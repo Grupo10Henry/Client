@@ -1,13 +1,13 @@
-// Kevin :)
+// Kevin :o
 
 import Cards from "../../Cards/Cards";
 
-import "./MostPupular.module.css";
+import "./NextEvents.module.css";
 
-export default MostPopular = () => {
+export default NextEvents = () => {
    return (
       <div>
-         <h3>eventos populares</h3>
+         <h3>proximos eventos</h3>
          <div>
             <Cards />
          </div>
