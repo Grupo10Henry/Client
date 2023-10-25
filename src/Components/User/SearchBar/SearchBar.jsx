@@ -1,11 +1,11 @@
 //franco
-import { HiOutlineMagnifyingGlass } from "react-icons/hi2"
+import { BsSearch } from "react-icons/bs"
 const SearchBar = () => {
   return (
     <div>
       <div>
         <div>
-          <HiOutlineMagnifyingGlass />
+          <BsSearch />
         </div>
         <input
           type="search"
