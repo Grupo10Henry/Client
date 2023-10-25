@@ -1,4 +1,4 @@
-/* JULI 
+// JULI 
 
 import {createSlice} from '@reduxjs/toolkit'
 
@@ -51,4 +51,3 @@ export const userSlice = createSlice({
 
 export const {addUser, checkEmail, changeName, changeEmail, changePassword, changePhone, changeIdentificationCard} = userSlice.actions;
 export default userSlice.reducer;
-*/
