@@ -1,6 +1,6 @@
 // Juli >>>>>>>>
 
-export const validate = (input) => {
+export const validateSignUp = (input) => {
   let errors = {};
   if (!input.name) {
     errors.name = "Campo obligatorio";

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser, checkEmail } from "../../../redux/userSlice";
 import styles from "./Register.module.css";
-import { validate } from "./validate";
+import { validateSignUp } from "./validateSignUp";
 import axios from "axios";
 
 // aquí será necesario que Back despache un email de confirmación cuando la cuenta se cree.
@@ -41,7 +41,7 @@ const SignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const newErrors = validate(input);
+    const newErrors = validateSignUp(input);
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
