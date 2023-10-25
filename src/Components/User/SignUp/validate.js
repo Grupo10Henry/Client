@@ -1,3 +1,5 @@
+// Juli >>>>>>>>
+
 export const validate = (input) => {
   let errors = {};
   if (!input.name) {

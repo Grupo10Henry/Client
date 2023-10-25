@@ -1,3 +1,5 @@
+// Juli >>>>>>>>
+
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser, checkEmail } from "../../../redux/userSlice";
@@ -38,6 +40,14 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const newErrors = validate(input);
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+    
     const formData = new FormData(event.target);
     const fullPhoneNumber = `${phone.countryCode}${phone.areaCode}${phone.phoneNumber}`;
 
