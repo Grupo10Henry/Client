@@ -1,3 +1,4 @@
+//franco
 import style from "./Filters.module.css"
 
 const categories = [
@@ -20,6 +21,7 @@ const CategoryFilter = () => {
     <div>
       <label htmlFor="category">Categoria:</label>
       <select name="category" id="category">
+        <option value="todos">Todos</option>
         {categories.map((cat, idx) => (
           <option key={idx} value={cat}>
             {cat}
