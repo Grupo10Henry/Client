@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Register from './Components/Forms/Register/Register';
+import SignUp from './Components/User/SignUp/SignUp';
 import styles from './App.module.css';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <div className={styles.App}>
       <BrowserRouter>
         <Routes>
-          <Route path="/registro" element={<Register />} />
+          <Route path="/registro" element={<SignUp />} />
         </Routes>
       </BrowserRouter>
     </div>
