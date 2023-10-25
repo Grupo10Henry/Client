@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addUser, checkEmail } from "../../../redux/userSlice";
-import styles from "./Register.module.css";
+/*import { addUser, checkEmail } from "../../../redux/userSlice";*/
+import styles from "./SignUp.module.css";
 import { validateSignUp } from "./validateSignUp";
 import axios from "axios";
 
