@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './Pages/User/Home/Home';
 import SignUp from './Components/User/SignUp/SignUp';
 import styles from './App.module.css';
 import Navbar from "./Components/User/Navbar/Navbar"
@@ -22,6 +23,7 @@ function App() {
         <Navbar />
         <AdminNavbar />
         <Routes>
+          <Route path="/home" element={<Home />} />
           <Route path="/registro" element={<SignUp />} />
           <Route path="/userlogin" element={<UserLogin />} />
           <Route path="/detalledelevento" element={<Detail />} />
