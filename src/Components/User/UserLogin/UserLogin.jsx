@@ -2,7 +2,7 @@
 
 import React, {useState} from "react";
 import styles from "./UserLogin.module.css";
-import validateLogin from "./validateLogin";
+//import validateLogin from "./validateLogin";
 
 
 
@@ -138,3 +138,4 @@ const UserLogin = ({login}) => {
     )
     };
 
+export default UserLogin;
