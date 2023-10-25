@@ -1,18 +1,18 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Register from './Components/Forms/Register/Register';
-import styles from './App.module.css';
+import React from "react"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Navbar from "./Components/User/Navbar/Navbar"
+
+import styles from "./App.module.css"
 
 function App() {
   return (
     <div className={styles.App}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/registro" element={<Register />} />
-        </Routes>
+        <Navbar />
+        <Routes></Routes>
       </BrowserRouter>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
