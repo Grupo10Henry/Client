@@ -1,0 +1,44 @@
+.wrapper {
+}
+
+.innerWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eaeaea;
+  --bg: #8ebec2;
+}
+
+.icon {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  flex: 1 1 10%;
+  border-right: thin solid var(--negro);
+  cursor: pointer;
+  user-select: none;
+  transition: color ease 200ms;
+  font-size: 20px;
+  display: grid;
+  place-content: center;
+  padding: 10px 0;
+  transition: background-color ease 200ms;
+}
+
+.icon:hover {
+  background-color: var(--bg);
+  transition: background-color ease 200ms;
+  transition: color ease 200ms;
+}
+
+.input {
+  border: 0;
+  outline: 0;
+  padding: 10px;
+  background-color: transparent;
+  flex: 1 0 80%;
+}
+
+.input::placeholder {
+  color: var(--turquesa);
+}

@@ -6,13 +6,15 @@ import { store } from "./redux/store"
 import "./main.css"
 import "tailwindcss/tailwind.css"
 import { BrowserRouter } from "react-router-dom"
-
+import ContextProvider from "./Context/Context.jsx"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-      <App />
+        <ContextProvider>
+          <App />
+        </ContextProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
