@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './Pages/User/Home/Home';
+import Contact from './Components/User/Contact/Contact';
+import { Context } from './Components/User/Contact/Context/Context';
 import SignUp from './Components/User/SignUp/SignUp';
 import styles from './App.module.css';
 import Navbar from "./Components/User/Navbar/Navbar"
@@ -18,8 +20,12 @@ function App() {
   const location = useLocation();
 
   return (
+
     <div className={styles.App}>
+      <Context>
         <Navbar />
+        <Contact />
+      </Context>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/registro" element={<SignUp />} />
@@ -31,6 +37,7 @@ function App() {
           <Route path="/admin" element={<AdminHome />} />
         </Routes>
     </div>
+
   )
 }
 

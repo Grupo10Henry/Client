@@ -1,10 +1,13 @@
 // Kevin :3
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { context } from "./Context/Context"
 
-
-import "./Contact.module.css"
+import style from "./Contact.module.css"
+// necesito ayuda con el diseño de la tarjeta de Contacto
 
 const Contact = () => {
+
+   const { view } = useContext(context)
 
    const [userData, setUserData] = useState({
       name: "",
@@ -23,7 +26,7 @@ const Contact = () => {
    // })
 
    return (
-      <div>
+      <div className={view ? style.contactTrue : style.contactFalse}>
          <form action="">
             <h1>Contactanos</h1>
             <div>
@@ -57,6 +60,7 @@ const Contact = () => {
                   name="request"
                   value={userData.request} />
                </label><br />
+               <button>Enviar</button>
             </div>
          </form>
       </div>
