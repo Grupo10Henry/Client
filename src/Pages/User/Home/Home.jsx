@@ -4,13 +4,13 @@ import AllEvents from "../../../Components/User/Events/AllEvents/AllEvents";
 import MostPopular from "../../../Components/User/Events/MostPopular/MostPopular";
 import NextEvents from "../../../Components/User/Events/NextEvents/NextEvents";
 
-import "./Home.module.css";
+import style from "./Home.module.css";
 
 const Home = () => {
 
    return (
-      <div>
-         <h1>Home</h1>
+      <div className={style.home}>
+         <h1>Home</h1> <br />
          <div>
             <MostPopular />
          </div>

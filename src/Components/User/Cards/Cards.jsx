@@ -2,11 +2,12 @@
 
 import Card from "./Card";
 
-import "./Cards.module.css";
+import style from "./Cards.module.css";
 
 const Cards = () => {
    return (
-      <div>
+      <div className={style.cards}>
+         <Card />
          <Card />
          <Card />
          <Card />
