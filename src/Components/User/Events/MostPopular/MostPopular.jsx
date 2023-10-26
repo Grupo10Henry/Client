@@ -4,7 +4,7 @@ import Cards from "../../Cards/Cards";
 
 import "./MostPupular.module.css";
 
-export default MostPopular = () => {
+const MostPopular = () => {
    return (
       <div>
          <h3>eventos populares</h3>
@@ -14,3 +14,5 @@ export default MostPopular = () => {
       </div>
    )
 }
+
+export default MostPopular

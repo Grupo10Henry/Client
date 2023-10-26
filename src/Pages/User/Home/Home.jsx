@@ -6,7 +6,7 @@ import NextEvents from "../../../Components/User/Events/NextEvents/NextEvents";
 
 import "./Home.module.css";
 
-export default Home = () => {
+const Home = () => {
 
    return (
       <div>
@@ -23,3 +23,5 @@ export default Home = () => {
       </div>
    )
 }
+
+export default Home
