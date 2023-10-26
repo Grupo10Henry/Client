@@ -1,0 +1,19 @@
+.contactTrue {
+   background-color: aquamarine;
+   position: fixed;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   border-radius: 10px;
+   border: 1px solid grey;
+   padding: 40px;
+   width: 35%;
+}
+
+.contactFalse {
+   background-color: transparent;
+   position: fixed;
+   display: flex;
+   padding: 400px;
+}

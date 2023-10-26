@@ -1,13 +1,13 @@
-// Kevin c:
+// Kevin :o
 
 import Cards from "../../Cards/Cards";
 
-import "./AllEvents.module.css";
+import "./NextEvents.module.css";
 
-const AllEvents = () => {
+const NextEvents = () => {
    return (
       <div>
-         <h3>todos los eventos</h3>
+         <h3>proximos eventos</h3>
          <div>
             <Cards />
          </div>
@@ -15,4 +15,4 @@ const AllEvents = () => {
    )
 }
 
-export default AllEvents
+export default NextEvents
