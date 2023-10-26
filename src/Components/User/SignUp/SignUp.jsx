@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 /*import { addUser, checkEmail } from "../../../redux/userSlice";*/
-import styles from "./SignUp.module.css";
 import { validateSignUp } from "./validateSignUp";
 import axios from "axios";
 
@@ -16,11 +15,6 @@ const SignUp = () => {
 
   const [errors, setErrors] = useState({});
 
-  const [phone, setPhone] = useState({
-    countryCode: "+57",
-    areaCode: "314",
-    phoneNumber: "2299661",
-  });
 
   const [input, setInput] = useState({
     name: "",
@@ -29,6 +23,7 @@ const SignUp = () => {
     identityCard: "",
     dob: "",
     password: "",
+    phone: "",
   });
 
   const handleChange = (event) => {
@@ -49,13 +44,12 @@ const SignUp = () => {
     }
     
     const formData = new FormData(event.target);
-    const fullPhoneNumber = `${phone.countryCode}${phone.areaCode}${phone.phoneNumber}`;
-
+   
     const userData = {
       name: formData.get("name"),
       lastName: formData.get("lastName"),
       email: formData.get("email"),
-      fullPhoneNumber: fullPhoneNumber,
+      phone: formData.get("phone"),
       identityCard: formData.get("identityCard"),
       dob: formData.get("dob"),
       password: formData.get("password"),
@@ -89,113 +83,195 @@ const SignUp = () => {
 
   return (
     <>
-      <div className={styles.container}>
-        <h1>Registro</h1>
-        <h3>*necesario para poder reservar localidades*</h3>
-        <form onSubmit={handleSubmit}>
-          <ul>
-            <li>
-              <label>Nombre:</label>
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          Regístrate
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-6" action="#" method="POST">
+          <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Nombre:
+              </label>
+              <div className="mt-2">
               <input
                 type="text"
                 name="name"
                 value={input.name}
                 onChange={handleChange}
+                autoComplete="name"
                 placeholder="Tu nombre aquí "
+                required
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-            </li>
-            <li>
-              <label>Apellido:</label>
+              </div>
+              </div>
+          
+            
+              <div className="flex flex-col">
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Apellido:
+              </label>
+              <div className="mt-2">
               <input
                 type="text"
                 name="lastName"
                 value={input.lastName}
                 onChange={handleChange}
+                autoComplete="lastName"
                 placeholder="Tu apellido aquí"
+                required
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-            </li>
-            <li>
-              <label>e-mail:</label>
+              </div>
+              </div>
+
+            
+              <div className="flex flex-col">
+              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                e-mail:
+              </label>
+              <div className="mt-2">
               <input
                 type="email"
                 name="email"
                 value={input.email}
                 onChange={handleChange}
                 placeholder="Tu e-mail aquí"
+                autoComplete="email"
+                required
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-            </li>
-            <li>
-              <label>Teléfono de contacto:</label>
-              <label>Cód. País</label>
+              </div>
+              </div>
+              
+              <div className="flex flex-col">
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Teléfono de contacto:
+                </label>
+                
+                <div className="mt-2 flex">
               <input
-                type="number"
-                name="countryCode"
-                value={phone.countryCode}
+                type="text"
+                name="phone"
+                value={input.phone}
                 onChange={handleChange}
-                placeholder="+57"
+                placeholder="+573142299661"
+                autoComplete="phone"
+                required
+                className="flex-grow rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              <label>Característica</label>
-              <input
-                type="number"
-                name="areaCode"
-                value={phone.areaCode}
-                onChange={handleChange}
-                placeholder="314"
-              />
-              <label>Número</label>
-              <input
-                type="number"
-                name="phoneNumber"
-                value={phone.phoneNumber}
-                onChange={handleChange}
-                placeholder="2299661"
-              />
-            </li>
-            <li>
-              <label>Fecha de nacimiento:</label>
+              
+              
+               </div>
+              </div>
+
+              
+              <div className="flex items-center justify-between">
+            
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Fecha de nacimiento:
+              </label>
+              <div className="mt-2">
               <input
                 type="date"
                 name="dob"
                 value={input.dob}
                 onChange={handleChange}
                 placeholder="Tu fecha de nacimiento aquí"
-              />
-            </li>
-            <li>
-              <label>Cédula:</label>
+                autoComplete="dob"
+                required
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+                </div>
+              </div>
+              
+              
+              <div className="flex items-center justify-between">
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Cédula:
+              </label>
+              <div className="mt-2">
               <input
-                type="number"
+                type="text"
                 name="identityCard"
                 value={input.identityCard}
                 onChange={handleChange}
-                placeholder="Tu cédula aquí"
+                placeholder="Tu número de cédula aquí"
+                autoComplete="identityCard"
+                required
+                className="block w-64 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-            </li>
-            <li>
-              <label>Contraseña:</label>
+              </div>
+              </div>
+
+              <div>
+              <div className="flex items-center justify-between">
+              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                Contraseña:
+                </label>
+                {/*<div className="text-sm">
+                <a
+                  href="#"
+                  className="font-semibold text-xs-indigo-600 hover:text-indigo-500">
+                  Olvidé mi contraseña
+                </a>
+                </div>*/}
+                </div>
+                
+                <div className="mt-2">
               <input
                 type="password"
                 name="password"
                 value={input.password}
                 onChange={handleChange}
                 placeholder="Tu contraseña aquí"
+                autoComplete="current-password"
+                required
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-            </li>
-            <li>
-              <label>Repetir contraseña:</label>
+              </div>
+              </div>
+
+              
+              <div className="flex flex-col">
+           
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Repetir contraseña:
+              </label>
+              <div className="mt-2">
               <input
                 type="password"
                 name="password2"
                 value={input.password2}
                 onChange={handleChange}
                 placeholder="Repetí tu contraseña aquí"
+                required
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-            </li>
-          </ul>
+              </div>
+              </div>
 
-          <button>Registrarse</button>
-          <h3>Si ya estás registrado: LogIn</h3>
+           <div>
+          <button 
+            type="submit"
+            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Registrarse
+            </button>
+            </div>
+
+
+            <div className="flex justify-center items-center  text-sm">
+            <a
+                  href="#"
+                  className="font-semibold text-center-xs-indigo-600 hover:text-indigo-500">
+                  Ya estoy registrado
+                </a>
+                </div>
+
         </form>
+      </div>
       </div>
     </>
   );
