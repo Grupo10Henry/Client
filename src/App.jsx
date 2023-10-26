@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './Pages/User/Home/Home';
 import SignUp from './Components/User/SignUp/SignUp';
 import styles from './App.module.css';
@@ -17,11 +17,17 @@ import Cart from "./Components/User/Cart/Cart";
 
 
 function App() {
+
+  const location = useLocation();
+
   return (
     <div className={styles.App}>
-      <BrowserRouter>
         <Navbar />
-        <AdminNavbar />
+        {location.pathname === "/adminevents" ||
+        location.pathname === "/admineventscreate" ||
+        location.pathname === "/adminusers" ||
+        location.pathname === "/adminlogin" ? <AdminNavbar /> : null}
+        {/* Pendiente rutas de Admin de Guada: FAQ, Reviews, Login */}
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/registro" element={<SignUp />} />
@@ -32,10 +38,9 @@ function App() {
           <Route path="/myaccount/:id" element={<MyAccount />} />
           <Route path="/adminevents" element={<AdminEvents />} />
           <Route path="/admineventscreate" element={<AdminEventsCreate />} />
-          <Route path="/adminUsers" element={<AdminUsers />} />
+          <Route path="/adminusers" element={<AdminUsers />} />
           <Route path="/adminlogin" element={<AdminLogin />} />
         </Routes>
-      </BrowserRouter>
     </div>
   )
 }
