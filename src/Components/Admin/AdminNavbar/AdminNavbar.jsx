@@ -5,55 +5,36 @@ import styles from './AdminNavbar.module.css';
 export default function AdminNavbar() {
     return (
         <div className={styles.adminNavContainer}>
-            <p>AdminNavBar :{")"}</p>
             <div>
-            <NavLink to="/adminevents" >
-                <button>
+                <button className={styles.adminNavbarButton}>
                     Ver eventos
                 </button>
-            </NavLink>
                 </div>
-                <div>
-            <NavLink to="/admineventscreate" >
-                <button>
+            <div>
+                <button className={styles.adminNavbarButton}>
                     Editar eventos
                 </button>
-            </NavLink>
-                </div>
+            </div>
             <div>
-            <NavLink to="/adminusers" >
-                <button>
+                <button className={styles.adminNavbarButton}>
                     Ver usuarios
                 </button>
-            </NavLink>
             </div>
             <div>
-            <NavLink to="/adminfooter" >
-                <button>
+                <button className={styles.adminNavbarButton}>
                     Datos de contacto
                 </button>
-            </NavLink>
             </div>
             <div>
-            <NavLink to="/adminfaq" >
-                <button>
+                <button className={styles.adminNavbarButton}>
                     Preguntas frecuentes
                 </button>
-            </NavLink>
             </div>
             <div>
-            <NavLink to="/adminreviews" >
-                <button>
+                <button className={styles.adminNavbarButton}>
                     Reseñas
                 </button>
-            </NavLink>
             </div>
-            {/* <NavLink to="/" >
-                <button>
-                    Texto
-                </button>
-            </NavLink>
-            Poner link a Login? */}
         </div>
     )
 }
