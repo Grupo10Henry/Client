@@ -13,7 +13,7 @@ export default function AdminNavbar({display, setDisplay}) {
                 </div>
             <div>
                 <button className={styles.adminNavbarButton} onClick={() => {setDisplay({...display, show: "createEvents"})}}>
-                    Editar eventos
+                    Crear eventos
                 </button>
             </div>
             <div>
