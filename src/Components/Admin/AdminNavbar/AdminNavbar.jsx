@@ -1,22 +1,23 @@
 // Luissssss
-import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
 import styles from './AdminNavbar.module.css';
 
-export default function AdminNavbar() {
+export default function AdminNavbar({display, setDisplay}) {
+
     return (
         <div className={styles.adminNavContainer}>
             <div>
-                <button className={styles.adminNavbarButton}>
+                <button className={styles.adminNavbarButton} onClick={() => {setDisplay({...display, show: "showEvents"})}}>
                     Ver eventos
                 </button>
                 </div>
             <div>
-                <button className={styles.adminNavbarButton}>
+                <button className={styles.adminNavbarButton} onClick={() => {setDisplay({...display, show: "createEvents"})}}>
                     Editar eventos
                 </button>
             </div>
             <div>
-                <button className={styles.adminNavbarButton}>
+                <button className={styles.adminNavbarButton} onClick={() => {setDisplay({...display, show: "showUsers"})}}>
                     Ver usuarios
                 </button>
             </div>
