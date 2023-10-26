@@ -25,8 +25,8 @@ function App() {
         <Navbar />
         {location.pathname === "/adminevents" ||
         location.pathname === "/admineventscreate" ||
-        location.pathname === "/adminusers" ||
-        location.pathname === "/adminlogin" ? <AdminNavbar /> : null}
+        location.pathname === "/adminusers"
+        ? <AdminNavbar /> : null}
         {/* Pendiente rutas de Admin de Guada: FAQ, Reviews, Login. Rutas: "/adminfooter", "/adminfaq", "/adminreviews" */}
         <Routes>
           <Route path="/home" element={<Home />} />
