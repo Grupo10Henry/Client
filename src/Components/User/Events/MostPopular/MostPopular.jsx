@@ -7,7 +7,7 @@ import "./MostPupular.module.css";
 const MostPopular = () => {
    return (
       <div>
-         <h3>eventos populares</h3>
+         <h2>eventos populares</h2> <br />
          <div>
             <Cards />
          </div>
