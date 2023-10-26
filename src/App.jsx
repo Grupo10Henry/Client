@@ -20,7 +20,6 @@ function App() {
   return (
     <div className={styles.App}>
         <Navbar />
-        {location.pathname === "/admin" ? <AdminNavbar /> : null}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/registro" element={<SignUp />} />
