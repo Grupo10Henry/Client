@@ -4,7 +4,7 @@ import Cards from "../../Cards/Cards";
 
 import "./AllEvents.module.css";
 
-export default AllEvents = () => {
+const AllEvents = () => {
    return (
       <div>
          <h3>todos los eventos</h3>
@@ -14,3 +14,5 @@ export default AllEvents = () => {
       </div>
    )
 }
+
+export default AllEvents

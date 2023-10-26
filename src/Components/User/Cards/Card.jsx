@@ -2,10 +2,12 @@
 
 import "./Card.module.css";
 
-export default Card = () => {
+const Card = () => {
    return (
       <div>
          <p>evento</p>
       </div>
    )
 }
+
+export default Card

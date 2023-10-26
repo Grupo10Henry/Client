@@ -4,7 +4,7 @@ import Card from "./Card";
 
 import "./Cards.module.css";
 
-export default Cards = () => {
+const Cards = () => {
    return (
       <div>
          <Card />
@@ -13,4 +13,6 @@ export default Cards = () => {
       </div>
    )
 }
+
+export default Cards
 

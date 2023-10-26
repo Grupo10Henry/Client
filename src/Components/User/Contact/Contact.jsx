@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import "./Contact.module.css"
 
-export default Contact = () => {
+const Contact = () => {
 
    const [userData, setUserData] = useState({
       name: "",
@@ -62,3 +62,5 @@ export default Contact = () => {
       </div>
    )
 }
+
+export default Contact

@@ -4,7 +4,7 @@ import Cards from "../../Cards/Cards";
 
 import "./NextEvents.module.css";
 
-export default NextEvents = () => {
+const NextEvents = () => {
    return (
       <div>
          <h3>proximos eventos</h3>
@@ -14,3 +14,5 @@ export default NextEvents = () => {
       </div>
    )
 }
+
+export default NextEvents
