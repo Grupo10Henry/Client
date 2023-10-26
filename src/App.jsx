@@ -6,14 +6,11 @@ import styles from './App.module.css';
 import Navbar from "./Components/User/Navbar/Navbar"
 import AdminNavbar from './Components/Admin/AdminNavbar/AdminNavbar';
 import MyAccount from './Pages/User/MyAccount/MyAccount';
-import AdminEvents from './Pages/Admin/AdminEvents/AdminEvents';
-import AdminLogin from './Pages/Admin/AdminLogin/AdminLogin';
-import AdminUsers from './Pages/Admin/AdminUsers/AdminUsers';
-import AdminEventsCreate from './Pages/Admin/AdminEventsCreate/AdminEventsCreate';
 import UserLogin from './Components/User/UserLogin/UserLogin';
 import Detail from "./Pages/User/Detail/Detail";
 import Booking from "./Pages/User/Booking/Booking";
 import Cart from "./Components/User/Cart/Cart";
+import AdminHome from './Pages/Admin/AdminHome/AdminHome';
 
 
 function App() {
@@ -23,11 +20,7 @@ function App() {
   return (
     <div className={styles.App}>
         <Navbar />
-        {location.pathname === "/adminevents" ||
-        location.pathname === "/admineventscreate" ||
-        location.pathname === "/adminusers"
-        ? <AdminNavbar /> : null}
-        {/* Pendiente rutas de Admin de Guada: FAQ, Reviews, Login. Rutas: "/adminfooter", "/adminfaq", "/adminreviews" */}
+        {location.pathname === "/admin" ? <AdminNavbar /> : null}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/registro" element={<SignUp />} />
@@ -36,10 +29,7 @@ function App() {
           <Route path="/reserva" element={<Booking />} />
           <Route path="/carrito" element={<Cart />} />
           <Route path="/myaccount/:id" element={<MyAccount />} />
-          <Route path="/adminevents" element={<AdminEvents />} />
-          <Route path="/admineventscreate" element={<AdminEventsCreate />} />
-          <Route path="/adminusers" element={<AdminUsers />} />
-          <Route path="/adminlogin" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminHome />} />
         </Routes>
     </div>
   )
