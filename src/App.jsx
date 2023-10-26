@@ -29,7 +29,7 @@ function App() {
         ? <AdminNavbar /> : null}
         {/* Pendiente rutas de Admin de Guada: FAQ, Reviews, Login. Rutas: "/adminfooter", "/adminfaq", "/adminreviews" */}
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/registro" element={<SignUp />} />
           <Route path="/userlogin" element={<UserLogin />} />
           <Route path="/detalledelevento" element={<Detail />} />
