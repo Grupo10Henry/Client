@@ -7,7 +7,7 @@ import style from "./Contact.module.css"
 
 const Contact = () => {
 
-   const { view } = useContext(context)
+   const { view, contactFalse } = useContext(context)
 
    const [userData, setUserData] = useState({
       name: "",
@@ -27,7 +27,7 @@ const Contact = () => {
 
    return (
       <div className={view ? style.contactTrue : style.contactFalse}>
-         <form action="">
+         <form >
             <h1>Contactanos</h1>
             <div>
                <label> Nombre: <input
@@ -61,6 +61,7 @@ const Contact = () => {
                   value={userData.request} />
                </label><br />
                <button>Enviar</button>
+               <button onClick={contactFalse}>Cerrar</button>
             </div>
          </form>
       </div>
