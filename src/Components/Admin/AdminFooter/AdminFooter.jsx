@@ -1,8 +1,6 @@
 //Guada
-
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+
 
 //POST - EDIT - Envia al back la nueva información
 
@@ -16,12 +14,6 @@ const AdminFooter = () => {
         dataPolicy: '',
     })
 
-    const [errors, setErrors] = useState({})
-
-    const info = useSelector(state => state.adminFooter)
-
-    const dispatch = useDispatch({})
-
     const editHandler = (event) => {
         setForm({
             ...form,
@@ -31,11 +23,13 @@ const AdminFooter = () => {
 
     const submitHandler = (event) => {
         event.preventDefault()
+        //dispatch(postFooter(form))
     }
 
     return(
         <div>
-            <form>
+            <h1>Info Contacto:</h1>
+            <form onSubmit={submitHandler}>
                 <div>
                     <label>Address</label>
                     <input
