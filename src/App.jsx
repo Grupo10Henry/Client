@@ -25,7 +25,6 @@ function App() {
 
         <Navbar />
         <Contact />
-        {location.pathname === "admin" ? null : <Footer />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/registro" element={<SignUp />} />
@@ -38,6 +37,7 @@ function App() {
           <Route path="/admin" element={<AdminHome />} />
           <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
         </Routes>
+        {location.pathname === "admin" ? null : <Footer />}
     </div>
   )
 }
