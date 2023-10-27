@@ -22,17 +22,17 @@ export default function AdminNavbar({display, setDisplay}) {
                 </button>
             </div>
             <div>
-                <button className={styles.adminNavbarButton}>
+                <button className={styles.adminNavbarButton} onClick={() => {setDisplay({...display, show: "editContact"})}}>
                     Datos de contacto
                 </button>
             </div>
             <div>
-                <button className={styles.adminNavbarButton}>
+                <button className={styles.adminNavbarButton} onClick={() => {setDisplay({...display, show: "editFAQ"})}}>
                     Preguntas frecuentes
                 </button>
             </div>
             <div>
-                <button className={styles.adminNavbarButton}>
+                <button className={styles.adminNavbarButton} onClick={() => {setDisplay({...display, show: "viewReviews"})}}>
                     Reseñas
                 </button>
             </div>
