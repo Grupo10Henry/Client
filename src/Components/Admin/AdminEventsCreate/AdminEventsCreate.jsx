@@ -37,6 +37,7 @@ export default function AdminEventsCreate() {
                     <div>
                     <label>Nombre del evento</label>
                     <input
+                    type="text" PONER TYPE EN TODOS
                     name='name'
                     value={input.name}
                     onChange={handleChange} />
