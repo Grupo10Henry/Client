@@ -8,7 +8,7 @@ import styles from './App.module.css';
 import Navbar from "./Components/User/Navbar/Navbar"
 import AdminNavbar from './Components/Admin/AdminNavbar/AdminNavbar';
 import MyAccount from './Pages/User/MyAccount/MyAccount';
-import UserLogin from './Components/User/UserLogin/UserLogin';
+import Login from './Components/User/Login/Login';
 import Detail from "./Pages/User/Detail/Detail";
 import Booking from "./Pages/User/Booking/Booking";
 import Cart from "./Components/User/Cart/Cart";
@@ -29,7 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/registro" element={<SignUp />} />
-          <Route path="/userlogin" element={<UserLogin />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/detalledelevento" element={<Detail />} />
           <Route path="/reserva" element={<Booking />} />
           <Route path="/carrito" element={<Cart />} />
