@@ -20,10 +20,10 @@ const CategoryFilter = () => {
   }
 
   return (
-    <div className={style.filterWrapper}>
-      <label htmlFor="category">Categoria:</label>
+    <div className="w-full flex flex-col gap-2">
+      <label htmlFor="cateogory">Categoria:</label>
       <select name="category" id="category">
-        <option value="todos">Todos</option>
+        <option value="Todos">Todos</option>
         {categories.map((cat, idx) => (
           <option key={idx} value={cat}>
             {cat}
