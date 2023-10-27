@@ -15,10 +15,12 @@ const categories = [
   "Filantrópicos",
 ]
 const CategoryFilter = () => {
-  const handlerCategory = (category) => {}
+  const handlerCategory = (category) => {
+    // pedirle via query al back
+  }
 
   return (
-    <div>
+    <div className={style.filterWrapper}>
       <label htmlFor="category">Categoria:</label>
       <select name="category" id="category">
         <option value="todos">Todos</option>

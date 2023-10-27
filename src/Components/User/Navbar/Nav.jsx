@@ -1,26 +1,39 @@
-import { Link, NavLink } from "react-router-dom"
-import { useState } from "react"
-import {
-  BsFillQuestionCircleFill,
-  BsFillPersonFill,
-  BsFillTelephoneFill,
-  BsList,
-  BsXLg,
-} from "react-icons/bs"
-import logoColor from "../../../assets/logo_mi_butaca_color.svg"
+import { Link, NavLink, useLocation } from "react-router-dom"
+import { useContext, useEffect, useState } from "react"
+import { BsList, BsXLg } from "react-icons/bs"
+import logoWhite from "../../../assets/logo_mi_butaca_blanco.svg"
 
 import style from "./Navbar.module.css"
+import { Context } from "../../../Context/Context"
+
+const linksItems = [
+  { id: 1, text: "Inicio", to: "/" },
+  { id: 2, text: "Iniciar sesión", to: "/userlogin" },
+  { id: 3, text: "Registrarse", to: "/registro" },
+]
 
 const Nav = () => {
-  const [isLogged, setIsLogged] = useState(false)
+  const [isLogged, setIsLogged] = useState(true)
   const [isOpen, setIsOpen] = useState(false)
 
+  const location = useLocation()
+  const { view, contactTrue } = useContext(Context)
   const linksClass = isOpen && style.showme
+
+  useEffect(() => {
+    setIsOpen(false)
+  }, [location.pathname])
+
+  useEffect(() => {
+    view && setIsOpen(false)
+  }, [view])
+
+  const handlerOpenContact = () => contactTrue()
 
   return (
     <nav className={style.nav}>
       <Link to="/" className={style.logo}>
-        <img src={logoColor} alt="imagen logo mi butaca" />
+        <img src={logoWhite} alt="imagen logo blanco mi butaca" />
       </Link>
       <button
         className={`${style.icon} ${style.iconToggle}`}
@@ -28,28 +41,28 @@ const Nav = () => {
       >
         {isOpen ? <BsXLg /> : <BsList />}
       </button>
-
+      {/* menu */}
       <div className={`${style.links} ${linksClass}`}>
-        {isLogged ? (
-          <NavLink to="/account" title="mi cuenta" className={style.link}>
+        {isLogged && (
+          <NavLink
+            to="/myaccount/2"
+            title="mi cuenta"
+            className={({ isActive }) => isActive && style.active}
+          >
             Mi cuenta
           </NavLink>
-        ) : (
-          <>
-            <NavLink to="/login" className={style.link}>
-              Iniciar sesión
-            </NavLink>
-            <NavLink to="/signup" className={style.link}>
-              Registro
-            </NavLink>
-          </>
         )}
-        <NavLink to="/contact" title="contacto" className={style.link}>
-          Contacto
-        </NavLink>
-        <NavLink to="/faq" title="preguntas frecuentes" className={style.link}>
-          FAQ
-        </NavLink>
+        {!isLogged &&
+          linksItems.map((link) => (
+            <NavLink
+              key={link.id}
+              to={link.to}
+              className={({ isActive }) => isActive && style.active}
+            >
+              {link.text}
+            </NavLink>
+          ))}
+        <button onClick={handlerOpenContact}>Contacto</button>
       </div>
     </nav>
   )

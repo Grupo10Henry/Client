@@ -1,31 +1,30 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
-import Home from './Pages/User/Home/Home';
-import Contact from './Components/User/Contact/Contact';
-import { Context } from './Components/User/Contact/Context/Context';
-import SignUp from './Components/User/SignUp/SignUp';
-import styles from './App.module.css';
+import React from "react"
+import { Route, Routes, useLocation } from "react-router-dom"
+import styles from "./App.module.css"
+import Cart from "./Components/User/Cart/Cart"
+import Contact from "./Components/User/Contact/Contact"
 import Navbar from "./Components/User/Navbar/Navbar"
 import AdminNavbar from './Components/Admin/AdminNavbar/AdminNavbar';
 import MyAccount from './Pages/User/MyAccount/MyAccount';
 import Login from './Components/User/Login/Login';
 import Detail from "./Pages/User/Detail/Detail";
-import Booking from "./Pages/User/Booking/Booking";
-import Cart from "./Components/User/Cart/Cart";
 import AdminHome from './Pages/Admin/AdminHome/AdminHome';
+import SignUp from "./Components/User/SignUp/SignUp"
+import AdminHome from "./Pages/Admin/AdminHome/AdminHome"
+import Booking from "./Pages/User/Booking/Booking"
+import Detail from "./Pages/User/Detail/Detail"
+import Home from "./Pages/User/Home/Home"
+import MyAccount from "./Pages/User/MyAccount/MyAccount"
 
 
 function App() {
-
-  const location = useLocation();
+  const location = useLocation()
 
   return (
-
     <div className={styles.App}>
-      <Context>
+
         <Navbar />
         <Contact />
-      </Context>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/registro" element={<SignUp />} />
@@ -37,7 +36,6 @@ function App() {
           <Route path="/admin" element={<AdminHome />} />
         </Routes>
     </div>
-
   )
 }
 

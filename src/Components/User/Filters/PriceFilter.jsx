@@ -1,13 +1,15 @@
 import { useState } from "react"
 
+import style from "./Filters.module.css"
+
 const startPrice = 2000
 
 const PriceFilter = () => {
   const [priceSelect, setPriceSelect] = useState(startPrice)
 
   return (
-    <div>
-      <label htmlFor="price">Precio a partir de:</label>
+    <div className={style.filterWrapper}>
+      <label htmlFor="price">A partir de:</label>
       <input
         type="range"
         name="price"

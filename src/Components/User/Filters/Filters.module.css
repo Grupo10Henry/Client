@@ -1,0 +1,20 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.filterWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+@media (width > 700px) {
+  .filters {
+    flex-direction: row;
+    gap: 40px;
+  }
+}
