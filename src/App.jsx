@@ -10,11 +10,8 @@ import Login from './Components/User/Login/Login';
 import Detail from "./Pages/User/Detail/Detail";
 import AdminHome from './Pages/Admin/AdminHome/AdminHome';
 import SignUp from "./Components/User/SignUp/SignUp"
-import AdminHome from "./Pages/Admin/AdminHome/AdminHome"
 import Booking from "./Pages/User/Booking/Booking"
-import Detail from "./Pages/User/Detail/Detail"
 import Home from "./Pages/User/Home/Home"
-import MyAccount from "./Pages/User/MyAccount/MyAccount"
 
 
 function App() {
