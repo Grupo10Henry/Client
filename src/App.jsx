@@ -12,6 +12,7 @@ import SignUp from "./Components/User/SignUp/SignUp"
 import Booking from "./Pages/User/Booking/Booking"
 import Detail from "./Pages/User/Detail/Detail"
 import Home from "./Pages/User/Home/Home"
+import PasswordRecover from "./Components/User/Login/PasswordRecover"
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/carrito" element={<Cart />} />
           <Route path="/myaccount/:id" element={<MyAccount />} />
           <Route path="/admin" element={<AdminHome />} />
+          <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
         </Routes>
     </div>
   )
