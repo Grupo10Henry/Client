@@ -1,4 +1,5 @@
 //franco
+import Select from "../Select/Select"
 import style from "./Filters.module.css"
 
 const categories = [
@@ -19,18 +20,6 @@ const CategoryFilter = () => {
     // pedirle via query al back
   }
 
-  return (
-    <div className={style.filterWrapper}>
-      <label htmlFor="category">Categoria:</label>
-      <select name="category" id="category">
-        <option value="todos">Todos</option>
-        {categories.map((cat, idx) => (
-          <option key={idx} value={cat}>
-            {cat}
-          </option>
-        ))}
-      </select>
-    </div>
-  )
+  return <Select data={categories} title="Categorias" defaultOption="Todos" />
 }
 export default CategoryFilter

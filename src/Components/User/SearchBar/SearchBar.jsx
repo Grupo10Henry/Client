@@ -2,8 +2,6 @@
 import { BsSearch } from "react-icons/bs"
 import { useState } from "react"
 
-import style from "./SearchBar.module.css"
-
 const SearchBar = () => {
   const [input, setInput] = useState("")
 
@@ -17,18 +15,22 @@ const SearchBar = () => {
   }
 
   return (
-    <div className={style.wrapper}>
-      <form className={style.innerWrapper} onSubmit={handleSearch}>
-        <button type="submit" className={style.icon}>
-          <BsSearch />
-        </button>
+    <div className="w-full h-full flex flex-col gap-2">
+      <div>Buscar:</div>
+      <form
+        className="flex flex-row items-center justify-center  ring-1 ring-[#282828]"
+        onSubmit={handleSearch}
+      >
         <input
           type="search"
-          placeholder="Buscá por nombre o ubicación del evento"
-          className={style.input}
+          placeholder="Ingresa el nombre o la ubicación del evento"
+          className="flex-auto bg-transparent  border-none text-xs focus:ring-transparent md:text-sm"
           value={input}
           onChange={handleChange}
         />
+        <button type="submit" className="w-[40px]  p-3 rounded-sm">
+          <BsSearch />
+        </button>
       </form>
     </div>
   )

@@ -1,19 +1,20 @@
 import { Link, NavLink, useLocation } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { BsList, BsXLg } from "react-icons/bs"
+import { Context } from "../../../Context/Context"
 import logoWhite from "../../../assets/logo_mi_butaca_blanco.svg"
 
 import style from "./Navbar.module.css"
-import { Context } from "../../../Context/Context"
 
 const linksItems = [
   { id: 1, text: "Inicio", to: "/" },
-  { id: 2, text: "Iniciar sesión", to: "/userlogin" },
+  { id: 2, text: "Iniciar sesión", to: "/iniciarsesion" },
   { id: 3, text: "Registrarse", to: "/registro" },
+  { id: 4, text: "Preguntas frecuentes", to: "/faq" },
 ]
 
 const Nav = () => {
-  const [isLogged, setIsLogged] = useState(true)
+  const [isLogged, setIsLogged] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
   const location = useLocation()
@@ -45,7 +46,7 @@ const Nav = () => {
       <div className={`${style.links} ${linksClass}`}>
         {isLogged && (
           <NavLink
-            to="/myaccount/2"
+            to="/micuenta/:id"
             title="mi cuenta"
             className={({ isActive }) => isActive && style.active}
           >
