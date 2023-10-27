@@ -24,7 +24,7 @@ const SearchBar = () => {
         <input
           type="search"
           placeholder="Ingresa el nombre o la ubicación del evento"
-          className="flex-auto bg-transparent  border-none text-xs focus:ring-transparent "
+          className="flex-auto bg-transparent  border-none text-xs focus:ring-transparent md:text-sm"
           value={input}
           onChange={handleChange}
         />

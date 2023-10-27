@@ -1,4 +1,5 @@
 //franco
+import Select from "../Select/Select"
 import style from "./Filters.module.css"
 
 const categories = [
@@ -19,18 +20,6 @@ const CategoryFilter = () => {
     // pedirle via query al back
   }
 
-  return (
-    <div className="w-full flex flex-col gap-2">
-      <label htmlFor="cateogory">Categoria:</label>
-      <select name="category" id="category">
-        <option value="Todos">Todos</option>
-        {categories.map((cat, idx) => (
-          <option key={idx} value={cat}>
-            {cat}
-          </option>
-        ))}
-      </select>
-    </div>
-  )
+  return <Select data={categories} title="Categorias" defaultOption="Todos" />
 }
 export default CategoryFilter
