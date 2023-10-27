@@ -4,12 +4,21 @@ import React, {useState} from "react";
 import logo from "../../../assets/logo_mi_butaca_color.svg";
 //import styles from "./UserLogin.module.css";
 //import validateLogin from "./validateLogin";
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Login = ({login}) => {
 
+    const navigate = useNavigate();
+
+    const handleSubmitPrueba = (event) => {
+        event.preventDefault();
+        navigate('/myaccount')
+    }
+
     const [errors, setErrors] = useState({email: '', password: ''})
+    
 
     const [user, setUser] = useState({
         email: '',
@@ -29,7 +38,7 @@ const Login = ({login}) => {
             ...user}))
     }
 
-    const handleSubmit = (event) => {
+    /*const handleSubmit = (event) => {
         event.preventDefault();
         if (errors.email || errors.password) {
             login(user)
@@ -37,7 +46,7 @@ const Login = ({login}) => {
             alert('Hay errores en el login');
             
             }
-    };
+    };*/
 
     // recordar contraseña
 
@@ -74,7 +83,7 @@ const Login = ({login}) => {
                 </h1>
             </div>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form onSubmit={handleSubmit} className="space-y-6" action="#" method="POST">
+                <form onSubmit={handleSubmitPrueba} className="space-y-6" action="#" method="POST">
                     <div>
                         <label htmlFor="email" className="block text-sm font-bold leading-6 text-gray-500">
                             ✉ EMAIL 
@@ -101,7 +110,7 @@ const Login = ({login}) => {
                             
                         </label>
                         <div className="text-xs">
-                            <a href="#" className="font-semibold text-teal-700 hover:text-fuchsia-600">
+                            <a href="http://localhost:5173/recuperarcontrasena" className="font-semibold text-teal-700 hover:text-fuchsia-600">
                             Olvidé mi contraseña
                             </a>
                         </div>
@@ -145,6 +154,7 @@ const Login = ({login}) => {
                 </div> 
                 */}
                 <div>
+                   
                 <button 
                 className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-fuchsia-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" 
                 type="submit"> 
@@ -158,7 +168,7 @@ const Login = ({login}) => {
                
                 <p className= "mt-10 text-center text-sm text-gray-500"> 
                 ¿No estás registrado? {" "}
-                <a href="#" className="font-semibold leading-6 text-teal-700 hover:text-fuchsia-500">
+                <a href="http://localhost:5173/registro" className="font-semibold leading-6 text-teal-700 hover:text-fuchsia-500">
                 Regístrate aquí
                 </a>
                 </p>
