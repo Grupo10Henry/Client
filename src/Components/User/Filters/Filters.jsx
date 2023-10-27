@@ -7,7 +7,7 @@ import SearchBar from "../SearchBar/SearchBar"
 
 const Filters = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-5 my-36  md:flex-row px-5">
+    <div className="flex flex-col items-center justify-center gap-8 my-36  md:flex-row px-5">
       <SearchBar />
       <CategoryFilter />
       <DateFilter />

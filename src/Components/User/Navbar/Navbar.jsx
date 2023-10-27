@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom"
 import Filters from "../Filters/Filters"
-// import SearchBar from "../SearchBar/SearchBar"
 import Nav from "./Nav"
 
 import style from "./Navbar.module.css"
@@ -12,8 +11,9 @@ const Navbar = () => {
   return (
     <header className={style.header}>
       <Nav />
-      {/* <SearchBar /> */}
-      {location.pathname !== "/detail" && <Filters />}
+      {location.pathname !== "/detail" && location.pathname !== "/faq" && (
+        <Filters />
+      )}
     </header>
   )
 }

@@ -30,12 +30,18 @@ Colores específicos EVENTOS:
 La marca no usa negro puro, por eso no es black */
   --negro: #282828;
   --turquesa: #026d77;
-  --nav: #8ebec2;
-  --nav: #a2dcbb;
-  --h-nav: 80px;
+  --magenta: #b04999;
+  --magenta-fuerte: #d81e5b;
+  --lila-claro: #c9bada;
+  --amarillo-oscuro: #c2ba25;
+  --amarillo-fuerte: #f4e04d;
+  --amarillo-claro: #e6e49f;
+  --verde-claro: #a2dcbb;
+  --h-nav: 90px;
 }
 
 body {
+  background-color: var(--verde-claro);
   color: var(--negro);
 }
 
