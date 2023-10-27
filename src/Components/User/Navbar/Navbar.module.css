@@ -26,8 +26,24 @@
   place-content: center;
 }
 
+.logo:hover {
+  animation: logoAnimation ease 3000ms infinite reverse;
+}
+
 .logo img {
   object-fit: contain;
+}
+
+@keyframes logoAnimation {
+  from {
+    transform: none;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  to {
+    transform: none;
+  }
 }
 
 .links {
@@ -57,21 +73,17 @@
   cursor: pointer;
   color: #efefef;
   font-size: 14px;
+  font-weight: 600;
 }
 
 .links button {
+  font-weight: 600;
   background-color: transparent;
   border: none;
   outline: none;
   cursor: pointer;
   color: #efefef;
   font-size: 14px;
-}
-
-.links a:hover,
-.links button:hover {
-  transition: color ease 200ms;
-  color: var(--turquesa);
 }
 
 .links a.active {
@@ -107,11 +119,40 @@
     position: unset;
     padding: 0;
     background-color: transparent;
-    gap: 20px;
     height: 100%;
     transition: none;
     transform: none;
     flex-direction: row;
+  }
+
+  .links a,
+  .links button {
+    padding: 0 10px;
+    position: relative;
+  }
+
+  .links a:hover,
+  .links button:hover {
+    transition: color ease 200ms;
+    color: var(--turquesa);
+  }
+
+  .links a::before,
+  .links button::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: -10px;
+    width: 0%;
+    height: 3px;
+    background-color: var(--turquesa);
+    transition: width ease 400ms;
+  }
+
+  .links a:hover::before,
+  .links button:hover::before {
+    width: 100%;
+    transition: width ease 400ms;
   }
 
   .iconToggle {
