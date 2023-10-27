@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { validateSignUp } from "./validateSignUp";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import logo from "../../../assets/logo_mi_butaca_color.svg";
 
 // aquí será necesario que Back despache un email de confirmación cuando la cuenta se cree.
 // seguramente lo mejor sea que, ante cada nuevo usuario que se incorpora en la tabla User, se dispare ese email.
@@ -92,15 +93,20 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <div className="fixed inset-0 z-1000 flex items-center justify-center backdrop-filter backdrop-blur-lg">
+      {/* Este div se utilizará para el fondo desenfocado */}
+        </div>
+        <div style={{ marginTop: '5rem' }} className="fixed inset-0 z-1001 flex flex-col items-center justify-center">
+      {/* Contenedor principal del formulario */}
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm p-6 space-y-0 bg-white rounded-lg shadow-lg">
+                <img className="mx-auto h-8 w-auto" src={logo} alt="Mi Butaca" />
         <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Regístrate
         </h1>
 
-        <form onSubmit={handleSubmitPrueba} className="space-y-6" action="#" method="POST">
+        <form onSubmit={handleSubmitPrueba} className="space-y-1" action="#" method="POST">
           <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900">
+              <label style={{ marginBottom: '0.1rem' }} className="block text-sm font-medium leading-6 text-gray-900">
                 Nombre:
               </label>
               <div className="mt-2">
@@ -112,7 +118,8 @@ const SignUp = () => {
                 autoComplete="name"
                 placeholder="Tu nombre aquí "
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                style={{ paddingTop: '-0.5rem' }}
               />
               </div>
               </div>
@@ -131,7 +138,7 @@ const SignUp = () => {
                 autoComplete="lastName"
                 placeholder="Tu apellido aquí"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               </div>
               </div>
@@ -150,7 +157,7 @@ const SignUp = () => {
                 placeholder="Tu e-mail aquí"
                 autoComplete="email"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               </div>
               </div>
@@ -169,7 +176,7 @@ const SignUp = () => {
                 placeholder="+573142299661"
                 autoComplete="phone"
                 required
-                className="flex-grow rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="flex-grow rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               
               
@@ -210,7 +217,7 @@ const SignUp = () => {
                 placeholder="Tu número de cédula aquí"
                 autoComplete="identityCard"
                 required
-                className="block w-64 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-64 rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               </div>
               </div>
@@ -238,7 +245,7 @@ const SignUp = () => {
                 placeholder="Tu contraseña aquí"
                 autoComplete="current-password"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               </div>
               </div>
@@ -257,7 +264,7 @@ const SignUp = () => {
                 onChange={handleChange}
                 placeholder="Repetí tu contraseña aquí"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               </div>
               </div>
@@ -265,7 +272,7 @@ const SignUp = () => {
            <div>
           <button 
             type="submit"
-            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-fuchsia-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Registrarse
             </button>
             </div>

@@ -12,6 +12,7 @@ import SignUp from "./Components/User/SignUp/SignUp"
 import Booking from "./Pages/User/Booking/Booking"
 import Home from "./Pages/User/Home/Home"
 import PasswordRecover from "./Components/User/Login/PasswordRecover"
+import Detail from "./Pages/User/Detail/Detail"
 
 
 
