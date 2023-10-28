@@ -12,10 +12,10 @@ const Login = ({login}) => {
 
     const navigate = useNavigate();
 
-    const handleSubmitPrueba = (event) => {
+    /*const handleSubmitPrueba = (event) => {
         event.preventDefault();
         navigate('/myaccount')
-    }
+    }*/
 
     const [errors, setErrors] = useState({email: '', password: ''})
     
@@ -38,7 +38,7 @@ const Login = ({login}) => {
             ...user}))
     }
 
-    /*const handleSubmit = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         if (errors.email || errors.password) {
             login(user)
@@ -46,7 +46,7 @@ const Login = ({login}) => {
             alert('Hay errores en el login');
             
             }
-    };*/
+    };
 
     // recordar contraseña
 
@@ -70,20 +70,20 @@ const Login = ({login}) => {
 
     return (
         <>
-        <div className="fixed inset-0 z-100 flex items-center justify-center backdrop-filter backdrop-blur-lg">
+        <div className="fixed inset-0 z-1000 flex items-center justify-center backdrop-filter backdrop-blur-lg">
       {/* Este div se utilizará para el fondo desenfocado */}
         </div>
-        <div className="fixed inset-0 z-101 flex flex-col items-center justify-center">
+        <div className="fixed inset-0 z-1001 flex flex-col items-center justify-center">
       {/* Contenedor principal del formulario */}
         {/*<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">*/}
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm p-6 h-32 bg-white rounded-lg shadow-lg">
-                <img className="mx-auto h-10 w-auto" src={logo} alt="Mi Butaca" />
+        <div className="row sm:mx-auto sm:w-full sm:max-w-sm p-6 h-32 bg-white rounded-lg shadow-lg">
+                <img className="mx-auto h-10 w-auto mb-5" src={logo} alt="Mi Butaca" />
                 <h1 className="text-center text-2xl font-bold text-fuchsia-900 mb-10">
-                    Login
+                    Iniciar Sesión
                 </h1>
             </div>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form onSubmit={handleSubmitPrueba} className="space-y-6" action="#" method="POST">
+                <form onSubmit={handleSubmit} className="space-y-6 bg-white shadow-lg w-full p-4 rounded-lg" action="#" method="POST">
                     <div>
                         <label htmlFor="email" className="block text-sm font-bold leading-6 text-gray-500">
                             ✉ EMAIL 
