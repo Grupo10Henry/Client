@@ -1,57 +1,67 @@
+/*
+La función login deberá verificar el email y el password del usuraio haciendo un post
+a la ruta
+http://localhost:3001/login
+de la cual recibirá un token que deberá guardar en localStorage
+luego, deberá verificar en la ruta
+http://localhost:3001/user
+si el usuario es admin true o false.
+Si es admin, deberá redirigir a la ruta /admin
+Si no es admin, concederá el acceso, y lo dirijirá a la ruta /
+si no existe deberá mostrar un mensaje de error
 
+el controlador de la ruta /login es:
+const loginController = async (email, password) => {
+    const user = await User.findOne({ where: { email: email } });
 
-const Login = ({login}) => {
-
-   /*
-La función Login deberá permitir al usuario ingresar a la aplicación.
-se deberá verificar en la ruta axios localhost:3001/user 
-si el usuario existe y si la contraseña es correcta. 
-Además, deberá verificarse si Admin es true o false.
-En caso de false, se deberá redirigir al usuario a la ruta /
-En caso de true, se deberá redirigir al usuario a la ruta /admin
-El caso de no existir el usuario o de que la contraseña sea incorrecta deberá ser manejado con un alert.
-
-El login deberá permitir al usuario ingresar con su cuenta de Google.
-*/
-
-const [user, setUser] = useState({
-    email: '',
-    password: ''
-});
-
-const handleChange = (event) => {
-    setUser({
-    ...user,
-    [event.target.name]: event.target.value
-    })
-}
-
-/* se deberá verificar en la ruta axios localhost:3001/user 
-si el usuario existe y si la contraseña es correcta. 
-Además, deberá verificarse si Admin es true o false.
-En caso de false, se deberá redirigir al usuario a la ruta /
-En caso de true, se deberá redirigir al usuario a la ruta /admin
-El caso de no existir el usuario o de que la contraseña sea incorrecta deberá ser manejado con un alert.
-*/
-
-const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-        const response = await axios.post("http://localhost:3001/login", user);
-        if (response.status === 200) {
-            alert("Usuario logueado correctamente");
-            window.location.href = "/admin";
-        }
-    } catch (error) {
-        if (error.response && error.response.data) {
-            alert("Error: " + error.response.data.error);
-        } else {
-            alert("Ocurrió un error desconocido");
-        }
+    if (!user) {
+        throw new Error("Usuario no encontrado");
     }
 
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+        throw new Error("Contraseña incorrecta");
+    }
 
+    const token = jwt.sign(
+        { id: user.id, email: user.email }, 
+        process.env.JWT_SECRET, 
+        { expiresIn: "1h" }
+    );
+
+    return token;
 }
 
 
-}
+*/
+
+const login = async (user) => {
+    const { email, password } = user;
+    const URL = "http://localhost:3001/login";
+    try {
+        const res = await axios.post(URL, { email, password });
+        const token = res.data.token;
+
+        if (token) {
+            localStorage.setItem("token", token);
+            const URL = "http://localhost:3001/user";
+            const res = await axios.get(URL, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const user = res.data;
+            if (user.admin) {
+                navigate("/admin");
+            } else {
+                navigate("/");
+            }
+        } else {
+            alert("Usuario o contraseña incorrectos");
+        }
+    } catch (error) {
+        console.error(error.response); // Muestra la respuesta del servidor en la consola
+        alert("Error en el inicio de sesión");
+    }
+};
+    
