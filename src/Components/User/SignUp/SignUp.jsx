@@ -52,20 +52,22 @@ const SignUp = () => {
       <div className="fixed inset-0 z-1000 flex items-center justify-center backdrop-filter backdrop-blur-lg">
         {/* Este div se utilizará para el fondo desenfocado */}
       </div>
+  
       <div
-        style={{ marginTop: "5rem" }}
-        className="fixed inset-0 z-1001 flex flex-col items-center justify-center"
+        className="fixed inset-0 z-1001 mt-20 flex flex-col items-center justify-center"
       >
         {/* Contenedor principal del formulario */}
-        <div className="row sm:mx-auto sm:w-full sm:max-w-sm p-6 space-y-0 bg-white rounded-lg shadow-lg">
-          <div className="col-12 col-md-6 offset-md-3">
-            <img className="mx-auto h-8 w-auto" src={logo} alt="Mi Butaca" />
-            <h1 className="mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-tiled-800">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm p-3 space-y-0 bg-white rounded-lg shadow-lg">
+          {/*<div className="col-12 col-md-6 offset-md-3">*/}
+            <img className="mx-auto h-8 w-auto mb-2" src={logo} alt="Mi Butaca" />
+            <h1 className="text-center text-2xl font-bold text-fuchsia-900 mb-10">
               Registrarse
             </h1>
+            </div>
+            <div className="mt-3 sm:mx-auto sm:w-full sm:max-w-sm">
             <form
               onSubmit={handleSubmit}
-              className="space-y-1"
+              className="bg-white pt-2 p-5 rounded-lg shadow-lg space-y-1"
               action="#"
               method="POST"
             >
@@ -78,7 +80,7 @@ const SignUp = () => {
       >
         Nombre
       </label>
-      <div className="mt-2">
+      <div className="mt-1">
         <input
           type="text"
           id="name"
@@ -100,7 +102,7 @@ const SignUp = () => {
       <label className="block text-sm font-medium leading-6 text-gray-900">
         Apellidos
       </label>
-      <div className="mt-2">
+      <div className="mt-1">
         <input
           type="text"
           className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -126,7 +128,7 @@ const SignUp = () => {
                 >
                   Correo Electrónico
                 </label>
-                <div className="mt-2">
+                <div className="mt-1">
                   <input
                     type="email"
                     className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -143,7 +145,7 @@ const SignUp = () => {
                 <label className="block text-sm font-medium leading-6 text-gray-900">
                   Teléfono
                 </label>
-                <div className="mt-2">
+                <div className="mt-1">
                   <input
                     type="text"
                     className="block w-full flex-grow rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -165,7 +167,7 @@ const SignUp = () => {
       </label>
       <input
         type="text"
-        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
         id="identityCard"
         name="identityCard"
         onChange={handleChange}
@@ -181,7 +183,7 @@ const SignUp = () => {
       </label>
       <input
         type="date"
-        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
         id="dob"
         name="dob"
         onChange={handleChange}
@@ -194,7 +196,7 @@ const SignUp = () => {
   <label className="block text-sm font-medium leading-6 text-gray-900">
     Contraseña
   </label>
-  <div className="mt-2">
+  <div className="mt-1">
     <input
       type="password"
       className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -208,11 +210,11 @@ const SignUp = () => {
     />
   </div>
 </div>
-<div className="mt-2 flex flex-col">
+<div className="mt-1 flex flex-col">
   <label className="block text-sm font-medium leading-6 text-gray-900">
     Repetir Contraseña
   </label>
-  <div className="mt-2">
+  <div className="mt-1">
     <input
       type="password"
       className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -229,30 +231,28 @@ const SignUp = () => {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-fuchsia-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex w-full mt-1 justify-center rounded-md bg-teal-600 px-2 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-fuchsia-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Registrarse
                 </button>
               </div>
+              
             </form>
-            <div className="flex justify-center items-center  text-sm">
-              <Link
-                to="/iniciarsesion"
-                className="font-semibold text-center-xs-indigo-600 hover:text-indigo-500"
-              >
-                ¿Ya tiene cuenta?:Iniciar Sesión
-              </Link>
-            </div>
-            <div className="flex justify-center items-center  text-sm">
-              
-              
-              
-            <button
-  onClick={handleGoogle}
-  className="flex items-center justify-center w-54 px-2 py-2 mt-3 font-medium text-black bg-fuchsia-300 hover:bg-red-600 rounded-md transition duration-300 ease-in-out"
->
-  <span className="text-xl pr-2">G</span> Registrarse con Google
-</button>
+            <p className= "mt-1 text-center text-sm text-gray-800"> 
+                ¿Ya está registrado? {" "}
+                <a href="/iniciarsesion" className="font-semibold leading-6 text-teal-700 hover:text-fuchsia-500">
+                Iniciar Sesión
+                </a>
+                </p>
+                {/* botón para loguearse con Google */}
+                <div className="mt-1 flex items-center justify-center ">
+                <button
+                onClick={handleGoogle}
+                className="flex items-center justify-center w-54 px-2 py-0 font-medium text-white bg-fuchsia-900 hover:bg-red-600 rounded-md transition duration-300 ease-in-out  shadow-sm"
+                >
+                <span className="text-xl pr-2">G</span> Registrarse con Google
+                </button>
+                </div>
 
 
             
@@ -260,8 +260,8 @@ const SignUp = () => {
             
             </div>
           </div>
-        </div>
-      </div>
+        {/*</div>*/}
+      
     </>
   );
 };
