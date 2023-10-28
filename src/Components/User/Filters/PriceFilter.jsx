@@ -1,26 +1,18 @@
 import { useState } from "react"
 
 import style from "./Filters.module.css"
-
-const startPrice = 2000
+import Select from "../Select/Select"
 
 const PriceFilter = () => {
-  const [priceSelect, setPriceSelect] = useState(startPrice)
+  const prices = [0, 20000, 50000, 100000, 350000, 450000]
 
   return (
-    <div className={style.filterWrapper}>
-      <label htmlFor="price">A partir de:</label>
-      <input
-        type="range"
-        name="price"
-        id="price"
-        min={startPrice}
-        max={10000}
-        value={priceSelect}
-        onChange={(e) => setPriceSelect(e.target.value)}
-      />
-      ${priceSelect}
-    </div>
+    <Select
+      data={prices}
+      title="A partir de"
+      defaultOption="Todos"
+      isPrice={true}
+    />
   )
 }
 export default PriceFilter
