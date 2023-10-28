@@ -1,8 +1,11 @@
 //franco
-import { BsSearch } from "react-icons/bs"
+import { BiSearch } from "react-icons/bi"
+import { MdCancel } from "react-icons/md"
 import { useState } from "react"
 
-const SearchBar = () => {
+import style from "./SearchBar.module.css"
+
+const SearchBar = ({ handlerFilter }) => {
   const [input, setInput] = useState("")
 
   const handleChange = (e) => {
@@ -11,28 +14,35 @@ const SearchBar = () => {
 
   const handleSearch = (e) => {
     e.preventDefault()
-    console.log(input)
+    handlerFilter({ newProp: "search", value: input })
   }
 
+  const handleDeleteInput = () => setInput("")
+
   return (
-    <div className="w-full h-full flex flex-col gap-2">
-      <div className="text-[var(--turquesa)]">Buscar</div>
-      <form
-        className="flex flex-row items-center justify-center  ring-1 ring-[#282828] rounded-md "
-        onSubmit={handleSearch}
-      >
+    <div className={style.wrapper}>
+      <h6 className={style.title}>Buscar</h6>
+      {/* form */}
+      <form className={style.form} onSubmit={handleSearch}>
         <input
-          type="search"
-          placeholder="Ingresa el nombre o la ubicación"
-          className="flex-auto bg-transparent text-[var]  border-none text-xs focus:ring-transparent md:text-sm placeholder:text-[var(--negro)] placeholder:opacity-50 overflow-hidden"
-          value={input}
+          type="text"
+          className={style.input}
+          placeholder="Nombre o ubicación"
           onChange={handleChange}
+          value={input}
         />
-        <button
-          type="submit"
-          className="w-[50px] flex items-center justify-center  p-3 rounded-md border-l-[1px] border-[var(--negro)] hover:bg-slate-50 transition"
-        >
-          <BsSearch />
+        {input.trim().length > 0 && (
+          <button
+            className={`${style.btn} ${style.btnDelete}`}
+            title="borrar"
+            onClick={handleDeleteInput}
+          >
+            <MdCancel />
+          </button>
+        )}
+
+        <button className={style.btn} title="buscar">
+          <BiSearch />
         </button>
       </form>
     </div>

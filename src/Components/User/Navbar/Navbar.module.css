@@ -73,11 +73,9 @@
   cursor: pointer;
   color: #efefef;
   font-size: 14px;
-  font-weight: 600;
 }
 
 .links button {
-  font-weight: 600;
   background-color: transparent;
   border: none;
   outline: none;
@@ -109,7 +107,7 @@
   }
 }
 
-@media (width > 700px) {
+@media (width > 800px) {
   .nav {
     padding: 0 20px;
   }
