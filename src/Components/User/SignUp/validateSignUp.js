@@ -1,58 +1,62 @@
 // Juli >>>>>>>>
 
-export const validateSignUp = (user) => {
+export const validateSignUp = (input) => {
   let errors = {};
-  if (!user.name) {
+  if (!input.name) {
     errors.name = "Campo obligatorio";
-  } else if (user.name.length > 15) {
+  } else if (input.name.length > 15) {
     errors.name = "El nombre debe tener menos de 15 caracteres";
-  } else if (!/^[A-Za-z\s]+$/.test(user.name)) {
+  } else if (!/^[A-Za-z\s]+$/.test(input.name)) {
     errors.name = "Números y caracteres especiales no permitidos";
   }
 
-  if (!user.lastName) {
+  if (!input.lastName) {
     errors.lastName = "Campo obligatorio";
-  } else if (user.lastName.length > 25) {
+  } else if (input.lastName.length > 25) {
     errors.lastName = "El apellido debe tener menos de 25 caracteres";
-  } else if (!/^[A-Za-z\s]+$/.test(user.lastName)) {
+  } else if (!/^[A-Za-z\s]+$/.test(input.lastName)) {
     errors.lastName = "Números y caracteres especiales no permitidos";
   }
 
-  if (!user.email) {
+  if (!input.email) {
     errors.email = "Campo obligatorio";
-  } else if (!/\S+@\S+\.\S+/.test(user.email)) {
+  } else if (!/\S+@\S+\.\S+/.test(input.email)) {
     errors.email = "Email inválido";
   }
 
-  if (!user.password) {
+  if (!input.password) {
     errors.password = "Campo obligatorio";
-  } else if (user.password.length < 8 || user.password.length > 15) {
+  } else if (input.password.length < 8 || input.password.length > 15) {
     errors.password = "La contraseña debe tener entre 8 y 15 caracteres";
-  } else if (!/(?=.*[0-9])/.test(user.password)) {
+  } else if (!/(?=.*[0-9])/.test(input.password)) {
     errors.password = "La contraseña debe contener al menos un número";
-  } else if (!/(?=.*[A-Z])/.test(user.password)) {
+  } else if (!/(?=.*[A-Z])/.test(input.password)) {
     errors.password = "La contraseña debe contener al menos una mayúscula";
-  } else if (!/(?=.*[a-z])/.test(user.password)) {
+  } else if (!/(?=.*[a-z])/.test(input.password)) {
     errors.password = "La contraseña debe contener al menos una minúscula";
   }
 
-  if (!user.password2) {
+  if (!input.password2) {
     errors.password2 = "Campo obligatorio";
-  } else if (user.password2 !== user.password) {
+  } else if (input.password2 !== input.password) {
     errors.password2 = "Las contraseñas no coinciden";
   }
 
-  if (!user.phone) {
+  if (!input.phone) {
     errors.phone = "Campo obligatorio";
-  } else if (!/^\+?[0-9]+$/.test(user.phone)) {
-    errors.phone = "Solo se permiten números y un símbolo '+' al principio";
+  } else if (!/^[0-9]+$/.test(input.phone)) {
+    errors.phone = "Solo se permiten números";
   }
-  
-  
 
-  if (!user.identityCard) {
+  if (!input.dob) {
+    errors.dob = "Campo obligatorio";
+  } else if (!/^[0-9]+$/.test(input.dob)) {
+    errors.dob = "Formato de fecha: DD/MM/AAAA - Solo se permiten números";
+  }
+
+  if (!input.identityCard) {
     errors.identityCard = "Campo obligatorio";
-  } else if (user.identityCard.length < 6 || user.identityCard.length > 15) {
+  } else if (input.identityCard.length < 6 || input.identityCard.length > 15) {
     errors.identityCard = "La cédula debe tener entre 6 y 15 caracteres";
   }
 
