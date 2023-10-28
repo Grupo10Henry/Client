@@ -6,14 +6,16 @@ import style from "./Navbar.module.css"
 
 //franco
 const Navbar = () => {
-  const location = useLocation()
+  const { pathname } = useLocation()
+  const showme =
+    !pathname.includes("/detail") &&
+    pathname !== "/faq" &&
+    pathname !== "/detail"
 
   return (
     <header className={style.header}>
       <Nav />
-      {location.pathname !== "/detail" && location.pathname !== "/faq" && (
-        <Filters />
-      )}
+      {showme && <Filters />}
     </header>
   )
 }

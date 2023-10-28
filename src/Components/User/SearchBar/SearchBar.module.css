@@ -1,45 +1,54 @@
 .wrapper {
-}
-
-.innerWrapper {
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #eaeaea;
-  background-color: rgb(249 250 251);
-  --bg: #8ebec2;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.icon {
-  background-color: transparent;
+.form {
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  border: thin solid #efefef;
+  position: relative;
+}
+
+.form .input {
   outline: none;
   border: none;
-  flex: 1 1 10%;
-  border-right: thin solid var(--negro);
-  cursor: pointer;
-  user-select: none;
-  transition: color ease 200ms;
-  font-size: 20px;
-  display: grid;
-  place-content: center;
-  padding: 10px 0;
-  transition: background-color ease 200ms;
-}
-
-.icon:hover {
-  background-color: var(--bg);
-  transition: background-color ease 200ms;
-  transition: color ease 200ms;
-}
-
-.input {
-  border: 0;
-  outline: 0;
-  padding: 10px;
-  background-color: transparent;
-  flex: 1 0 80%;
+  width: 100%;
+  background-color: var(--filters-bg);
+  color: var(--verde-claro);
 }
 
 .input::placeholder {
+  opacity: 40%;
+  color: inherit;
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: none;
+  border: none;
+}
+
+.title {
   color: var(--turquesa);
+}
+
+.btn {
+  display: grid;
+  place-content: center;
+  width: 50px;
+  height: 100%;
+  color: var(--verde-claro);
+  font-size: 20px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.btnDelete {
+  right: 40px;
 }
