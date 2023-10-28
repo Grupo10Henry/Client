@@ -7,10 +7,10 @@ import "./NextEvents.module.css";
 const NextEvents = () => {
    return (
       <div>
-         <h2>proximos eventos</h2> <br />
+         <h2><b>- Proximos Eventos -</b></h2> 
          <div>
             <Cards />
-         </div>
+         </div> <br />
       </div>
    )
 }

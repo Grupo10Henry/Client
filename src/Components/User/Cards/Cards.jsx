@@ -2,15 +2,17 @@
 
 import Card from "./Card";
 
+import events from "../Events/Events";
+
 import style from "./Cards.module.css";
 
 const Cards = () => {
    return (
       <div className={style.cards}>
-         <Card />
-         <Card />
-         <Card />
-         <Card />
+         {
+            events.map(event =>
+               <Card event={event} />
+            )}
       </div>
    )
 }
