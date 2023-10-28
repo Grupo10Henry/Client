@@ -57,15 +57,17 @@ const SignUp = () => {
         className="fixed inset-0 z-1001 flex flex-col items-center justify-center"
       >
         {/* Contenedor principal del formulario */}
-        <div className="row sm:mx-auto sm:w-full sm:max-w-sm p-6 space-y-0 bg-white rounded-lg shadow-lg">
-          <div className="col-12 col-md-6 offset-md-3">
-            <img className="mx-auto h-8 w-auto" src={logo} alt="Mi Butaca" />
-            <h1 className="mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-tiled-800">
+        <div className="row sm:mx-auto sm:w-full sm:max-w-sm p-3 mt-5 space-y-0 h-30 bg-white rounded-lg shadow-lg">
+          {/*<div className="col-12 col-md-6 offset-md-3">*/}
+            <img className="mx-auto h-10 w-auto mb-3" src={logo} alt="Mi Butaca" />
+            <h1 className="text-center text-2xl font-bold text-fuchsia-900 mb-5">
               Registrarse
             </h1>
+            </div>
+            <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
             <form
               onSubmit={handleSubmit}
-              className="space-y-1"
+              className="space-y-1 bg-white shadow-lg w-full p-3 rounded-lg"
               action="#"
               method="POST"
             >
@@ -73,12 +75,12 @@ const SignUp = () => {
   <div className="w-1/2">
     <div>
       <label
-        style={{ marginBottom: "0.1rem" }}
+        
         className="block text-sm font-medium leading-6 text-gray-900"
       >
         Nombre
       </label>
-      <div className="mt-2">
+      <div className="mt-1">
         <input
           type="text"
           id="name"
@@ -90,7 +92,7 @@ const SignUp = () => {
           title="Solo letras y espacios, máximo 15 caracteres"
           placeholder="Su nombre aquí."
           className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          style={{ paddingTop: "-0.5rem" }}
+          
         />
       </div>
     </div>
@@ -100,7 +102,7 @@ const SignUp = () => {
       <label className="block text-sm font-medium leading-6 text-gray-900">
         Apellidos
       </label>
-      <div className="mt-2">
+      <div className="mt-1">
         <input
           type="text"
           className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -126,7 +128,7 @@ const SignUp = () => {
                 >
                   Correo Electrónico
                 </label>
-                <div className="mt-2">
+                <div className="mt-1">
                   <input
                     type="email"
                     className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -143,7 +145,7 @@ const SignUp = () => {
                 <label className="block text-sm font-medium leading-6 text-gray-900">
                   Teléfono
                 </label>
-                <div className="mt-2">
+                <div className="mt-1">
                   <input
                     type="text"
                     className="block w-full flex-grow rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -194,7 +196,7 @@ const SignUp = () => {
   <label className="block text-sm font-medium leading-6 text-gray-900">
     Contraseña
   </label>
-  <div className="mt-2">
+  <div className="mt-1">
     <input
       type="password"
       className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -208,11 +210,11 @@ const SignUp = () => {
     />
   </div>
 </div>
-<div className="mt-2 flex flex-col">
+<div className="mt-1 flex flex-col">
   <label className="block text-sm font-medium leading-6 text-gray-900">
     Repetir Contraseña
   </label>
-  <div className="mt-2">
+  <div className="mt-1">
     <input
       type="password"
       className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -238,9 +240,9 @@ const SignUp = () => {
             <div className="flex justify-center items-center  text-sm">
               <Link
                 to="/iniciarsesion"
-                className="font-semibold text-center-xs-indigo-600 hover:text-indigo-500"
+                className="font-semibold text-center-xs-indigo-600 hover:text-indigo-500 mt-1"
               >
-                ¿Ya tiene cuenta?:Iniciar Sesión
+                ¿Ya tiene cuenta? : Iniciar Sesión
               </Link>
             </div>
             <div className="flex justify-center items-center  text-sm">
@@ -249,9 +251,9 @@ const SignUp = () => {
               
             <button
   onClick={handleGoogle}
-  className="flex items-center justify-center w-54 px-2 py-2 mt-3 font-medium text-black bg-fuchsia-300 hover:bg-red-600 rounded-md transition duration-300 ease-in-out"
+  className="flex items-center justify-center w-54 px-2 py-1 mt-1 font-medium text-black bg-fuchsia-300 hover:bg-red-600 rounded-md transition duration-300 ease-in-out"
 >
-  <span className="text-xl pr-2">G</span> Registrarse con Google
+  <span className="text-sm pr-2">G</span> Registrarse con Google
 </button>
 
 
@@ -261,7 +263,7 @@ const SignUp = () => {
             </div>
           </div>
         </div>
-      </div>
+      {/*</div>*/}
     </>
   );
 };
