@@ -7,7 +7,7 @@ import "./AllEvents.module.css";
 const AllEvents = () => {
    return (
       <div>
-         <h2>todos los eventos</h2> <br />
+         <h2><b>- Todos Los Eventos Disponibles -</b></h2> 
          <div>
             <Cards />
          </div>

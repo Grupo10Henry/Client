@@ -1,15 +1,15 @@
 // Kevin :)
 
-import Cards from "../../Cards/Cards";
-
 import "./MostPupular.module.css";
 
 const MostPopular = () => {
    return (
       <div>
-         <h2>eventos populares</h2> <br />
+         <h2><b>- Recomendados -</b></h2> <br />
          <div>
-            <Cards />
+            <h2>banner1</h2>
+            <h2>banner2</h2>
+            <h2>banner3</h2> <br />
          </div>
       </div>
    )
