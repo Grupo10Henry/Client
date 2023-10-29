@@ -3,16 +3,18 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 60vh;
-    width: 180px;
+    height: 90vh;
+    width: 150px;
     background-color: rgb(155, 155, 155);
 }
 
 .adminNavbarButton {
+    font-size: 15px;
     background-color: transparent;
     border: none;
     cursor: pointer;
     padding: 15px 10px 15px 10px;
+    margin: 0px 0px 0px 0px;
     width: 150px;
 }
 
