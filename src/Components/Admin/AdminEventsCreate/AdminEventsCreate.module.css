@@ -1,5 +1,4 @@
 .formContainer {
-    background-color: rgb(230, 196, 145);
     width: 1070px;
 }
 
@@ -55,4 +54,24 @@
     padding: 0px 0px 0px 10px;
     margin: 0px 0px 0px 0px;
     width: 200px;
+}
+
+.sectionForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.sectionFormTitle {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+.formButton {
+    background-color: aquamarine;
+    border-radius: 5px;
 }

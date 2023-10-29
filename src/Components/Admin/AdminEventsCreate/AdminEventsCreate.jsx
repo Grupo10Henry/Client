@@ -1,15 +1,8 @@
 // Luissssss
 import styles from './AdminEventsCreate.module.css';
 import { useState } from 'react';
-// import { usePlacesWidget } from 'react-places-autocomplete';
 
 export default function AdminEventsCreate() {
-
-        // const [location, setLocation] = useState('');
-        // const { ready, value, suggestions: { status, data }, setValue, clearSuggestions } = usePlacesWidget({
-        //   apiKey: 'GOOGLE_API_KEY',
-        //   debounce: 300,
-        // });
 
     const categories = [
         "Teatro",
@@ -23,7 +16,12 @@ export default function AdminEventsCreate() {
         "Festivales",
         "Empresariales",
         "Filantrópicos",
-      ]
+      ];
+
+    const types = [
+        "Grande",
+        "Pequeño",
+    ];
 
     const [input, setInput] = useState({
         name: "",
@@ -40,9 +38,22 @@ export default function AdminEventsCreate() {
         planImage: "",
         priceMin: "",
         priceMax: "",
+        type: "",
+    });
+
+    const [section, setSection] = useState({
+        sector: "",
+        wildcard: "",
+        ticketType: "",
+        discountCode: "",
+        ticketPrice: "",
+        sectionSeats: "",
+        sectionRows: "",
+        sectionColumns: "",
     });
 
     console.log(input);
+    console.log(section);
 
     function handleChange(e){
         setInput({
@@ -51,10 +62,12 @@ export default function AdminEventsCreate() {
         })
     };
 
-    const handleSelect = (suggestion) => {
-        setLocation(suggestion.description);
-        clearSuggestions();
-      };
+    function handleChangeSection(e){
+        setSection({
+            ...section,
+        [e.target.name]: e.target.value,
+        })
+    };
 
     return (
         // <div>
@@ -91,6 +104,8 @@ export default function AdminEventsCreate() {
                     ))}
                     </select>
                     </div>
+                    </div>
+                    <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Ubicación del evento</label>
                     <input className={styles.formInputText}
@@ -160,20 +175,8 @@ export default function AdminEventsCreate() {
                     value={input.mapLocation}
                     onChange={handleChange} />
                     </div>
-                    {/* <input
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder="Enter a location"
-        />
-        {status === 'OK' && (
-          <ul>
-          {data.map((suggestion) => (
-            <li key={suggestion.place_id} onClick={() => handleSelect(suggestion)}>
-            {suggestion.description}
-            </li>
-            ))}
-            </ul>
-          )} */}
+                    </div>
+                    <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Imagen del evento</label>
                     <input className={styles.formInputText}
@@ -198,12 +201,110 @@ export default function AdminEventsCreate() {
                     value={input.planImage}
                     onChange={handleChange} />
                     </div>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Tipo de evento</label>
+                    <select className={styles.formInputText}
+                    name='type'
+                    value={input.type}
+                    onChange={handleChange} >
+                    {types.sort().map((cat, idx) => (
+                      <option key={idx} value={cat}>
+                            {cat}
+                        </option>
+                    ))}
+                    </select>
                     </div>
                     </div>
+                    </div>
+
+                {/* Form de secciones */}
+
+                <form className={styles.sectionForm}>
+                    <p className={styles.sectionFormTitle}>Creador de secciones</p>
+                    <p className={styles.formLabel}>Para crear una nueva sección, completa los campos y haz clic en "Crear sección"</p>
+                    <p>nombre, tipo, sillas, filas, columnas, precio, tipo de boleta, código de descuento</p>
+                    <div className={styles.formFields}>
+                    <div className={styles.formRows}>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Nombre de la sección</label>
+                    <input className={styles.formInputText}
+                    type="text"
+                    name='sector'
+                    value={section.sector}
+                    onChange={handleChangeSection} />
+                    </div>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Campo disponible</label>
+                    <input className={styles.formInputText}
+                    type="text"
+                    name='wildcard'
+                    value={section.wildcard}
+                    onChange={handleChangeSection} />
+                    </div>
+                    </div>
+                    <div className={styles.formRows}>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Tipo de sección</label>
+                    <input className={styles.formInputText}
+                    type="text"
+                    name='ticketType'
+                    value={section.ticketType}
+                    onChange={handleChangeSection} />
+                    </div>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Código de descuento</label>
+                    <input className={styles.formInputText}
+                    type="text"
+                    name='discountCode'
+                    value={section.discountCode}
+                    onChange={handleChangeSection} />
+                    </div>
+                    </div>
+                    <div className={styles.formRows}>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Precio por entrada</label>
+                    <input className={styles.formInputText}
+                    type="number"
+                    min="0"
+                    name='ticketPrice'
+                    value={section.ticketPrice}
+                    onChange={handleChangeSection} />
+                    </div>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Cantidad de asientos</label>
+                    <input className={styles.formInputText}
+                    type="number"
+                    min="0"
+                    name='sectionSeats'
+                    value={section.sectionSeats}
+                    onChange={handleChangeSection} />
+                    </div>
+                    </div>
+                    <div className={styles.formRows}>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Cantidad de filas</label>
+                    <input className={styles.formInputText}
+                    type="number"
+                    min="0"
+                    name='sectionRows'
+                    value={section.sectionRows}
+                    onChange={handleChangeSection} />
+                    </div>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Cantidad de columnas</label>
+                    <input className={styles.formInputText}
+                    type="number"
+                    min="0"
+                    name='sectionColumns'
+                    value={section.sectionColumns}
+                    onChange={handleChangeSection} />
+                    </div>
+                    </div>
+                    </div>
+                </form>
                     <button className={styles.formButton}
                     type="submit"
                     >Crear evento</button>
-
                 </form>
             </div>
         // </div>
