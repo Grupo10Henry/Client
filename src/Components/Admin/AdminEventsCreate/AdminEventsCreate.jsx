@@ -1,4 +1,5 @@
 // Luissssss
+import axios from 'axios';
 import styles from './AdminEventsCreate.module.css';
 import { useState } from 'react';
 
@@ -69,10 +70,25 @@ export default function AdminEventsCreate() {
         })
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!input.name || !input.description || !input.category || !input.capacity || !input.date || !input.time || !input.locationName || !input.adressLocation || !input.mapLocation ||
+            !input.image || !input.bannerImage || !input.planImage || !input.priceMin || !input.priceMax || !input.type) {
+                alert('Por favor completa todos los campos para crear el evento')
+            }
+        try {
+            const post = await axios.post('http://localhost:3001/events/', input)
+                alert(post.data)
+        } catch (error) {
+            alert(error.response.data.error)
+        }
+
+    };
+
     return (
         // <div>
             <div className={styles.formContainer}>
-                <form className={styles.form}>
+                <form className={styles.form} onSubmit={handleSubmit}>
                     <p className={styles.formTitle}>Completa la información para crear un evento</p>
                     <div className={styles.formFields}>
                     <div className={styles.formRows}>
@@ -221,8 +237,7 @@ export default function AdminEventsCreate() {
 
                 <form className={styles.sectionForm}>
                     <p className={styles.sectionFormTitle}>Creador de secciones</p>
-                    <p className={styles.formLabel}>Para crear una nueva sección, completa los campos y haz clic en "Crear sección"</p>
-                    <p>nombre, tipo, sillas, filas, columnas, precio, tipo de boleta, código de descuento</p>
+                    <p className={styles.formLabel}>Para crear una nueva sección, completa los campos y haz clic en "Añadir sección"</p>
                     <div className={styles.formFields}>
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
@@ -282,25 +297,26 @@ export default function AdminEventsCreate() {
                     </div>
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
-                    <label className={styles.formLabel}>Cantidad de filas</label>
-                    <input className={styles.formInputText}
+                    {input.type === 'Grande' ? null : <label className={styles.formLabel}>Cantidad de filas</label>}
+                    {input.type === 'Grande' ? null : <input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='sectionRows'
                     value={section.sectionRows}
-                    onChange={handleChangeSection} />
+                    onChange={handleChangeSection} />}
                     </div>
                     <div className={styles.fieldContainer}>
-                    <label className={styles.formLabel}>Cantidad de columnas</label>
-                    <input className={styles.formInputText}
+                    {input.type === 'Grande' ? null : <label className={styles.formLabel}>Cantidad de columnas</label>}
+                    {input.type === 'Grande' ? null : <input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='sectionColumns'
                     value={section.sectionColumns}
-                    onChange={handleChangeSection} />
+                    onChange={handleChangeSection} />}
                     </div>
                     </div>
                     </div>
+                    <button>Añadir sección</button>
                 </form>
                     <button className={styles.formButton}
                     type="submit"
