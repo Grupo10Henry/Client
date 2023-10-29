@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
 import userReducer from "./userSlice"
-import eventReducer from "./eventSlice"
+import detailReducer from "./detailSlice"
 import seatReducer from "./seatSlice"
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    event: eventReducer,
+    event: detailReducer,
     seat: seatReducer,
   },
 })

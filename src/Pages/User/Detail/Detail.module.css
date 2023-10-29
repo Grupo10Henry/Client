@@ -1,1 +1,61 @@
 /* Juli >>>>>>>> */
+
+/* .ContainerGlobal será el contenedor de todos los elementos de la página. Deberá tener fondo blur y cubrir 100% de la pantalla y será 
+la base que albergará la grilla de dos columnas
+*/
+
+.ContainerGlobal{
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* El .ContainerBanner contendrá una imágen cargada en el html, ocupará el ancho total del dispositivo, es decir, dos columnas, 
+y alto proporcional según la imágen*/
+
+.ContainerBanner,
+.ContainerGoogleMap {
+    width: 100%;
+    height: auto;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: brown;
+    color: aliceblue;
+}
+
+/* .ContainerLeftColumn será la 1er columna, la izquierda. Tendrá un ancho de 50% del dispositivo y un alto proporcional al contenido  
+*/
+
+.ContainerLeftColumn,
+.ContainerRightColumn {
+    width: 50%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .ContainerNameDescription se encuentra dentro de la columna izquierda y contendrá el nombre del usuario y su descripción. 
+*/
+
+.ContainerNameDescription,
+.ContainerAddress,
+.ContainerEventDate {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+

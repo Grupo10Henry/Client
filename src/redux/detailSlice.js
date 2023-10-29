@@ -15,10 +15,10 @@ const initialState = {
     planImage: '',
 };
 
-export const eventSlice = createSlice({
-    name: 'event',
+export const detailSlice = createSlice({
+    name: 'detail',
     initialState,
-    rweducers: {
+    reducers: {
         getDetail: (state, action) => {
             const {name, description, date, time, locationName, adressLocation, mapLocation, image, bannerImage, planImage} = action.payload;
             state.name = name;
@@ -35,5 +35,5 @@ export const eventSlice = createSlice({
     },
 });
 
-export const {getDetail} = eventSlice.actions;
-export default eventSlice.reducer;
+export const {getDetail} = detailSlice.actions;
+export default detailSlice.reducer;
