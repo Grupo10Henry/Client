@@ -1,25 +1,47 @@
 // Kevin owo
 
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+import { HiLocationMarker } from "react-icons/hi"
 
-import style from "./Card.module.css";
+import style from "./Card.module.css"
+import { formatoPesosColombianos } from "../../../utils/formatPrice"
 
 // recibo "name" "date" "time" "image" "locationName" y "id" para el detail
-const Card = (event) => {
+//Renderiza Imagen, Fecha, Horario, Ubicación (nombre del lugar), Precio, Nombre
+const Card = (props) => {
+  const { name, image, time, date, locationName, eventID, priceMin } = props
 
-   const { name, image, time, date, locationName, eventID } = event.event
+  const formatPrice = priceMin && formatoPesosColombianos.format(priceMin)
 
-   return (
-      <div key={eventID} className={style.card}>
-         <Link className={style.link} to={`/detalle/${eventID}`}>
-            <h3><b>{name}</b></h3> <br />
-            <img className={style.image} src={image} alt="Imagen del Evento" />
-            <p>{date}</p>
-            <p>{time}</p>
-            <p><b>{locationName}</b></p>
-         </Link>
+  return (
+    <div className={style.card}>
+      <div className={style.img}>
+        <img src={image} alt={name} />
       </div>
-   )
+
+      <div className={style.content}>
+        <h4>{name}</h4>
+        <div className={style.location}>
+          <HiLocationMarker />
+          <span>{locationName}</span>
+        </div>
+
+        <div>
+          Desde: <b>{formatPrice}</b>
+        </div>
+        <div>
+          Fecha: <b>{date}</b>
+        </div>
+        <div>
+          Horario: <b>{time}hs</b>
+        </div>
+      </div>
+
+      <Link to={`/detalle/${eventID}`} className={style.more}>
+        Saber mas
+      </Link>
+    </div>
+  )
 }
 
 export default Card

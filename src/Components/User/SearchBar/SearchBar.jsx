@@ -5,7 +5,7 @@ import { useState } from "react"
 
 import style from "./SearchBar.module.css"
 
-const SearchBar = ({ handlerFilter }) => {
+const SearchBar = ({ handlerFilter, handlerApplyFilter }) => {
   const [input, setInput] = useState("")
 
   const handleChange = (e) => {
@@ -15,9 +15,13 @@ const SearchBar = ({ handlerFilter }) => {
   const handleSearch = (e) => {
     e.preventDefault()
     handlerFilter({ newProp: "search", value: input })
+    handlerApplyFilter()
   }
 
-  const handleDeleteInput = () => setInput("")
+  const handleDeleteInput = () => {
+    setInput("")
+    handlerFilter({ newProp: "search", value: "" })
+  }
 
   return (
     <div className={style.wrapper}>
