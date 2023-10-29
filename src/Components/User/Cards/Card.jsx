@@ -11,7 +11,7 @@ const Card = (event) => {
 
    return (
       <div key={eventID} className={style.card}>
-         <Link className={style.link} to={`/detail/${eventID}`}>
+         <Link className={style.link} to={`/detalle/${eventID}`}>
             <h3><b>{name}</b></h3> <br />
             <img className={style.image} src={image} alt="Imagen del Evento" />
             <p>{date}</p>
