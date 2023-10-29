@@ -1,20 +1,18 @@
 // Kevin uwu
 
-import Card from "./Card";
+import { useSelector } from "react-redux"
+import Card from "./Card"
 
-import events from "../Events/Events";
+import style from "./Cards.module.css"
 
-import style from "./Cards.module.css";
-
-const Cards = () => {
-   return (
-      <div className={style.cards}>
-         {
-            events.map(event =>
-               <Card event={event} />
-            )}
-      </div>
-   )
+const Cards = ({ data }) => {
+  return (
+    <div className={style.cards}>
+      {data.map((event) => (
+        <Card key={event.eventID} {...event} />
+      ))}
+    </div>
+  )
 }
 
-export default Cards 
+export default Cards

@@ -1,18 +1,21 @@
 // Kevin c:
 
-import Cards from "../../Cards/Cards";
+import { useSelector } from "react-redux"
+import Cards from "../../Cards/Cards"
 
-import "./AllEvents.module.css";
+import "./AllEvents.module.css"
 
 const AllEvents = () => {
-   return (
-      <div>
-         <h2><b>- Todos Los Eventos Disponibles -</b></h2> 
-         <div>
-            <Cards />
-         </div>
-      </div>
-   )
+  const { allEvents } = useSelector((s) => s.events)
+
+  return (
+    <div>
+      <h2>
+        <b>- Todos Los Eventos Disponibles -</b>
+      </h2>
+      <Cards data={allEvents} />
+    </div>
+  )
 }
 
 export default AllEvents

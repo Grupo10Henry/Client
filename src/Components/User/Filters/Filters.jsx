@@ -25,14 +25,14 @@ const Filters = () => {
 
   const handlerApplyFilter = async () => {
     console.log(filters)
-    try {
-      const { data } = await axios.get("http://localhost:3001/event", {
-        params: filters,
-      })
-      console.log(data)
-    } catch (error) {
-      console.log(error.response?.data.error)
-    }
+    // try {
+    //   const { data } = await axios.get("http://localhost:3001/event", {
+    //     params: filters,
+    //   })
+    //   console.log(data)
+    // } catch (error) {
+    //   console.log(error.response?.data.error)
+    // }
   }
 
   const showBtnApply = () => {
@@ -49,14 +49,19 @@ const Filters = () => {
   return (
     <div className={style.container}>
       <div className={style.filters}>
-        <SearchBar handlerFilter={handlerFilter} />
+        <SearchBar
+          handlerFilter={handlerFilter}
+          handlerApplyFilter={handlerApplyFilter}
+        />
         <CategoryFilter handlerFilter={handlerFilter} />
         <DateFilter handlerFilter={handlerFilter} />
         <PriceFilter handlerFilter={handlerFilter} />
       </div>
       <div className={style.btnWrapper}>
         {showBtnApply() && (
-          <button className={style.btn}>Aplicar filtros</button>
+          <button className={style.btn} onClick={handlerApplyFilter}>
+            Aplicar filtros
+          </button>
         )}
       </div>
     </div>

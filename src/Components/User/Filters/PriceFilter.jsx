@@ -2,16 +2,14 @@ import { IoMdArrowDropupCircle, IoMdArrowDropdownCircle } from "react-icons/io"
 
 import style from "./Filters.module.css"
 import { useEffect, useState } from "react"
+import { formatoPesosColombianos } from "../../../utils/formatPrice"
 
 const PriceFilter = ({ handlerFilter }) => {
   const [showme, setShowme] = useState(false)
   const [selectedOption, setSelectedOption] = useState("")
 
   const prices = [20000, 50000, 100000, 350000, 450000].map((price) => {
-    const priceFormat = price.toLocaleString("es-CO", {
-      style: "currency",
-      currency: "COP",
-    })
+    const priceFormat = formatoPesosColombianos.format(price)
     return priceFormat
   })
 
