@@ -4,7 +4,7 @@
 la base que albergará la grilla de dos columnas
 */
 
-.ContainerGlobal{
+/*.ContainerGlobal{
     background: rgba(0, 0, 0, 0.5);
     position: absolute;
     width: 100%;
@@ -16,7 +16,7 @@ la base que albergará la grilla de dos columnas
 }
 
 /* El .ContainerBanner contendrá una imágen cargada en el html, ocupará el ancho total del dispositivo, es decir, dos columnas, 
-y alto proporcional según la imágen*/
+y alto proporcional según la imágen
 
 .ContainerBanner,
 .ContainerGoogleMap {
@@ -33,7 +33,7 @@ y alto proporcional según la imágen*/
 }
 
 /* .ContainerLeftColumn será la 1er columna, la izquierda. Tendrá un ancho de 50% del dispositivo y un alto proporcional al contenido  
-*/
+
 
 .ContainerLeftColumn,
 .ContainerRightColumn {
@@ -46,7 +46,7 @@ y alto proporcional según la imágen*/
 }
 
 /* .ContainerNameDescription se encuentra dentro de la columna izquierda y contendrá el nombre del usuario y su descripción. 
-*/
+
 
 .ContainerNameDescription,
 .ContainerAddress,
@@ -58,4 +58,87 @@ y alto proporcional según la imágen*/
     justify-content: center;
     align-items: center;
 }
+*/
 
+.ContainerGlobal {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    color: #000;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .ContainerBanner {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .ContainerBanner img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .ContainerLeftColumn {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .ContainerNameDescription h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .ContainerNameDescription p {
+    font-size: 18px;
+  }
+  
+  .ContainerAddress {
+    margin-top: 20px;
+  }
+  
+  .ContainerAddress h3,
+  .ContainerAddress h4 {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  
+  .ContainerRightColumn {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .ContainerEventDate h3,
+  .ContainerEventDate h2 {
+    font-size: 18px;
+    margin: 5px 0;
+  }
+  
+  .ContainerEventDate h2 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .ContainerEventDate h2 + h2 {
+    margin-top: 20px;
+  }
+  
+  .ContainerPrices {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  
+  .ContainerGoogleMap {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .ContainerGoogleMap iframe {
+    border: none;
+  }
+  
