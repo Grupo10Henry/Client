@@ -7,7 +7,7 @@ export default function AdminEventsCreate() {
 
         // const [location, setLocation] = useState('');
         // const { ready, value, suggestions: { status, data }, setValue, clearSuggestions } = usePlacesWidget({
-        //   apiKey: 'AIzaSyAk33OybgLEOTfTfB-mWeon3pWcGLHS3vY',
+        //   apiKey: 'GOOGLE_API_KEY',
         //   debounce: 300,
         // });
 
