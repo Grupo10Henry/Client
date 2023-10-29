@@ -22,6 +22,7 @@ const CategoryFilter = ({ handlerFilter }) => {
   const [selectedOption, setSelectedOption] = useState("")
 
   const optionClass = `${style.options} ${showme && style.show}`
+  const categoriesSort = categories.sort((a, b) => a.localeCompare(b))
 
   const handlerDropdown = () => {
     setShowme(!showme)
@@ -62,7 +63,7 @@ const CategoryFilter = ({ handlerFilter }) => {
               Todos
             </span>
           )}
-          {categories.map((item, idx) => (
+          {categoriesSort.map((item, idx) => (
             <span
               key={idx}
               className={style.option}

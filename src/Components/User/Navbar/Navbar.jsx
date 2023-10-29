@@ -7,15 +7,11 @@ import style from "./Navbar.module.css"
 //franco
 const Navbar = () => {
   const { pathname } = useLocation()
-  const showme =
-    !pathname.includes("/detail") &&
-    pathname !== "/faq" &&
-    pathname !== "/detail"
 
   return (
     <header className={style.header}>
       <Nav />
-      {showme && <Filters />}
+      {pathname === "/" && <Filters />}
     </header>
   )
 }

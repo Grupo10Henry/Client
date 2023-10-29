@@ -35,6 +35,17 @@ const Filters = () => {
     }
   }
 
+  const showBtnApply = () => {
+    let verify = false
+    for (let prop in filters) {
+      if (filters[prop] !== "") {
+        verify = true
+        break
+      } else verify = false
+    }
+    return verify
+  }
+
   return (
     <div className={style.container}>
       <div className={style.filters}>
@@ -44,10 +55,8 @@ const Filters = () => {
         <PriceFilter handlerFilter={handlerFilter} />
       </div>
       <div className={style.btnWrapper}>
-        {Object.values(filters).length > 0 && (
-          <button className={style.btn} onClick={handlerApplyFilter}>
-            Aplicar filtros
-          </button>
+        {showBtnApply() && (
+          <button className={style.btn}>Aplicar filtros</button>
         )}
       </div>
     </div>
