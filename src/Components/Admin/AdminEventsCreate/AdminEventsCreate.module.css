@@ -1,0 +1,58 @@
+.formContainer {
+    background-color: rgb(230, 196, 145);
+    width: 1070px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.formTitle {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+.formFields {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.formRows {
+}
+
+.fieldContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.formLabel {
+    font-size: 13px;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+.formInputText {
+    font-size: 13px;
+    border-color: rgb(143, 143, 143);
+    height: 25px;
+    border-radius: 5px;
+    padding: 0px 0px 0px 10px;
+    margin: 0px 0px 0px 0px;
+    width: 200px;
+}
+
+.formInputTextArea {
+    font-size: 13px;
+    border-color: rgb(143, 143, 143);
+    border-radius: 5px;
+    padding: 0px 0px 0px 10px;
+    margin: 0px 0px 0px 0px;
+    width: 200px;
+}

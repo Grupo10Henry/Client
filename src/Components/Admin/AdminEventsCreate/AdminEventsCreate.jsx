@@ -1,7 +1,7 @@
 // Luissssss
 import styles from './AdminEventsCreate.module.css';
 import { useState } from 'react';
-import { usePlacesWidget } from 'react-places-autocomplete';
+// import { usePlacesWidget } from 'react-places-autocomplete';
 
 export default function AdminEventsCreate() {
 
@@ -57,101 +57,104 @@ export default function AdminEventsCreate() {
       };
 
     return (
-        <div>
-            <div>
-                <form>
-                    <p>Completa la información para crear un evento</p>
-                    <div>
-                    <label>Nombre del evento</label>
-                    <input
+        // <div>
+            <div className={styles.formContainer}>
+                <form className={styles.form}>
+                    <p className={styles.formTitle}>Completa la información para crear un evento</p>
+                    <div className={styles.formFields}>
+                    <div className={styles.formRows}>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Nombre del evento</label>
+                    <input className={styles.formInputText}
                     type="text"
                     name='name'
                     value={input.name}
                     onChange={handleChange} />
                     </div>
-                    <div>
-                    <label>Descripción</label>
-                    <textarea
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Descripción</label>
+                    <textarea className={styles.formInputTextArea}
                     name='description'
                     value={input.description}
                     onChange={handleChange} />
                     </div>
-                    <div>
-                    <label>Categoría</label>
-                    <select
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Categoría</label>
+                    <select className={styles.formInputText}
                     name='category'
                     value={input.category}
                     onChange={handleChange} >
                     {categories.sort().map((cat, idx) => (
-                        <option key={idx} value={cat}>
+                      <option key={idx} value={cat}>
                             {cat}
                         </option>
                     ))}
                     </select>
                     </div>
-                    <div>
-                    <label>Ubicación del evento</label>
-                    <input
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Ubicación del evento</label>
+                    <input className={styles.formInputText}
                     type="text"
                     name='locationName'
                     value={input.locationName}
                     onChange={handleChange} />
                     </div>
-                    <div>
-                    <label>Dirección de la ubicación</label>
-                    <input
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Dirección de la ubicación</label>
+                    <input className={styles.formInputText}
                     type="text"
                     name='adressLocation'
                     value={input.adressLocation}
                     onChange={handleChange} />
                     </div>
-                    <div>
-                    <label>Fecha del evento</label>
-                    <input
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Fecha del evento</label>
+                    <input className={styles.formInputText}
                     type="date"
                     name='date'
                     value={input.date}
                     onChange={handleChange} />
                     </div>
-                    <div>
-                    <label>Hora del evento</label>
-                    <input
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Hora del evento</label>
+                    <input className={styles.formInputText}
                     type="time"
                     name='time'
                     value={input.time}
                     onChange={handleChange} />
                     </div>
-                    <div>
-                    <label>Aforo máximo del evento</label>
-                    <input
+                    </div>
+                    <div className={styles.formRows}>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Aforo máximo del evento</label>
+                    <input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='capacity'
                     value={input.capacity}
                     onChange={handleChange} />
                     </div>
-                    <div>
-                    <label>Precio mínimo</label>
-                    <input
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Precio mínimo</label>
+                    <input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='priceMin'
                     value={input.priceMin}
                     onChange={handleChange} />
                     </div>
-                    <div>
-                    <label>Precio máximo</label>
-                    <input
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Precio máximo</label>
+                    <input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='priceMax'
                     value={input.priceMax}
                     onChange={handleChange} />
                     </div>
-                    <div>
-                    <label>Ubicación en el mapa</label>
-                    <p> Ingresa <a href="https://maps-generator.com/" target="_blank" rel="noopener noreferrer">aquí</a> para obtener el link</p>
-                    <input
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Ubicación en mapa {'('}Obtén link <a href="https://maps-generator.com/" target="_blank" rel="noopener noreferrer">aquí</a>{')'} </label>
+                    <input className={styles.formInputText}
                     type='url'
                     name='mapLocation'
                     value={input.mapLocation}
@@ -161,43 +164,48 @@ export default function AdminEventsCreate() {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Enter a location"
-      />
-      {status === 'OK' && (
-        <ul>
+        />
+        {status === 'OK' && (
+          <ul>
           {data.map((suggestion) => (
             <li key={suggestion.place_id} onClick={() => handleSelect(suggestion)}>
-              {suggestion.description}
+            {suggestion.description}
             </li>
-          ))}
-        </ul>
-      )} */}
-                    <div>
-                    <label>Imagen del evento</label>
-                    <input
+            ))}
+            </ul>
+          )} */}
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Imagen del evento</label>
+                    <input className={styles.formInputText}
                     type='url'
                     name='image'
                     value={input.image}
                     onChange={handleChange} />
                     </div>
-                    <div>
-                    <label>Imagen banner del evento</label>
-                    <input
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Imagen banner del evento</label>
+                    <input className={styles.formInputText}
                     type='url'
                     name='bannerImage'
                     value={input.bannerImage}
                     onChange={handleChange} />
                     </div>
-                    <div>
-                    <label>Imagen del plano del evento</label>
-                    <input
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Imagen del plano del evento</label>
+                    <input className={styles.formInputText}
                     type='url'
                     name='planImage'
                     value={input.planImage}
                     onChange={handleChange} />
                     </div>
+                    </div>
+                    </div>
+                    <button className={styles.formButton}
+                    type="submit"
+                    >Crear evento</button>
 
                 </form>
             </div>
-        </div>
+        // </div>
     )
 }
