@@ -26,7 +26,7 @@ export default function AdminHome() {
             />
             </div>
             <div>
-            {display.show === "home" ? <h1>Admin Home :{")"}</h1> : null}
+            {display.show === "home" ? <AdminEvents /> : null}
             {display.show === "showEvents" ? <AdminEvents /> : null}
             {display.show === "createEvents" ? <AdminEventsCreate /> : null}
             {display.show === "showUsers" ? <AdminUsers /> : null}
