@@ -27,10 +27,10 @@ const AdminFooter = () => {
 
     return(
         <div className={style.AdminFooterContainer}>
-            <h1>Info Contacto:</h1>
+            <h1>Información de contacto</h1>
             <form onSubmit={submitHandler}>
                 <div>
-                    <label>Address</label>
+                    <label>Dirección</label>
                     <input
                     type="text"
                     name="address"
@@ -39,7 +39,7 @@ const AdminFooter = () => {
                     />
                 </div>
                 <div>
-                    <label>Phone</label>
+                    <label>Teléfono</label>
                     <input
                     type="text"
                     name="phone"
@@ -57,7 +57,7 @@ const AdminFooter = () => {
                     />
                 </div>
                 <div>
-                    <label>Business Hours</label>
+                    <label>Horario de atención</label>
                     <input
                     type="text"
                     name="businessHours"
@@ -66,7 +66,7 @@ const AdminFooter = () => {
                     />
                 </div>
                 <div>
-                    <label>Data Policy:</label>
+                    <label>Politica de datos</label>
                     <textarea
                         name="dataPolicy"
                         value={form.dataPolicy}
