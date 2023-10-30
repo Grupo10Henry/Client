@@ -128,6 +128,7 @@ y alto proporcional según la imágen
   
   .ContainerPrices {
     display: flex;
+    width: 20%;
     justify-content: space-between;
     font-size: 16px;
     margin: 5px 0;

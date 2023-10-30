@@ -6,21 +6,21 @@ const Detail = () => {
     <>
       <div className={styles.ContainerGlobal}>
         <div className={styles.ContainerBanner}>
-          <p>Banner del Evento</p>
+          
           <img
-            src="URL_DE_LA_IMAGEN_DEL_BANNER"
+            src="https://fcefyn.unc.edu.ar/media/images/Paula_Tecco.2e16d0ba.fill-1600x390-c100.jpg"
             alt="Nombre del Evento"
           />
         </div>
         <div className={styles.ContainerLeftColumn}>
           <div className={styles.ContainerNameDescription}>
-            <h1>Nombre del Evento</h1>
+            <h1>Paula tecco</h1>
             <p>Descripción del evento aquí...</p>
           </div>
           <div className={styles.ContainerAddress}>
             <h3>Lugar: Nombre del Lugar</h3>
             <h3>Dirección: Dirección del Lugar</h3>
-            <h4>Capacidad Total: 1000</h4>
+            <h4>Capacidad Total: 1000 lugares</h4>
           </div>
         </div>
         <div className={styles.ContainerRightColumn}>
@@ -30,15 +30,15 @@ const Detail = () => {
             <h2>Sectores:</h2>
             <div className={styles.ContainerPrices}>
               <p>Sector 1</p>
-              <p>$50</p>
+              <p>$3000</p>
             </div>
             <div className={styles.ContainerPrices}>
               <p>Sector 2</p>
-              <p>$40</p>
+              <p>$4000</p>
             </div>
             <div className={styles.ContainerPrices}>
               <p>Sector 3</p>
-              <p>$30</p>
+              <p>$5000</p>
             </div>
           </div>
         </div>
