@@ -57,13 +57,13 @@ const Filters = () => {
         <DateFilter handlerFilter={handlerFilter} />
         <PriceFilter handlerFilter={handlerFilter} />
       </div>
-      <div className={style.btnWrapper}>
+      {/* <div className={style.btnWrapper}>
         {showBtnApply() && (
           <button className={style.btn} onClick={handlerApplyFilter}>
             Aplicar filtros
           </button>
         )}
-      </div>
+      </div> */}
     </div>
   )
 }
