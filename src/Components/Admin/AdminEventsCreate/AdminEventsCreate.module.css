@@ -37,7 +37,7 @@
     margin: 0px 0px 0px 0px;
 }
 
-.formInputText {
+.form .formInputText {
     font-size: 13px;
     border-color: rgb(143, 143, 143);
     height: 25px;
@@ -71,7 +71,7 @@
     margin: 0px 0px 0px 0px;
 }
 
-.formButton {
+.form .formButton {
     background-color: aquamarine;
     border-radius: 5px;
 }
