@@ -1,5 +1,6 @@
 .card {
   background-color: var(--amarillo-claro);
+  background-color: #a2dcbb;
   padding: 20px;
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
@@ -52,4 +53,5 @@
   text-decoration: underline;
   margin-top: 20px;
   display: block;
+  color: var(--turquesa);
 }
