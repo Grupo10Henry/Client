@@ -26,10 +26,10 @@ const Contact = () => {
       <form>
         <h4 className={style.title}>Contáctanos</h4>
         <div>
-          <div className={style.inputField}>
+          <div>
             <label>Nombre:</label>
-
             <input
+              className={style.inputField}
               type="text"
               placeholder="ingrese su nombre"
               name="name"
@@ -38,9 +38,10 @@ const Contact = () => {
             />
           </div>
 
-          <div className={style.inputField}>
+          <div>
             <label>Apellido:</label>
-            <input
+            <input 
+              className={style.inputField}
               type="text"
               placeholder="ingrese su apellido"
               name="lastName"
@@ -49,9 +50,10 @@ const Contact = () => {
             />
           </div>
 
-          <div className={style.inputField}>
+          <div>
             <label>Email: </label>
-            <input
+            <input 
+              className={style.inputField}
               type="text"
               placeholder="ingrese su email"
               name="email"
@@ -60,9 +62,10 @@ const Contact = () => {
             />
           </div>
 
-          <div className={style.inputField}>
+          <div>
             <label>Telefono:</label>
             <input
+              className={style.inputField}
               type="text"
               placeholder="ingrese su numero de telefono"
               name="phone"
@@ -71,10 +74,10 @@ const Contact = () => {
             />
           </div>
 
-          <div className={style.inputField}>
+          <div>
             <label>Consulta:</label>
-
             <input
+              className={style.inputField}
               type="text"
               placeholder="ingrese su Consulta"
               name="request"
