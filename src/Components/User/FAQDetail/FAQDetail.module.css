@@ -1,0 +1,30 @@
+.faqContainer {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #ebeaea;
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px #6d967f;;
+    
+}
+
+.faqContainer h1 {
+    font-size: 24px;
+    color: #478283;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.faqContainer  p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+}
+
+.faqContainer  .question{
+    color:#3fa1a1;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+

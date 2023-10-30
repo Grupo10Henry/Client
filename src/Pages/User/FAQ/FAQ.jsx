@@ -1,9 +1,14 @@
 //Guada
 
+import FAQDetail from "../../../Components/User/FAQDetail/FAQDetail"
+import style from "./FAQ.module.css"
+
 const FAQ = () => {
     return(
-        <div>
-            <h1>FAQ</h1>
+        <div className={style.FAQDetailContainer}>
+            <div>
+                <FAQDetail />
+            </div>    
         </div>
     )
 }
