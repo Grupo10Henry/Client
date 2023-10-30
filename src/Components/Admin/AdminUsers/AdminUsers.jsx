@@ -83,18 +83,3 @@ export default function AdminUsers() {
            </div>
     )
 }
-
-[
-    {
- question: '¿Cómo me puedo registrar?',
- answer: 'dfdsfdsfds'
-    },
-    {
-question: '¿Me puedo registrar con Google?',
-answer: 'dfdsfdsfds'
-    },
-    {
-question: '¿Qué medios de pago hay?',
-answer: 'dfdsfdsfds'
-    },
-]
