@@ -27,7 +27,6 @@ export default function AdminEventsCreate() {
         image: "",
         bannerImage: "",
         planImage: "",
-        views: 0,
         priceMin: "",
         priceMax: "",
         isDonation: false,
@@ -53,8 +52,8 @@ export default function AdminEventsCreate() {
             [e.target.name]: e.target.value,
         })
     };
-    
-    function handleChangeSection(e){
+
+function handleChangeSection(e){
         setSection({
             ...section,
             [e.target.name]: e.target.value,
@@ -63,24 +62,43 @@ export default function AdminEventsCreate() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+        //Código para extraer URL de Google Maps
         if (!input.name || !input.description || !input.category || !input.isDonation || !input.capacity || !input.date || !input.time || !input.locationName ||
             !input.adressLocation || !input.mapLocation || !input.image || !input.bannerImage || !input.planImage || !input.priceMin || !input.priceMax || !input.type) {
                 alert('Por favor completa todos los campos para crear el evento')
             } else {
-                
-                //Código para extraer URL de Google Maps
                 let match = input.mapLocation.match(iframeRegex);
                 setInput({...input, mapLocation: match[1]})
-                
-                // setInput({...input, mapLocation: mapURL})
-                
-        try {
-            // const post = await axios.post('http://localhost:3001/event/', input)
-            const post = await instance.post('/event/', input)
-                alert(post.data)
-        } catch (error) {
-            alert(error.response.data.error)
-        }
+
+                let newEvent = {
+                    name: input.name,
+                    description: input.description,
+                    category: input.category,
+                    capacity: input.capacity,
+                    date: input.date,
+                    time: input.time,
+                    locationName: input.locationName,
+                    adressLocation: input.adressLocation,
+                    mapLocation: match[1],
+                    image: input.image,
+                    bannerImage: input.bannerImage,
+                    planImage: input.planImage,
+                    views: 0,
+                    priceMin: input.priceMin,
+                    priceMax: input.priceMax,
+                    isDonation: input.isDonation,
+                    type: input.type,
+                };
+
+                try {
+                    // const post = await axios.post('http://localhost:3001/event/', input)
+                    const post = await instance.post('/event/', newEvent)
+                    alert("Evento creado exitosamente")
+                } catch (error) {
+                    alert(error.response.data.error)
+                }
+
+        // Borrarcampos de input
     }
     };
 
@@ -158,6 +176,7 @@ export default function AdminEventsCreate() {
                     <input className={styles.formInputText}
                     type="date"
                     name='date'
+                    // Poner límite inferior igual a fecha de hoy
                     value={input.date}
                     onChange={handleChange} />
                     </div>
@@ -187,7 +206,7 @@ export default function AdminEventsCreate() {
                     min="0"
                     name='priceMin'
                     value={input.priceMin}
-                    onChange={handleChange} />) : (<input className={styles.formInputText} type="number" name='priceMin' value='0' readOnly />)}
+                    onChange={handleChange} />) : (<input className={styles.formInputText} type="number" name='priceMin' value='0' readOnly onChange={handleChange} />)}
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Precio máximo</label>
@@ -196,7 +215,7 @@ export default function AdminEventsCreate() {
                     min="0"
                     name='priceMax'
                     value={input.priceMax}
-                    onChange={handleChange} />) : (<input className={styles.formInputText} type="number" name='priceMax' value='0' readOnly />)}
+                    onChange={handleChange} />) : (<input className={styles.formInputText} type="number" name='priceMax' value='0' readOnly onChange={handleChange}/>)}
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Ubicación en mapa {'('}Obtén link <a href="https://maps-generator.com/" target="_blank" rel="noopener noreferrer">aquí</a>{')'} </label>
