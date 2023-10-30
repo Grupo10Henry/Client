@@ -187,6 +187,7 @@ const Login = ({ login }) => {
             >
               Regístrese aquí
             </a>
+            <a href="/">{"    "} Inicio</a>
           </p>
           {/* botón para loguearse con Google */}
           <div className="mt-1 flex items-center justify-center ">
