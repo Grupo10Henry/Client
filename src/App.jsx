@@ -63,6 +63,7 @@ function App() {
   return (
     <div className={styles.App}>
       {(location.pathname === "/" ||
+        location.pathname === "/admin" ||
         location.pathname.includes("/detalle")) && <Navbar />}
       <Contact />
       <Routes>
