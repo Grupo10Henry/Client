@@ -1,7 +1,7 @@
 //Guada
 
 //import { useState } from 'react-redux'
-
+import style from "./Footer.module.css"
 //GET - Trae la info del back 
 
 const Footer = () => {
@@ -15,7 +15,7 @@ const Footer = () => {
     }
 
     return(
-        <div>
+        <div className={style.footerContainer}>
             <h1>Contacto</h1>
             <p>Dirección: {data.address}</p>
             <p>Teléfono: {data.phone}</p>

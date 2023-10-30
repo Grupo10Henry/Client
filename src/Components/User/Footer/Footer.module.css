@@ -1,0 +1,22 @@
+.footerContainer {
+    background-color: #282828;
+    color: #ecf0f1;
+    padding: 20px;
+    text-align: left;
+    width: 100%;
+}
+
+.footerContainer h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+
+}
+
+.footerContainer p {
+    font-size: 16px;
+    margin: 5px 0;
+    background-color: #282828;
+}
+
+
+
