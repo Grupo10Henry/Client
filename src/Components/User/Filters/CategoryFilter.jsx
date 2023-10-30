@@ -5,39 +5,37 @@ import { useEffect, useState } from "react"
 import style from "./Filters.module.css"
 
 const categories = [
-  "Teatro",
-  "Música",
-  "Cine",
-  "Artes Visuales",
-  "Literatura",
-  "Deportes",
-  "Eventos académicos",
-  "Convenciones",
-  "Festivales",
-  "Empresariales",
-  "Filantrópicos",
+  { id: 1, value: "Teatro" },
+  { id: 2, value: "Música" },
+  { id: 3, value: "Cine" },
+  { id: 4, value: "Artes Visuales" },
+  { id: 5, value: "Literatura" },
+  { id: 6, value: "Deportes" },
+  { id: 7, value: "Eventos académicos" },
+  { id: 8, value: "Convenciones" },
+  { id: 9, value: "Festivales" },
+  { id: 10, value: "Empresariales" },
+  { id: 11, value: "Filantrópicos" },
 ]
+
 const CategoryFilter = ({ handlerFilter }) => {
   const [showme, setShowme] = useState(false)
   const [selectedOption, setSelectedOption] = useState("")
 
   const optionClass = `${style.options} ${showme && style.show}`
-  const categoriesSort = categories.sort((a, b) => a.localeCompare(b))
+  const categoriesSort = categories.sort((a, b) =>
+    a.value.localeCompare(b.value)
+  )
 
   const handlerDropdown = () => {
     setShowme(!showme)
   }
 
-  const handlerCategory = () => {
+  const handlerCategory = (value) => {
     // pedirle via query al back
+    setSelectedOption(value)
+    console.log("pidiendo a back:", value)
   }
-
-  useEffect(() => {
-    handlerFilter({
-      newProp: "category",
-      value: selectedOption === "Todos" ? "" : selectedOption,
-    })
-  }, [selectedOption])
 
   return (
     <div className={style.wrapper}>
@@ -53,23 +51,21 @@ const CategoryFilter = ({ handlerFilter }) => {
         ) : (
           <IoMdArrowDropdownCircle className={style.arrow} />
         )}
+
         {/* options */}
         <div className={optionClass}>
           {selectedOption !== "" && (
-            <span
-              className={style.option}
-              onClick={() => setSelectedOption("Todos")}
-            >
+            <span className={style.option} onClick={() => handlerCategory("")}>
               Todos
             </span>
           )}
-          {categoriesSort.map((item, idx) => (
+          {categoriesSort.map((element) => (
             <span
-              key={idx}
+              key={element.id}
               className={style.option}
-              onClick={() => setSelectedOption(item)}
+              onClick={() => handlerCategory(element.value)}
             >
-              {item}
+              {element.value}
             </span>
           ))}
         </div>
