@@ -4,14 +4,26 @@ import style from "./Filters.module.css"
 import { useEffect, useState } from "react"
 import { formatoPesosColombianos } from "../../../utils/formatPrice"
 
+const prices = [
+  { id: 0, text: "Todos", value: "" },
+  { id: 1, text: "Gratis", value: 0 },
+  { id: 2, value: 20000 },
+  { id: 3, value: 50000 },
+  { id: 4, value: 100000 },
+  { id: 5, value: 350000 },
+  { id: 6, value: 450000 },
+].map((price) => {
+  const priceFormat = formatoPesosColombianos.format(price.value)
+  if ((price.text && price.text === "Gratis") || price.text === "Todos")
+    return price
+  else {
+    return { ...price, text: priceFormat }
+  }
+})
+
 const PriceFilter = ({ handlerFilter }) => {
   const [showme, setShowme] = useState(false)
   const [selectedOption, setSelectedOption] = useState("")
-
-  const prices = [20000, 50000, 100000, 350000, 450000].map((price) => {
-    const priceFormat = formatoPesosColombianos.format(price)
-    return priceFormat
-  })
 
   const optionClass = `${style.options} ${showme && style.show}`
 
@@ -25,12 +37,11 @@ const PriceFilter = ({ handlerFilter }) => {
     return val
   }
 
-  useEffect(() => {
-    handlerFilter({
-      newProp: "price",
-      value: valueSelect(selectedOption),
-    })
-  }, [selectedOption])
+  const handlerPrice = (value) => {
+    // pedirle via query al back
+    setSelectedOption(valueSelect(value))
+    console.log("pidiendo a back:", value)
+  }
 
   return (
     <div className={style.wrapper}>
@@ -48,27 +59,13 @@ const PriceFilter = ({ handlerFilter }) => {
         )}
         {/* options */}
         <div className={optionClass}>
-          {selectedOption !== "" && (
+          {prices.map((element) => (
             <span
+              key={element.id}
               className={style.option}
-              onClick={() => setSelectedOption("Todos")}
+              onClick={() => handlerPrice(element.value)}
             >
-              Todos
-            </span>
-          )}
-          <span
-            className={style.option}
-            onClick={() => setSelectedOption("Gratis")}
-          >
-            Gratis
-          </span>
-          {prices.map((item, idx) => (
-            <span
-              key={idx}
-              className={style.option}
-              onClick={() => setSelectedOption(item)}
-            >
-              {item}
+              {element.text}
             </span>
           ))}
         </div>

@@ -3,7 +3,12 @@ import { IoMdArrowDropupCircle, IoMdArrowDropdownCircle } from "react-icons/io"
 import style from "./Filters.module.css"
 import { useEffect, useState } from "react"
 
-const date = ["2024/1/11", "2024/04/02", "2024/1/07"]
+const date = [
+  { id: 0, text: "Todos", value: "" },
+  { id: 1, text: "2024/1/11", value: "2024/1/11" },
+  { id: 2, text: "2024/04/02", value: "2024/04/02" },
+  { id: 3, text: "2024/1/07", vallue: "2024/1/07" },
+]
 
 const DateFilter = ({ handlerFilter }) => {
   const [showme, setShowme] = useState(false)
@@ -15,12 +20,11 @@ const DateFilter = ({ handlerFilter }) => {
     setShowme(!showme)
   }
 
-  useEffect(() => {
-    handlerFilter({
-      newProp: "date",
-      value: selectedOption === "Todos" ? "" : selectedOption,
-    })
-  }, [selectedOption])
+  const handlerDate = (value) => {
+    //pedir a back
+    setSelectedOption(value)
+    console.log("pidiendo a back:", value)
+  }
 
   return (
     <div className={style.wrapper}>
@@ -39,21 +43,13 @@ const DateFilter = ({ handlerFilter }) => {
         )}
         {/* options */}
         <div className={optionClass}>
-          {selectedOption !== "" && (
+          {date.map((element) => (
             <span
+              key={element.id}
               className={style.option}
-              onClick={() => setSelectedOption("Todos")}
+              onClick={() => handlerDate(element.value)}
             >
-              Todos
-            </span>
-          )}
-          {date.map((item, idx) => (
-            <span
-              key={idx}
-              className={style.option}
-              onClick={() => setSelectedOption(item)}
-            >
-              {item}
+              {element.text}
             </span>
           ))}
         </div>

@@ -49,18 +49,17 @@ export default function AdminUsers() {
 
     return (
         <div>
-            <h1>Admin Users :{")"}</h1>
+            <h1>Bloquear y desbloquear usuarios</h1>
          <table>
          <thead>
            <tr>
-             <th>Name</th>
-             <th>Last Name</th>
+             <th>Nombre</th>
+             <th>Apellido</th>
              <th>Email</th>
-             <th>Phone</th>
-             <th>Password</th>
-             <th>Identity Card</th>
-             <th>DOB</th>
-             <th>Action</th>
+             <th>Teléfono</th>
+             <th>Documento</th>
+             <th>Fecha de nacimiento</th>
+             <th>Acción</th>
            </tr>
          </thead>
          <tbody>
@@ -70,11 +69,10 @@ export default function AdminUsers() {
                <td>{user.lastName}</td>
                <td>{user.email}</td>
                <td>{user.phone}</td>
-               <td>{user.password}</td>
                <td>{user.identityCard}</td>
                <td>{user.dob}</td>
                <td>
-                 <button onClick={() => handleBlockUser(index)}>Block</button>
+                 <button className={styles.utablebutton} onClick={() => handleBlockUser(index)}>Bloquear</button>
                </td>
              </tr>
            ))}
