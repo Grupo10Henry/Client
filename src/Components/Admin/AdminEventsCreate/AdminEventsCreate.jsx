@@ -2,22 +2,12 @@
 import axios from 'axios';
 import styles from './AdminEventsCreate.module.css';
 import { useState } from 'react';
+import { instance } from '../../../axios/config';
+import { categories } from '../../../utils/categories';
 
 export default function AdminEventsCreate() {
-
-    const categories = [
-        "Teatro",
-        "Música",
-        "Cine",
-        "Artes Visuales",
-        "Literatura",
-        "Deportes",
-        "Eventos académicos",
-        "Convenciones",
-        "Festivales",
-        "Empresariales",
-        "Filantrópicos",
-      ];
+    
+    let iframeRegex = /<iframe[^>]+src="([^"]+)"/;
 
     const types = [
         "Grande",
@@ -37,8 +27,10 @@ export default function AdminEventsCreate() {
         image: "",
         bannerImage: "",
         planImage: "",
+        views: 0,
         priceMin: "",
         priceMax: "",
+        isDonation: false,
         type: "",
     });
 
@@ -54,35 +46,42 @@ export default function AdminEventsCreate() {
     });
 
     console.log(input);
-    console.log(section);
 
     function handleChange(e){
         setInput({
             ...input,
-        [e.target.name]: e.target.value,
+            [e.target.name]: e.target.value,
         })
     };
-
+    
     function handleChangeSection(e){
         setSection({
             ...section,
-        [e.target.name]: e.target.value,
+            [e.target.name]: e.target.value,
         })
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!input.name || !input.description || !input.category || !input.capacity || !input.date || !input.time || !input.locationName || !input.adressLocation || !input.mapLocation ||
-            !input.image || !input.bannerImage || !input.planImage || !input.priceMin || !input.priceMax || !input.type) {
+        if (!input.name || !input.description || !input.category || !input.isDonation || !input.capacity || !input.date || !input.time || !input.locationName ||
+            !input.adressLocation || !input.mapLocation || !input.image || !input.bannerImage || !input.planImage || !input.priceMin || !input.priceMax || !input.type) {
                 alert('Por favor completa todos los campos para crear el evento')
-            }
+            } else {
+                
+                //Código para extraer URL de Google Maps
+                let match = input.mapLocation.match(iframeRegex);
+                setInput({...input, mapLocation: match[1]})
+                
+                // setInput({...input, mapLocation: mapURL})
+                
         try {
-            const post = await axios.post('http://localhost:3001/event/', input)
+            // const post = await axios.post('http://localhost:3001/event/', input)
+            const post = await instance.post('/event/', input)
                 alert(post.data)
         } catch (error) {
             alert(error.response.data.error)
         }
-
+    }
     };
 
     return (
@@ -113,11 +112,27 @@ export default function AdminEventsCreate() {
                     name='category'
                     value={input.category}
                     onChange={handleChange} >
-                    {categories.sort().map((cat, idx) => (
-                      <option key={idx} value={cat}>
-                            {cat}
+                      <option value="" selected disabled></option>
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.value}>
+                            {cat.value}
                         </option>
                     ))}
+                    </select>
+                    </div>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Evento pago</label>
+                    <select className={styles.formInputText}
+                    name='isDonation'
+                    value={input.isDonation}
+                    onChange={handleChange} >
+                        <option value="" selected disabled></option>
+                        <option value={false}>
+                            Sí
+                        </option>
+                        <option value={true}>
+                            No
+                        </option>
                     </select>
                     </div>
                     </div>
@@ -167,26 +182,26 @@ export default function AdminEventsCreate() {
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Precio mínimo</label>
-                    <input className={styles.formInputText}
+                    {input.isDonation === "false" ? (<input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='priceMin'
                     value={input.priceMin}
-                    onChange={handleChange} />
+                    onChange={handleChange} />) : (<input className={styles.formInputText} type="number" name='priceMin' value='0' readOnly />)}
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Precio máximo</label>
-                    <input className={styles.formInputText}
+                    {input.isDonation === "false" ? (<input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='priceMax'
                     value={input.priceMax}
-                    onChange={handleChange} />
+                    onChange={handleChange} />) : (<input className={styles.formInputText} type="number" name='priceMax' value='0' readOnly />)}
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Ubicación en mapa {'('}Obtén link <a href="https://maps-generator.com/" target="_blank" rel="noopener noreferrer">aquí</a>{')'} </label>
                     <input className={styles.formInputText}
-                    type='url'
+                    type='text'
                     name='mapLocation'
                     value={input.mapLocation}
                     onChange={handleChange} />
@@ -223,6 +238,7 @@ export default function AdminEventsCreate() {
                     name='type'
                     value={input.type}
                     onChange={handleChange} >
+                      <option value="" selected disabled></option>
                     {types.sort().map((cat, idx) => (
                       <option key={idx} value={cat}>
                             {cat}
@@ -233,6 +249,10 @@ export default function AdminEventsCreate() {
                     </div>
                     </div>
 
+                    <button className={styles.formButton}
+                    type="submit"
+                    >Crear evento</button>
+                </form>
                 {/* Form de secciones */}
 
                 <form className={styles.sectionForm}>
@@ -297,8 +317,8 @@ export default function AdminEventsCreate() {
                     </div>
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
-                    {input.type === 'Grande' ? null : <label className={styles.formLabel}>Cantidad de filas</label>}
-                    {input.type === 'Grande' ? null : <input className={styles.formInputText}
+                    <label className={styles.formLabel}>Cantidad de filas</label>
+                    {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='sectionRows' value='0' readOnly /> : <input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='sectionRows'
@@ -306,8 +326,8 @@ export default function AdminEventsCreate() {
                     onChange={handleChangeSection} />}
                     </div>
                     <div className={styles.fieldContainer}>
-                    {input.type === 'Grande' ? null : <label className={styles.formLabel}>Cantidad de columnas</label>}
-                    {input.type === 'Grande' ? null : <input className={styles.formInputText}
+                    <label className={styles.formLabel}>Cantidad de columnas</label>
+                    {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='sectionColumns' value='0' readOnly /> : <input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='sectionColumns'
@@ -317,10 +337,6 @@ export default function AdminEventsCreate() {
                     </div>
                     </div>
                     <button className={styles.sectionButton}>Añadir sección</button>
-                </form>
-                    <button className={styles.formButton}
-                    type="submit"
-                    >Crear evento</button>
                 </form>
             </div>
         // </div>
