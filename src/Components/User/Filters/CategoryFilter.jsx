@@ -1,31 +1,15 @@
 //franco
-import { IoMdArrowDropupCircle, IoMdArrowDropdownCircle } from "react-icons/io"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { IoMdArrowDropdownCircle, IoMdArrowDropupCircle } from "react-icons/io"
+import { categories } from "../../../utils/categories"
 
 import style from "./Filters.module.css"
 
-const categories = [
-  { id: 1, value: "Teatro" },
-  { id: 2, value: "Música" },
-  { id: 3, value: "Cine" },
-  { id: 4, value: "Artes Visuales" },
-  { id: 5, value: "Literatura" },
-  { id: 6, value: "Deportes" },
-  { id: 7, value: "Eventos académicos" },
-  { id: 8, value: "Convenciones" },
-  { id: 9, value: "Festivales" },
-  { id: 10, value: "Empresariales" },
-  { id: 11, value: "Filantrópicos" },
-]
-
-const CategoryFilter = ({ handlerFilter }) => {
+const CategoryFilter = () => {
   const [showme, setShowme] = useState(false)
   const [selectedOption, setSelectedOption] = useState("")
 
   const optionClass = `${style.options} ${showme && style.show}`
-  const categoriesSort = categories.sort((a, b) =>
-    a.value.localeCompare(b.value)
-  )
 
   const handlerDropdown = () => {
     setShowme(!showme)
@@ -59,7 +43,7 @@ const CategoryFilter = ({ handlerFilter }) => {
               Todos
             </span>
           )}
-          {categoriesSort.map((element) => (
+          {categories.map((element) => (
             <span
               key={element.id}
               className={style.option}
