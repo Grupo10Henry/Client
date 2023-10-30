@@ -77,7 +77,7 @@ export default function AdminEventsCreate() {
                 alert('Por favor completa todos los campos para crear el evento')
             }
         try {
-            const post = await axios.post('http://localhost:3001/events/', input)
+            const post = await axios.post('http://localhost:3001/event/', input)
                 alert(post.data)
         } catch (error) {
             alert(error.response.data.error)
