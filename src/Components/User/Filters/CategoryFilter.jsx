@@ -41,7 +41,7 @@ const CategoryFilter = ({ handlerFilter }) => {
 
   return (
     <div className={style.wrapper}>
-      <h6 className={style.title}>Categorias</h6>
+      <h6 className={style.title}>Categorías</h6>
       {/* select */}
       <div className={style.selectWrapper} onClick={handlerDropdown}>
         {/* icons */}

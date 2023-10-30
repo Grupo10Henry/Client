@@ -2,9 +2,9 @@
 
 import { Link } from "react-router-dom"
 import { HiLocationMarker } from "react-icons/hi"
+import { formatoPesosColombianos } from "../../../utils/formatPrice"
 
 import style from "./Card.module.css"
-import { formatoPesosColombianos } from "../../../utils/formatPrice"
 
 // recibo "name" "date" "time" "image" "locationName" y "id" para el detail
 //Renderiza Imagen, Fecha, Horario, Ubicación (nombre del lugar), Precio, Nombre
