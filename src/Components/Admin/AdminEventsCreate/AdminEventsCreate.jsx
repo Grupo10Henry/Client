@@ -316,7 +316,7 @@ export default function AdminEventsCreate() {
                     </div>
                     </div>
                     </div>
-                    <button>Añadir sección</button>
+                    <button className={styles.sectionButton}>Añadir sección</button>
                 </form>
                     <button className={styles.formButton}
                     type="submit"
