@@ -1,9 +1,26 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../../../assets/logo_mi_butaca_color.svg";
+import fondo from "../../../assets/fondo-tres-scaled.jpg";
+
 
 const SignUp = () => {
+
+const navigate = useNavigate();
+
+const handlerNavigateHome = () => {
+  navigate("/");
+};
+
+  const handlerNavigateLogin = () => {
+    navigate("/iniciarsesion");
+  };
+
+    const handlerNavigateSignUp = () => {
+      navigate("/registro");
+    };
+
   const [user, setUser] = useState({
     name: "",
     lastName: "",
@@ -49,23 +66,35 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="fixed inset-0 z-1000 flex items-center justify-center backdrop-filter backdrop-blur-lg">
-        {/* Este div se utilizará para el fondo desenfocado */}
-      </div>
 
-      <div className="fixed inset-0 z-1001 mt-20 flex flex-col items-center justify-center">
+<div
+  className={`fixed inset-0 z-1000 flex items-center justify-center backdrop-filter backdrop-blur-lg bg-cover bg-center`}
+  style={{
+    backgroundImage: `url(${fondo})`,
+  }}
+>
+<div
+     className="absolute inset-0"
+     style={{
+       background: "rgba(255, 255, 255, 0.6)", // Fondo blanco semitransparente para aclarar
+     }}
+  ></div>
+</div>
+
+
+      <div className="fixed inset-0 z-1001 mt-1 flex flex-col items-center justify-center">
         {/* Contenedor principal del formulario */}
-        <div className=" sm:mx-auto sm:w-full sm:max-w-lg p-3 space-y-0 bg-white rounded-lg shadow-lg">
+        <div className=" mx-auto w-full max-w-xl p-3 space-y-0 bg-amber-50 bg-opacity-50 rounded-lg shadow-lg">
           {/*<div className="col-12 col-md-6 offset-md-3">*/}
           <img className="mx-auto h-8 w-auto mb-2" src={logo} alt="Mi Butaca" />
           <h1 className="text-center text-2xl font-bold text-fuchsia-900 mb-10">
             Registrarse
           </h1>
         </div>
-        <div className="mt-3 sm:mx-auto sm:w-full sm:max-w-lg">
+        <div className="mt-3 mx-auto w-full max-w-xl text-sm md:text-base lg:text-lg xl:text-xl">
           <form
             onSubmit={handleSubmit}
-            className="bg-white pt-2 p-5 rounded-lg shadow-lg space-y-1"
+            className="bg-amber-50 bg-opacity-50 pt-2 p-5 rounded-lg shadow-lg space-y-1"
             action="#"
             method="POST"
           >
@@ -74,7 +103,7 @@ const SignUp = () => {
                 <div>
                   <label
                     style={{ marginBottom: "0.1rem" }}
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block font-medium leading-6 text-gray-900"
                   >
                     Nombre
                   </label>
@@ -97,7 +126,7 @@ const SignUp = () => {
               </div>
               <div className="w-1/2">
                 <div className="flex flex-col">
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
+                  <label className="block font-medium leading-6 text-gray-900">
                     Apellidos
                   </label>
                   <div className="mt-1">
@@ -134,12 +163,12 @@ const SignUp = () => {
                   onChange={handleChange}
                   value={user.email}
                   required
-                  placeholder="Su correo electrónico aquí."
+                  placeholder="email@su-email.com"
                 />
               </div>
             </div>
             <div className="flex flex-col">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
+              <label className="block font-medium leading-6 text-gray-900">
                 Teléfono
               </label>
               <div className="mt-1">
@@ -153,7 +182,9 @@ const SignUp = () => {
                   required
                   pattern="^\+?\d{1,19}$"
                   title="Debe contener solo números. El primer carácter puede ser el signo '+'. Máximo 20 caracteres."
+                  placeholder="+573142939772"
                 />
+                <p class="text-xs text-center text-teal-600">Sin espacios, ni puntos{" (.)"}, ni guiones {" (-)"}. Puede o no tener el signo "+" adelante. </p>
               </div>
             </div>
             <div className="flex flex-col">
@@ -161,7 +192,7 @@ const SignUp = () => {
                 <div className="w-1/2">
                   <label
                     htmlFor="identityCard"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block font-medium leading-6 text-gray-900"
                   >
                     Cédula
                   </label>
@@ -175,12 +206,14 @@ const SignUp = () => {
                     required
                     pattern="^[a-zA-Z0-9]{6,15}$"
                     title="Debe contener entre 6 y 15 caracteres alfanuméricos"
+                    placeholder="19457869"
                   />
+                  <p class="text-xs text-center text-teal-600">Sin puntos {" (.)"} ni guiones {" (-)"}</p>
                 </div>
                 <div className="w-1/2">
                   <label
                     htmlFor="dob"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block font-medium leading-6 text-gray-900"
                   >
                     Fecha de Nacimiento
                   </label>
@@ -196,7 +229,7 @@ const SignUp = () => {
               </div>
             </div>
             <div className="flex flex-col">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
+              <label className="block font-medium leading-6 text-gray-900">
                 Contraseña
               </label>
               <div className="mt-1">
@@ -210,13 +243,15 @@ const SignUp = () => {
                   required
                   pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$"
                   title="Debe contener entre 6 y 12 caracteres, al menos 1 número, 1 letra mayúscula y 1 letra minúscula"
+                  placeholder=""
+                  
                 />
-                <p class="text-xs text-center">6 y 12 caracteres, al menos 1 número, 1 letra mayúscula y 1 letra minúscula</p>
+                <p class="text-xs text-center text-teal-600">Debe tener: entre 6 y 12 caracteres, al menos 1 número, 1 letra mayúscula y 1 minúscula</p>
 
               </div>
             </div>
             <div className="mt-1 flex flex-col">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
+              <label className="block font-medium leading-6 text-gray-900">
                 Repetir Contraseña
               </label>
               <div className="mt-1">
@@ -226,6 +261,7 @@ const SignUp = () => {
                   id="repeatPassword"
                   name="repeatPassword"
                   onChange={handleChange}
+                  
                   value={user.repeatPassword}
                   required
                 />
@@ -235,21 +271,25 @@ const SignUp = () => {
             <div>
               <button
                 type="submit"
-                className="flex w-full mt-1 justify-center rounded-md bg-teal-600 px-2 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-fuchsia-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full mt-1 justify-center rounded-md bg-teal-600 px-2 py-1.5 text-sm md:text-base lg:text-lg xl:text-xl font-semibold leading-6 text-white shadow-sm hover:bg-fuchsia-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Registrarse
               </button>
             </div>
           </form>
-          <p className="mt-1 text-center text-sm text-gray-800">
+          <p className="mt-1 text-center text-sm md:text-base lg:text-lg xl:text-xl text-gray-800">
             ¿Ya está registrado?{" "}
-            <a
-              href="/iniciarsesion"
+            <p
+              onClick={handlerNavigateLogin}
               className="font-semibold leading-6 text-teal-700 hover:text-fuchsia-500"
             >
-              Iniciar Sesión
-            </a>
-            <a href="/">{"    "} Inicio</a>
+              Iniciar Sesión {" | "}
+            </p>
+            <p 
+            onClick={handlerNavigateHome}
+            className=" leading-6 text-teal-600 hover:text-fuchsia-500">Seguir como visitante
+            
+          </p>
           </p>
           {/* botón para loguearse con Google */}
           <div className="mt-1 flex items-center justify-center ">
