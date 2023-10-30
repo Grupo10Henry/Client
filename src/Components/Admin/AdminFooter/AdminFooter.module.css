@@ -1,0 +1,48 @@
+.AdminFooterContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
+    max-width: 600px;
+  }
+  
+  .AdminFooterContainer h1 {
+    margin-bottom: 20px;
+  }
+  
+  .AdminFooterContainer form {
+    width: 100%;
+  }
+  
+  .AdminFooterContainer div {
+    margin-bottom: 15px;
+  }
+  
+  .AdminFooterContainer label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .AdminFooterContainer input,
+  .AdminFooterContainer textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+  }
+  
+  .AdminFooterContainer button {
+    background-color: #6ed6c5;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .AdminFooterContainer button:hover {
+    background-color: #2f9291;
+  }

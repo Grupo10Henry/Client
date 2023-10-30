@@ -22,6 +22,7 @@ const CategoryFilter = ({ handlerFilter }) => {
   const [selectedOption, setSelectedOption] = useState("")
 
   const optionClass = `${style.options} ${showme && style.show}`
+  const categoriesSort = categories.sort((a, b) => a.localeCompare(b))
 
   const handlerDropdown = () => {
     setShowme(!showme)
@@ -40,7 +41,7 @@ const CategoryFilter = ({ handlerFilter }) => {
 
   return (
     <div className={style.wrapper}>
-      <h6 className={style.title}>Categorias</h6>
+      <h6 className={style.title}>Categorías</h6>
       {/* select */}
       <div className={style.selectWrapper} onClick={handlerDropdown}>
         {/* icons */}
@@ -62,7 +63,7 @@ const CategoryFilter = ({ handlerFilter }) => {
               Todos
             </span>
           )}
-          {categories.map((item, idx) => (
+          {categoriesSort.map((item, idx) => (
             <span
               key={idx}
               className={style.option}

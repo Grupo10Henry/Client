@@ -25,26 +25,40 @@ const Filters = () => {
 
   const handlerApplyFilter = async () => {
     console.log(filters)
-    try {
-      const { data } = await axios.get("http://localhost:3001/event", {
-        params: filters,
-      })
-      console.log(data)
-    } catch (error) {
-      console.log(error.response?.data.error)
+    // try {
+    //   const { data } = await axios.get("http://localhost:3001/event", {
+    //     params: filters,
+    //   })
+    //   console.log(data)
+    // } catch (error) {
+    //   console.log(error.response?.data.error)
+    // }
+  }
+
+  const showBtnApply = () => {
+    let verify = false
+    for (let prop in filters) {
+      if (filters[prop] !== "") {
+        verify = true
+        break
+      } else verify = false
     }
+    return verify
   }
 
   return (
     <div className={style.container}>
       <div className={style.filters}>
-        <SearchBar handlerFilter={handlerFilter} />
+        <SearchBar
+          handlerFilter={handlerFilter}
+          handlerApplyFilter={handlerApplyFilter}
+        />
         <CategoryFilter handlerFilter={handlerFilter} />
         <DateFilter handlerFilter={handlerFilter} />
         <PriceFilter handlerFilter={handlerFilter} />
       </div>
       <div className={style.btnWrapper}>
-        {Object.values(filters).length > 0 && (
+        {showBtnApply() && (
           <button className={style.btn} onClick={handlerApplyFilter}>
             Aplicar filtros
           </button>

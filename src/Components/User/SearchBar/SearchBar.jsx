@@ -1,23 +1,15 @@
 //franco
 import { BiSearch } from "react-icons/bi"
 import { MdCancel } from "react-icons/md"
-import { useState } from "react"
+import { useSarchbar } from "../../../hooks/useSearchBar"
 
 import style from "./SearchBar.module.css"
 
-const SearchBar = ({ handlerFilter }) => {
-  const [input, setInput] = useState("")
-
-  const handleChange = (e) => {
-    setInput(e.target.value)
-  }
-
-  const handleSearch = (e) => {
-    e.preventDefault()
-    handlerFilter({ newProp: "search", value: input })
-  }
-
-  const handleDeleteInput = () => setInput("")
+const SearchBar = ({ handlerFilter, handlerApplyFilter }) => {
+  const { handleChange, handleSearch, handleDeleteInput, input } = useSarchbar(
+    handlerFilter,
+    handlerApplyFilter
+  )
 
   return (
     <div className={style.wrapper}>

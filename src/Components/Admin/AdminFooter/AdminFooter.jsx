@@ -1,7 +1,6 @@
 //Guada
 import { useState } from "react";
-
-
+import style from "./AdminFooter.module.css"
 //POST - EDIT - Envia al back la nueva información
 
 const AdminFooter = () => {
@@ -27,11 +26,11 @@ const AdminFooter = () => {
     }
 
     return(
-        <div>
-            <h1>Info Contacto:</h1>
+        <div className={style.AdminFooterContainer}>
+            <h1>Información de contacto</h1>
             <form onSubmit={submitHandler}>
                 <div>
-                    <label>Address</label>
+                    <label>Dirección</label>
                     <input
                     type="text"
                     name="address"
@@ -40,7 +39,7 @@ const AdminFooter = () => {
                     />
                 </div>
                 <div>
-                    <label>Phone</label>
+                    <label>Teléfono</label>
                     <input
                     type="text"
                     name="phone"
@@ -58,7 +57,7 @@ const AdminFooter = () => {
                     />
                 </div>
                 <div>
-                    <label>Business Hours</label>
+                    <label>Horario de atención</label>
                     <input
                     type="text"
                     name="businessHours"
@@ -67,12 +66,12 @@ const AdminFooter = () => {
                     />
                 </div>
                 <div>
-                <label>Data Policy:</label>
-                <textarea
-                    name="dataPolicy"
-                    value={form.dataPolicy}
-                    onChange={editHandler}
-                />
+                    <label>Politica de datos</label>
+                    <textarea
+                        name="dataPolicy"
+                        value={form.dataPolicy}
+                        onChange={editHandler}
+                    />
                 </div>
                 <button type="submit">Guardar</button>
             </form>
