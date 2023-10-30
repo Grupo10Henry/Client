@@ -8,12 +8,12 @@ import events from "../Events"
 import style from "./NextEvents.module.css"
 
 const NextEvents = () => {
-  const nextEvents = [events[0], events[2], events[5], events[1]]
+  const nextEvents = [events[0], events[2], events[1], events[3]]
 
   return (
     <div>
       <h2>
-        <b>- Proximos Eventos -</b>
+        <b>- Próximos Eventos -</b>
       </h2>
       <Cards data={nextEvents} />
     </div>

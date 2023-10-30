@@ -24,7 +24,7 @@ const Contact = () => {
   return (
     <div className={`${style.contact} ${Show}`}>
       <form>
-        <h4 className={style.title}>Contactanos</h4>
+        <h4 className={style.title}>Contáctanos</h4>
         <div>
           <div className={style.inputField}>
             <label>Nombre:</label>
