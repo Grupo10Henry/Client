@@ -1,15 +1,19 @@
-// Kevin :)
-
 import React from "react"
 import { Link } from "react-router-dom"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { EffectCoverflow, Pagination, Navigation } from "swiper/modules"
+import {
+  EffectCoverflow,
+  Pagination,
+  Navigation,
+  Autoplay,
+} from "swiper/modules"
 import events from "../Events"
 
 import "swiper/css"
 import "swiper/css/effect-coverflow"
 import "swiper/css/pagination"
 import "swiper/css/navigation"
+import "swiper/css/autoplay"
 
 import style from "./MostPupular.module.css"
 import "./MostPupular.module.css"
@@ -26,10 +30,18 @@ const MostPopular = () => {
       </h2>{" "}
       <br />
       <Swiper
+        modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
+        slidesPerView={1}
         effect={"coverflow"}
         centeredSlides={true}
         loop={true}
-        slidesPerView={"auto"}
+        grabCursor={true}
+        spaceBetween={20}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
         coverflowEffect={{
           rotate: 0,
           stretch: 0,
@@ -42,24 +54,35 @@ const MostPopular = () => {
           prevEl: ".swiper-button-prev",
           clickable: true,
         }}
-        modules={[EffectCoverflow, Pagination, Navigation]}
         className="swiper_container"
       >
-        <Link to={`/detail/${event1.eventID}`}>
-          <SwiperSlide>
-            <img src={event1.bannerImage} alt="image" />
-          </SwiperSlide>
-        </Link>
-        <Link to={`/detail/${event2.eventID}`}>
-          <SwiperSlide>
-            <img src={event2.bannerImage} alt="image" />
-          </SwiperSlide>
-        </Link>
-        <Link to={`/detail/${event3.eventID}`}>
-          <SwiperSlide>
-            <img src={event3.bannerImage} alt="image" />
-          </SwiperSlide>
-        </Link>
+        <SwiperSlide>
+          <Link to={`/detail/${event1.eventID}`}>
+            <button className={style.buttonInfo}>
+              {"-> Mas informacion aqui <-"}
+            </button>
+          </Link>
+          <img src={event1.bannerImage} alt="image" className={style.image} />{" "}
+          <br />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Link to={`/detail/${event2.eventID}`}>
+            <button className={style.buttonInfo}>
+              {"-> Mas informacion aqui <-"}
+            </button>
+          </Link>
+          <img src={event2.bannerImage} alt="image" className={style.image} />{" "}
+          <br />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Link to={`/detail/${event3.eventID}`}>
+            <button className={style.buttonInfo}>
+              {"-> Mas informacion aqui <-"}
+            </button>
+          </Link>
+          <img src={event3.bannerImage} alt="image" className={style.image} />{" "}
+          <br />
+        </SwiperSlide>
         <div className="slider-controler">
           <div className="swiper-button-prev slider-arrow">
             <ion-icon name="arrow-back-outline" />
@@ -69,7 +92,8 @@ const MostPopular = () => {
           </div>
           <div className="swiper-pagination" />
         </div>
-      </Swiper>
+      </Swiper>{" "}
+      <br />
     </div>
   )
 }

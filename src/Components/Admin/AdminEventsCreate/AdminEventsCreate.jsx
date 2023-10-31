@@ -70,7 +70,7 @@ function handleChangeSection(e){
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!input.name || !input.description || !input.category || !input.isDonation || !input.capacity || !input.date || !input.time || !input.locationName ||
-            !input.adressLocation || !input.mapLocation || !input.image || !input.bannerImage || !input.planImage || !input.priceMin || !input.priceMax || !input.type) {
+            !input.adressLocation || !input.mapLocation || !input.image || !input.bannerImage || !input.planImage || !input.type) {
                 alert('Por favor completa todos los campos para crear el evento')
             } else {
                 // Código para extraer la URL de source del código de GoogleMaps
@@ -105,7 +105,7 @@ function handleChangeSection(e){
                     alert(error.response.data.error)
                 }
 
-        // Borrarcampos de input
+        // Borrar campos de input
     }
     };
 
