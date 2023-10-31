@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../../../assets/logo_mi_butaca_color.svg";
 import fondo from "../../../assets/fondo-tres-scaled.jpg";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const navigate = useNavigate();

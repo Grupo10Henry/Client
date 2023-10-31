@@ -1,16 +1,21 @@
 /* Juli >>>>>>>> */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 //import { getDetail } from "../../../redux/eventSlice";
 //import { getSeat } from "../../../redux/seatSlice";
+import { selectEventID } from "../../../redux/eventIDSlice";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import styles from "./Detail.module.css";
 
-const Detail = ({ eventID }) => {
-  const [sectorPrices, setSectorPrices] = useState([]);
+const Detail = () => {
 
+  const eventID = useSelector(selectEventID);
+console.log(eventID, "eventID en detalle")
+
+  const [sectorPrices, setSectorPrices] = useState([]);
   const dispatch = useDispatch();
   const [eventDetails, setEventDetails] = useState({
     name: "",
@@ -25,40 +30,44 @@ const Detail = ({ eventID }) => {
   });
 
   useEffect(() => {
-    const fetchEventData = async () => {
+    /*const fetchEventData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3001/seat?eventID=${eventID}`
-        );
-
+        const response = await axios.get(`http://localhost:3001/seat?eventID=${eventID}`);
+    
         if (response.data && response.data.length > 0) {
+          // Agrupa los asientos por sector y calcula el precio promedio
           const sectorData = response.data.reduce((result, seat) => {
             const { sector, price } = seat;
             if (!result[sector]) {
-              result[sector] = price;
+              result[sector] = [price];
+            } else {
+              result[sector].push(price);
             }
             return result;
           }, {});
-
-          const sectorPricesArray = Object.entries(sectorData).map(
-            ([sector, price]) => ({
-              sector,
-              price,
-            })
-          );
-
+    
+          const sectorPricesArray = Object.entries(sectorData).map(([sector, prices]) => ({
+            sector,
+            price: prices.reduce((total, price) => total + price, 0) / prices.length,
+          }));
+    
           setSectorPrices(sectorPricesArray);
         }
       } catch (error) {
         console.error("Error al obtener los sectores y precios:", error);
       }
-    };
+    };*/
+    
+
+    
+
+
 
     const fetchEventDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3001/event?eventID=${eventID}`
-        );
+        console.log(eventID, "eventID en fetchEventDetails")
+        const response = await axios.get(`http://localhost:3001/event/${eventID}`);
+
 
         if (response.data) {
           const {
@@ -90,7 +99,8 @@ const Detail = ({ eventID }) => {
       }
     };
 
-    fetchEventData();
+    //fetchEventData();
+
     fetchEventDetails();
   }, [eventID]);
 
@@ -119,14 +129,14 @@ const Detail = ({ eventID }) => {
               <h3>Fecha: {eventDetails.date}</h3>
               <h2>Hora: {eventDetails.time}</h2>
               <h2>Sectores:</h2>
-              {setSectorPrices.map((sector) => (
+              {/*{sectorPrices.map((sector) => (
                 <div
                 className={styles.ContainerPrices} 
                 key={sector.sector}>
                   <p>{sector.sector}</p>
                   <p>$ {sector.price}</p>
                 </div>
-              ))}
+              ))}*/}
             </div>
           </div>
         
