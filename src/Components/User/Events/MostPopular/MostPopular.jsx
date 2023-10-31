@@ -1,8 +1,14 @@
 import React from "react";
+// import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react"
-import { EffectCoverflow, Pagination, Navigation, Autoplay } from "swiper/modules"
-import events from "../Events";
+import {
+  EffectCoverflow,
+  Pagination,
+  Navigation,
+  Autoplay,
+} from "swiper/modules"
+import events from "../Events"
 
 import "swiper/css"
 import "swiper/css/effect-coverflow"
@@ -10,17 +16,27 @@ import "swiper/css/pagination"
 import "swiper/css/navigation"
 import "swiper/css/autoplay"
 
-import style from "./MostPupular.module.css";
-import "./MostPupular.module.css";
+import style from "./MostPupular.module.css"
+import "./MostPupular.module.css"
 
-const MostPopular = ({ sectionRef }) => {
+const MostPopular = () => {
+   // const { allEvents } = useSelector((s) => s.events)
+   const orden = events
+   // CUANDO NO ME PONGAN LINKS DE GOOGLE MEET EN LOS BANNERS, events PASARA A SER allEvents
 
-   const event1 = events[1]
-   const event2 = events[5]
-   const event3 = events[2]
+   if (orden?.length > 3) {
+   orden.sort((a, b) => {
+      if (a.views < b.views) {
+         return 1
+      } else if (a.views > b.views) {
+         return -1
+      } else {
+         return 0
+      }
+   })
 
    return (
-      <div className={style.container} ref={sectionRef}>
+      <div className={style.container} id='mostPopular'>
          <h2><b>- Eventos Recomendados -</b></h2> <br />
          <Swiper
             modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
@@ -52,23 +68,24 @@ const MostPopular = ({ sectionRef }) => {
          >
 
             <SwiperSlide>
-               <Link to={`/detail/${event1.eventID}`}>
+               <Link to={`/detail/${orden[0].eventID}`}>
                   <button className={style.buttonInfo}>{'-> Mas informacion aqui <-'}</button>
                </Link>
-               <img src={event1.bannerImage} alt="image" className={style.image} /> <br />
-            </SwiperSlide>
+               <img src={orden[0].bannerImage} alt="image" className={style.image} />
+            </SwiperSlide><br />
             <SwiperSlide>
-               <Link to={`/detail/${event2.eventID}`}>
+               <Link to={`/detail/${orden[1].eventID}`}>
                   <button className={style.buttonInfo}>{'-> Mas informacion aqui <-'}</button>
                </Link>
-               <img src={event2.bannerImage} alt="image" className={style.image} /> <br />
-            </SwiperSlide>
+               <img src={orden[1].bannerImage} alt="image" className={style.image} />
+            </SwiperSlide><br />
             <SwiperSlide>
-               <Link to={`/detail/${event3.eventID}`}>
+               <Link to={`/detail/${orden[2].eventID}`}>
                   <button className={style.buttonInfo}>{'-> Mas informacion aqui <-'}</button>
                </Link>
-               <img src={event3.bannerImage} alt="image" className={style.image} /> <br />
-            </SwiperSlide>
+               <img src={orden[2].bannerImage} alt="image" className={style.image} />
+            </SwiperSlide><br />
+
             <div className="slider-controler">
                <div className="swiper-button-prev slider-arrow">
                   <ion-icon name="arrow-back-outline" />
@@ -81,6 +98,11 @@ const MostPopular = ({ sectionRef }) => {
          </Swiper> <br />
       </div>
    )
+   }
+   return (<div>
+      <h2><b>- Eventos Recomendados -</b></h2> <br />
+      <p>No hay eventos suficientes o faltan mas views</p><br />
+   </div>)
 }
 
 export default MostPopular
