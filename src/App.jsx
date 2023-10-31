@@ -16,7 +16,8 @@ import Footer from "./Components/User/Footer/Footer"
 import FAQ from "./Pages/User/FAQ/FAQ"
 
 import axios from "axios"
-import Reviews from "./Components/User/Reviews/Reviews"
+import Reviews2 from "./Components/User/Reviews/Reviews2"
+//import Reviews from "./Components/User/Reviews/Reviews"
 
 function App() {
   const location = useLocation()

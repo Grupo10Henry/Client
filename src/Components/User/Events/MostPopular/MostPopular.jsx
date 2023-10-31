@@ -19,11 +19,12 @@ import "swiper/css/autoplay"
 import style from "./MostPupular.module.css"
 import "./MostPupular.module.css"
 
-const MostPopular = ({ sectionRef }) => {
+const MostPopular = () => {
    // const { allEvents } = useSelector((s) => s.events)
    const orden = events
    // CUANDO NO ME PONGAN LINKS DE GOOGLE MEET EN LOS BANNERS, events PASARA A SER allEvents
 
+   if (orden?.length > 3) {
    orden.sort((a, b) => {
       if (a.views < b.views) {
          return 1
@@ -35,7 +36,7 @@ const MostPopular = ({ sectionRef }) => {
    })
 
    return (
-      <div className={style.container} ref={sectionRef}>
+      <div className={style.container} id='mostPopular'>
          <h2><b>- Eventos Recomendados -</b></h2> <br />
          <Swiper
             modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
@@ -83,7 +84,8 @@ const MostPopular = ({ sectionRef }) => {
                   <button className={style.buttonInfo}>{'-> Mas informacion aqui <-'}</button>
                </Link>
                <img src={orden[2].bannerImage} alt="image" className={style.image} />
-            </SwiperSlide> <br />
+            </SwiperSlide><br />
+
             <div className="slider-controler">
                <div className="swiper-button-prev slider-arrow">
                   <ion-icon name="arrow-back-outline" />
@@ -96,6 +98,11 @@ const MostPopular = ({ sectionRef }) => {
          </Swiper> <br />
       </div>
    )
+   }
+   return (<div>
+      <h2><b>- Eventos Recomendados -</b></h2> <br />
+      <p>No hay eventos suficientes o faltan mas views</p><br />
+   </div>)
 }
 
 export default MostPopular
