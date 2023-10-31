@@ -14,13 +14,13 @@ import "swiper/css/navigation"
 import style from "./MostPupular.module.css"
 import "./MostPupular.module.css"
 
-const MostPopular = ({ sectionRef }) => {
+const MostPopular = () => {
   const event1 = events[1]
   const event2 = events[5]
   const event3 = events[2]
 
   return (
-    <div className={style.container} ref={sectionRef}>
+    <div className={style.container} id="mostPopular">
       <h2>
         <b>- Eventos Recomendados -</b>
       </h2>{" "}

@@ -1,8 +1,11 @@
 import { AiOutlineArrowDown } from "react-icons/ai"
 
 import style from "./Banner.module.css"
+import { useScrollTo } from "../../../hooks/useScrollTo"
 
-const Banner = ({ scrollToSection }) => {
+const Banner = () => {
+  const { handleScrollClick } = useScrollTo()
+
   return (
     <section className={style.banner}>
       <div className={style.bannerBg}></div>
@@ -19,7 +22,7 @@ const Banner = ({ scrollToSection }) => {
           boletos y prepárate para una experiencia inolvidable. ¡Tu butaca te
           espera!
         </p>
-        <div className={style.bannerBtn} onClick={scrollToSection}>
+        <div className={style.bannerBtn} onClick={handleScrollClick}>
           <AiOutlineArrowDown />
         </div>
       </div>
