@@ -2,10 +2,10 @@ import AllEvents from "../AllEvents/AllEvents"
 import MostPopular from "../MostPopular/MostPopular"
 import NextEvents from "../NextEvents/NextEvents"
 
-const EventsSections = ({ sectionRef }) => {
+const EventsSections = () => {
   return (
     <>
-      <MostPopular sectionRef={sectionRef} />
+      <MostPopular />
       <NextEvents />
       <AllEvents />
     </>
