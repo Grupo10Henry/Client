@@ -2,8 +2,13 @@ import React from "react";
 // import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react"
-import { EffectCoverflow, Pagination, Navigation, Autoplay } from "swiper/modules"
-import events from "../Events";
+import {
+  EffectCoverflow,
+  Pagination,
+  Navigation,
+  Autoplay,
+} from "swiper/modules"
+import events from "../Events"
 
 import "swiper/css"
 import "swiper/css/effect-coverflow"
@@ -11,8 +16,8 @@ import "swiper/css/pagination"
 import "swiper/css/navigation"
 import "swiper/css/autoplay"
 
-import style from "./MostPupular.module.css";
-import "./MostPupular.module.css";
+import style from "./MostPupular.module.css"
+import "./MostPupular.module.css"
 
 const MostPopular = ({ sectionRef }) => {
    // const { allEvents } = useSelector((s) => s.events)

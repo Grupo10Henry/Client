@@ -14,8 +14,9 @@ import style from "./Home.module.css"
 
 const Home = () => {
   const { pathname } = useLocation()
-  const dispatch = useDispatch()
   const { isFilter } = useSelector((s) => s.events)
+
+  const dispatch = useDispatch()
 
   //get events
   const getEvents = async () => {
@@ -31,23 +32,12 @@ const Home = () => {
     getEvents().then((data) => dispatch(getAllEvents(data)))
   }, [])
 
-  //scroll to section mostPopular
-  const sectionRef = useRef(null)
-
-  const scrollToSection = () => {
-    sectionRef.current.scrollIntoView({ behavior: "smooth" })
-  }
-
   return (
     <div className={style.home}>
-      <Banner scrollToSection={scrollToSection} />
+      <Banner />
       <EventsText />
       {pathname === "/" && <Filters />}
-      {isFilter ? (
-        <EventsFiltered />
-      ) : (
-        <EventsSections sectionRef={sectionRef} />
-      )}
+      {isFilter ? <EventsFiltered /> : <EventsSections />}
     </div>
   )
 }
