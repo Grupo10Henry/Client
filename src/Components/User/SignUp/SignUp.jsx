@@ -1,25 +1,26 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../../../assets/logo_mi_butaca_color.svg";
 import fondo from "../../../assets/fondo-tres-scaled.jpg";
 
-
 const SignUp = () => {
+  const navigate = useNavigate();
 
-const navigate = useNavigate();
+  const [modoOscuro, setModoOscuro] = useState(false);
+  
 
-const handlerNavigateHome = () => {
-  navigate("/");
-};
+  const handlerNavigateHome = () => {
+    navigate("/");
+  };
 
   const handlerNavigateLogin = () => {
     navigate("/iniciarsesion");
   };
 
-    const handlerNavigateSignUp = () => {
-      navigate("/registro");
-    };
+  const handlerNavigateSignUp = () => {
+    navigate("/registro");
+  };
 
   const [user, setUser] = useState({
     name: "",
@@ -62,25 +63,49 @@ const handlerNavigateHome = () => {
     }
   };
 
-  // prueba de validaciones
+ const darkModeClass = modoOscuro ? "dark-mode" : "";
+ 
+// Estilos para el modo claro
+const lightModeStyles = {
+  container: {
+    backgroundColor: "#fff",
+    color: "#333",
+  },
+  button: {
+    backgroundColor: "#3498db",
+    color: "#fff",
+  },
+};
+
+// Estilos para el modo oscuro
+const darkModeStyles = {
+  container: {
+    backgroundColor: "#333",
+    color: "#fff",
+  },
+  button: {
+    backgroundColor: "#f1c40f",
+    color: "#333",
+  },
+};
+
+const currentStyles = modoOscuro ? darkModeStyles : lightModeStyles;
 
   return (
     <>
-
-<div
-  className={`fixed inset-0 z-1000 flex items-center justify-center backdrop-filter backdrop-blur-lg bg-cover bg-center`}
-  style={{
-    backgroundImage: `url(${fondo})`,
-  }}
->
-<div
-     className="absolute inset-0"
-     style={{
-       background: "rgba(255, 255, 255, 0.6)", // Fondo blanco semitransparente para aclarar
-     }}
-  ></div>
-</div>
-
+      <div
+        className={`fixed inset-0 z-1000 flex items-center justify-center backdrop-filter backdrop-blur-lg bg-cover bg-center`}
+        style={{
+          backgroundImage: `url(${fondo})`,
+        }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "rgba(255, 255, 255, 0.6)", // Fondo blanco semitransparente para aclarar
+          }}
+        ></div>
+      </div>
 
       <div className="fixed inset-0 z-1001 mt-1 flex flex-col items-center justify-center">
         {/* Contenedor principal del formulario */}
@@ -184,7 +209,10 @@ const handlerNavigateHome = () => {
                   title="Debe contener solo números. El primer carácter puede ser el signo '+'. Máximo 20 caracteres."
                   placeholder="+573142939772"
                 />
-                <p class="text-xs text-center text-teal-600">Sin espacios, ni puntos{" (.)"}, ni guiones {" (-)"}. Puede o no tener el signo "+" adelante. </p>
+                <p class="text-xs text-center text-teal-600">
+                  Sin espacios, ni puntos{" (.)"}, ni guiones {" (-)"}. Puede o
+                  no tener el signo "+" adelante.{" "}
+                </p>
               </div>
             </div>
             <div className="flex flex-col">
@@ -208,7 +236,9 @@ const handlerNavigateHome = () => {
                     title="Debe contener entre 6 y 15 caracteres alfanuméricos"
                     placeholder="19457869"
                   />
-                  <p class="text-xs text-center text-teal-600">Sin puntos {" (.)"} ni guiones {" (-)"}</p>
+                  <p class="text-xs text-center text-teal-600">
+                    Sin puntos {" (.)"} ni guiones {" (-)"}
+                  </p>
                 </div>
                 <div className="w-1/2">
                   <label
@@ -244,10 +274,11 @@ const handlerNavigateHome = () => {
                   pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$"
                   title="Debe contener entre 6 y 12 caracteres, al menos 1 número, 1 letra mayúscula y 1 letra minúscula"
                   placeholder=""
-                  
                 />
-                <p class="text-xs text-center text-teal-600">Debe tener: entre 6 y 12 caracteres, al menos 1 número, 1 letra mayúscula y 1 minúscula</p>
-
+                <p class="text-xs text-center text-teal-600">
+                  Debe tener: entre 6 y 12 caracteres, al menos 1 número, 1
+                  letra mayúscula y 1 minúscula
+                </p>
               </div>
             </div>
             <div className="mt-1 flex flex-col">
@@ -261,7 +292,6 @@ const handlerNavigateHome = () => {
                   id="repeatPassword"
                   name="repeatPassword"
                   onChange={handleChange}
-                  
                   value={user.repeatPassword}
                   required
                 />
@@ -285,11 +315,12 @@ const handlerNavigateHome = () => {
             >
               Iniciar Sesión {" | "}
             </p>
-            <p 
-            onClick={handlerNavigateHome}
-            className=" leading-6 text-teal-600 hover:text-fuchsia-500">Seguir como visitante
-            
-          </p>
+            <p
+              onClick={handlerNavigateHome}
+              className=" leading-6 text-teal-600 hover:text-fuchsia-500"
+            >
+              Seguir como visitante
+            </p>
           </p>
           {/* botón para loguearse con Google */}
           <div className="mt-1 flex items-center justify-center ">
