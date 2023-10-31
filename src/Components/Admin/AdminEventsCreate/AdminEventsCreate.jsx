@@ -12,7 +12,22 @@ export default function AdminEventsCreate() {
     const dispatch = useDispatch();
     const {allEvents} = useSelector((s) => s.events)
 
-    console.log(allEvents)
+    const getEvents = async () => {
+        try {
+          const { data } = await instance.get("/event") // http://localhost:3001/event
+          console.log(data)
+          return data
+        } catch (error) {
+          console.log(error)
+        }
+    };
+    
+        useEffect(() => {
+          getEvents().then((data) => (dispatch(getAllEvents(data))))
+        }, []
+    );
+
+    // console.log(allEvents)
 
     let iframeRegex = /<iframe[^>]+src="([^"]+)"/;
 
@@ -41,21 +56,29 @@ export default function AdminEventsCreate() {
     });
 
     const [section, setSection] = useState({
+        eventID: "",
+        rows: "",
+        columns: "",
         sector: "",
-        wildcard: "",
-        ticketType: "",
-        discountCode: "",
-        ticketPrice: "",
+        price: "",
         sectionSeats: "",
-        sectionRows: "",
-        sectionColumns: "",
+        // ticketType: "",
+        // discountCode: "",
     });
 
     console.log(input);
+    console.log(section);
 
     function handleChange(e){
         setInput({
             ...input,
+            [e.target.name]: e.target.value,
+        })
+    };
+
+    function handleChangeSection(e){
+        setSection({
+            ...section,
             [e.target.name]: e.target.value,
         })
     };
@@ -287,19 +310,25 @@ function handleChangeSection(e){
                     <div className={styles.formFields}>
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Selecciona un evento</label>
+                    <select className={styles.formInputText}
+                    name='eventID'
+                    value={section.eventID}
+                    onChange={handleChangeSection} >
+                      <option value="">-- Seleccionar --</option>
+                    {allEvents.map((event) => (
+                      <option key={event.eventID} value={event.eventID}>
+                            {event.name}
+                        </option>
+                    ))}
+                    </select>
+                    </div>
+                    <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Nombre de la sección</label>
                     <input className={styles.formInputText}
                     type="text"
                     name='sector'
                     value={section.sector}
-                    onChange={handleChangeSection} />
-                    </div>
-                    <div className={styles.fieldContainer}>
-                    <label className={styles.formLabel}>Campo disponible</label>
-                    <input className={styles.formInputText}
-                    type="text"
-                    name='wildcard'
-                    value={section.wildcard}
                     onChange={handleChangeSection} />
                     </div>
                     </div>
@@ -327,8 +356,8 @@ function handleChangeSection(e){
                     <input className={styles.formInputText}
                     type="number"
                     min="0"
-                    name='ticketPrice'
-                    value={section.ticketPrice}
+                    name='price'
+                    value={section.price}
                     onChange={handleChangeSection} />
                     </div>
                     <div className={styles.fieldContainer}>
@@ -344,19 +373,19 @@ function handleChangeSection(e){
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Cantidad de filas</label>
-                    {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='sectionRows' value='0' readOnly /> : <input className={styles.formInputText}
+                    {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='rows' value='0' readOnly /> : <input className={styles.formInputText}
                     type="number"
                     min="0"
-                    name='sectionRows'
-                    value={section.sectionRows}
+                    name='rows'
+                    value={section.rows}
                     onChange={handleChangeSection} />}
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Cantidad de columnas</label>
-                    {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='sectionColumns' value='0' readOnly /> : <input className={styles.formInputText}
+                    {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='columns' value='0' readOnly /> : <input className={styles.formInputText}
                     type="number"
                     min="0"
-                    name='sectionColumns'
+                    name='columns'
                     value={section.sectionColumns}
                     onChange={handleChangeSection} />}
                     </div>
