@@ -5,7 +5,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import events from "../Components/User/Events/Events"
 
 const initialState = {
-  allEvents: events,
+  allEvents: [],
   eventsFiltered: [],
   isFilter: false,
   reset: false,
