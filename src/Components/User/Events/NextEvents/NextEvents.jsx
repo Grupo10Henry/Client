@@ -1,7 +1,5 @@
 // Kevin :o
 
-// ESTO NO TIENE LOGICA, SOLO ES UNA DEMOSTRACION VISUAL DE COMO DEBE QUEDAR
-
 import Cards from "../../Cards/Cards"
 import events from "../Events"
 
