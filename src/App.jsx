@@ -16,6 +16,7 @@ import Footer from "./Components/User/Footer/Footer"
 import FAQ from "./Pages/User/FAQ/FAQ"
 
 import axios from "axios"
+import Reviews from "./Components/User/Reviews/Reviews"
 
 function App() {
   const location = useLocation()
@@ -78,6 +79,7 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
+        <Route path="/reviews" element={<Reviews/>}/>
       </Routes>
       {location.pathname === "admin" ? null : <Footer />}
     </div>
