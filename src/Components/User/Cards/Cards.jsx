@@ -1,6 +1,4 @@
 // Kevin uwu
-
-import { useSelector } from "react-redux"
 import Card from "./Card"
 
 import style from "./Cards.module.css"
@@ -8,7 +6,7 @@ import style from "./Cards.module.css"
 const Cards = ({ data }) => {
   return (
     <div className={style.cards}>
-      {data.map((event) => (
+      {data?.map((event) => (
         <Card key={event.eventID} {...event} />
       ))}
     </div>

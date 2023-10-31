@@ -2,19 +2,12 @@
 
 import { createSlice } from "@reduxjs/toolkit"
 
-import events from "../Components/User/Events/Events"
-
 const initialState = {
   allEvents: [],
   eventsFiltered: [],
   isFilter: false,
   reset: false,
-  //probando
-  // allEvents: {
-  //   mostPopular: [],
-  //   nextEvents: [],
-  //   availableEvents: [],
-  // },
+  isLoading: false,
 }
 
 export const eventsSlice = createSlice({
@@ -30,9 +23,13 @@ export const eventsSlice = createSlice({
     handlerIsFilter: (state, action) => {
       state.isFilter = true
     },
+    handlerIsLoading: (state, action) => {
+      state.isLoading = action.payload
+    },
     handlerReset: (state, action) => {
       state.reset = true
       state.isFilter = false
+      state.isLoading = false
     },
   },
 })
@@ -42,6 +39,7 @@ export const {
   setFilteredEvents,
   handlerIsFilter,
   handlerReset,
+  handlerIsLoading,
 } = eventsSlice.actions
 
 export default eventsSlice.reducer
