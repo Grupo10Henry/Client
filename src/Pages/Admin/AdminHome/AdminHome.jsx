@@ -15,8 +15,6 @@ export default function AdminHome() {
         show: "home"
     });
 
-    console.log(display)
-
     return (
         <div className={styles.AdminHomeContainer}>
             <div>

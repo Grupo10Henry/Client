@@ -24,7 +24,7 @@ export const eventsSlice = createSlice({
     getAllEvents: (state, action) => {
       state.allEvents = action.payload
     },
-    getFilteredEvents: (state, action) => {
+    setFilteredEvents: (state, action) => {
       state.eventsFiltered = action.payload
     },
     handlerIsFilter: (state, action) => {
@@ -39,7 +39,7 @@ export const eventsSlice = createSlice({
 
 export const {
   getAllEvents,
-  getFilteredEvents,
+  setFilteredEvents,
   handlerIsFilter,
   handlerReset,
 } = eventsSlice.actions

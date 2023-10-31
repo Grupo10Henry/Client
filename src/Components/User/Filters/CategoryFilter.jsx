@@ -1,47 +1,30 @@
 //franco
-import { IoMdArrowDropupCircle, IoMdArrowDropdownCircle } from "react-icons/io"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { IoMdArrowDropdownCircle, IoMdArrowDropupCircle } from "react-icons/io"
+import { categories } from "../../../utils/categories"
 
 import style from "./Filters.module.css"
 
-const categories = [
-  "Teatro",
-  "Música",
-  "Cine",
-  "Artes Visuales",
-  "Literatura",
-  "Deportes",
-  "Eventos académicos",
-  "Convenciones",
-  "Festivales",
-  "Empresariales",
-  "Filantrópicos",
-]
 const CategoryFilter = ({ handlerFilter }) => {
   const [showme, setShowme] = useState(false)
   const [selectedOption, setSelectedOption] = useState("")
 
   const optionClass = `${style.options} ${showme && style.show}`
-  const categoriesSort = categories.sort((a, b) => a.localeCompare(b))
 
   const handlerDropdown = () => {
     setShowme(!showme)
   }
 
-  const handlerCategory = () => {
+  const handlerCategory = (name, value) => {
     // pedirle via query al back
+    setSelectedOption(value)
+    handlerFilter(name, value)
+    console.log("pidiendo a back:", value)
   }
-
-  useEffect(() => {
-    handlerFilter({
-      newProp: "category",
-      value: selectedOption === "Todos" ? "" : selectedOption,
-    })
-  }, [selectedOption])
 
   return (
     <div className={style.wrapper}>
-      <h6 className={style.title}>Categorías</h6>
+      <h6 className={`${style.title} gradient-text`}>Categorías</h6>
       {/* select */}
       <div className={style.selectWrapper} onClick={handlerDropdown}>
         {/* icons */}
@@ -53,23 +36,21 @@ const CategoryFilter = ({ handlerFilter }) => {
         ) : (
           <IoMdArrowDropdownCircle className={style.arrow} />
         )}
+
         {/* options */}
         <div className={optionClass}>
           {selectedOption !== "" && (
-            <span
-              className={style.option}
-              onClick={() => setSelectedOption("Todos")}
-            >
+            <span className={style.option} onClick={() => handlerCategory("")}>
               Todos
             </span>
           )}
-          {categoriesSort.map((item, idx) => (
+          {categories.map((element) => (
             <span
-              key={idx}
+              key={element.id}
               className={style.option}
-              onClick={() => setSelectedOption(item)}
+              onClick={() => handlerCategory("category", element.value)}
             >
-              {item}
+              {element.value}
             </span>
           ))}
         </div>

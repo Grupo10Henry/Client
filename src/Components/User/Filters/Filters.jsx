@@ -1,68 +1,52 @@
 //franco
 import { useState } from "react"
+import SearchBar from "../SearchBar/SearchBar"
 import CategoryFilter from "./CategoryFilter"
 import DateFilter from "./DateFilter"
 import PriceFilter from "./PriceFilter"
-import SearchBar from "../SearchBar/SearchBar"
-import axios from "axios"
+import { instance } from "../../../axios/config"
 
 import style from "./Filters.module.css"
+import { useDispatch } from "react-redux"
+import { setFilteredEvents } from "../../../redux/eventsSlice"
 
 const Filters = () => {
-  const [filters, setFilters] = useState({
-    search: "",
-    category: "",
-    date: "",
-    price: "",
-  })
+  const [filters, setFilters] = useState({})
+  const dispatch = useDispatch()
 
-  const handlerFilter = ({ newProp, value }) => {
-    setFilters({
-      ...filters,
-      [newProp]: value,
-    })
-  }
-
-  const handlerApplyFilter = async () => {
-    console.log(filters)
-    // try {
-    //   const { data } = await axios.get("http://localhost:3001/event", {
-    //     params: filters,
-    //   })
-    //   console.log(data)
-    // } catch (error) {
-    //   console.log(error.response?.data.error)
-    // }
-  }
-
-  const showBtnApply = () => {
-    let verify = false
-    for (let prop in filters) {
-      if (filters[prop] !== "") {
-        verify = true
-        break
-      } else verify = false
+  const filterData = async (filters) => {
+    try {
+      const { data } = await instance.get("/event", {
+        params: filters,
+      })
+      console.log(data)
+      dispatch(setFilteredEvents(data))
+      return data
+    } catch (error) {
+      console.log(error?.response?.data.error || error)
     }
-    return verify
+  }
+
+  const handlerFilter = async (name, value) => {
+    try {
+      const updatedFilters = { ...filters, [name]: value }
+      setFilters(updatedFilters)
+      console.log("filters:", updatedFilters)
+
+      const data = await filterData(updatedFilters)
+      // console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
     <div className={style.container}>
       <div className={style.filters}>
-        <SearchBar
-          handlerFilter={handlerFilter}
-          handlerApplyFilter={handlerApplyFilter}
-        />
+        <SearchBar handlerFilter={handlerFilter} />
         <CategoryFilter handlerFilter={handlerFilter} />
         <DateFilter handlerFilter={handlerFilter} />
         <PriceFilter handlerFilter={handlerFilter} />
-      </div>
-      <div className={style.btnWrapper}>
-        {showBtnApply() && (
-          <button className={style.btn} onClick={handlerApplyFilter}>
-            Aplicar filtros
-          </button>
-        )}
       </div>
     </div>
   )

@@ -1,26 +1,25 @@
 import { useState } from "react"
 
-export const useSarchbar = (handlerFilter, handlerApplyFilter) => {
+export const useSarchbar = (handlerFilter) => {
   const [input, setInput] = useState("")
 
-  const handleChange = (e) => {
+  const handlerChange = (e) => {
     setInput(e.target.value)
   }
 
-  const handleSearch = (e) => {
+  const handlerSearch = (e) => {
     e.preventDefault()
     if (input.trim().length === 0) {
       alert("Por favor, ingresa algo")
       return
     }
-    handlerFilter({ newProp: "search", value: input })
-    handlerApplyFilter()
+    handlerFilter(input)
+    console.log("pidiendo a back:", input)
   }
 
-  const handleDeleteInput = () => {
+  const handlerDeleteInput = () => {
     setInput("")
-    handlerFilter({ newProp: "search", value: "" })
   }
 
-  return { handleChange, handleSearch, handleDeleteInput, input }
+  return { handlerChange, handlerSearch, handlerDeleteInput, input }
 }
