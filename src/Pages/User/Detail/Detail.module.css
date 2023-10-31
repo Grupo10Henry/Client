@@ -149,7 +149,7 @@
 /* Hijo 4: Ocupa el 100% del ancho y alto proporcional */
 .ContainerGoogleMap {
   width: 100%;
-  height: auto;
+  height: 20em;
   margin-bottom: 100px;
 }
 
