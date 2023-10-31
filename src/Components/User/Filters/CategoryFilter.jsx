@@ -5,7 +5,7 @@ import { categories } from "../../../utils/categories"
 
 import style from "./Filters.module.css"
 
-const CategoryFilter = () => {
+const CategoryFilter = ({ handlerFilter }) => {
   const [showme, setShowme] = useState(false)
   const [selectedOption, setSelectedOption] = useState("")
 
@@ -15,15 +15,16 @@ const CategoryFilter = () => {
     setShowme(!showme)
   }
 
-  const handlerCategory = (value) => {
+  const handlerCategory = (name, value) => {
     // pedirle via query al back
     setSelectedOption(value)
+    handlerFilter(name, value)
     console.log("pidiendo a back:", value)
   }
 
   return (
     <div className={style.wrapper}>
-      <h6 className={style.title}>Categorías</h6>
+      <h6 className={`${style.title} gradient-text`}>Categorías</h6>
       {/* select */}
       <div className={style.selectWrapper} onClick={handlerDropdown}>
         {/* icons */}
@@ -47,7 +48,7 @@ const CategoryFilter = () => {
             <span
               key={element.id}
               className={style.option}
-              onClick={() => handlerCategory(element.value)}
+              onClick={() => handlerCategory("category", element.value)}
             >
               {element.value}
             </span>
