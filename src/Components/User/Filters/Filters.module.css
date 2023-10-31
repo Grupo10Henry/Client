@@ -1,20 +1,20 @@
-.container {
+.filters {
   padding: 0 20px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
+  margin-bottom: 100px;
   gap: 20px;
 }
 
-.filters {
+.filtersContainer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 15px;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
-.filters > * {
+.filtersContainer > * {
   flex: 1 1 250px;
 }
 
@@ -23,6 +23,26 @@
   align-items: center;
   flex-direction: column;
   gap: 5px;
+}
+
+.filtersReset {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  font-size: 16px;
+  transition: color ease 200ms;
+  color: var(--negro);
+}
+
+.filtersBtn {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.filtersBtn:hover {
+  color: var(--danger);
+  transition: color ease 200ms;
 }
 
 /* selects */

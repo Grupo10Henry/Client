@@ -1,15 +1,16 @@
 //franco
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { IoMdArrowDropdownCircle, IoMdArrowDropupCircle } from "react-icons/io"
 import { categories } from "../../../utils/categories"
 
 import style from "./Filters.module.css"
-import { useDispatch } from "react-redux"
-import { handlerIsFilter, handlerIsLoading } from "../../../redux/eventsSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { handlerIsFilter } from "../../../redux/eventsSlice"
 
 const CategoryFilter = ({ handlerFilter }) => {
   const [showme, setShowme] = useState(false)
   const [selectedOption, setSelectedOption] = useState("")
+  const { reset } = useSelector((s) => s.events)
 
   const dispatch = useDispatch()
 
@@ -26,6 +27,12 @@ const CategoryFilter = ({ handlerFilter }) => {
     dispatch(handlerIsFilter())
     handlerFilter(name, value)
   }
+
+  useEffect(() => {
+    if (reset) {
+      setSelectedOption("")
+    }
+  }, [reset])
 
   return (
     <div className={style.wrapper}>
