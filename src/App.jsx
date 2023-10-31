@@ -36,7 +36,6 @@ function App() {
     try {
       const response = await axios.post(URL, { email, password })
       const token = response.data
-
       if (token) {
         localStorage.setItem("token", token)
 
@@ -79,7 +78,7 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
-        <Route path="/reviews" element={<Reviews/>}/>
+        <Route path="/reviews" element={<Reviews />} />
       </Routes>
       {location.pathname === "admin" ? null : <Footer />}
     </div>
