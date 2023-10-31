@@ -34,8 +34,8 @@ export default function AdminEventsCreate() {
         image: "",
         bannerImage: "",
         planImage: "",
-        priceMin: "",
-        priceMax: "",
+        priceMin: 0,
+        priceMax: 0,
         isDonation: "",
         type: "",
     });
