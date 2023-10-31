@@ -69,7 +69,6 @@ function handleChangeSection(e){
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //Código para extraer URL de Google Maps
         if (!input.name || !input.description || !input.category || !input.isDonation || !input.capacity || !input.date || !input.time || !input.locationName ||
             !input.adressLocation || !input.mapLocation || !input.image || !input.bannerImage || !input.planImage || !input.priceMin || !input.priceMax || !input.type) {
                 alert('Por favor completa todos los campos para crear el evento')
