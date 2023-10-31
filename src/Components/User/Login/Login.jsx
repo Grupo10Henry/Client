@@ -67,6 +67,18 @@ const Login = ({ login }) => {
     console.log(response.data);
   };
 
+  const handlerNavigateSignUp = () => {
+    navigate("/registro");
+  };
+
+  const handlerNavigateHome = () => {
+    navigate("/");
+  };
+
+const handlePasswordRecuperation = () => {
+  navigate("/recuperarcontrasena");
+}
+
   return (
     <>
       <div className="fixed inset-0 z-100 flex items-center justify-center backdrop-filter backdrop-blur-lg">
@@ -122,12 +134,12 @@ const Login = ({ login }) => {
                   🗝 CONTRASEÑA
                 </label>
                 <div className="text-xs">
-                  <a
-                    href="/recuperarcontrasena"
-                    className="font-semibold text-teal-700 hover:text-fuchsia-600"
+                  <p
+                    onClick={handlePasswordRecuperation}
+                    className="font-semibold text-teal-700 hover:text-fuchsia-600 cursor-pointer"
                   >
                     Olvidé mi contraseña
-                  </a>
+                  </p>
                 </div>
               </div>
               <div className="mt-2">
@@ -145,28 +157,7 @@ const Login = ({ login }) => {
               </div>
             </div>
 
-            {/* recordar contraseña tildar con checkbox 
-                <div >
-                <input
-                type="checkbox"
-                name="recordar"
-                checked={recordar}
-                onChange={handleRecordar}
-                />
-
-                {/* para recuperar contraseña hacer click en el texto "Recuperar contraseña" y llamar a handleRecuperar
-                <label> Recuperar contraseña </label>
-                <br/>
-                <input
-                type="checkbox"
-                name="recuperar"
-                checked={recuperar}
-                onChange={handleRecuperar}
-                />
-
-        
-                </div> 
-                */}
+           
             <div>
               <button
                 className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-fuchsia-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -179,15 +170,20 @@ const Login = ({ login }) => {
 
           {/* si no está registrado, link al componente SignUp ( modal) */}
 
-          <p className="mt-3 text-center text-sm text-gray-800">
+          <p className="mt-1 text-center text-sm md:text-base lg:text-lg xl:text-xl text-gray-800">
             ¿No está registrado?{" "}
-            <a
-              href="/registro"
-              className="font-semibold leading-6 text-teal-700 hover:text-fuchsia-500"
+            <p
+              onClick={handlerNavigateSignUp}
+              className="cursor-pointer font-semibold leading-6 text-teal-700 hover:text-fuchsia-500"
             >
               Regístrese aquí
-            </a>
-            <a href="/">{"    "} Inicio</a>
+            </p>
+            <p
+              onClick={handlerNavigateHome}
+              className=" cursor-pointer leading-6 text-teal-600 hover:text-fuchsia-500"
+            >
+              Seguir como visitante
+            </p>
           </p>
           {/* botón para loguearse con Google */}
           <div className="mt-1 flex items-center justify-center ">
