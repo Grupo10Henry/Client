@@ -1,12 +1,19 @@
 // Luissssss
 import axios from 'axios';
 import styles from './AdminEventsCreate.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { instance } from '../../../axios/config';
 import { categories } from '../../../utils/categories';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllEvents } from '../../../redux/eventsSlice';
 
 export default function AdminEventsCreate() {
-    
+
+    const dispatch = useDispatch();
+    const {allEvents} = useSelector((s) => s.events)
+
+    console.log(allEvents)
+
     let iframeRegex = /<iframe[^>]+src="([^"]+)"/;
 
     const types = [
@@ -29,7 +36,7 @@ export default function AdminEventsCreate() {
         planImage: "",
         priceMin: "",
         priceMax: "",
-        isDonation: false,
+        isDonation: "",
         type: "",
     });
 
@@ -67,6 +74,7 @@ function handleChangeSection(e){
             !input.adressLocation || !input.mapLocation || !input.image || !input.bannerImage || !input.planImage || !input.priceMin || !input.priceMax || !input.type) {
                 alert('Por favor completa todos los campos para crear el evento')
             } else {
+                // Código para extraer la URL de source del código de GoogleMaps
                 let match = input.mapLocation.match(iframeRegex);
                 setInput({...input, mapLocation: match[1]})
 
@@ -130,7 +138,7 @@ function handleChangeSection(e){
                     name='category'
                     value={input.category}
                     onChange={handleChange} >
-                      <option value="" selected disabled></option>
+                      <option value="">-- Seleccionar --</option>
                     {categories.map((cat) => (
                       <option key={cat.id} value={cat.value}>
                             {cat.value}
@@ -144,7 +152,7 @@ function handleChangeSection(e){
                     name='isDonation'
                     value={input.isDonation}
                     onChange={handleChange} >
-                        <option value="" selected disabled></option>
+                        <option value="">-- Seleccionar --</option>
                         <option value={false}>
                             Sí
                         </option>
@@ -257,7 +265,7 @@ function handleChangeSection(e){
                     name='type'
                     value={input.type}
                     onChange={handleChange} >
-                      <option value="" selected disabled></option>
+                      <option value="">-- Seleccionar --</option>
                     {types.sort().map((cat, idx) => (
                       <option key={idx} value={cat}>
                             {cat}
