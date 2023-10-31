@@ -104,12 +104,24 @@ console.log(eventID, "eventID en detalle")
     fetchEventDetails();
   }, [eventID]);
 
+  const originalDate = eventDetails.date;
+  const parts = originalDate.split("-");
+
+  if (parts.length === 3) {
+    const newDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+    <h1>{newDate}</h1>;
+  }
+  else {
+    <h1>{eventDetails.date}</h1>;
+  }
+
+
   return (
     <>
       <div className={styles.ContainerGlobal}>
         
           <div className={styles.ContainerBanner}>
-            <p>Banner del Evento</p>
+            
             <img src={eventDetails.bannerImage} alt={eventDetails.name} />
           </div>
           <div className={styles.ContainerLeftColumn}>
@@ -120,14 +132,14 @@ console.log(eventID, "eventID en detalle")
             <div className={styles.ContainerAddress}>
               <h3>Lugar: {eventDetails.locationName}</h3>
               <h3>Dirección: {eventDetails.adressLocation}</h3>
-              <h4>Capacidad Total: {eventDetails.capacity}</h4>
+              <h4>Capacidad Total: {eventDetails.capacity}{" "} personas. </h4>
             </div>
           </div>
 
           <div className={styles.ContainerRightColumn}>
             <div className={styles.ContainerEventDate}>
-              <h3>Fecha: {eventDetails.date}</h3>
-              <h2>Hora: {eventDetails.time}</h2>
+              <h1>{eventDetails.date.split("-").reverse().join("-")}</h1>
+              <h2>{eventDetails.time.split(":").slice(0,2).join(":") }{" "} hs.</h2>
               <h2>Sectores:</h2>
               {/*{sectorPrices.map((sector) => (
                 <div

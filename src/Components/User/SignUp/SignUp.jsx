@@ -19,9 +19,7 @@ const SignUp = () => {
     navigate("/iniciarsesion");
   };
 
-  const handlerNavigateSignUp = () => {
-    navigate("/registro");
-  };
+
 
   const [user, setUser] = useState({
     name: "",
@@ -312,13 +310,13 @@ const currentStyles = modoOscuro ? darkModeStyles : lightModeStyles;
             ¿Ya está registrado?{" "}
             <p
               onClick={handlerNavigateLogin}
-              className="font-semibold leading-6 text-teal-700 hover:text-fuchsia-500"
+              className="cursor-pointer font-semibold leading-6 text-teal-700 hover:text-fuchsia-500"
             >
               Iniciar Sesión {" | "}
             </p>
             <p
               onClick={handlerNavigateHome}
-              className=" leading-6 text-teal-600 hover:text-fuchsia-500"
+              className=" cursor-pointer leading-6 text-teal-600 hover:text-fuchsia-500"
             >
               Seguir como visitante
             </p>
