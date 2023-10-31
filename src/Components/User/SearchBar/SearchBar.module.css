@@ -33,10 +33,6 @@
   border: none;
 }
 
-.title {
-  color: var(--turquesa);
-}
-
 .btn {
   display: grid;
   place-content: center;

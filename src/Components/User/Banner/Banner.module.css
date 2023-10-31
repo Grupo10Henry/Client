@@ -36,12 +36,11 @@
 .bannerH1 {
   font-size: 30px;
   font-weight: 600;
-  color: var(--verde-claro);
 }
 
 .bannerParagraph {
   line-height: 1.5;
-  font-size: clamp(14px, 2vw, 16px);
+  font-size: clamp(14px, 2vw, 18px);
   max-width: 700px;
   margin-inline: auto;
 }

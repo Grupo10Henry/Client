@@ -7,7 +7,9 @@ const Banner = ({ scrollToSection }) => {
     <section className={style.banner}>
       <div className={style.bannerBg}></div>
       <div className={style.bannerContent}>
-        <h1 className={style.bannerH1}>¡Bienvenido a Mi Butaca!</h1>
+        <h1 className={`${style.bannerH1} gradient-text`}>
+          ¡Bienvenido a Mi Butaca!
+        </h1>
         <p className={style.bannerParagraph}>
           En Mi Butaca, estamos dedicados a brindarte una experiencia
           inolvidable en la industria del entretenimiento. Desde los eventos más

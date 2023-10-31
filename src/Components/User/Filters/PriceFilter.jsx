@@ -40,12 +40,13 @@ const PriceFilter = ({ handlerFilter }) => {
   const handlerPrice = (value) => {
     // pedirle via query al back
     setSelectedOption(valueSelect(value))
+    handlerFilter(value)
     console.log("pidiendo a back:", value)
   }
 
   return (
     <div className={style.wrapper}>
-      <h6 className={style.title}>A partir de</h6>
+      <h6 className={`${style.title} gradient-text`}>A partir de</h6>
       {/* select */}
       <div className={style.selectWrapper} onClick={handlerDropdown}>
         {/* icons */}
