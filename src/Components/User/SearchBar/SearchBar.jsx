@@ -5,13 +5,13 @@ import { useSarchbar } from "../../../hooks/useSearchBar"
 
 import style from "./SearchBar.module.css"
 
-const SearchBar = () => {
+const SearchBar = ({ handlerFilter }) => {
   const { handlerChange, handlerSearch, handlerDeleteInput, input } =
-    useSarchbar()
+    useSarchbar(handlerFilter)
 
   return (
     <div className={style.wrapper}>
-      <h6 className={style.title}>Buscar</h6>
+      <h6 className={`${style.title} gradient-text`}>Buscar</h6>
       {/* form */}
       <form className={style.form} onSubmit={handlerSearch}>
         <input

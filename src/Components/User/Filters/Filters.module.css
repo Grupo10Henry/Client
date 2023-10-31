@@ -24,28 +24,6 @@
   flex-direction: column;
   gap: 5px;
 }
-/* 
-.btnWrapper {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 20px;
-}
-
-.btn {
-  --color: var(--verde-claro);
-  color: var(--color);
-  background-color: var(--filters-bg);
-  padding: 10px 15px;
-  border-radius: 4px;
-  font-size: 14px;
-  border: 1px solid #efefef;
-  transition: transform ease 200ms;
-}
-
-.btn:hover {
-  transition: transform ease 200ms;
-  transform: translateY(5px);
-} */
 
 /* selects */
 .wrapper {
@@ -72,10 +50,6 @@
 
 .arrow {
   font-size: 20px;
-}
-
-.title {
-  color: var(--turquesa);
 }
 
 .titleOption {

@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export const useSarchbar = () => {
+export const useSarchbar = (handlerFilter) => {
   const [input, setInput] = useState("")
 
   const handlerChange = (e) => {
@@ -13,6 +13,7 @@ export const useSarchbar = () => {
       alert("Por favor, ingresa algo")
       return
     }
+    handlerFilter(input)
     console.log("pidiendo a back:", input)
   }
 
