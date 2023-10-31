@@ -42,7 +42,7 @@ const events = [
       "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9ec28039-b885-442a-9e83-ce5fe3de2cfc/d8hipyl-e3e5d4cb-1443-4639-b342-6c1b55c159cd.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzllYzI4MDM5LWI4ODUtNDQyYS05ZTgzLWNlNWZlM2RlMmNmY1wvZDhoaXB5bC1lM2U1ZDRjYi0xNDQzLTQ2MzktYjM0Mi02YzFiNTVjMTU5Y2QucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.xCK1l4rxCNMflozneIwN9Hfq6rnVaa6inP8LEJILbMk",
     planImage:
       "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9ec28039-b885-442a-9e83-ce5fe3de2cfc/d8hipyl-e3e5d4cb-1443-4639-b342-6c1b55c159cd.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzllYzI4MDM5LWI4ODUtNDQyYS05ZTgzLWNlNWZlM2RlMmNmY1wvZDhoaXB5bC1lM2U1ZDRjYi0xNDQzLTQ2MzktYjM0Mi02YzFiNTVjMTU5Y2QucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.xCK1l4rxCNMflozneIwN9Hfq6rnVaa6inP8LEJILbMk",
-    views: 8000,
+    views: 20000,
     priceMin: "300000",
     priceMax: "10000000",
   },
@@ -65,7 +65,7 @@ const events = [
       "https://teatrooriente.cl/wp-content/uploads/2018/11/banner-principal-ap-1500x459.jpg",
     planImage:
       "https://teatrooriente.cl/wp-content/uploads/2018/11/banner-principal-ap-1500x459.jpg",
-    views: 10000,
+    views: 2000,
     priceMin: "300000",
     priceMax: "10000000",
   },
@@ -107,10 +107,10 @@ const events = [
     image:
       "https://i.scdn.co/image/ab6761610000e5ebc85bfa07726d7173c15306dc",
     bannerImage:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtJDEWk1U6KQYPTbHkpFq-9gGQmjdtF2J-KeqGlxtqlovahh6vmmCnpYEJgPPhNSLl9-E&usqp=CAU",
+      "https://cdn.shopify.com/s/files/1/0705/7417/8584/collections/LuisFonsi-Banner.jpg?v=1680532693",
     planImage:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtJDEWk1U6KQYPTbHkpFq-9gGQmjdtF2J-KeqGlxtqlovahh6vmmCnpYEJgPPhNSLl9-E&usqp=CAU",
-    views: 10000,
+      "https://cdn.shopify.com/s/files/1/0705/7417/8584/collections/LuisFonsi-Banner.jpg?v=1680532693",
+    views: 14000,
     priceMin: "300000",
     priceMax: "10000000",
   },
@@ -132,7 +132,7 @@ const events = [
       "https://www.music-art.sk/wp-content/uploads/2019/10/maluma_Banner.jpg",
     planImage:
       "https://www.music-art.sk/wp-content/uploads/2019/10/maluma_Banner.jpg",
-    views: 8000,
+    views: 18000,
     priceMin: "300000",
     priceMax: "10000000",
   },
