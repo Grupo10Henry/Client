@@ -20,7 +20,7 @@ const Card = (props) => {
       </div>
 
       <div className={style.content}>
-        <h4>{name}</h4>
+        <h4 className="gradient-text">{name}</h4>
         <div className={style.location}>
           <HiLocationMarker />
           <span>{locationName}</span>
@@ -37,7 +37,10 @@ const Card = (props) => {
         </div>
       </div>
 
-      <Link to={`/detalle/${eventID}`} className={style.more}>
+      <Link
+        to={`/detalle/${eventID}`}
+        className={`${style.more} gradient-text`}
+      >
         Saber mas
       </Link>
     </div>

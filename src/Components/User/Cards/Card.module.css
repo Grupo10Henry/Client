@@ -1,6 +1,5 @@
 .card {
-  background-color: var(--amarillo-claro);
-  background-color: #a2dcbb;
+  background: var(--negro);
   padding: 20px;
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
@@ -15,13 +14,14 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 15px;
+  margin-top: 20px;
   font-size: 15px;
+  color: #efefef;
 }
 
 .img {
-  height: 200px;
+  height: 300px;
   border-radius: 4px;
   overflow: hidden;
 }
@@ -46,12 +46,10 @@
   font-weight: 600;
   letter-spacing: 0.5px;
   justify-content: center;
-  color: var(--turquesa);
+  /* color: #efefef; */
 }
 
 .more {
-  text-decoration: none;
   margin-top: 20px;
   display: block;
-  color: var(--turquesa);
 }

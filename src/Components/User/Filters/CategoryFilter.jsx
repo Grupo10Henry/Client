@@ -4,10 +4,14 @@ import { IoMdArrowDropdownCircle, IoMdArrowDropupCircle } from "react-icons/io"
 import { categories } from "../../../utils/categories"
 
 import style from "./Filters.module.css"
+import { useDispatch } from "react-redux"
+import { handlerIsFilter, handlerIsLoading } from "../../../redux/eventsSlice"
 
 const CategoryFilter = ({ handlerFilter }) => {
   const [showme, setShowme] = useState(false)
   const [selectedOption, setSelectedOption] = useState("")
+
+  const dispatch = useDispatch()
 
   const optionClass = `${style.options} ${showme && style.show}`
 
@@ -17,9 +21,10 @@ const CategoryFilter = ({ handlerFilter }) => {
 
   const handlerCategory = (name, value) => {
     // pedirle via query al back
-    setSelectedOption(value)
-    handlerFilter(name, value)
     console.log("pidiendo a back:", value)
+    setSelectedOption(value)
+    dispatch(handlerIsFilter())
+    handlerFilter(name, value)
   }
 
   return (
