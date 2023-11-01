@@ -60,7 +60,7 @@ const PriceFilter = ({ handlerFilter }) => {
 
   return (
     <div className={style.wrapper}>
-      <h6 className={`${style.title} gradient-text`}>A partir de</h6>
+      <h6 className={`${style.title} gradient-text`}>Precio máximo </h6>
       {/* select */}
       <div className={style.selectWrapper} onClick={handlerDropdown}>
         {/* icons */}

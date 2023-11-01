@@ -7,7 +7,7 @@ import EventsSections from "../../../Components/User/Events/EventsSections/Event
 import EventsText from "../../../Components/User/EventsText/EventsText"
 import Filters from "../../../Components/User/Filters/Filters"
 import { instance } from "../../../axios/config"
-import { getAllEvents } from "../../../redux/eventsSlice"
+import { getAllEvents, setEventsDate } from "../../../redux/eventsSlice"
 import EventsFiltered from "../../../Components/User/Events/EventsFiltered/EventsFiltered"
 
 import style from "./Home.module.css"
@@ -18,13 +18,29 @@ const Home = () => {
 
   const dispatch = useDispatch()
 
+  // function to set unique dates in state
+  const convertUniquesDates = (arr) => {
+    const onlyDateSet = [...new Set(arr.map((event) => event.date))]
+
+    const newDates = onlyDateSet?.map((date) => {
+      return {
+        id: crypto.randomUUID(),
+        text: date,
+        value: date,
+      }
+    })
+
+    return newDates
+  }
+
   //get events
   const getEvents = async () => {
     try {
       const { data } = await instance.get("/event") // http://localhost:3001/event
+      dispatch(setEventsDate(convertUniquesDates(data)))
       return data
     } catch (error) {
-      console.log(error)
+      console.log(error?.response?.data.error || error)
     }
   }
 

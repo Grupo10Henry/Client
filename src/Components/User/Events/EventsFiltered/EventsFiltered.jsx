@@ -16,7 +16,7 @@ const EventsFiltered = () => {
 
   return (
     <section className={style.eventsFiltered}>
-      <div>EventsFiltered</div>
+      {/* <div>EventsFiltered</div> */}
       <Cards data={eventsFiltered} />
     </section>
   )
