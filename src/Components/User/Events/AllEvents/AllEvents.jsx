@@ -9,7 +9,7 @@ const AllEvents = () => {
   const { allEvents } = useSelector((s) => s.events)
   return (
     <div>
-      <h2>
+      <h2 className="subtitle gradient-text">
         <b>- Todos Los Eventos Disponibles -</b>
       </h2>
       {allEvents ? <Cards data={allEvents} /> : "No hay eventos disponibles :c"}

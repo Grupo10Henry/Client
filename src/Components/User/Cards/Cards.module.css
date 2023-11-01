@@ -7,19 +7,3 @@
   grid-template-columns: repeat(auto-fit, minmax(100px, 300px));
   grid-gap: 17px;
 }
-
-/* @media (width > 810px) {
-  .cards {
-    justify-content: space-between;
-    gap: 0;
-    row-gap: 30px;
-  }
-} */
-
-/* .cards {
-  padding-top: 75px;
-  margin: 13px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 13px;
-} */
