@@ -25,6 +25,7 @@ const MostPopular = () => {
   // CUANDO NO ME PONGAN LINKS DE GOOGLE MEET EN LOS BANNERS, events PASARA A SER allEvents
 
   if (orden?.length > 3) {
+    // ordena el array con los eventos segun las views para mostrar los banners de los primeros 3
     orden.sort((a, b) => {
       if (a.views < b.views) {
         return 1
@@ -38,10 +39,11 @@ const MostPopular = () => {
     return (
       <div className={style.container} id="mostPopular">
         <h2 className="subtitle gradient-text">
-          <b>- Eventos Recomendados -</b>
+          <b>Eventos Recomendados</b>
         </h2>{" "}
         <br />
         <Swiper
+          // cosas para generar el "carrusel" de banners 
           modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
           slidesPerView={1}
           effect={"coverflow"}
@@ -69,7 +71,7 @@ const MostPopular = () => {
           className="swiper_container"
         >
           <SwiperSlide>
-            <Link to={`/detail/${orden[0].eventID}`}>
+            <Link to={`/detalle/${orden[0].eventID}`}>
               <button className={style.buttonInfo}>
                 {"-> Mas informacion aqui <-"}
               </button>
@@ -82,7 +84,7 @@ const MostPopular = () => {
           </SwiperSlide>
           <br />
           <SwiperSlide>
-            <Link to={`/detail/${orden[1].eventID}`}>
+            <Link to={`/detalle/${orden[1].eventID}`}>
               <button className={style.buttonInfo}>
                 {"-> Mas informacion aqui <-"}
               </button>
@@ -95,7 +97,7 @@ const MostPopular = () => {
           </SwiperSlide>
           <br />
           <SwiperSlide>
-            <Link to={`/detail/${orden[2].eventID}`}>
+            <Link to={`/detalle/${orden[2].eventID}`}>
               <button className={style.buttonInfo}>
                 {"-> Mas informacion aqui <-"}
               </button>
@@ -125,10 +127,10 @@ const MostPopular = () => {
   return (
     <div>
       <h2>
-        <b>- Eventos Recomendados -</b>
+        <b>Eventos Recomendados</b>
       </h2>{" "}
       <br />
-      <p>No hay eventos suficientes o faltan mas views</p>
+      <p>No hay eventos disponibles</p>
       <br />
     </div>
   )
