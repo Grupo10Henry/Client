@@ -33,7 +33,7 @@ const NextEvents = () => {
 
   return (
     <div>
-      <h2>
+      <h2 className="subtitle gradient-text">
         <b>- Próximos Eventos -</b>
       </h2>
       {nextEvents ? <Cards data={nextEvents} /> : "No hay proximos eventos :c"}

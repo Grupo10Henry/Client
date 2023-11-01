@@ -7,15 +7,11 @@
 }
 
 .filtersContainer {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;
   align-items: center;
   gap: 15px;
   margin-top: 20px;
-}
-
-.filtersContainer > * {
-  flex: 1 1 250px;
 }
 
 .filterWrapper {
@@ -118,9 +114,14 @@
   border: thin solid #efefef;
 }
 
-/* @media (width > 700px) {
-  .filters {
-    flex-direction: row;
-    gap: 40px;
+@media (width > 700px) {
+  .filtersContainer {
+    grid-template-columns: repeat(2, 1fr);
   }
-} */
+}
+
+@media (width > 1000px) {
+  .filtersContainer {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
