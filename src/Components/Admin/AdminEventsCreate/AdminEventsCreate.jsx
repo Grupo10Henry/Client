@@ -15,7 +15,7 @@ export default function AdminEventsCreate() {
     const getEvents = async () => {
         try {
           const { data } = await instance.get("/event") // http://localhost:3001/event
-          console.log(data)
+        //   console.log(data)
           return data
         } catch (error) {
           console.log(error)
@@ -46,14 +46,23 @@ export default function AdminEventsCreate() {
         locationName: "",
         adressLocation: "",
         mapLocation: "",
-        image: "",
-        bannerImage: "",
-        planImage: "",
+        // image: "",
+        // bannerImage: "",
+        // planImage: "",
         priceMin: 0,
         priceMax: 0,
         isDonation: "",
         type: "",
     });
+
+    const [image, setImage] =useState();
+    const [imageURL, setImageURL] =useState();
+
+    const [bannerImage, setBannerImage] =useState();
+    const [bannerImageURL, setBannerImageURL] =useState();
+
+    const [planImage, setPlanImage] =useState();
+    const [planImageURL, setPlanImageURL] =useState();
 
     const [section, setSection] = useState({
         eventID: "",
@@ -72,12 +81,29 @@ export default function AdminEventsCreate() {
     console.log(section);
     console.log(sections);
 
+    console.log(image, bannerImage, planImage)
+
     function handleChange(e){
         setInput({
             ...input,
             [e.target.name]: e.target.value,
         })
     };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+      };
+
+    const handleBannerImageChange = (e) => {
+        const file = e.target.files[0];
+        setBannerImage(file);
+      };
+
+    const handlePlanImageChange = (e) => {
+        const file = e.target.files[0];
+        setPlanImage(file);
+      };
 
     function handleChangeSection(e){
         setSection({
@@ -109,12 +135,67 @@ export default function AdminEventsCreate() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!input.name || !input.description || !input.category || !input.isDonation || !input.capacity || !input.date || !input.time || !input.locationName ||
-            !input.adressLocation || !input.mapLocation || !input.image || !input.bannerImage || !input.planImage || !input.type) {
+            !input.adressLocation || !input.mapLocation || !input.type) {
                 alert('Por favor completa todos los campos para crear el evento')
             } else {
                 // Código para extraer la URL de source del código de GoogleMaps
+                // let copy = input.mapLocation
                 let match = input.mapLocation.match(iframeRegex);
-                setInput({...input, mapLocation: match[1]})
+                // setInput({...input, mapLocation: match[1]})
+
+                // Cargar imagen en Cloudinary
+                // try {
+                    const formData = new FormData();
+                    formData.append('file', image);
+                    formData.append('upload_preset', 'mibutaca');
+                
+                    const cloudinaryResponse = await axios.post(
+                      'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
+                      formData
+                    );
+                
+                    // Obtener URL de imagen en Cloudinary
+                    const imageUrl = cloudinaryResponse.data.secure_url;
+                    setImageURL(imageUrl);
+                // } catch (error) {
+                //     console.error('Error uploading image:', error);
+                // }
+
+                // Cargar imagen Banner en Cloudinary
+                // try {
+                    const formDataB = new FormData();
+                    formDataB.append('file', bannerImage);
+                    formDataB.append('upload_preset', 'mibutaca');
+                
+                    const cloudinaryResponseB = await axios.post(
+                      'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
+                      formDataB
+                    );
+                
+                    // Obtener URL de imagen Banner en Cloudinary
+                    const bannerImageUrl = cloudinaryResponseB.data.secure_url;
+                    setBannerImageURL(bannerImageUrl);
+                // } catch (error) {
+                //     console.error('Error uploading image:', error);
+                // }
+
+                // Cargar imagen Plano en Cloudinary
+                // try {
+                    const formDataP = new FormData();
+                    formDataP.append('file', planImage);
+                    formDataP.append('upload_preset', 'mibutaca');
+                
+                    const cloudinaryResponseP = await axios.post(
+                      'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
+                      formDataP
+                    );
+                
+                    // Obtener URL de imagen Plano en Cloudinary
+                    const planImageUrl = cloudinaryResponseP.data.secure_url;
+                    setPlanImageURL(planImageUrl);                    
+                // } catch (error) {
+                //     console.error('Error uploading image:', error);
+                // }
 
                 let newEvent = {
                     name: input.name,
@@ -126,9 +207,9 @@ export default function AdminEventsCreate() {
                     locationName: input.locationName,
                     adressLocation: input.adressLocation,
                     mapLocation: match[1],
-                    image: input.image,
-                    bannerImage: input.bannerImage,
-                    planImage: input.planImage,
+                    image: imageURL,
+                    bannerImage: bannerImageURL,
+                    planImage: planImageURL,
                     views: 0,
                     priceMin: input.priceMin,
                     priceMax: input.priceMax,
@@ -264,7 +345,7 @@ export default function AdminEventsCreate() {
                     onChange={handleChange} />) : (<input className={styles.formInputText} type="number" name='priceMax' value='0' readOnly onChange={handleChange}/>)}
                     </div>
                     <div className={styles.fieldContainer}>
-                    <label className={styles.formLabel}>Ubicación en mapa {'('}Obtén link <a className={styles.labelLink} href="https://maps-generator.com/" target="_blank" rel="noopener noreferrer">aquí</a>{')'} </label>
+                    <label className={styles.formLabel}>Ubicación en mapa {'('}Obtén link <a className={styles.labelLink} href="https://www.google.com/maps/@6.2477017,-75.5782726,11.79z?entry=ttu" target="_blank" rel="noopener noreferrer">aquí</a>{')'} </label>
                     <input className={styles.formInputText}
                     type='text'
                     name='mapLocation'
@@ -275,27 +356,30 @@ export default function AdminEventsCreate() {
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Imagen del evento</label>
-                    <input className={styles.formInputText}
-                    type='url'
+                    <input
+                    className={styles.formInputText}
+                    type='file'
                     name='image'
-                    value={input.image}
-                    onChange={handleChange} />
+                    // value={input.image}
+                    onChange={handleImageChange} />
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Imagen banner del evento</label>
-                    <input className={styles.formInputText}
-                    type='url'
+                    <input
+                    className={styles.formInputText}
+                    type='file'
                     name='bannerImage'
-                    value={input.bannerImage}
-                    onChange={handleChange} />
+                    // value={input.bannerImage}
+                    onChange={handleBannerImageChange} />
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Imagen del plano del evento</label>
-                    <input className={styles.formInputText}
-                    type='url'
+                    <input
+                    className={styles.formInputText}
+                    type='file'
                     name='planImage'
-                    value={input.planImage}
-                    onChange={handleChange} />
+                    // value={input.planImage}
+                    onChange={handlePlanImageChange} />
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Tipo de evento</label>
