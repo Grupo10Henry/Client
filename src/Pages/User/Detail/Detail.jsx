@@ -9,6 +9,7 @@ import { selectEventID } from "../../../redux/eventIDSlice";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import styles from "./Detail.module.css";
+import BookingButton from "./BookingButton";
 
 const Detail = () => {
 
@@ -159,6 +160,9 @@ console.log(eventID, "eventID en detalle")
               className={styles.iframe}
             ></iframe>
           </div>
+          <div className={styles.ContainerBookingButton}>
+            <BookingButton />
+            </div>
         </div>
       
     </>

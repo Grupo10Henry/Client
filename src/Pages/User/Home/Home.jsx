@@ -11,7 +11,7 @@ import { getAllEvents } from "../../../redux/eventsSlice"
 import EventsFiltered from "../../../Components/User/Events/EventsFiltered/EventsFiltered"
 
 import style from "./Home.module.css"
-
+import Reviews2 from "../../../Components/User/Reviews/Reviews2"
 const Home = () => {
   const { pathname } = useLocation()
   const { isFilter } = useSelector((s) => s.events)
@@ -38,6 +38,7 @@ const Home = () => {
       <EventsText />
       {pathname === "/" && <Filters />}
       {isFilter ? <EventsFiltered /> : <EventsSections />}
+      <Reviews2 /> <br />
     </div>
   )
 }

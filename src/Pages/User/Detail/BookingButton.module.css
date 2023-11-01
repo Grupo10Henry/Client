@@ -1,0 +1,15 @@
+.bookingButton {
+    position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #83199e;
+  color: #fff;
+  border: none;
+  border-radius: 10%;
+  box-shadow: black 0px 0px 10px;
+  width: 120px;
+  height: 80px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
