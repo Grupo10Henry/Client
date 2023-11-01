@@ -22,6 +22,7 @@ export const eventsSlice = createSlice({
     },
     handlerIsFilter: (state, action) => {
       state.isFilter = true
+      state.reset = false
     },
     handlerIsLoading: (state, action) => {
       state.isLoading = action.payload
@@ -30,6 +31,7 @@ export const eventsSlice = createSlice({
       state.reset = true
       state.isFilter = false
       state.isLoading = false
+      state.eventsFiltered = []
     },
   },
 })

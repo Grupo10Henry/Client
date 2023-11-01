@@ -5,55 +5,62 @@ import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 
 const Reviews2 = () => {
     const comments = [
-    "No recomendaría este servicio. Experimenté dificultades significativas.",
-    "No quedé completamente satisfecho con el servicio. Algunos problemas a mejorar.",
+    "No recomendaría este evento. Experimenté dificultades significativas.",
+    "No estoy satisfecho, algunos problemas a mejorar.",
     "La experiencia fue promedio. Ni buena ni mala.",
-    "Me siento satisfecho con el servicio. Cumple con mis expectativas.",
-    "El sitio web funciona de manera excelente. Fácil de usar y muy útil.",
+    "Fue un gran evento, aunque con pequeños inconvenientes.",
+    "Muy agradable. Disfruté cada parte del evento y lo recomendaría sin dudarlo.",
     ];
 
     const reviews = [
     {
-        name: "Guadalupe",
-        lastName: "Redondo",
+        name: "Micaela",
+        lastName: "Bellone",
         date: new Date(2023, 2, 14),
-        rating: 4
+        rating: 4,
+        event: "Karol G"
     },
     {
         name: "Belén",
         lastName: "Gonzales",
         date: new Date(2023, 5, 21),
-        rating: 3
+        rating: 3,
+        event: "Shakira"
     },
     {
         name: "Carlos",
         lastName: "Marinez",
         date: new Date(2023, 8, 9),
-        rating: 5
+        rating: 5,
+        event: "Maria Becerra"
     },
     {
         name: "Nicolas",
         lastName: "Perez",
         date: new Date(2023, 1, 5),
-        rating: 5
+        rating: 5,
+        event: "TINI"
     },
     {
         name: "Guillermo",
         lastName: "Román",
         date: new Date(2023, 10, 3),
-        rating: 2
+        rating: 2,
+        event: "Maluma"
     },
     {
         name: "Juan",
         lastName: "Gomez",
         date: new Date(2023, 9, 6),
-        rating: 4
+        rating: 4,
+        event: "Luis Fonsi"
     },
     {
         name: "Sofia",
         lastName: "Aguirre",
         date: new Date(2023, 5, 2),
-        rating: 3
+        rating: 3,
+        event: "Karol G"
     }
     ];
 
@@ -91,7 +98,8 @@ const Reviews2 = () => {
 
     return (
         <div >
-        <div className={style.average}>
+        <h1 className={style.reviewTitle}>EVENTOS ANTERIORES</h1>
+        <div className={style.average}>    
             <p>{averageRating.toFixed(1)}</p>
             <div className={style.stars}>{renderStars(averageRating)}</div>
             <p>({reviews.length})</p>
@@ -113,6 +121,9 @@ const Reviews2 = () => {
                             {[...Array(review.rating)].map((_, starIndex) => (
                             <IoStar key={starIndex} />
                             ))}
+                        </div>
+                        <div className={style.reviewEvent}>
+                            {review.event}
                         </div>
                         <p>{comments[review.rating - 1]}</p>
                     </div>

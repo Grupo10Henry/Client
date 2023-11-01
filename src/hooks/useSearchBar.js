@@ -1,7 +1,11 @@
 import { useState } from "react"
+import { handlerIsFilter } from "../redux/eventsSlice"
+import { useDispatch } from "react-redux"
 
 export const useSarchbar = (handlerFilter) => {
   const [input, setInput] = useState("")
+
+  const dispatch = useDispatch()
 
   const handlerChange = (e) => {
     setInput(e.target.value)
@@ -13,8 +17,10 @@ export const useSarchbar = (handlerFilter) => {
       alert("Por favor, ingresa algo")
       return
     }
-    handlerFilter(input)
     console.log("pidiendo a back:", input)
+    handlerFilter("search", input)
+    dispatch(handlerIsFilter())
+    setInput("")
   }
 
   const handlerDeleteInput = () => {
