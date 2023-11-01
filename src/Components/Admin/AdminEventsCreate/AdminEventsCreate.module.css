@@ -37,6 +37,11 @@
     margin: 0px 0px 0px 0px;
 }
 
+.labelLink {
+    font-weight: 600;
+    color: rgb(82, 129, 218);
+}
+
 .form .formInputText {
     font-size: 13px;
     border-color: rgb(143, 143, 143);

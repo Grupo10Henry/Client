@@ -61,7 +61,7 @@ export default function AdminEventsCreate() {
         columns: "",
         sector: "",
         price: "",
-        sectionSeats: "",
+        // sectionSeats: "",
         // ticketType: "",
         // discountCode: "",
     });
@@ -92,12 +92,18 @@ export default function AdminEventsCreate() {
     };
 
     const handlePostSections = async () => {
+        if(sections.length) {
         try {
-            const postSection = await instance.post('/seat', sections)
+            const postSection = sections.map( async (section) => {
+            await instance.post('/seat', section)
+        })
             alert('Se han añadido las secciones al evento')
         } catch (error) {
             alert(error.response.data.error)
         }
+    } else {
+        alert('Por favor añade secciones antes de crearlas')
+    }
     };
     
     const handleSubmit = async (e) => {
@@ -258,7 +264,7 @@ export default function AdminEventsCreate() {
                     onChange={handleChange} />) : (<input className={styles.formInputText} type="number" name='priceMax' value='0' readOnly onChange={handleChange}/>)}
                     </div>
                     <div className={styles.fieldContainer}>
-                    <label className={styles.formLabel}>Ubicación en mapa {'('}Obtén link <a href="https://maps-generator.com/" target="_blank" rel="noopener noreferrer">aquí</a>{')'} </label>
+                    <label className={styles.formLabel}>Ubicación en mapa {'('}Obtén link <a className={styles.labelLink} href="https://maps-generator.com/" target="_blank" rel="noopener noreferrer">aquí</a>{')'} </label>
                     <input className={styles.formInputText}
                     type='text'
                     name='mapLocation'
@@ -370,7 +376,7 @@ export default function AdminEventsCreate() {
                     value={section.price}
                     onChange={handleChangeSection} />
                     </div>
-                    <div className={styles.fieldContainer}>
+                    {/* <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Cantidad de asientos</label>
                     <input className={styles.formInputText}
                     type="number"
@@ -378,26 +384,30 @@ export default function AdminEventsCreate() {
                     name='sectionSeats'
                     value={section.sectionSeats}
                     onChange={handleChangeSection} />
-                    </div>
+                    </div> */}
                     </div>
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Cantidad de filas</label>
-                    {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='rows' value='0' readOnly /> : <input className={styles.formInputText}
+                    {/* {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='rows' value='0' readOnly /> : */}
+                    <input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='rows'
                     value={section.rows}
-                    onChange={handleChangeSection} />}
+                    onChange={handleChangeSection} />
+                    {/* } */}
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Cantidad de columnas</label>
-                    {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='columns' value='0' readOnly /> : <input className={styles.formInputText}
+                    {/* {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='columns' value='0' readOnly /> :  */}
+                    <input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='columns'
                     value={section.sectionColumns}
-                    onChange={handleChangeSection} />}
+                    onChange={handleChangeSection} />
+                    {/* } */}
                     </div>
                     </div>
                     </div>
