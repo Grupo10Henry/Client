@@ -97,16 +97,12 @@
   justify-content: space-around;
 }
 
-.ContainerGlobal h1 {
-  color: brown;
-  font-size: 24px;
-  font-weight: bold;
-}
 
 .ContainerGlobal h2 {
-  color: rgb(67, 7, 7);
-  font-size: 18px;
+  color: brown;
+  font-size: 20px;
   font-weight: bold;
+  margin-bottom: 0;
 }
 /* Hijo 1: ContainerBanner: 100% ancho, alto proporcional */
 .ContainerBanner {
@@ -129,14 +125,14 @@
   padding: 10px;
   width: 50%;
   height: auto;
- 
+  
   margin-bottom: 15px;
- 
+  
 }
 
 .ContainerLeftColumn {
   background-color: antiquewhite;
-  flex: 2;
+  flex: 3;
   margin-right: 50px;
 }
 
@@ -144,6 +140,8 @@
   background-color: rgb(254, 203, 149);
   text-align: center;
   flex: 1;
+  align-items: center;
+  padding: 0 30px;
 }
 
 /* Hijo 4: Ocupa el 100% del ancho y alto proporcional */
@@ -158,4 +156,44 @@
   width: 100%;
   height: 100%;
   border: none;
+}
+
+.divCount {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: brown;
+  color: aliceblue;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: black 0px 0px 10px;
+}
+
+.divCount p {
+  font-size: 10px;
+  margin: 0;
+
+  
+}
+
+.divCount h1 {
+  color: rgb(255, 255, 255);
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+}
+.countdownContainer {
+  margin-left: 15px;
+  margin-right: 15px;
+  display: flex;
+  align-items: center; /* Centra verticalmente los elementos hijos */
+  justify-content: center; /* Centra horizontalmente los elementos hijos */
+}
+
+.countdownContainer div {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra verticalmente los elementos hijos */
+  margin: 0 10px; /* Agrega un espacio entre los valores y las palabras */
 }
