@@ -71,6 +71,20 @@
     margin: 0px 0px 0px 0px;
 }
 
+.form .formButton {
+    background-color: rgb(69, 192, 149);
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+    margin: 0px 0px 15px 0px;
+    font-size: 14px;
+    color: aliceblue;
+    font-weight: bold;
+}
+
+.form .formButton:hover {
+    background-color: rgb(91, 214, 171);
+}
+
 .sectionForm .sectionButton {
     background-color: rgb(175, 175, 175);
     border-radius: 5px;
@@ -85,16 +99,16 @@
     background-color: rgb(199, 199, 199);
 }
 
-.form .formButton {
+.sectionsTable .formButton {
     background-color: rgb(69, 192, 149);
     border-radius: 5px;
     padding: 5px 10px 5px 10px;
-    margin: 0px 0px 0px 0px;
+    margin: 0px 0px 15px 0px;
     font-size: 14px;
     color: aliceblue;
     font-weight: bold;
 }
 
-.form .formButton:hover {
+.sectionsTable .formButton:hover {
     background-color: rgb(91, 214, 171);
 }

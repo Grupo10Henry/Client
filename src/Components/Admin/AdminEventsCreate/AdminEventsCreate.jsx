@@ -66,8 +66,11 @@ export default function AdminEventsCreate() {
         // discountCode: "",
     });
 
+    const [sections, setSections] =useState([]);
+
     console.log(input);
     console.log(section);
+    console.log(sections);
 
     function handleChange(e){
         setInput({
@@ -83,11 +86,18 @@ export default function AdminEventsCreate() {
         })
     };
 
-function handleChangeSection(e){
-        setSection({
-            ...section,
-            [e.target.name]: e.target.value,
-        })
+    function handleSubmitCreateSection(e){
+        e.preventDefault();
+        setSections([...sections, section]);
+    };
+
+    const handlePostSections = async () => {
+        try {
+            const postSection = await instance.post('/seat', sections)
+            alert('Se han añadido las secciones al evento')
+        } catch (error) {
+            alert(error.response.data.error)
+        }
     };
     
     const handleSubmit = async (e) => {
@@ -304,7 +314,7 @@ function handleChangeSection(e){
                 </form>
                 {/* Form de secciones */}
 
-                <form className={styles.sectionForm}>
+                <form className={styles.sectionForm} onSubmit={handleSubmitCreateSection}>
                     <p className={styles.sectionFormTitle}>Creador de secciones</p>
                     <p className={styles.formLabel}>Para crear una nueva sección, completa los campos y haz clic en "Añadir sección"</p>
                     <div className={styles.formFields}>
@@ -332,7 +342,7 @@ function handleChangeSection(e){
                     onChange={handleChangeSection} />
                     </div>
                     </div>
-                    <div className={styles.formRows}>
+                    {/* <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Tipo de sección</label>
                     <input className={styles.formInputText}
@@ -349,7 +359,7 @@ function handleChangeSection(e){
                     value={section.discountCode}
                     onChange={handleChangeSection} />
                     </div>
-                    </div>
+                    </div> */}
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Precio por entrada</label>
@@ -391,9 +401,36 @@ function handleChangeSection(e){
                     </div>
                     </div>
                     </div>
-                    <button className={styles.sectionButton}>Añadir sección</button>
+                    <button className={styles.sectionButton}
+                    type="submit"
+                    >Añadir sección</button>
                 </form>
+                <div className={styles.sectionsTable}>
+                    {sections.length ? <h2>Secciones añadidas:</h2> : null}
+                    {sections.length ?
+                    <table>
+                    <thead>
+                        <tr>
+                        <th>Nombre de la sección</th>
+                        <th>Filas</th>
+                        <th>Columnas</th>
+                        <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {sections?.map((section, index) => (
+                            <tr key={index}>
+                            <td>{section.sector}</td>
+                            <td>{section.rows}</td>
+                            <td>{section.columns}</td>
+                            <td>{section.price}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                    </table>
+                     : null}
+                     {sections.length ? <button className={styles.formButton} onClick={handlePostSections}>Agregar secciones a evento</button> : null}
             </div>
-        // </div>
+           </div>
     )
 }
