@@ -38,7 +38,7 @@ const Home = () => {
       <EventsText />
       {pathname === "/" && <Filters />}
       {isFilter ? <EventsFiltered /> : <EventsSections />}
-      <Reviews2 />
+      <Reviews2 /> <br />
     </div>
   )
 }

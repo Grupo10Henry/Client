@@ -12,7 +12,22 @@ export default function AdminEventsCreate() {
     const dispatch = useDispatch();
     const {allEvents} = useSelector((s) => s.events)
 
-    console.log(allEvents)
+    const getEvents = async () => {
+        try {
+          const { data } = await instance.get("/event") // http://localhost:3001/event
+          console.log(data)
+          return data
+        } catch (error) {
+          console.log(error)
+        }
+    };
+    
+        useEffect(() => {
+          getEvents().then((data) => (dispatch(getAllEvents(data))))
+        }, []
+    );
+
+    // console.log(allEvents)
 
     let iframeRegex = /<iframe[^>]+src="([^"]+)"/;
 
@@ -41,17 +56,21 @@ export default function AdminEventsCreate() {
     });
 
     const [section, setSection] = useState({
+        eventID: "",
+        rows: "",
+        columns: "",
         sector: "",
-        wildcard: "",
-        ticketType: "",
-        discountCode: "",
-        ticketPrice: "",
-        sectionSeats: "",
-        sectionRows: "",
-        sectionColumns: "",
+        price: "",
+        // sectionSeats: "",
+        // ticketType: "",
+        // discountCode: "",
     });
 
+    const [sections, setSections] =useState([]);
+
     console.log(input);
+    console.log(section);
+    console.log(sections);
 
     function handleChange(e){
         setInput({
@@ -60,11 +79,31 @@ export default function AdminEventsCreate() {
         })
     };
 
-function handleChangeSection(e){
+    function handleChangeSection(e){
         setSection({
             ...section,
             [e.target.name]: e.target.value,
         })
+    };
+
+    function handleSubmitCreateSection(e){
+        e.preventDefault();
+        setSections([...sections, section]);
+    };
+
+    const handlePostSections = async () => {
+        if(sections.length) {
+        try {
+            const postSection = sections.map( async (section) => {
+            await instance.post('/seat', section)
+        })
+            alert('Se han añadido las secciones al evento')
+        } catch (error) {
+            alert(error.response.data.error)
+        }
+    } else {
+        alert('Por favor añade secciones antes de crearlas')
+    }
     };
     
     const handleSubmit = async (e) => {
@@ -225,7 +264,7 @@ function handleChangeSection(e){
                     onChange={handleChange} />) : (<input className={styles.formInputText} type="number" name='priceMax' value='0' readOnly onChange={handleChange}/>)}
                     </div>
                     <div className={styles.fieldContainer}>
-                    <label className={styles.formLabel}>Ubicación en mapa {'('}Obtén link <a href="https://maps-generator.com/" target="_blank" rel="noopener noreferrer">aquí</a>{')'} </label>
+                    <label className={styles.formLabel}>Ubicación en mapa {'('}Obtén link <a className={styles.labelLink} href="https://maps-generator.com/" target="_blank" rel="noopener noreferrer">aquí</a>{')'} </label>
                     <input className={styles.formInputText}
                     type='text'
                     name='mapLocation'
@@ -281,11 +320,25 @@ function handleChangeSection(e){
                 </form>
                 {/* Form de secciones */}
 
-                <form className={styles.sectionForm}>
+                <form className={styles.sectionForm} onSubmit={handleSubmitCreateSection}>
                     <p className={styles.sectionFormTitle}>Creador de secciones</p>
                     <p className={styles.formLabel}>Para crear una nueva sección, completa los campos y haz clic en "Añadir sección"</p>
                     <div className={styles.formFields}>
                     <div className={styles.formRows}>
+                    <div className={styles.fieldContainer}>
+                    <label className={styles.formLabel}>Selecciona un evento</label>
+                    <select className={styles.formInputText}
+                    name='eventID'
+                    value={section.eventID}
+                    onChange={handleChangeSection} >
+                      <option value="">-- Seleccionar --</option>
+                    {allEvents.map((event) => (
+                      <option key={event.eventID} value={event.eventID}>
+                            {event.name}
+                        </option>
+                    ))}
+                    </select>
+                    </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Nombre de la sección</label>
                     <input className={styles.formInputText}
@@ -294,16 +347,8 @@ function handleChangeSection(e){
                     value={section.sector}
                     onChange={handleChangeSection} />
                     </div>
-                    <div className={styles.fieldContainer}>
-                    <label className={styles.formLabel}>Campo disponible</label>
-                    <input className={styles.formInputText}
-                    type="text"
-                    name='wildcard'
-                    value={section.wildcard}
-                    onChange={handleChangeSection} />
                     </div>
-                    </div>
-                    <div className={styles.formRows}>
+                    {/* <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Tipo de sección</label>
                     <input className={styles.formInputText}
@@ -320,18 +365,18 @@ function handleChangeSection(e){
                     value={section.discountCode}
                     onChange={handleChangeSection} />
                     </div>
-                    </div>
+                    </div> */}
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Precio por entrada</label>
                     <input className={styles.formInputText}
                     type="number"
                     min="0"
-                    name='ticketPrice'
-                    value={section.ticketPrice}
+                    name='price'
+                    value={section.price}
                     onChange={handleChangeSection} />
                     </div>
-                    <div className={styles.fieldContainer}>
+                    {/* <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Cantidad de asientos</label>
                     <input className={styles.formInputText}
                     type="number"
@@ -339,32 +384,63 @@ function handleChangeSection(e){
                     name='sectionSeats'
                     value={section.sectionSeats}
                     onChange={handleChangeSection} />
-                    </div>
+                    </div> */}
                     </div>
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Cantidad de filas</label>
-                    {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='sectionRows' value='0' readOnly /> : <input className={styles.formInputText}
+                    {/* {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='rows' value='0' readOnly /> : */}
+                    <input className={styles.formInputText}
                     type="number"
                     min="0"
-                    name='sectionRows'
-                    value={section.sectionRows}
-                    onChange={handleChangeSection} />}
+                    name='rows'
+                    value={section.rows}
+                    onChange={handleChangeSection} />
+                    {/* } */}
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Cantidad de columnas</label>
-                    {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='sectionColumns' value='0' readOnly /> : <input className={styles.formInputText}
+                    {/* {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='columns' value='0' readOnly /> :  */}
+                    <input className={styles.formInputText}
                     type="number"
                     min="0"
-                    name='sectionColumns'
+                    name='columns'
                     value={section.sectionColumns}
-                    onChange={handleChangeSection} />}
+                    onChange={handleChangeSection} />
+                    {/* } */}
                     </div>
                     </div>
                     </div>
-                    <button className={styles.sectionButton}>Añadir sección</button>
+                    <button className={styles.sectionButton}
+                    type="submit"
+                    >Añadir sección</button>
                 </form>
+                <div className={styles.sectionsTable}>
+                    {sections.length ? <h2>Secciones añadidas:</h2> : null}
+                    {sections.length ?
+                    <table>
+                    <thead>
+                        <tr>
+                        <th>Nombre de la sección</th>
+                        <th>Filas</th>
+                        <th>Columnas</th>
+                        <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {sections?.map((section, index) => (
+                            <tr key={index}>
+                            <td>{section.sector}</td>
+                            <td>{section.rows}</td>
+                            <td>{section.columns}</td>
+                            <td>{section.price}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                    </table>
+                     : null}
+                     {sections.length ? <button className={styles.formButton} onClick={handlePostSections}>Agregar secciones a evento</button> : null}
             </div>
-        // </div>
+           </div>
     )
 }

@@ -20,11 +20,12 @@
     background-color: rgb(255, 255, 255);
     border-radius: 5px ;
     box-shadow: 5px 5px 5px rgb(181, 180, 180);
+    margin-bottom: 50px;
 }
 .review2 p{
     color:rgb(115, 115, 115);
     font-size: 14px;
-
+    text-align: left;
 }
 .ReviewContainer2 h3{
     color: rgb(66, 124, 124);
@@ -44,6 +45,7 @@
 .btnReviews {
     margin-top: 20px;
     color: rgb(13, 132, 132);
+    margin-bottom: 50px;
 }
 
 .average {
@@ -59,4 +61,16 @@
 
 .average p {
     margin: 0;
+}
+.reviewEvent{
+    color:rgb(225, 16, 204);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.reviewTitle{
+    margin-top: 100px;
+    color:rgb(225, 16, 204);
+    font-size: 20px;
+    font-weight: bold;
 }
