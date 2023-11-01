@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+
 //import { getDetail } from "../../../redux/eventSlice";
 //import { getSeat } from "../../../redux/seatSlice";
 import { selectEventID } from "../../../redux/eventIDSlice";
@@ -14,8 +14,8 @@ import BookingButton from "./BookingButton";
 const Detail = () => {
 
   const eventID = useSelector(selectEventID);
-console.log(eventID, "eventID en detalle")
 
+  
   const [sectorPrices, setSectorPrices] = useState([]);
   const dispatch = useDispatch();
   const [eventDetails, setEventDetails] = useState({
@@ -29,12 +29,12 @@ console.log(eventID, "eventID en detalle")
     bannerImage: "",
     capacity: "",
   });
-
+  
   useEffect(() => {
     /*const fetchEventData = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/seat?eventID=${eventID}`);
-    
+        
         if (response.data && response.data.length > 0) {
           // Agrupa los asientos por sector y calcula el precio promedio
           const sectorData = response.data.reduce((result, seat) => {
@@ -46,12 +46,12 @@ console.log(eventID, "eventID en detalle")
             }
             return result;
           }, {});
-    
+          
           const sectorPricesArray = Object.entries(sectorData).map(([sector, prices]) => ({
             sector,
             price: prices.reduce((total, price) => total + price, 0) / prices.length,
           }));
-    
+          
           setSectorPrices(sectorPricesArray);
         }
       } catch (error) {
@@ -59,14 +59,14 @@ console.log(eventID, "eventID en detalle")
       }
     };*/
     
-
+    
     
 
 
-
+    
     const fetchEventDetails = async () => {
       try {
-        console.log(eventID, "eventID en fetchEventDetails")
+        
         const response = await axios.get(`http://localhost:3001/event/${eventID}`);
 
 
@@ -82,7 +82,7 @@ console.log(eventID, "eventID en detalle")
             bannerImage,
             capacity,
           } = response.data;
-
+          
           setEventDetails({
             name,
             description,
@@ -99,9 +99,9 @@ console.log(eventID, "eventID en detalle")
         console.error("Error al obtener los detalles del evento:", error);
       }
     };
-
+    
     //fetchEventData();
-
+    
     fetchEventDetails();
   }, [eventID]);
 
@@ -115,6 +115,43 @@ console.log(eventID, "eventID en detalle")
   else {
     <h1>{eventDetails.date}</h1>;
   }
+
+  // counter down timer
+  
+  const targetDateTime = new Date(`${eventDetails.date} ${eventDetails.time}`).getTime();
+  const currentDate = new Date().getTime();
+  const timeDifference = targetDateTime - currentDate;
+
+  const [ countdown, setCountdown ] = useState({
+    days: Math.floor(timeDifference / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    minutes: Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)),
+    seconds: Math.floor((timeDifference % (1000 * 60)) / 1000),
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newTimeDifference = targetDateTime - new Date().getTime();
+      if (newTimeDifference < 0) {
+        clearInterval(interval);
+      setCountdown({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      });
+    } else {
+      setCountdown({
+        days: Math.floor(newTimeDifference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((newTimeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((newTimeDifference % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((newTimeDifference % (1000 * 60)) / 1000),
+      });
+    }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDateTime]);
 
 
   return (
@@ -139,8 +176,31 @@ console.log(eventID, "eventID en detalle")
 
           <div className={styles.ContainerRightColumn}>
             <div className={styles.ContainerEventDate}>
-              <h1>{eventDetails.date.split("-").reverse().join("-")}</h1>
+              <h2>{eventDetails.date.split("-").reverse().join("-")}</h2>
               <h2>{eventDetails.time.split(":").slice(0,2).join(":") }{" "} hs.</h2>
+              <div className={styles.divCount}>
+  <p>Restan...</p>
+  <div className={styles.countdownContainer}>
+    <div>
+      <h1>{countdown.days}</h1>
+      <p>días</p>
+    </div>
+    <div>
+      <h1>{countdown.hours}</h1>
+      <p>horas</p>
+    </div>
+    <div>
+      <h1>{countdown.minutes}</h1>
+      <p>minutos</p>
+    </div>
+    <div>
+      <h1>{countdown.seconds}</h1>
+      <p>segundos</p>
+    </div>
+  </div>
+</div>
+
+              
               <h2>Sectores:</h2>
               {/*{sectorPrices.map((sector) => (
                 <div
