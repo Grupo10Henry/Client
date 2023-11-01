@@ -7,8 +7,8 @@ import events from "../Events"
 import style from "./NextEvents.module.css"
 
 const NextEvents = () => {
-  // const { allEvents } = useSelector((s) => s.events)
-
+  const { nextEvents } = useSelector((s) => s.events)
+  const Events = nextEvents
   // const eventsArr = allEvents[1].date
 
   // eventsArr.sort((a, b) => b.date - a.date)
@@ -27,16 +27,18 @@ const NextEvents = () => {
   // const mes1 = parseInt(String(eventsArr[0].date).substring(5, 7))
   // const dia1 = parseInt(String(eventsArr[0].date).substring(8, 10))
 
-  // console.log(eventsArr)
+  console.log(Events)
 
-  const nextEvents = [events[0], events[2], events[1], events[3]]
+  // const Events = [events[0], events[2], events[1], events[3]]
 
   return (
     <div>
       <h2 className="subtitle gradient-text">
-        <b>- Próximos Eventos -</b>
+        <b>Próximos Eventos</b>
       </h2>
-      {nextEvents ? <Cards data={nextEvents} /> : "No hay proximos eventos :c"}
+      {/* {Events ? <Cards data={Events} /> : "No hay proximos eventos :c"} */}
+      <p>CUIDADO</p>
+      <p>piso mojado</p>
     </div>
   )
 }

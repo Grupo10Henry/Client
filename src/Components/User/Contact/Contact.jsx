@@ -24,7 +24,7 @@ const Contact = () => {
   return (
     <div className={`${style.contact} ${Show}`}>
       <form>
-        <h4 className={style.title}>Contáctanos</h4>
+        <h4 className={style.title}>Tienes alguna consulta? Contáctanos</h4>
         <div>
           <div>
             <label>Nombre:</label>
@@ -79,7 +79,7 @@ const Contact = () => {
             <input
               className={style.inputField}
               type="text"
-              placeholder="ingrese su Consulta"
+              placeholder="ingrese su consulta"
               name="request"
               value={userData.request}
               onChange={handlerChange}

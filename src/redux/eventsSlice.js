@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
   allEvents: [],
+  nextEvents: [],
   eventsFiltered: [],
   eventsDate: [],
   isFilter: false,
@@ -17,6 +18,9 @@ export const eventsSlice = createSlice({
   reducers: {
     getAllEvents: (state, action) => {
       state.allEvents = action.payload
+    },
+    getNextEvents: (state, action) => {
+      state.nextEvents = action.payload
     },
     setFilteredEvents: (state, action) => {
       state.eventsFiltered = action.payload
@@ -42,6 +46,7 @@ export const eventsSlice = createSlice({
 
 export const {
   getAllEvents,
+  getNextEvents,
   setFilteredEvents,
   setEventsDate,
   handlerIsFilter,
