@@ -14,11 +14,15 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@tailwindcss/forms": "^0.5.6",
     "axios": "^1.4.0",
+<<<<<<< HEAD
+=======
     "cloudinary": "^1.41.0",
     "framer-motion": "^10.16.4",
+>>>>>>> d812d343444e14705e5e0a72f5fcd8a2487da597
     "leaflet": "^1.9.4",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
+    "react-content-loader": "^6.2.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-places-autocomplete": "^7.3.0",

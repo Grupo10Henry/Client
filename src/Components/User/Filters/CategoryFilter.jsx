@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react"
 import { IoMdArrowDropdownCircle, IoMdArrowDropupCircle } from "react-icons/io"
 import { categories } from "../../../utils/categories"
+import { handlerIsFilter } from "../../../redux/eventsSlice"
+import { useDispatch, useSelector } from "react-redux"
 
 import style from "./Filters.module.css"
-import { useDispatch, useSelector } from "react-redux"
-import { handlerIsFilter } from "../../../redux/eventsSlice"
 
 const CategoryFilter = ({ handlerFilter }) => {
   const [showme, setShowme] = useState(false)
@@ -51,11 +51,6 @@ const CategoryFilter = ({ handlerFilter }) => {
 
         {/* options */}
         <div className={optionClass}>
-          {selectedOption !== "" && (
-            <span className={style.option} onClick={() => handlerCategory("")}>
-              Todos
-            </span>
-          )}
           {categories.map((element) => (
             <span
               key={element.id}

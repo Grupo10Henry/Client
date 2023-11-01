@@ -14,7 +14,6 @@ const linksItems = [
 ]
 
 const Nav = () => {
-  const [isLogged, setIsLogged] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
   const location = useLocation()
@@ -30,6 +29,8 @@ const Nav = () => {
   }, [view])
 
   const handlerOpenContact = () => contactTrue()
+
+  const isLogged = localStorage.getItem("token")
 
   return (
     <nav className={style.nav}>
