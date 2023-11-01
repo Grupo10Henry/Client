@@ -153,6 +153,10 @@
     transition: width ease 400ms;
   }
 
+  .links a.active::before {
+    width: 100%;
+    transition: width ease 400ms;
+  }
   .iconToggle {
     display: none;
   }

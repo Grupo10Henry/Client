@@ -41,7 +41,6 @@ const DateFilter = ({ handlerFilter }) => {
       <div className={style.selectWrapper} onClick={handlerDropdown}>
         {/* icons */}
         <div className={style.titleOption}>
-          {" "}
           {selectedOption.length > 0 ? selectedOption : "Todos"}
         </div>
         {showme ? (
@@ -51,14 +50,6 @@ const DateFilter = ({ handlerFilter }) => {
         )}
         {/* options */}
         <div className={optionClass}>
-          {selectedOption.length !== 0 && (
-            <span
-              className={style.option}
-              onClick={() => handlerDate("date", "")}
-            >
-              Todos
-            </span>
-          )}
           {eventsDate?.map((element) => (
             <span
               key={element.id}

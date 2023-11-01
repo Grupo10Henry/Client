@@ -2,12 +2,13 @@ import { useSelector } from "react-redux"
 
 import style from "./EventsFiltered.module.css"
 import Cards from "../../Cards/Cards"
+import Loader from "../../Loader/Loader"
 
 const EventsFiltered = () => {
   const { eventsFiltered, isLoading } = useSelector((s) => s.events)
 
   if (isLoading) {
-    return <h2>LOADING...</h2>
+    return <Loader />
   }
 
   if (eventsFiltered.length === 0) {

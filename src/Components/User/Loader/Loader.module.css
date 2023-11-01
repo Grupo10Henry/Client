@@ -1,0 +1,6 @@
+.loaderWrapper {
+  display: grid;
+  column-gap: 20px;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+}
