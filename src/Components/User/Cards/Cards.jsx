@@ -7,7 +7,7 @@ const Cards = ({ data }) => {
   return (
     <div className={style.cards}>
       {data?.map((event) => (
-        <Card key={event.eventID} {...event} />
+        <Card key={event?.eventID} {...event} />
       ))}
     </div>
   )
