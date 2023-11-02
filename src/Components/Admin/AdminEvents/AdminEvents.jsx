@@ -54,7 +54,7 @@ export default function AdminEvents() {
            </tr>
          </thead>
          <tbody>
-           {allEvents.map((event) => (
+           {allEvents?.map((event) => (
                <tr key={event.eventID}>
                <td>{event.name}</td>
                <td>{event.category}</td>
