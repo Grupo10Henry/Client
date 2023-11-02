@@ -197,3 +197,56 @@
   align-items: center; /* Centra verticalmente los elementos hijos */
   margin: 0 10px; /* Agrega un espacio entre los valores y las palabras */
 }
+
+.ContainerNameDescription h1 {
+  color: brown;
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.ContainerNameDescription p {
+  font-size: 16px;
+  /*  italica*/
+  font-style: italic;
+  margin: 0;
+  
+}
+
+.ContainerPrices {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  margin: 5px 0;
+  color: black;
+  background-color:rgb(254, 189, 149);
+}
+
+.ContainerGlobal button {
+ 
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 1px 5px;
+}
+
+.ContainerGlobal button:hover {
+  background-color: black;
+  color: white;
+  border: 1px solid #9e1943;
+  transition: 0.5s;
+}
+
+.ContainerAddress {
+  background-color:rgb(246, 214, 198);
+  
+}
+
+.ContainerAddress h4{
+  font-size: 15px;
+}
+
+.ContainerAddress h3{
+  font-size: 15px;
+  font-weight: bold;
+}

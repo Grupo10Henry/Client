@@ -1,6 +1,6 @@
 .bookingButton {
     position: fixed;
-  bottom: 20px;
+  top: 120px;
   right: 20px;
   background-color: #9e1943;
   color: #fff;
@@ -12,4 +12,11 @@
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
+}
+
+.bookingButton:hover {
+  background-color: black;
+  color: white;
+  border: 1px solid #9e1943;
+  transition: 0.5s;
 }
