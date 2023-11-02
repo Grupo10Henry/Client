@@ -19,9 +19,9 @@ const Detail = () => {
 
   const handleClick = () => {
     navigate("/reserva");
-}
+  };
 
-
+  const [isDonation, setIsDonation] = useState(false);
 
   const [sectorPrices, setSectorPrices] = useState([]);
   const dispatch = useDispatch();
@@ -45,10 +45,8 @@ const Detail = () => {
           `http://localhost:3001/seat/${eventID}`
         );
         if (response.data) {
-          
           setSectorPrices(response.data);
-            };
-        
+        }
       } catch (error) {
         console.error("Error al obtener los sectores y precios:", error);
       }
@@ -86,6 +84,8 @@ const Detail = () => {
             capacity,
             planImage,
           });
+
+          setIsDonation(response.data.isDonation);
         }
       } catch (error) {
         console.error("Error al obtener los detalles del evento:", error);
@@ -155,8 +155,7 @@ const Detail = () => {
   return (
     <>
       <div className={styles.ContainerGlobal}>
-
-        <div className={styles.ContainerBanner} id="initDetail" >
+        <div className={styles.ContainerBanner}>
           <img src={eventDetails.bannerImage} alt={eventDetails.name} />
         </div>
         <div className={styles.ContainerLeftColumn}>
@@ -200,15 +199,21 @@ const Detail = () => {
               </div>
             </div>
             <br />
+            {isDonation ? (
+              <p>Ingreso con contribución voluntaria.</p>
+            ) : (
+              <>
             <h2>Sectores:</h2>
             {sectorPrices.map((sector) => (
               <div className={styles.ContainerPrices} key={sector[1]}>
-                
                 <p>{sector[1]}</p>
                 <p>$ {sector[0]}</p>
               </div>
             ))}
+
             <button onClick={handleClick}>Ver sectores y Reservar</button>
+            </>
+            )}
           </div>
         </div>
 
