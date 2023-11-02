@@ -416,7 +416,7 @@ export default function AdminEventsCreate() {
                     value={section.eventID}
                     onChange={handleChangeSection} >
                       <option value="">-- Seleccionar --</option>
-                    {allEvents.map((event) => (
+                    {allEvents?.map((event) => (
                       <option key={event.eventID} value={event.eventID}>
                             {event.name}
                         </option>
