@@ -63,3 +63,7 @@ img {
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.subtitle {
+  font-size: clamp(18px, 2vw, 24px);
+}

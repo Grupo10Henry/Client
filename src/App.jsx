@@ -1,5 +1,5 @@
 import React from "react"
-import { Route, Routes, useLocation } from "react-router-dom"
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import styles from "./App.module.css"
 import Cart from "./Components/User/Cart/Cart"
 import Contact from "./Components/User/Contact/Contact"
@@ -19,7 +19,7 @@ import axios from "axios"
 
 function App() {
   const location = useLocation()
-
+  const navigate = useNavigate()
   /* La función login deberá verificar el email y el password del usuario en la ruta http://localhost:3001/login/ 
    Si e usuario existe, deberá verificar si el usuario es admin true o false en http://localhost:3001/user  
     Si es admin, deberá redirigir a la ruta /admin
@@ -34,7 +34,7 @@ function App() {
 
     try {
       const response = await axios.post(URL, { email, password })
-      const token = response.data
+      const token = response.data.token
       if (token) {
         localStorage.setItem("token", token)
 
@@ -46,9 +46,9 @@ function App() {
         const user = userResponse.data
 
         if (user.isAdmin) {
-          window.location.href = "/admin"
+          navigate("/admin")
         } else {
-          window.location.href = "/"
+          navigate("/")
         }
       } else {
         alert("Usuario o contraseña incorrectos")

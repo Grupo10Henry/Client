@@ -7,7 +7,6 @@ import { handlerIsFilter } from "../../../redux/eventsSlice"
 import { useDispatch, useSelector } from "react-redux"
 
 const prices = [
-  { id: 0, text: "Todos", value: "Todos" },
   { id: 1, text: "Gratis", value: "Gratis" },
   { id: 2, value: 20000 },
   { id: 3, value: 50000 },
@@ -36,9 +35,10 @@ const PriceFilter = ({ handlerFilter }) => {
     setShowme(!showme)
   }
 
+  // change value
   const valueSelect = (val) => {
     if (val === "Gratis") return 0
-    else if (val === "Todos") return ""
+    // else if (val === "Todos") return ""
     return val
   }
 
@@ -60,7 +60,7 @@ const PriceFilter = ({ handlerFilter }) => {
 
   return (
     <div className={style.wrapper}>
-      <h6 className={`${style.title} gradient-text`}>A partir de</h6>
+      <h6 className={`${style.title} gradient-text`}>Precio máximo </h6>
       {/* select */}
       <div className={style.selectWrapper} onClick={handlerDropdown}>
         {/* icons */}

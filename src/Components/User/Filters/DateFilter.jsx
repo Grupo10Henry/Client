@@ -1,30 +1,24 @@
 import { IoMdArrowDropupCircle, IoMdArrowDropdownCircle } from "react-icons/io"
 
-import style from "./Filters.module.css"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { handlerIsFilter } from "../../../redux/eventsSlice"
 
-const date = [
-  { id: 0, text: "Todos", value: "" },
-  { id: 1, text: "2023-10-02", value: "2023-10-02" },
-  { id: 2, text: "2023-10-03", value: "2023-10-03" },
-  { id: 3, text: "2023-10-07", vallue: "2023-10-07" },
-]
+import style from "./Filters.module.css"
 
 const DateFilter = ({ handlerFilter }) => {
   const [showme, setShowme] = useState(false)
   const [selectedOption, setSelectedOption] = useState("")
-  const { reset } = useSelector((s) => s.events)
+  const { eventsDate, reset } = useSelector((s) => s.events)
 
   const dispatch = useDispatch()
 
   const optionClass = `${style.options} ${showme && style.show}`
 
+  // function for show options
   const handlerDropdown = () => {
     setShowme(!showme)
   }
-
   const handlerDate = (name, value) => {
     //pedir a back
     console.log("pidiendo a back:", value)
@@ -47,7 +41,6 @@ const DateFilter = ({ handlerFilter }) => {
       <div className={style.selectWrapper} onClick={handlerDropdown}>
         {/* icons */}
         <div className={style.titleOption}>
-          {" "}
           {selectedOption.length > 0 ? selectedOption : "Todos"}
         </div>
         {showme ? (
@@ -57,7 +50,7 @@ const DateFilter = ({ handlerFilter }) => {
         )}
         {/* options */}
         <div className={optionClass}>
-          {date.map((element) => (
+          {eventsDate?.map((element) => (
             <span
               key={element.id}
               className={style.option}

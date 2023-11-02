@@ -38,10 +38,10 @@ const Card = (props) => {
           Desde: <b>{formatPrice}</b>
         </div>
         <div>
-          Fecha: <b>{date.split("-").reverse().join("-")}</b>
+          Fecha: <b>{date?.split("-").reverse().join("-")}</b>
         </div>
         <div>
-          Horario: <b>{time.split(":").slice(0,2).join(":")}hs</b>
+          Horario: <b>{time?.split(":").slice(0,2).join(":")}hs</b>
         </div>
       </div>
 
