@@ -14,6 +14,7 @@ import PasswordRecover from "./Components/User/Login/PasswordRecover"
 import Detail from "./Pages/User/Detail/Detail"
 import Footer from "./Components/User/Footer/Footer"
 import FAQ from "./Pages/User/FAQ/FAQ"
+import ScrollToTop from "./Components/UserAndAdmin/ScrollToTop"
 
 import axios from "axios"
 
@@ -73,13 +74,14 @@ function App() {
         <Route path="/registro" element={<SignUp />} />
         <Route path="/iniciarsesion" element={<Login login={login} />} />
         <Route path="/detalle/:id" element={<Detail />} />
-        <Route path="/reserva" element={<Booking />} />
+        <Route path="/reserva/:id" element={<Booking />} />
         <Route path="/carrito" element={<Cart />} />
         <Route path="/micuenta/:id" element={<MyAccount />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
       </Routes>
+      <ScrollToTop />
       {location.pathname === "admin" ? null : <Footer />}
     </div>
   )
