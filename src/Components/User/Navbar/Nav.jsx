@@ -1,34 +1,21 @@
-import { Link, NavLink, useLocation } from "react-router-dom"
-import { useContext, useEffect, useState } from "react"
 import { BsList, BsXLg } from "react-icons/bs"
-import { Context } from "../../../Context/Context"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 import logoWhite from "../../../assets/logo_mi_butaca_blanco.svg"
+import useNav from "../../../hooks/useNav"
 
 import style from "./Navbar.module.css"
 
-const linksItems = [
-  { id: 1, text: "Inicio", to: "/" },
-  { id: 2, text: "Iniciar sesión", to: "/iniciarsesion" },
-  { id: 3, text: "Registrarse", to: "/registro" },
-  { id: 4, text: "Preguntas frecuentes", to: "/faq" },
-]
-
 const Nav = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const { isOpen, setIsOpen, handlerOpenContact, links } = useNav()
 
-  const location = useLocation()
-  const { view, contactTrue } = useContext(Context)
   const linksClass = isOpen && style.showme
 
-  useEffect(() => {
-    setIsOpen(false)
-  }, [location.pathname])
-
-  useEffect(() => {
-    view && setIsOpen(false)
-  }, [view])
-
-  const handlerOpenContact = () => contactTrue()
+  const navigate = useNavigate()
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    // Realiza alguna acción adicional, como redirigir a otra página después de eliminar el token
+    navigate("/") // Cambia '/nuevaruta' por la ruta a la que deseas redirigir
+  }
 
   const isLogged = localStorage.getItem("token")
 
@@ -43,19 +30,11 @@ const Nav = () => {
       >
         {isOpen ? <BsXLg /> : <BsList />}
       </button>
+
       {/* menu */}
-      <div className={`${style.links} ${linksClass}`}>
-        {isLogged && (
-          <NavLink
-            to="/micuenta/:id"
-            title="mi cuenta"
-            className={({ isActive }) => isActive && style.active}
-          >
-            Mi cuenta
-          </NavLink>
-        )}
-        {!isLogged &&
-          linksItems.map((link) => (
+      <div className={`${style.menu} ${linksClass}`}>
+        <div className={style.links}>
+          {links.map((link) => (
             <NavLink
               key={link.id}
               to={link.to}
@@ -64,7 +43,31 @@ const Nav = () => {
               {link.text}
             </NavLink>
           ))}
-        <button onClick={handlerOpenContact}>Contacto</button>
+          <button onClick={handlerOpenContact}>Contacto</button>
+        </div>
+        {isLogged ? (
+          <div className={style.options}>
+            <NavLink
+              title="Mi perfil"
+              to={`micuenta/2`}
+              className={style.optionsBtn}
+            >
+              Mi perfil
+            </NavLink>
+            <button onClick={handleLogout} className={style.optionsBtn}>
+              Salir
+            </button>
+          </div>
+        ) : (
+          <div className={style.options}>
+            <NavLink to="iniciarsesion" className={style.optionsBtn}>
+              Iniciar sesión
+            </NavLink>
+            <NavLink to="registro" className={style.optionsBtn}>
+              Registrarse
+            </NavLink>
+          </div>
+        )}
       </div>
     </nav>
   )
