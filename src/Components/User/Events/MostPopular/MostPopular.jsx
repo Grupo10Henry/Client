@@ -1,5 +1,5 @@
 import React from "react"
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom"
 import { Swiper, SwiperSlide } from "swiper/react"
 import {
@@ -10,6 +10,7 @@ import {
 } from "swiper/modules"
 import events from "../Events"
 
+import noBanner from "../../../../assets/noBanner.jpeg"
 import "swiper/css"
 import "swiper/css/effect-coverflow"
 import "swiper/css/pagination"
@@ -20,21 +21,23 @@ import style from "./MostPupular.module.css"
 import "./MostPupular.module.css"
 
 const MostPopular = () => {
-  // const { allEvents } = useSelector((s) => s.events)
-  const orden = events
+  const { allEvents } = useSelector((s) => s.events)
+  // ejemplo de lo que se veria cuando no hayan eventos disponibles
+  const orden = []
+  const noLink = '/'
   // CUANDO NO ME PONGAN LINKS DE GOOGLE MEET EN LOS BANNERS, events PASARA A SER allEvents
 
-  if (orden?.length > 3) {
     // ordena el array con los eventos segun las views para mostrar los banners de los primeros 3
-    orden.sort((a, b) => {
-      if (a.views < b.views) {
-        return 1
+  orden.sort((a, b) => {
+    if (a.views < b.views) {
+      return 1
       } else if (a.views > b.views) {
         return -1
       } else {
-        return 0
+      return 0
       }
     })
+
 
     return (
       <div className={style.container} id="mostPopular">
@@ -43,7 +46,7 @@ const MostPopular = () => {
         </h2>{" "}
         <br />
         <Swiper
-          // cosas para generar el "carrusel" de banners 
+          // cosas para generar el "carrusel" de banners
           modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
           slidesPerView={1}
           effect={"coverflow"}
@@ -71,39 +74,39 @@ const MostPopular = () => {
           className="swiper_container"
         >
           <SwiperSlide>
-            <Link to={`/detalle/${orden[0].eventID}`}>
+            <Link to={orden[0]?.eventID ? `/detalle/${orden[0].eventID}` : noLink}>
               <button className={style.buttonInfo}>
                 {"-> Mas informacion aqui <-"}
               </button>
             </Link>
             <img
-              src={orden[0].bannerImage}
+              src={orden[0]?.bannerImage ? orden[0].bannerImage : noBanner}
               alt="image"
               className={style.image}
             />
           </SwiperSlide>
           <br />
           <SwiperSlide>
-            <Link to={`/detalle/${orden[1].eventID}`}>
+            <Link to={orden[1]?.eventID ? `/detalle/${orden[1].eventID}` : noLink}>
               <button className={style.buttonInfo}>
                 {"-> Mas informacion aqui <-"}
               </button>
             </Link>
             <img
-              src={orden[1].bannerImage}
+              src={orden[1]?.bannerImage ? orden[1].bannerImage : noBanner}
               alt="image"
               className={style.image}
             />
           </SwiperSlide>
           <br />
           <SwiperSlide>
-            <Link to={`/detalle/${orden[2].eventID}`}>
+            <Link to={orden[2]?.eventID ? `/detalle/${orden[2].eventID}` : noLink}>
               <button className={style.buttonInfo}>
                 {"-> Mas informacion aqui <-"}
               </button>
             </Link>
             <img
-              src={orden[2].bannerImage}
+              src={orden[2]?.bannerImage ? orden[2].bannerImage : noBanner}
               alt="image"
               className={style.image}
             />
@@ -123,17 +126,6 @@ const MostPopular = () => {
         <br />
       </div>
     )
-  }
-  return (
-    <div>
-      <h2>
-        <b>Eventos Recomendados</b>
-      </h2>{" "}
-      <br />
-      <p>No hay eventos disponibles</p>
-      <br />
-    </div>
-  )
 }
 
 export default MostPopular
