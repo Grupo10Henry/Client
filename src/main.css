@@ -1,0 +1,69 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* estilos de referencia para el proyecto */
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  /* Colores Ppales de la Marca:
+1- amarillo oscuro #C2BA25
+2- magenta #B04999
+3- turquesa #026D77
+4- negro #282828
+
+Colores Secundarios:
+1- amarillo claro #E6E49F
+2- lila claro #C9BADA
+3- verde claro #A2DCBB
+4- turquesa claro #8EBEC2
+
+Colores específicos EVENTOS:
+1- amarillo fuerte #F4E04D
+2- lila fuerte #7D5BA6
+3- magenta fuerte #D81E5B
+4- negro #282828
+
+La marca no usa negro puro, por eso no es black */
+  --negro: #282828;
+  --turquesa: #026d77;
+  --magenta: #b04999;
+  --magenta-fuerte: #d81e5b;
+  --danger: rgb(212, 37, 37);
+  --lila-claro: #c9bada;
+  --amarillo-oscuro: #c2ba25;
+  --amarillo-fuerte: #f4e04d;
+  --amarillo-claro: #e6e49f;
+  --verde-claro: #a2dcbb;
+  --h-nav: 90px;
+  /* --filters-bg: #026d77; */
+  --filters-bg: #3d3d3d;
+  --gradient: linear-gradient(to left, #026d77, #a2dcbb);
+}
+
+body {
+  /* background-color: var(--verde-claro); */
+  background-color: #efefef;
+  color: var(--negro);
+}
+
+img {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: clamp(18px, 2vw, 24px);
+}

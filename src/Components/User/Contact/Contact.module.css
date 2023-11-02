@@ -1,0 +1,62 @@
+.contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  width: 100%;
+  position: fixed;
+  padding: 10px;
+  left: 50%;
+  top: 50%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity ease 200ms;
+  transform: translate(-50%, -50%);
+  background-color: var(--negro);
+  z-index: 2000;
+  color: #efefef;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.contactShow {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity ease 200ms;
+}
+
+.title {
+  font-size: 25px;
+  margin-bottom: 30px;
+  color: var(--turquesa);
+}
+
+.contact form {
+  width: 100%;
+  height: 100%;
+  position: center;
+  text-align: center;
+  margin-top: 43px;
+}
+.inputField {
+  margin: 10px 0;
+  color: black;
+}
+
+.contact form input {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.btn {
+  width: 100%;
+  height: 40px;
+  background-color: var(--turquesa);
+}
+
+.close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

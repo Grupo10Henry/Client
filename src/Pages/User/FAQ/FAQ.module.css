@@ -1,0 +1,8 @@
+.FAQDetailContainer {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(245, 243, 243, 0.7);
+}
+

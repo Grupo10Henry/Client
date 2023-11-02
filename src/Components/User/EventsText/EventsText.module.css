@@ -1,0 +1,36 @@
+.eventsText {
+  padding: 80px 20px;
+}
+
+.eventsTextTitle {
+  margin-bottom: 70px;
+}
+
+.eventsTextH2 {
+  font-size: 25px;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.eventsTextH2::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 50%;
+  left: 0;
+  height: 4px;
+  margin: 10px 0 0 0;
+  background: var(--gradient);
+}
+
+.eventsTextContent {
+  max-width: 800px;
+  margin-inline: auto;
+  line-height: 1.6;
+  font-size: clamp(16px, 2vw, 18px);
+}

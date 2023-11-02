@@ -1,0 +1,106 @@
+.footerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 480px;
+    background-image: url(../../../assets/fondo-tres-scaled.jpg);
+    background-color: rgba(255, 255, 255, 0.7);
+    background-blend-mode: lighten;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.mapaContainer {
+    width: 50%;
+    height: 80%;
+    padding: 20px;
+    text-align: left;
+}
+
+.mapaContainer h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: rgb(66, 66, 66);
+    font-weight: bold;
+}
+
+.mapa {
+    width: 100%;
+    height: 100%;
+}
+
+.infoContainer {
+    width: 50%;
+    height: 65%;
+    color: #ecf0f1;
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.infoContainer h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: rgb(43, 127, 127);
+}
+
+.infoContainer p {
+    font-size: 15px;
+    margin: 5px 0;
+    color: rgb(88, 88, 88);
+    display: flex;
+    align-items: center;
+}
+
+.infoContainer p svg {
+    margin-right: 10px;
+}
+
+.footerRedes {
+    display: flex;
+    gap: 10px;
+}
+
+.footerRedes p {
+    margin-top: 2rem;
+    font-size: 25px;
+    color: rgb(49, 133, 141);
+    transition: transform 0.2s ease-in-out;
+}
+
+.footerRedes p:hover {
+    transform: scale(1.2);
+}
+
+.footer2 {
+    background-color: rgb(7, 96, 105);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    max-height: 350px;
+}
+
+.footer2Logo {
+    max-width: 200px;
+    padding: 20px;
+}
+
+.footer2Info {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding-right: 20px;
+}
+.footer2Info a{
+    color:rgb(232, 235, 12);
+}
+
+
+
+
+

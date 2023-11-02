@@ -1,0 +1,51 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form {
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  border: thin solid #efefef;
+  position: relative;
+}
+
+.form .input {
+  padding: 10px;
+  outline: none;
+  border: none;
+  width: 100%;
+  background-color: var(--filters-bg);
+  color: var(--verde-claro);
+}
+
+.input::placeholder {
+  opacity: 40%;
+  color: inherit;
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: none;
+  border: none;
+}
+
+.btn {
+  display: grid;
+  place-content: center;
+  width: 50px;
+  height: 100%;
+  color: var(--verde-claro);
+  font-size: 20px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.btnDelete {
+  right: 30px;
+}
