@@ -74,7 +74,7 @@ function App() {
         <Route path="/registro" element={<SignUp />} />
         <Route path="/iniciarsesion" element={<Login login={login} />} />
         <Route path="/detalle/:id" element={<Detail />} />
-        <Route path="/reserva" element={<Booking />} />
+        <Route path="/reserva/:id" element={<Booking />} />
         <Route path="/carrito" element={<Cart />} />
         <Route path="/micuenta/:id" element={<MyAccount />} />
         <Route path="/faq" element={<FAQ />} />
