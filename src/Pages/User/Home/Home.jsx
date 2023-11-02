@@ -46,7 +46,7 @@ const Home = () => {
   //obtiene los proximos eventos
   const NextEvents = async () => {
     try {
-      const { data } = await instance.get("/event/next") // http://localhost:3001/event
+      const { data } = await instance.get("/event/next") // http://localhost:3001/event/next
       dispatch(setEventsDate(convertUniquesDates(data)))
       return data
     } catch (error) {
