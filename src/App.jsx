@@ -14,6 +14,7 @@ import PasswordRecover from "./Components/User/Login/PasswordRecover"
 import Detail from "./Pages/User/Detail/Detail"
 import Footer from "./Components/User/Footer/Footer"
 import FAQ from "./Pages/User/FAQ/FAQ"
+import ScrollToTop from "./Components/UserAndAdmin/ScrollToTop"
 
 import axios from "axios"
 
@@ -80,6 +81,7 @@ function App() {
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
       </Routes>
+      <ScrollToTop />
       {location.pathname === "admin" ? null : <Footer />}
     </div>
   )
