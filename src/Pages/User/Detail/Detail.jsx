@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import styles from "./Detail.module.css";
 import BookingButton from "./BookingButton";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Detail = () => {
   const eventID = useSelector(selectEventID);
@@ -18,7 +18,7 @@ const Detail = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/reserva");
+    navigate(`/reserva/${eventID}?isDonation=${isDonation}`);
   };
 
   const [isDonation, setIsDonation] = useState(false);
@@ -200,7 +200,10 @@ const Detail = () => {
             </div>
             <br />
             {isDonation ? (
+              <>
               <p>Ingreso con contribución voluntaria.</p>
+              <button onClick={handleClick}>Ver sectores y Reservar</button>
+              </>
             ) : (
               <>
             <h2>Sectores:</h2>
@@ -225,7 +228,9 @@ const Detail = () => {
           ></iframe>
         </div>
         <div className={styles.ContainerBookingButton}>
-          <BookingButton />
+          <Link to={`/reserva/${eventID}`}>
+          <BookingButton  />
+          </Link>
         </div>
       </div>
     </>
