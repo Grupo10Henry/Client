@@ -20,7 +20,6 @@ import BookingSeats from "./Components/User/Booking/BookingSeats/BookingSeatsDem
 import {instance} from "./axios/config"
 import axios from "axios"
 import NotFound from "./Components/User/NotFound/NotFound"
-import { instance } from "./axios/config"
 
 function App() {
   const location = useLocation()
@@ -73,13 +72,13 @@ const getUserEmailFromGoogle = async (token) => {
 
           console.log("Datos de la solicitud POST:", requestBody);
     
-        const response = await instance.post(URL, requestBody);
+        const response = await axios.post(URL, requestBody);
         const token = response.data.token;
     
         if (token) {
           localStorage.setItem("token", token);
     
-          const userResponse = await instance.get("http://localhost:3001/user", {
+          const userResponse = await axios.get("http://localhost:3001/user", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
