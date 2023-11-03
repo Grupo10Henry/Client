@@ -5,7 +5,7 @@ import styles from "./Booking.module.css";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import {instance} from "../../../axios/config";
-import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsDemo";
+import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeats";
 
 const Booking = () => {
   const { id } = useParams();

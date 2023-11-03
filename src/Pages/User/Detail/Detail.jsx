@@ -14,6 +14,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Detail = () => {
   const eventID = useSelector(selectEventID);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      // Cuando los datos se cargan con éxito, cambia isLoading a falso
+      setIsLoading(false);
+    }, 2000); // Simula una carga de 2 segundos
+  }, []);
 
   const navigate = useNavigate();
 
@@ -155,6 +163,10 @@ const Detail = () => {
   return (
     <>
       <div className={styles.ContainerGlobal}>
+      {isLoading ? ( // Verifica si isLoading es verdadero
+      <div className={styles.loader}></div>
+    ) : (
+      <>
         <div className={styles.ContainerBanner}>
           <img src={eventDetails.bannerImage} alt={eventDetails.name} />
         </div>
@@ -232,6 +244,8 @@ const Detail = () => {
           <BookingButton  />
           </Link>
         </div>
+      </>
+    )}
       </div>
     </>
   );

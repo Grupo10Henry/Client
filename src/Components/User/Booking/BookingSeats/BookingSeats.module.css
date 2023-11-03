@@ -1,52 +1,53 @@
 /* BookingSeats.module.css */
 .seatMap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .sector {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px; /* Espacio entre los sectores */
-  }
-  
-  .row {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .seat {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    margin: 5px;
-  }
-  
-  .selected {
-    background-color: #00ff00; /* Cambia el color de fondo cuando se selecciona */
-  }
-  
-  /* Cuando el asiento esté ocupado */
-  .seat.occupied svg {
-    fill: #ff0000; /* Cambia el color de relleno del SVG a rojo */
-  }
-  
-  /* Cuando el asiento esté libre */
-  .seat.free svg {
-    fill: #00ff00; /* Cambia el color de relleno del SVG a verde */
-  }
-  
-  .seatInfo {
-    text-align: center;
-  }
-  
-  .selectedInfo {
-    margin-top: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: min-content;
+  padding: 10px;
+}
+
+.sector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5px; /* Reduzco el espacio entre los sectores */
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.seat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Aumento el tamaño de los asientos */
+  height: 20px; /* Aumento el tamaño de los asientos */
+  border: none;
+  cursor: pointer;
+  margin: 0px; /* Reduzco el espacio entre los asientos */
+}
+
+.selected {
+  background-color: #00ff00; /* Cambia el color de fondo cuando se selecciona */
+}
+
+/* Cuando el asiento esté ocupado */
+.seat.occupied svg {
+  fill: #ff0000; /* Cambia el color de relleno del SVG a rojo */
+}
+
+/* Cuando el asiento esté libre */
+.seat.free svg {
+  fill: #00ff00; /* Cambia el color de relleno del SVG a verde */
+}
+
+.seatInfo {
+  text-align: center;
+}
+
+.selectedInfo {
+  margin-top: 10px; /* Ajusto el espacio entre la información del asiento seleccionado */
+}

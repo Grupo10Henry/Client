@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSelectedSeats, addSelectedSeat, removeSelectedSeat } from '../../../../redux/bookSeatsSlice'; // Asegúrate de importar las acciones y selectores adecuados
 import styles from './BookingSeats.module.css';
+import asiento from '../../../../assets/asiento.svg';
 
 const sampleData = [
   // Sector 1: rows: 3, columns: 10
@@ -91,7 +92,7 @@ const BookingSeats = () => {
                         .map((seat) => (
                           <img
                             key={seat.seatID}
-                            src="ruta-de-tu-imagen-svg.svg" // Reemplaza con la ruta de tu imagen SVG
+                            src= {asiento}
                             alt={`Seat ${seat.seatLocation}`}
                             className={`${styles.seat} ${selectedSeats.includes(seat) ? styles.selected : ''}`}
                             onClick={() => handleSeatClick(seat)}
