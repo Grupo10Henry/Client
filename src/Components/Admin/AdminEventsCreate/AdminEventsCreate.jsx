@@ -132,72 +132,95 @@ export default function AdminEventsCreate() {
     }
     };
     
+    const uploadImage = async (image) => {
+        const formData = new FormData();
+        formData.append('file', image);
+        formData.append('upload_preset', 'mibutaca');
+    
+        const response = await axios.post(
+            'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
+            formData
+        );
+    
+        if (response.status === 200) {
+            return response.data.secure_url;
+        } else {
+            return null; // Indicate that the upload failed
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!input.name || !input.description || !input.category || !input.isDonation || !input.capacity || !input.date || !input.time || !input.locationName ||
             !input.adressLocation || !input.mapLocation || !input.type) {
-                alert('Por favor completa todos los campos para crear el evento')
-            } else {
-                // Código para extraer la URL de source del código de GoogleMaps
-                // let copy = input.mapLocation
-                let match = input.mapLocation.match(iframeRegex);
-                // setInput({...input, mapLocation: match[1]})
+                alert('Por favor completa todos los campos para crear el evento');
+                return;
+            }
 
-                // Cargar imagen en Cloudinary
-                // try {
-                    const formData = new FormData();
-                    formData.append('file', image);
-                    formData.append('upload_preset', 'mibutaca');
+        try {
+            
+            
+            // Código para extraer la URL de source del código de GoogleMaps
+            let match = input.mapLocation.match(iframeRegex);
+            
+            // // Cargar imagen en Cloudinary
+            // const formData = new FormData();
+            // formData.append('file', image);
+            // formData.append('upload_preset', 'mibutaca');
+            
+            // const cloudinaryResponse = await axios.post(
+            //     'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
+            //     formData
+            //     );
                 
-                    const cloudinaryResponse = await axios.post(
-                      'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
-                      formData
-                    );
+            //     // Obtener URL de imagen en Cloudinary
+            //     const imageUrl = cloudinaryResponse.data.secure_url;
+            //     setImageURL(imageUrl);
                 
-                    // Obtener URL de imagen en Cloudinary
-                    const imageUrl = cloudinaryResponse.data.secure_url;
-                    setImageURL(imageUrl);
-                // } catch (error) {
-                //     console.error('Error uploading image:', error);
-                // }
+            //     // Cargar imagen Banner en Cloudinary
+            //     const formDataB = new FormData();
+            //     formDataB.append('file', bannerImage);
+            //     formDataB.append('upload_preset', 'mibutaca');
+                
+            //     const cloudinaryResponseB = await axios.post(
+            //           'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
+            //           formDataB
+            //           );
+                      
+            //         // Obtener URL de imagen Banner en Cloudinary
+            //         const bannerImageUrl = cloudinaryResponseB.data.secure_url;
+            //         setBannerImageURL(bannerImageUrl);
+                    
+            //         // Cargar imagen Plano en Cloudinary
+            //         const formDataP = new FormData();
+            //         formDataP.append('file', planImage);
+            //         formDataP.append('upload_preset', 'mibutaca');
+                    
+            //         const cloudinaryResponseP = await axios.post(
+            //             'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
+            //             formDataP
+            //             );
+                        
+            //             // Obtener URL de imagen Plano en Cloudinary
+            //             const planImageUrl = cloudinaryResponseP.data.secure_url;
+            //         setPlanImageURL(planImageUrl);
 
-                // Cargar imagen Banner en Cloudinary
-                // try {
-                    const formDataB = new FormData();
-                    formDataB.append('file', bannerImage);
-                    formDataB.append('upload_preset', 'mibutaca');
-                
-                    const cloudinaryResponseB = await axios.post(
-                      'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
-                      formDataB
-                    );
-                
-                    // Obtener URL de imagen Banner en Cloudinary
-                    const bannerImageUrl = cloudinaryResponseB.data.secure_url;
-                    setBannerImageURL(bannerImageUrl);
-                // } catch (error) {
-                //     console.error('Error uploading image:', error);
-                // }
+            // Upload all images concurrently and wait for all of them to complete
+        const [imageResponse, bannerResponse, planResponse] = await Promise.all([
+            uploadImage(image),
+            uploadImage(bannerImage),
+            uploadImage(planImage)
+        ]);
 
-                // Cargar imagen Plano en Cloudinary
-                // try {
-                    const formDataP = new FormData();
-                    formDataP.append('file', planImage);
-                    formDataP.append('upload_preset', 'mibutaca');
-                
-                    const cloudinaryResponseP = await axios.post(
-                      'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
-                      formDataP
-                    );
-                
-                    // Obtener URL de imagen Plano en Cloudinary
-                    const planImageUrl = cloudinaryResponseP.data.secure_url;
-                    setPlanImageURL(planImageUrl);                    
-                // } catch (error) {
-                //     console.error('Error uploading image:', error);
-                // }
+        // Ensure all image uploads were successful
+        if (!imageResponse || !bannerResponse || !planResponse) {
+            alert('Error uploading images');
+            return;
+        }
 
-                let newEvent = {
+        const [imageURL, bannerImageURL, planImageURL] = [imageResponse, bannerResponse, planResponse];
+
+                    let newEvent = {
                     name: input.name,
                     description: input.description,
                     category: input.category,
@@ -222,16 +245,17 @@ export default function AdminEventsCreate() {
                     const post = await instance.post('/event/', newEvent)
                     alert("Evento creado exitosamente")
                 } catch (error) {
-                    alert(error.response.data.error)
-                }
-
-        // Borrar campos de input
-    }
+                    alert(error.response.data.error);
+                }                
+            } catch (error) {
+                alert(error.response.data.error);
+            }
+            // Borrar campos de input
     };
-
+    
     return (
         // <div>
-            <div className={styles.formContainer}>
+        <div className={styles.formContainer}>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <p className={styles.formTitle}>Completa la información para crear un evento</p>
                     <div className={styles.formFields}>
