@@ -19,12 +19,14 @@ import BookingSeats from "./Components/User/Booking/BookingSeats/BookingSeatsDem
 
 import {instance} from "./axios/config"
 import axios from "axios"
+import NotFound from "./Components/User/NotFound/NotFound"
+import { instance } from "./axios/config"
 
 function App() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const getUserEmailFromGoogle = async (token) => {
+const getUserEmailFromGoogle = async (token) => {
     try {
       const response = await axios.get(
         "https://www.googleapis.com/oauth2/v3/userinfo",
@@ -101,15 +103,20 @@ function App() {
         
     
 
+  const allowedPaths = [
+    "/admin",
+    "/faq",
+    "/reserva",
+    "/carrito",
+    "/micuenta",
+    "/detalle",
+  ]
+  const shouldRenderNavbar = allowedPaths.some(
+    (path) => location.pathname === path || location.pathname.includes(path)
+  )
   return (
     <div className={styles.App}>
-      {(location.pathname === "/" ||
-        location.pathname === "/admin" ||
-        location.pathname === "/faq" ||
-        location.pathname === "/reserva" ||
-        location.pathname === "/carrito" ||
-        location.pathname.includes("/micuenta") ||
-        location.pathname.includes("/detalle")) && <Navbar />}
+      {(location.pathname === "/" || shouldRenderNavbar) && <Navbar />}
       <Contact />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -123,6 +130,7 @@ function App() {
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
         <Route path="/reserva/seats" element={<BookingSeats />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />
       {location.pathname === "admin" ? null : <Footer />}
