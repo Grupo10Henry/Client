@@ -6,6 +6,7 @@ import eventsReducer from "./eventsSlice"
 import eventIDReducer from "./eventIDSlice"
 import counterReducer from "./counterSlice"
 import eventsCountReducer from "./eventsCountSlice"
+import bookSeatReducer from "./bookSeatsSlice"
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     events: eventsReducer,
     counter: counterReducer,
     eventsCount: eventsCountReducer,
+    bookSeat: bookSeatReducer,
   },
 })
