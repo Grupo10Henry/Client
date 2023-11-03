@@ -145,38 +145,38 @@ export default function MyAccountInfo() {
             <button className={styles.saveButton} onClick={handleSaveChanges}>Guardar cambios</button>
             </div>
             ) : (
-            <div>
-                <div>
-                    <div>
-                    <p>Nombre:</p>
-                    <p>{userData.name}</p>
+            <div className={styles.infoContainer}>
+                <div className={styles.infoRowContainer}>
+                    <div className={styles.infoInputContainer}>
+                    <p className={styles.infoLabel}>Nombre:</p>
+                    <p className={styles.infoDisplay}>{userData.name}</p>
                     </div>
-                    <div>
-                    <p>Apellido:</p>
-                    <p>{userData.lastName}</p>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                    <p>Fecha de nacimiento:</p>
-                    <p>{userData.dob}</p>
-                    </div>
-                    <div>
-                    <p>Documento de identidad:</p>
-                    <p>{userData.identityCard}</p>
+                    <div className={styles.infoInputContainer}>
+                    <p className={styles.infoLabel}>Apellido:</p>
+                    <p className={styles.infoDisplay}>{userData.lastName}</p>
                     </div>
                 </div>
-                <div>
-                    <div>
-                    <p>Email:</p>
-                    <p>{userData.email}</p>
+                <div className={styles.infoRowContainer}>
+                    <div className={styles.infoInputContainer}>
+                    <p className={styles.infoLabel}>Fecha de nacimiento:</p>
+                    <p className={styles.infoDisplay}>{userData.dob}</p>
                     </div>
-                    <div>
-                    <p>Teléfono:</p>
-                    <p>{userData.phone}</p>
+                    <div className={styles.infoInputContainer}>
+                    <p className={styles.infoLabel}>Documento de identidad:</p>
+                    <p className={styles.infoDisplay}>{userData.identityCard}</p>
                     </div>
                 </div>
-                <button onClick={()=>setEditMode(true)}>Editar</button>
+                <div className={styles.infoRowContainer}>
+                    <div className={styles.infoInputContainer}>
+                    <p className={styles.infoLabel}>Email:</p>
+                    <p className={styles.infoDisplay}>{userData.email}</p>
+                    </div>
+                    <div className={styles.infoInputContainer}>
+                    <p className={styles.infoLabel}>Teléfono:</p>
+                    <p className={styles.infoDisplay}>{userData.phone}</p>
+                    </div>
+                </div>
+                <button className={styles.saveButton} onClick={()=>setEditMode(true)}>Editar</button>
                 </div>
             )}
         </div>
