@@ -5,6 +5,8 @@ import { useSarchbar } from "../../../hooks/useSearchBar"
 
 import style from "./SearchBar.module.css"
 
+import { Toaster, resolveValue } from "react-hot-toast"
+
 const SearchBar = ({ handlerFilter, resetPropFilters }) => {
   const { handlerChange, handlerSearch, handlerDeleteInput, input } =
     useSarchbar(handlerFilter, resetPropFilters)
@@ -36,6 +38,8 @@ const SearchBar = ({ handlerFilter, resetPropFilters }) => {
           <BiSearch />
         </button>
       </form>
+
+      <Toaster position="botttom-right" />
     </div>
   )
 }

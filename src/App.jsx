@@ -18,6 +18,7 @@ import ScrollToTop from "./Components/UserAndAdmin/ScrollToTop"
 
 import axios from "axios"
 import NotFound from "./Components/User/NotFound/NotFound"
+import { instance } from "./axios/config"
 
 function App() {
   const location = useLocation()
@@ -32,15 +33,15 @@ function App() {
 
   async function login(userData) {
     const { email, password } = userData
-    const URL = "http://localhost:3001/login/"
 
     try {
-      const response = await axios.post(URL, { email, password })
+      const response = await instance.post("/login", { email, password })
       const token = response.data.token
+      console.log(response.data)
       if (token) {
         localStorage.setItem("token", token)
 
-        const userResponse = await axios.get("http://localhost:3001/user", {
+        const userResponse = await instance.get("/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
