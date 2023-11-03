@@ -1,9 +1,10 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { handlerIsFilter } from "../redux/eventsSlice"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
-export const useSarchbar = (handlerFilter) => {
+export const useSarchbar = (handlerFilter, resetPropFilters) => {
   const [input, setInput] = useState("")
+  const { reset } = useSelector((s) => s.events)
 
   const dispatch = useDispatch()
 
@@ -20,12 +21,18 @@ export const useSarchbar = (handlerFilter) => {
     console.log("pidiendo a back:", input)
     handlerFilter("search", input)
     dispatch(handlerIsFilter())
-    setInput("")
   }
 
   const handlerDeleteInput = () => {
     setInput("")
+    resetPropFilters({ propToDelete: "search" })
   }
+
+  useEffect(() => {
+    if (reset) {
+      setInput("")
+    }
+  }, [reset])
 
   return { handlerChange, handlerSearch, handlerDeleteInput, input }
 }

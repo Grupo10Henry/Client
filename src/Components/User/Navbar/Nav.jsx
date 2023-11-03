@@ -8,7 +8,7 @@ import style from "./Navbar.module.css"
 const Nav = () => {
   const { isOpen, setIsOpen, handlerOpenContact, links } = useNav()
 
-  const linksClass = isOpen && style.showme
+  const linksClass = isOpen ? style.showme : ""
 
   const navigate = useNavigate()
   const handleLogout = () => {
@@ -38,7 +38,7 @@ const Nav = () => {
             <NavLink
               key={link.id}
               to={link.to}
-              className={({ isActive }) => isActive && style.active}
+              className={({ isActive }) => (isActive ? style.active : "")}
             >
               {link.text}
             </NavLink>

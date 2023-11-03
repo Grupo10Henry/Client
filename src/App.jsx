@@ -17,6 +17,7 @@ import FAQ from "./Pages/User/FAQ/FAQ"
 import ScrollToTop from "./Components/UserAndAdmin/ScrollToTop"
 
 import axios from "axios"
+import NotFound from "./Components/User/NotFound/NotFound"
 
 function App() {
   const location = useLocation()
@@ -60,15 +61,20 @@ function App() {
     }
   }
 
+  const allowedPaths = [
+    "/admin",
+    "/faq",
+    "/reserva",
+    "/carrito",
+    "/micuenta",
+    "/detalle",
+  ]
+  const shouldRenderNavbar = allowedPaths.some(
+    (path) => location.pathname === path || location.pathname.includes(path)
+  )
   return (
     <div className={styles.App}>
-      {(location.pathname === "/" ||
-        location.pathname === "/admin" ||
-        location.pathname === "/faq" ||
-        location.pathname === "/reserva" ||
-        location.pathname === "/carrito" ||
-        location.pathname.includes("/micuenta") ||
-        location.pathname.includes("/detalle")) && <Navbar />}
+      {(location.pathname === "/" || shouldRenderNavbar) && <Navbar />}
       <Contact />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -81,6 +87,7 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />
       {location.pathname === "admin" ? null : <Footer />}

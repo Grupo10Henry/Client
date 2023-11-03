@@ -5,9 +5,9 @@ import { useSarchbar } from "../../../hooks/useSearchBar"
 
 import style from "./SearchBar.module.css"
 
-const SearchBar = ({ handlerFilter }) => {
+const SearchBar = ({ handlerFilter, resetPropFilters }) => {
   const { handlerChange, handlerSearch, handlerDeleteInput, input } =
-    useSarchbar(handlerFilter)
+    useSarchbar(handlerFilter, resetPropFilters)
 
   return (
     <div className={style.wrapper}>
