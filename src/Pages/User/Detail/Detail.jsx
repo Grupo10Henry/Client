@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 //import { getSeat } from "../../../redux/seatSlice";
 import { selectEventID } from "../../../redux/eventIDSlice";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import {instance} from "../../../axios/config";
 import styles from "./Detail.module.css";
 import BookingButton from "./BookingButton";
 import { Link, useNavigate } from "react-router-dom";
@@ -41,8 +41,8 @@ const Detail = () => {
     const fetchEventData = async () => {
       try {
         /* traer de la ruta /seat/:eventID los sectores y precios. La respuesta es un array de arrays, que contiene [price, sector] */
-        const response = await axios.get(
-          `http://localhost:3001/seat/${eventID}`
+        const response = await instance.get(
+          `/seat/${eventID}`
         );
         if (response.data) {
           setSectorPrices(response.data);
@@ -54,8 +54,8 @@ const Detail = () => {
 
     const fetchEventDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3001/event/${eventID}`
+        const response = await instance.get(
+          `/event/${eventID}`
         );
 
         if (response.data) {

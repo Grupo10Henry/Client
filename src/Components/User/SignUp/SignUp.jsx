@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import {instance} from "../../../axios/config";
 import logo from "../../../assets/logo_mi_butaca_color.svg";
 import fondo from "../../../assets/fondo-tres-scaled.jpg";
 import Swal from "sweetalert2";
@@ -35,7 +35,7 @@ const SignUp = () => {
   // logica necesaria para permitir al usuario registrarse con Google
   const handleGoogle = async (e) => {
     e.preventDefault();
-    const response = await axios.get("http://localhost:3001/auth/google");
+    const response = await instance.get("/auth/google");
     console.log(response.data);
   };
 
@@ -47,7 +47,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3001/user", user);
+      const response = await instance.post("/user", user);
 
       if (response.status === 200) {
         alert("Usuario creado correctamente");

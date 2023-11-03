@@ -174,10 +174,25 @@
   }
 
   .ContainerPlanoAsientos {
+    display: flex;
+    justify-content: center;
     flex: 2;
+    align-items: center;
   }
 
+  .ContainerPlanoAsientos img {
+    width: 50%;
+    height: auto;
+    justify-content: center;
+  }
 
-
+  .ContainerPrices {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin: 5px 0;
+    color: black;
+    background-color:rgb(254, 189, 149);
+  }
 
 

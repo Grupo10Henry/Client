@@ -15,8 +15,9 @@ import Detail from "./Pages/User/Detail/Detail"
 import Footer from "./Components/User/Footer/Footer"
 import FAQ from "./Pages/User/FAQ/FAQ"
 import ScrollToTop from "./Components/UserAndAdmin/ScrollToTop"
+import BookingSeats from "./Components/User/Booking/BookingSeats/BookingSeatsDemo"
 
-import axios from "axios"
+import {instance} from "./axios/config"
 
 function App() {
   const location = useLocation()
@@ -34,12 +35,12 @@ function App() {
     const URL = "http://localhost:3001/login/"
 
     try {
-      const response = await axios.post(URL, { email, password })
+      const response = await instance.post(URL, { email, password })
       const token = response.data.token
       if (token) {
         localStorage.setItem("token", token)
 
-        const userResponse = await axios.get("http://localhost:3001/user", {
+        const userResponse = await instance.get("http://localhost:3001/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -80,6 +81,7 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
+        <Route path="/reserva/seats" element={<BookingSeats />} />
       </Routes>
       <ScrollToTop />
       {location.pathname === "admin" ? null : <Footer />}
