@@ -40,28 +40,47 @@ export default function MyAccountInfo() {
         deletedAt: null
       }
 
+    useEffect(() => {
+        setUser(userData)
+    }, []);
+
     const [editMode, setEditMode] = useState(false);
     const [user, setUser] = useState({
-        userID: 3,
-        isAdmin: false,
-        name: "franco",
-        lastName: "rinque",
-        email: "Franco2@gmail.com",
-        phone: "1122334455",
-        password: "$2a$10$j50dnsZi5UBlsDyYGq/JdeyMJWOO9unSZrO7ydZu5EhvjB6op3ogy",
-        identityCard: "43336633",
-        dob: "2024-04-02",
+        userID: "",
+        isAdmin: "",
+        name: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        password: "",
+        identityCard: "",
+        dob: "",
     })
 
-    console.log(editMode)
+    console.log(editMode);
+    console.log(user);
+
+    const handleChange = (field, value) => {
+        setUser({
+            ...user,
+            [field]: value,
+        })
+;    } 
 
     return (
         <div>
             <h1>Datos personales:</h1>
+            {editMode ? (
+            <div>
             <div>
                 <div>
                     <label>Nombre:</label>
-                    <input />
+                    <input
+                    placeholder={userData.name}
+                    type="text"
+                    value={user.name}
+                    onChange={(e) => handleChange('name', e.target.value)}
+                    />
                 </div>
                 <div>
                     <label>Apellido:</label>
@@ -88,7 +107,43 @@ export default function MyAccountInfo() {
                     <input />
                 </div>
             </div>
-            <button onClick={()=>setEditMode(true)}>Editar</button>
+            <button onClick={()=>setEditMode(false)}>Guardar cambios</button>
+            </div>
+            ) : (
+            <div>
+                <div>
+                    <div>
+                    <p>Nombre:</p>
+                    <p>{userData.name}</p>
+                    </div>
+                    <div>
+                    <p>Apellido:</p>
+                    <p>{userData.lastName}</p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                    <p>Fecha de nacimiento:</p>
+                    <p>{userData.dob}</p>
+                    </div>
+                    <div>
+                    <p>Documento de identidad:</p>
+                    <p>{userData.identityCard}</p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                    <p>Email:</p>
+                    <p>{userData.email}</p>
+                    </div>
+                    <div>
+                    <p>Teléfono:</p>
+                    <p>{userData.phone}</p>
+                    </div>
+                </div>
+                <button onClick={()=>setEditMode(true)}>Editar</button>
+                </div>
+            )}
         </div>
     )
 }
