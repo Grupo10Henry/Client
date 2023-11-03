@@ -71,15 +71,9 @@ const Home = () => {
     <div className={style.home}>
       <Banner />
       <EventsText />
-      <EventsSections />
       {pathname === "/" && <Filters />}
-
       {isFilter ? <EventsFiltered /> : <EventsSections />}
-      <Reviews/><br />
-
-      {isFilter ? <EventsFiltered /> : <AllEvents />}
-
-
+      <Reviews />
     </div>
   )
 }
