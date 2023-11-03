@@ -78,23 +78,23 @@ export default function MyAccountInfo() {
     };
 
     return (
-        <div>
-            <h1>Datos personales:</h1>
+        <div className={styles.infoContainer}>
+            <h1 className={styles.infoTitle}>Datos personales:</h1>
             {editMode ? (
-            <div>
-            <div>
-                <div>
-                    <label>Nombre:</label>
-                    <input
+            <div className={styles.infoContainer}>
+            <div className={styles.infoRowContainer}>
+                <div className={styles.infoInputContainer}>
+                    <label className={styles.infoLabel}>Nombre:</label>
+                    <input className={styles.infoInput}
                     placeholder={userData.name}
                     type="text"
                     value={user.name}
                     onChange={(e) => handleChange('name', e.target.value)}
                     />
                 </div>
-                <div>
-                    <label>Apellido:</label>
-                    <input
+                <div className={styles.infoInputContainer}>
+                    <label className={styles.infoLabel}>Apellido:</label>
+                    <input className={styles.infoInput}
                     placeholder={userData.lastName}
                     type="text"
                     value={user.lastName}
@@ -102,19 +102,19 @@ export default function MyAccountInfo() {
                     />
                 </div>
             </div>
-            <div>
-                <div>
-                    <label>Fecha de nacimiento:</label>
-                    <input
+            <div className={styles.infoRowContainer}>
+                <div className={styles.infoInputContainer}>
+                    <label className={styles.infoLabel}>Fecha de nacimiento:</label>
+                    <input className={styles.infoInput}
                     placeholder={userData.dob}
                     type="date"
                     value={user.dob}
                     onChange={(e) => handleChange('dob', e.target.value)}
                     />
                 </div>
-                <div>
-                    <label>Documento de identidad:</label>
-                    <input
+                <div className={styles.infoInputContainer}>
+                    <label className={styles.infoLabel}>Documento de identidad:</label>
+                    <input className={styles.infoInput}
                     placeholder={userData.identityCard}
                     type="number"
                     value={user.identityCard}
@@ -122,19 +122,19 @@ export default function MyAccountInfo() {
                     />
                 </div>
             </div>
-            <div>
-                <div>
-                    <label>Email:</label>
-                    <input
+            <div className={styles.infoRowContainer}>
+                <div className={styles.infoInputContainer}>
+                    <label className={styles.infoLabel}>Email:</label>
+                    <input className={styles.infoInput}
                     placeholder={userData.email}
                     type="text"
                     value={user.email}
                     onChange={(e) => handleChange('email', e.target.value)}
                     />
                 </div>
-                <div>
-                    <label>Teléfono:</label>
-                    <input
+                <div className={styles.infoInputContainer}>
+                    <label className={styles.infoLabel}>Teléfono:</label>
+                    <input className={styles.infoInput}
                     placeholder={userData.phone}
                     type="number"
                     value={user.phone}
@@ -142,41 +142,41 @@ export default function MyAccountInfo() {
                     />
                 </div>
             </div>
-            <button onClick={handleSaveChanges}>Guardar cambios</button>
+            <button className={styles.saveButton} onClick={handleSaveChanges}>Guardar cambios</button>
             </div>
             ) : (
-            <div>
-                <div>
-                    <div>
-                    <p>Nombre:</p>
-                    <p>{userData.name}</p>
+            <div className={styles.infoContainer}>
+                <div className={styles.infoRowContainer}>
+                    <div className={styles.infoInputContainer}>
+                    <p className={styles.infoLabel}>Nombre:</p>
+                    <p className={styles.infoDisplay}>{userData.name}</p>
                     </div>
-                    <div>
-                    <p>Apellido:</p>
-                    <p>{userData.lastName}</p>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                    <p>Fecha de nacimiento:</p>
-                    <p>{userData.dob}</p>
-                    </div>
-                    <div>
-                    <p>Documento de identidad:</p>
-                    <p>{userData.identityCard}</p>
+                    <div className={styles.infoInputContainer}>
+                    <p className={styles.infoLabel}>Apellido:</p>
+                    <p className={styles.infoDisplay}>{userData.lastName}</p>
                     </div>
                 </div>
-                <div>
-                    <div>
-                    <p>Email:</p>
-                    <p>{userData.email}</p>
+                <div className={styles.infoRowContainer}>
+                    <div className={styles.infoInputContainer}>
+                    <p className={styles.infoLabel}>Fecha de nacimiento:</p>
+                    <p className={styles.infoDisplay}>{userData.dob}</p>
                     </div>
-                    <div>
-                    <p>Teléfono:</p>
-                    <p>{userData.phone}</p>
+                    <div className={styles.infoInputContainer}>
+                    <p className={styles.infoLabel}>Documento de identidad:</p>
+                    <p className={styles.infoDisplay}>{userData.identityCard}</p>
                     </div>
                 </div>
-                <button onClick={()=>setEditMode(true)}>Editar</button>
+                <div className={styles.infoRowContainer}>
+                    <div className={styles.infoInputContainer}>
+                    <p className={styles.infoLabel}>Email:</p>
+                    <p className={styles.infoDisplay}>{userData.email}</p>
+                    </div>
+                    <div className={styles.infoInputContainer}>
+                    <p className={styles.infoLabel}>Teléfono:</p>
+                    <p className={styles.infoDisplay}>{userData.phone}</p>
+                    </div>
+                </div>
+                <button className={styles.saveButton} onClick={()=>setEditMode(true)}>Editar</button>
                 </div>
             )}
         </div>
