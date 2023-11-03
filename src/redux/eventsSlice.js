@@ -10,6 +10,7 @@ const initialState = {
   isFilter: false,
   reset: false,
   isLoading: false,
+  isError: false,
 }
 
 export const eventsSlice = createSlice({
@@ -24,6 +25,7 @@ export const eventsSlice = createSlice({
     },
     setFilteredEvents: (state, action) => {
       state.eventsFiltered = action.payload
+      state.isError = false
     },
     setEventsDate: (state, action) => {
       state.eventsDate = action.payload
@@ -41,6 +43,10 @@ export const eventsSlice = createSlice({
       state.isLoading = false
       state.eventsFiltered = []
     },
+    setEventsFilteredFailed: (state, action) => {
+      state.isError = action.payload
+      state.isLoading = false
+    },
   },
 })
 
@@ -52,6 +58,7 @@ export const {
   handlerIsFilter,
   handlerReset,
   handlerIsLoading,
+  setEventsFilteredFailed,
 } = eventsSlice.actions
 
 export default eventsSlice.reducer
