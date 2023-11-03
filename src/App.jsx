@@ -17,6 +17,8 @@ import FAQ from "./Pages/User/FAQ/FAQ"
 import ScrollToTop from "./Components/UserAndAdmin/ScrollToTop"
 
 import axios from "axios"
+import NotFound from "./Components/User/NotFound/NotFound"
+import { instance } from "./axios/config"
 
 function App() {
   const location = useLocation()
@@ -31,15 +33,15 @@ function App() {
 
   async function login(userData) {
     const { email, password } = userData
-    const URL = "http://localhost:3001/login/"
 
     try {
-      const response = await axios.post(URL, { email, password })
+      const response = await instance.post("/login", { email, password })
       const token = response.data.token
+      console.log(response.data)
       if (token) {
         localStorage.setItem("token", token)
 
-        const userResponse = await axios.get("http://localhost:3001/user", {
+        const userResponse = await instance.get("/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -60,15 +62,20 @@ function App() {
     }
   }
 
+  const allowedPaths = [
+    "/admin",
+    "/faq",
+    "/reserva",
+    "/carrito",
+    "/micuenta",
+    "/detalle",
+  ]
+  const shouldRenderNavbar = allowedPaths.some(
+    (path) => location.pathname === path || location.pathname.includes(path)
+  )
   return (
     <div className={styles.App}>
-      {(location.pathname === "/" ||
-        location.pathname === "/admin" ||
-        location.pathname === "/faq" ||
-        location.pathname === "/reserva" ||
-        location.pathname === "/carrito" ||
-        location.pathname.includes("/micuenta") ||
-        location.pathname.includes("/detalle")) && <Navbar />}
+      {(location.pathname === "/" || shouldRenderNavbar) && <Navbar />}
       <Contact />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -81,6 +88,7 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />
       {location.pathname === "admin" ? null : <Footer />}

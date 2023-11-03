@@ -144,6 +144,24 @@
   transform: scale(0.95);
 }
 
+.toastConfirmBtns {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.toastConfirmBtns button {
+  background-color: var(--turquesa);
+  padding: 10px 20px;
+  border-radius: 3px;
+  color: #efefef;
+}
+
+.toastConfirmBtns button:nth-of-type(2) {
+  background-color: var(--danger);
+}
+
 @media (width > 500px) {
   .logo {
     width: 130px;
