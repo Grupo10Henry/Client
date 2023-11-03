@@ -15,8 +15,11 @@ import {
 import EventsFiltered from "../../../Components/User/Events/EventsFiltered/EventsFiltered"
 
 import style from "./Home.module.css"
-import Reviews2 from "../../../Components/User/Reviews/Reviews2"
+
+import Reviews from "../../../Components/User/Reviews/Reviews"
+
 import AllEvents from "../../../Components/User/Events/AllEvents/AllEvents"
+
 const Home = () => {
   const { pathname } = useLocation()
   const { isFilter } = useSelector((s) => s.events)
@@ -70,8 +73,13 @@ const Home = () => {
       <EventsText />
       <EventsSections />
       {pathname === "/" && <Filters />}
+
+      {isFilter ? <EventsFiltered /> : <EventsSections />}
+      <Reviews/><br />
+
       {isFilter ? <EventsFiltered /> : <AllEvents />}
-      <Reviews2 /> <br />
+
+
     </div>
   )
 }
