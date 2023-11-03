@@ -1,16 +1,39 @@
-.Review{
+.reviewUserEvent{
+    color:rgb(225, 16, 204);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.averageRating{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-left: 6%;
+    margin-top: 20px;
+    gap:10px;
+    font-size: 16px;
+    color:rgb(115, 115, 115);
+}
+
+.averageRating p {
+    margin: 0;
+}
+
+.reviewsUser{
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-.ReviewContainer2 {
+.reviewUserContainer {
     display: flex;
     flex-wrap: wrap;
     width: 90%;
 }
-
-.review2 {
+.reviewUserContainer h3{
+    color: rgb(66, 124, 124);
+    font-size: 14px;
+}
+.reviewUser{
     flex: 0 0 calc(33.33% - 20px);
     margin: 10px;
     padding: 12px;
@@ -22,55 +45,27 @@
     box-shadow: 5px 5px 5px rgb(181, 180, 180);
     margin-bottom: 50px;
 }
-.review2 p{
+.reviewUser p{
     color:rgb(115, 115, 115);
     font-size: 14px;
     text-align: left;
 }
-.ReviewContainer2 h3{
-    color: rgb(66, 124, 124);
-    font-size: 14px;
-}
-.review2 h3 span {
+
+.reviewUser h3 span {
     font-weight: bold; 
     font-size: 15px;
 }
-.stars {
+.reviewStars {
     margin-top: 10px;
     margin-bottom: 10px;
     display: flex;
     color: rgb(14, 162, 162);
 }
 
-.btnReviews {
+.btnReviewsUser {
     margin-top: 20px;
     color: rgb(13, 132, 132);
     margin-bottom: 50px;
 }
 
-.average {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    margin-left: 6%;
-    margin-top: 20px;
-    gap:10px;
-    font-size: 16px;
-    color:rgb(115, 115, 115);
-}
 
-.average p {
-    margin: 0;
-}
-.reviewEvent{
-    color:rgb(225, 16, 204);
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.reviewTitle{
-    margin-top: 100px;
-    color:rgb(225, 16, 204);
-    font-size: 20px;
-    font-weight: bold;
-}
