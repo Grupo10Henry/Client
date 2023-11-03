@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import logo from "../../../assets/logo_mi_butaca_color.svg";
 //import styles from "./UserLogin.module.css";
 //import validateLogin from "./validateLogin";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import { instance } from "../../../axios/config";
 
 const Login = ({ login }) => {
   const [errors, setErrors] = useState({
@@ -20,6 +20,8 @@ const Login = ({ login }) => {
   //const [shown, setShown] = useState(false);
 
   //const switchShown = () => setShown(!shown);
+
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -59,13 +61,7 @@ const Login = ({ login }) => {
 
   const navigate = useNavigate();
 
-  // el usuario debe poder loguearse con su cuenta de Google
-
-  const handleGoogle = async (e) => {
-    e.preventDefault();
-    const response = await axios.get("http://localhost:3001/auth/google");
-    console.log(response.data);
-  };
+  
 
   const handlerNavigateSignUp = () => {
     navigate("/registro");
@@ -75,9 +71,15 @@ const Login = ({ login }) => {
     navigate("/");
   };
 
-const handlePasswordRecuperation = () => {
-  navigate("/recuperarcontrasena");
-}
+  const handlePasswordRecuperation = () => {
+    navigate("/recuperarcontrasena");
+  };
+
+  const togglePasswordVisibility = (inputId) => {
+    const passwordInput = document.getElementById(inputId);
+    passwordInput.type =
+      passwordInput.type === "password" ? "text" : "password";
+  };
 
   return (
     <>
@@ -142,11 +144,12 @@ const handlePasswordRecuperation = () => {
                   </p>
                 </div>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
+                id="password"
                   type="password"
                   name="password"
-                  placeholder="Tu-clave123"
+                  placeholder=""
                   value={user.password}
                   onChange={handleChange}
                   autoComplete="current-password"
@@ -154,10 +157,16 @@ const handlePasswordRecuperation = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 {errors.password && <p>{errors.password}</p>}
+                <button
+                  type="button"
+                  onClick={() => togglePasswordVisibility("password")} // Llamar a togglePasswordVisibility con el id del campo de contraseña
+                  className="absolute inset-y-0 bottom-4 right-0 flex items-center pr-2 cursor-pointer text-gray-600 top-4"
+                >
+                  👁️
+                </button>
               </div>
             </div>
 
-           
             <div>
               <button
                 className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-fuchsia-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -187,12 +196,11 @@ const handlePasswordRecuperation = () => {
           </p>
           {/* botón para loguearse con Google */}
           <div className="mt-1 flex items-center justify-center ">
-            <button
-              onClick={handleGoogle}
-              className="flex items-center justify-center w-54 px-2 py-1 mt-1 font-medium text-white bg-fuchsia-900 hover:bg-red-600 rounded-md transition duration-300 ease-in-out  shadow-sm"
-            >
-              <span className="text-xl pr-2">G</span> Ingresar con Google
-            </button>
+            <Link to="http://localhost:3001/auth/google/callback">
+              <button className="flex items-center justify-center w-54 px-2 py-1 mt-1 font-medium text-white bg-fuchsia-900 hover:bg-red-600 rounded-md transition duration-300 ease-in-out  shadow-sm">
+                <span className="text-xl pr-2">G</span> Ingresar con Google
+              </button>
+            </Link>
           </div>
         </div>
       </div>

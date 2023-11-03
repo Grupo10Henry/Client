@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {instance} from "../../../axios/config";
+import { useNavigate, Link } from "react-router-dom";
+import { instance } from "../../../axios/config";
 import logo from "../../../assets/logo_mi_butaca_color.svg";
 import fondo from "../../../assets/fondo-tres-scaled.jpg";
-import Swal from "sweetalert2";
 
 const SignUp = () => {
   const navigate = useNavigate();
 
+  const today = new Date();
+  today.setFullYear(today.getFullYear() - 18); // Restar 18 años a la fecha actual
+
+  const maxDate = today.toISOString().split("T")[0]; // Formatear la fecha como 'YYYY-MM-DD'
+
   const [modoOscuro, setModoOscuro] = useState(false);
-  
 
   const handlerNavigateHome = () => {
     navigate("/");
@@ -18,8 +21,6 @@ const SignUp = () => {
   const handlerNavigateLogin = () => {
     navigate("/iniciarsesion");
   };
-
-
 
   const [user, setUser] = useState({
     name: "",
@@ -32,12 +33,11 @@ const SignUp = () => {
     repeatPassword: "",
   });
 
-  // logica necesaria para permitir al usuario registrarse con Google
-  const handleGoogle = async (e) => {
+  /* const handleGoogle = async (e) => {
     e.preventDefault();
-    const response = await instance.get("/auth/google");
+    const response = await instance.get("/auth/google/callback");
     console.log(response.data);
-  };
+  };*/
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -62,33 +62,33 @@ const SignUp = () => {
     }
   };
 
- const darkModeClass = modoOscuro ? "dark-mode" : "";
- 
-// Estilos para el modo claro
-const lightModeStyles = {
-  container: {
-    backgroundColor: "#fff",
-    color: "#333",
-  },
-  button: {
-    backgroundColor: "#3498db",
-    color: "#fff",
-  },
-};
+  const darkModeClass = modoOscuro ? "dark-mode" : "";
 
-// Estilos para el modo oscuro
-const darkModeStyles = {
-  container: {
-    backgroundColor: "#333",
-    color: "#fff",
-  },
-  button: {
-    backgroundColor: "#f1c40f",
-    color: "#333",
-  },
-};
+  // Estilos para el modo claro
+  const lightModeStyles = {
+    container: {
+      backgroundColor: "#fff",
+      color: "#333",
+    },
+    button: {
+      backgroundColor: "#3498db",
+      color: "#fff",
+    },
+  };
 
-const currentStyles = modoOscuro ? darkModeStyles : lightModeStyles;
+  // Estilos para el modo oscuro
+  const darkModeStyles = {
+    container: {
+      backgroundColor: "#333",
+      color: "#fff",
+    },
+    button: {
+      backgroundColor: "#f1c40f",
+      color: "#333",
+    },
+  };
+
+  const currentStyles = modoOscuro ? darkModeStyles : lightModeStyles;
 
   return (
     <>
@@ -253,38 +253,49 @@ const currentStyles = modoOscuro ? darkModeStyles : lightModeStyles;
                     name="dob"
                     onChange={handleChange}
                     value={user.dob}
+                    max={maxDate}
                   />
                 </div>
               </div>
             </div>
             <div className="flex flex-col">
-              <label className="block font-medium leading-6 text-gray-900">
-                Contraseña
-              </label>
-              <div className="mt-1">
-                <input
-                  type="password"
-                  className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  id="password"
-                  name="password"
-                  onChange={handleChange}
-                  value={user.password}
-                  required
-                  pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$"
-                  title="Debe contener entre 6 y 12 caracteres, al menos 1 número, 1 letra mayúscula y 1 letra minúscula"
-                  placeholder=""
-                />
-                <p class="text-xs text-center text-teal-600">
-                  Debe tener: entre 6 y 12 caracteres, al menos 1 número, 1
-                  letra mayúscula y 1 minúscula
-                </p>
-              </div>
-            </div>
-            <div className="mt-1 flex flex-col">
+  <label className="block font-medium leading-6 text-gray-900">
+    Contraseña
+  </label>
+  <div className="mt-1 relative">
+    <input
+      type="password"
+      className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      id="password"
+      name="password"
+      onChange={handleChange}
+      value={user.password}
+      required
+      pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$"
+      title="Debe contener entre 6 y 12 caracteres, al menos 1 número, 1 letra mayúscula y 1 letra minúscula"
+      placeholder=""
+    />
+    <button
+      onClick={() => {
+        const passwordInput = document.getElementById("password");
+        passwordInput.type =
+          passwordInput.type === "password" ? "text" : "password";
+      }}
+      className="absolute inset-y-0 bottom-4 right-0 flex items-center pr-2 cursor-pointer text-gray-600"
+    >
+      👁️
+    </button>
+    <p class="text-xs text-center text-teal-600">
+      Debe tener: entre 6 y 12 caracteres, al menos 1 número, 1 letra mayúscula y 1 minúscula
+    </p>
+  </div>
+</div>
+
+            <div className="flex flex-col">
               <label className="block font-medium leading-6 text-gray-900">
                 Repetir Contraseña
               </label>
-              <div className="mt-1">
+              <div className="mt-1 relative">
                 <input
                   type="password"
                   className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -294,6 +305,16 @@ const currentStyles = modoOscuro ? darkModeStyles : lightModeStyles;
                   value={user.repeatPassword}
                   required
                 />
+                 <button
+      onClick={() => {
+        const passwordInput = document.getElementById("repeatPassword");
+        passwordInput.type =
+          passwordInput.type === "password" ? "text" : "password";
+      }}
+      className="absolute inset-y-0 bottom-4 right-0 flex items-center pr-2 cursor-pointer text-gray-600 top-4"
+    >
+      👁️
+    </button>
               </div>
             </div>
 
@@ -323,12 +344,11 @@ const currentStyles = modoOscuro ? darkModeStyles : lightModeStyles;
           </p>
           {/* botón para loguearse con Google */}
           <div className="mt-1 flex items-center justify-center ">
-            <button
-              onClick={handleGoogle}
-              className="flex items-center justify-center w-54 px-2 py-0 font-medium text-white bg-fuchsia-900 hover:bg-red-600 rounded-md transition duration-300 ease-in-out  shadow-sm"
-            >
-              <span className="text-xl pr-2">G</span> Registrarse con Google
-            </button>
+            <Link to="http://localhost:3001/auth/google/callback">
+              <button className="flex items-center justify-center w-54 px-2 py-0 font-medium text-white bg-fuchsia-900 hover:bg-red-600 rounded-md transition duration-300 ease-in-out  shadow-sm">
+                <span className="text-xl pr-2">G</span> Registrarse con Google
+              </button>
+            </Link>
           </div>
         </div>
       </div>
