@@ -1,11 +1,12 @@
 /* Juli >>>>>>>> */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../../assets/logo_mi_butaca_color.svg";
 //import styles from "./UserLogin.module.css";
 //import validateLogin from "./validateLogin";
 import { useNavigate, Link } from "react-router-dom";
 import { instance } from "../../../axios/config";
+import axios from "axios";
 
 const Login = ({ login }) => {
   const [errors, setErrors] = useState({
@@ -22,6 +23,21 @@ const Login = ({ login }) => {
   //const switchShown = () => setShown(!shown);
 
   
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
+    if (token) {
+      loginWithToken(token);
+    }
+  }, []);
+
+  const loginWithToken = (token) => {
+    login({ token });
+    navigate("/");
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -59,7 +75,6 @@ const Login = ({ login }) => {
     return Object.keys(errors).length ? errors : null;
   };
 
-  const navigate = useNavigate();
 
   
 
@@ -80,6 +95,8 @@ const Login = ({ login }) => {
     passwordInput.type =
       passwordInput.type === "password" ? "text" : "password";
   };
+
+  
 
   return (
     <>
