@@ -67,6 +67,7 @@ function App() {
         location.pathname === "/faq" ||
         location.pathname === "/reserva" ||
         location.pathname === "/carrito" ||
+        location.pathname.includes("/micuenta") ||
         location.pathname.includes("/detalle")) && <Navbar />}
       <Contact />
       <Routes>
