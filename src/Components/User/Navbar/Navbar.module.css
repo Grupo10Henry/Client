@@ -48,14 +48,13 @@
 
 .menu {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-auto-flow: row;
   position: fixed;
   z-index: 99;
   right: 0;
   top: var(--h-nav);
-  padding: 30px 10px;
+  height: calc(100vh - var(--h-nav));
   gap: 20px;
   transform: translateX(100vw);
   transition: transform ease 200ms;
@@ -126,10 +125,11 @@
   color: #efefef;
   height: 35px;
   padding: 0 20px;
+  text-align: center;
   display: flex;
   align-items: center;
   border-radius: 3px;
-  font-size: 14px;
+  font-size: 12px;
   transition: transform ease 200ms;
 }
 
@@ -144,6 +144,30 @@
   transform: scale(0.95);
 }
 
+.toastConfirm b {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.toastConfirmBtns {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.toastConfirmBtns button {
+  background-color: #efefef;
+  padding: 10px 20px;
+  border-radius: 3px;
+  color: var(--negro);
+}
+
+.toastConfirmBtns button:nth-of-type(2) {
+  background-color: var(--danger);
+  color: #efefef;
+}
+
 @media (width > 500px) {
   .logo {
     width: 130px;
@@ -156,21 +180,20 @@
   }
 
   .menu {
-    justify-content: center;
+    grid-template-columns: 2fr max-content;
     position: unset;
     padding: 0;
     background-color: transparent;
     height: 100%;
     transition: none;
     transform: none;
-    flex-direction: row;
   }
 
   .links {
     flex-direction: row;
     justify-content: center;
-    gap: 30px;
-    flex: 3;
+    gap: 20px;
+    width: 100%;
     height: 100%;
   }
 
@@ -214,7 +237,7 @@
   }
 
   .options {
-    flex: 1;
+    width: 100%;
     gap: 20px;
     margin-top: 0;
     margin-left: auto;

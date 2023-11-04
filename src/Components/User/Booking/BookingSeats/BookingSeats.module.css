@@ -1,0 +1,66 @@
+
+.seatMap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: min-content;
+  padding: 10px;
+}
+
+.sector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5px; /* Reduzco el espacio entre los sectores */
+}
+
+.sector table {
+  width: 800px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.seat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px; /* Aumento el tamaño de los asientos */
+  height: 100px; /* Aumento el tamaño de los asientos */
+  border: none;
+  padding: 0px -20px;
+  cursor: pointer;
+  margin: 0; /* Reduzco el espacio entre los asientos */
+  
+}
+
+.seat svg {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}	
+
+.selected {
+  background-color: #00ff00; /* Cambia el color de fondo cuando se selecciona */
+}
+
+/* Cuando el asiento esté ocupado */
+.seat.occupied svg {
+  fill: #ff0000; /* Cambia el color de relleno del SVG a rojo */
+}
+
+/* Cuando el asiento esté libre */
+.seat.free svg {
+  fill: #00ff00; /* Cambia el color de relleno del SVG a verde */
+}
+
+.seatInfo {
+  text-align: center;
+}
+
+.selectedInfo {
+  margin-top: 10px; /* Ajusto el espacio entre la información del asiento seleccionado */
+}

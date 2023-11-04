@@ -1,5 +1,9 @@
-import axios from "axios"
+import axios from "axios";
+
+
 
 export const instance = axios.create({
-  baseURL: "http://localhost:3001", // esta url cambia al deployar
-})
+  baseURL: "https://grupo10henryserver.onrender.com", })
+
+export const config = {
+    baseURL: "https://grupo10henryserver.onrender.com", };

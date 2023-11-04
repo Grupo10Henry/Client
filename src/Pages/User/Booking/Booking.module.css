@@ -1,42 +1,201 @@
 /* Juli >>>>>>>> */
 
-.ContainerGral {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    color: #000;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.ContainerGlobal {
     width: 100%;
     height: auto;
+    display: flex;
+    flex-wrap: wrap;
+  
+    padding: 5px;
+    /*espacio entre los elementos*/
+    justify-content: space-around;
+  }
+  
+/* Estilos para dispositivos pequeños */
+@media (max-width: 768px) {
+    .ContainerUp {
+      flex-direction: column; /* Cambia la dirección de la distribución a column */
+    }
+  
+    .ContainerBanner {
+      order: 1; /* Cambia el orden, lo mueve arriba */
+      margin-bottom: 0; /* Elimina el margen inferior para que estén más pegados */
+      flex: 0; /* Evita que ocupe espacio en la parte superior */
+    }
+  
+    .ContainerTitulo {
+      order: 2; /* Cambia el orden, lo mueve abajo */
+      margin-left: 0; /* Elimina el margen izquierdo para que estén más pegados */
+      flex: 0; /* Evita que ocupe espacio en la parte superior */
+    }
+  
+    .ContainerBanner img {
+      height: auto; /* Ajusta la altura de la imagen */
+    }
+  }
+  
+  
+
+  .ContainerUp {
+    width: 100%;
+    height:fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  
+  }
+  
+
+  .ContainerBanner {
+    margin-bottom: 15px;
+    flex: 1;
+    width: 100%;
+    max-height: fit-content;
+    display: flex;
+    justify-content: center;
     align-items: center;
-}
+    color: aliceblue;
+    overflow: hidden;
+    margin-right: 15px;
+    margin-top: 5px;
+  }
+  
+  .ContainerBanner img {
+    width: 100%; /* Ajusta el ancho según tus necesidades */
+    height: auto;
+    object-fit: cover;
+    object-position: center center;
+  }
+  
+  /* Estilos para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .ContainerBanner img {
+      object-fit: none; /* Esto desactiva el reajuste y muestra la imagen completa */
+    }
+  }
+  
+  
 
-.ContainerGral h1 {
-    font-size: 24px;
-    font-weight: bold;
+  .ContainerTitulo {
+    flex: 2;
+    height: auto;
+    margin-right: 30px;
+    margin-left: 15px;
+    
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    
+  }
+
+  .ContainerTitulo h1 {
     color: brown;
-}
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+  }
 
-.ContainerGral h2 {
+  .ContainerTitulo h2 {
+    color:black;
+    font-size: 2.px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .ContainerTitulo p {
+    color:brown;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .ContainerDate {
+    background-color: rgb(211, 170, 119);
+    align-items: center;
+    justify-content: center;
+    color: black;
     font-size: 18px;
     font-weight: bold;
-    color: rgb(92, 11, 11);
-}
+    height: 40px;
+    padding: 10px 10px;
+  }
 
-.ContainerGral h3 {
-    font-size: 16px;
+  .ContainerDate h3 {
+    text-align: center;
+    justify-content: center;
+    
+  }
+
+  .ContainerLocation {
+    background-color: rgb(172, 197, 170);
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+    padding: auto;
+  }
+
+  .ContainerLocation p{
+    color: black;
+    font-size: 15px;
     font-weight: bold;
-    color: rgb(4, 0, 0);
-}
+    text-align: center;
+  }
 
-.ContainerGral img {
-    max-width: 50%;
+  .ContainerGoogleMap {
+    width: 100%;
+    max-height: fit-content;
+    padding: 0;
+  }
+
+
+  .iframe{
+    margin-top: 10px;
+    width: 100%;
     height: auto;
-}
 
-.ContainerGral button {
-    background-color: black;
-    color: #fff;
-}
+    border: none;
+  }
+
+
+  .ContainerPlan {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 10px;
+    background-color: white;
+  }
+
+  .ContainerSectores {
+    background-color: rgb(254, 203, 149);
+    flex: 1;
+    text-align: center;
+    padding: 0 15px;
+  }
+
+  .ContainerPlanoAsientos {
+    display: flex;
+    justify-content: center;
+    flex: 4;
+    align-items: center;
+    
+  }
+
+  .ContainerPlanoAsientos img {
+    width: 50%;
+    height: auto;
+    justify-content: center;
+  }
+
+  .ContainerPrices {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin: 5px 0;
+    color: black;
+    background-color:rgb(254, 189, 149);
+  }
+
+
+  

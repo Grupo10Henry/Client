@@ -3,7 +3,7 @@
 import logo from "../../../assets/logo_mi_butaca_color.svg";
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
+import {instance} from "../../../axios/config"
 
 
 
@@ -28,14 +28,14 @@ const Cart = () => {
     /*useEffect(() => {
         // Agrega el "id" a la URL
         const getCart = async () => {
-            const res = await axios.get(`http://localhost:5173/api/cart/${id}`);
+            const res = await instance.get(`/cart/${id}`);
             setCart(res.data);
         };
         getCart();
     }, [id]);*/
 
     /*const deleteItem = async (id) => {
-        await axios.delete(`http://localhost:5173/api/cart/${id}`);
+        await instance.delete(`/cart/${id}`);
         setCart((prevCart) => prevCart.filter((item) => item.id !== id));
     };*/
 

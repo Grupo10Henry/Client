@@ -2,19 +2,54 @@ import { BsList, BsXLg } from "react-icons/bs"
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import logoWhite from "../../../assets/logo_mi_butaca_blanco.svg"
 import useNav from "../../../hooks/useNav"
+import toast, { Toaster } from "react-hot-toast"
 
 import style from "./Navbar.module.css"
 
 const Nav = () => {
   const { isOpen, setIsOpen, handlerOpenContact, links } = useNav()
 
-  const linksClass = isOpen && style.showme
+  const linksClass = isOpen ? style.showme : ""
 
   const navigate = useNavigate()
-  const handleLogout = () => {
+
+  const handleActionConfirmed = () => {
+    toast.remove()
+    toast.success("Sesion cerrada")
+    setTimeout(() => {
+      toast.remove()
+    }, 1500)
     localStorage.removeItem("token")
-    // Realiza alguna acción adicional, como redirigir a otra página después de eliminar el token
-    navigate("/") // Cambia '/nuevaruta' por la ruta a la que deseas redirigir
+    navigate("/")
+  }
+
+  const handleConfirmAction = () => {
+    toast(
+      (t) => (
+        <span className={style.toastConfirm}>
+          <b>¿Deseas cerrar sesión?</b>
+          <div className={style.toastConfirmBtns}>
+            <button onClick={handleActionConfirmed}>Salir</button>
+            <button onClick={() => toast.remove(t.id)}>Cancelar</button>
+          </div>
+        </span>
+      ),
+      {
+        position: "bottom-right",
+        style: {
+          background: "var(--negro)",
+          color: "#efefef",
+          borderRadius: "3px",
+          padding: "30px",
+          fontSize: "14px",
+        },
+      }
+    )
+  }
+
+  const handleLogout = () => {
+    setIsOpen(false)
+    handleConfirmAction()
   }
 
   const isLogged = localStorage.getItem("token")
@@ -38,12 +73,18 @@ const Nav = () => {
             <NavLink
               key={link.id}
               to={link.to}
-              className={({ isActive }) => isActive && style.active}
+              className={({ isActive }) => (isActive ? style.active : "")}
             >
               {link.text}
             </NavLink>
           ))}
           <button onClick={handlerOpenContact}>Contacto</button>
+          <NavLink
+            to="/admin"
+            className={({ isActive }) => (isActive ? style.active : "")}
+          >
+            Administrador
+          </NavLink>
         </div>
         {isLogged ? (
           <div className={style.options}>
