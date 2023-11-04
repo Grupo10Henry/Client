@@ -164,7 +164,7 @@ const Booking = () => {
           {eventDetails.type === "Pequeño" ? (
             <img src={eventDetails.planImage} />
           ) : (
-            <BookingSeats />
+            <BookingSeats id={id} />
           )}
         </div>
       </div>

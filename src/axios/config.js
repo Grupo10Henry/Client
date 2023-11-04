@@ -1,5 +1,9 @@
 import axios from "axios"
+import dotenv from "dotenv"
+
+dotenv.config();
+
+
 
 export const instance = axios.create({
-  baseURL: "http://localhost:3001", // esta url cambia al deployar
-})
+  baseURL: process.env.SERVER_URL, })
