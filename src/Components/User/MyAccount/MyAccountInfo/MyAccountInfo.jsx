@@ -16,7 +16,7 @@ export default function MyAccountInfo() {
     const {userData} = useSelector((s) => s.user)
 
     const getUserData = async () => {
-
+        try {
           const { data } = await instance.get(`/user/${params.id}`) // instance.get(`/user/${params.id}`) || axios.get(`http://localhost:3001/user/${params.id}`)
           console.log(data)
           return data
