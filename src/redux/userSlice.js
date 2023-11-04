@@ -10,6 +10,8 @@ const initialState = {
   identityCard: "",
   dob: "",
   password: "",
+  allUsers: [],
+  userData: [],
 }
 
 export const userSlice = createSlice({
@@ -47,6 +49,9 @@ export const userSlice = createSlice({
     changeIdentificationCard: (state, action) => {
       state.identificationCard = action.payload
     },
+    getUserById: (state, action) => {
+      state.userData = action.payload
+    },
   },
 })
 
@@ -58,5 +63,6 @@ export const {
   changePassword,
   changePhone,
   changeIdentificationCard,
+  getUserById,
 } = userSlice.actions
 export default userSlice.reducer
