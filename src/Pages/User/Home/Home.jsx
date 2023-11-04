@@ -7,7 +7,11 @@ import EventsSections from "../../../Components/User/Events/EventsSections/Event
 import EventsText from "../../../Components/User/EventsText/EventsText"
 import Filters from "../../../Components/User/Filters/Filters"
 import { instance } from "../../../axios/config"
-import { getAllEvents, setEventsDate, getNextEvents } from "../../../redux/eventsSlice"
+import {
+  getAllEvents,
+  setEventsDate,
+  getNextEvents,
+} from "../../../redux/eventsSlice"
 import EventsFiltered from "../../../Components/User/Events/EventsFiltered/EventsFiltered"
 
 import style from "./Home.module.css"
@@ -65,9 +69,14 @@ const Home = () => {
     <div className={style.home}>
       <Banner />
       <EventsText />
+      <EventsSections />
       {pathname === "/" && <Filters />}
+
       {isFilter ? <EventsFiltered /> : <EventsSections />}
       <Reviews/><br />
+
+      {isFilter ? <EventsFiltered /> : <AllEvents />}
+      
     </div>
   )
 }
