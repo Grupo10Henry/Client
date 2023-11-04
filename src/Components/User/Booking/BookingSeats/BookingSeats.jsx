@@ -8,6 +8,7 @@ import {
 } from '../../../../redux/bookSeatsSlice'; // Asegúrate de importar las acciones y selectores adecuados
 import styles from './BookingSeats.module.css';
 import asiento from '../../../../assets/asiento.svg';
+import { instance } from '../../../../axios/config';
 
 const BookingSeats = () => {
   const {id} = useParams();
@@ -23,6 +24,7 @@ const BookingSeats = () => {
 
   useEffect(() => {
     // Aquí debes cargar los asientos desde la API al montar el componente.
+    // hacer un get.instance a /seat/${id}/${sector}
     // Asumiremos que tienes una función fetchSeats que hace una solicitud GET a '/seat/' con el eventId como parámetro.
     dispatch(fetchSeats(eventId));
   }, [dispatch, eventId]);
