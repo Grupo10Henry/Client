@@ -41,7 +41,7 @@ const generateSampleSeats = () => {
           columns: sectorInfo.columns,
           seatLocation: `${row}-${col}`,
           sector: sectorInfo.sector,
-          Price: 50, // Precio de ejemplo (cambia según el sector si es necesario)
+          Price: 5000, // Precio de ejemplo (cambia según el sector si es necesario)
           status: 'free', // Estado de ejemplo
           exits: null,
         });
