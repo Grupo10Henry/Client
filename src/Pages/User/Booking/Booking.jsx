@@ -5,7 +5,7 @@ import styles from "./Booking.module.css";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import {instance} from "../../../axios/config";
-import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeats";
+import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsDemo";
 
 const Booking = () => {
   const { id } = useParams();
@@ -164,7 +164,7 @@ const Booking = () => {
           {eventDetails.type === "Pequeño" ? (
             <img src={eventDetails.planImage} />
           ) : (
-            <BookingSeats />
+            <BookingSeats id={id} />
           )}
         </div>
       </div>

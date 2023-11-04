@@ -46,7 +46,7 @@ const getUserEmailFromGoogle = async (token) => {
 
     const login = async (userData) => {
       const { email, password, token } = userData;
-      const URL = "http://localhost:3001/login/";
+      const URL = `${process.env.SERVER_URL}/login/`;
     
       try {
         // Comprobar si se proporciona un token en la URL
@@ -78,7 +78,7 @@ const getUserEmailFromGoogle = async (token) => {
         if (token) {
           localStorage.setItem("token", token);
     
-          const userResponse = await axios.get("http://localhost:3001/user", {
+          const userResponse = await instance.get("/user", {
             headers: {
               Authorization: `Bearer ${token}`,
             },

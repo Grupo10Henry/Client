@@ -1,13 +1,19 @@
 // SeatMap.js
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { 
     selectSeats, selectSelectedSeats, selectTotalPrice, selectEventId, fetchSeats, selectStatus, 
     removeSelectedSeat, addSelectedSeat 
 } from '../../../../redux/bookSeatsSlice'; // Asegúrate de importar las acciones y selectores adecuados
 import styles from './BookingSeats.module.css';
+import asiento from '../../../../assets/asiento.svg';
 
 const BookingSeats = () => {
+  const {id} = useParams();
+  // eventID es = id
+
+
   const seats = useSelector(selectSeats);
   const selectedSeats = useSelector(selectSelectedSeats);
   const totalPrice = useSelector(selectTotalPrice);
@@ -46,7 +52,7 @@ const BookingSeats = () => {
               className={`${styles.seat} ${selectedSeats.includes(seat) ? styles.selected : ''}`}
               onClick={() => handleSeatClick(seat)}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+              <svg xmlns={asiento} width="30" height="30" viewBox="0 0 30 30">
                 {/* Aquí debes agregar el gráfico SVG del asiento o butaca */}
               </svg>
               <div className={styles.seatInfo}>
