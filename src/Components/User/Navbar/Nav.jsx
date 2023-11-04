@@ -16,20 +16,35 @@ const Nav = () => {
   const handleActionConfirmed = () => {
     toast.remove()
     toast.success("Sesion cerrada")
+    setTimeout(() => {
+      toast.remove()
+    }, 1500)
     localStorage.removeItem("token")
     navigate("/")
   }
 
   const handleConfirmAction = () => {
-    toast((t) => (
-      <span>
-        <b>¿Deseas cerrar sesión?</b>
-        <div className={style.toastConfirmBtns}>
-          <button onClick={handleActionConfirmed}>Salir</button>
-          <button onClick={() => toast.remove(t.id)}>Cancelar</button>
-        </div>
-      </span>
-    ))
+    toast(
+      (t) => (
+        <span className={style.toastConfirm}>
+          <b>¿Deseas cerrar sesión?</b>
+          <div className={style.toastConfirmBtns}>
+            <button onClick={handleActionConfirmed}>Salir</button>
+            <button onClick={() => toast.remove(t.id)}>Cancelar</button>
+          </div>
+        </span>
+      ),
+      {
+        position: "bottom-right",
+        style: {
+          background: "var(--negro)",
+          color: "#efefef",
+          borderRadius: "3px",
+          padding: "30px",
+          fontSize: "14px",
+        },
+      }
+    )
   }
 
   const handleLogout = () => {
@@ -64,6 +79,12 @@ const Nav = () => {
             </NavLink>
           ))}
           <button onClick={handlerOpenContact}>Contacto</button>
+          <NavLink
+            to="/admin"
+            className={({ isActive }) => (isActive ? style.active : "")}
+          >
+            Administrador
+          </NavLink>
         </div>
         {isLogged ? (
           <div className={style.options}>
