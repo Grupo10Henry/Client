@@ -17,7 +17,7 @@ import FAQ from "./Pages/User/FAQ/FAQ"
 import ScrollToTop from "./Components/UserAndAdmin/ScrollToTop"
 import BookingSeats from "./Components/User/Booking/BookingSeats/BookingSeatsDemo"
 
-import {instance} from "./axios/config"
+import {instance, config} from "./axios/config"
 import axios from "axios"
 import NotFound from "./Components/User/NotFound/NotFound"
 
@@ -46,7 +46,7 @@ const getUserEmailFromGoogle = async (token) => {
 
     const login = async (userData) => {
       const { email, password, token } = userData;
-      const URL = `${process.env.SERVER_URL}/login/`;
+      const URL = `${config.baseURL}/login`;
     
       try {
         // Comprobar si se proporciona un token en la URL
