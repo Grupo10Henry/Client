@@ -16,8 +16,8 @@ export default function MyAccountInfo() {
     const {userData} = useSelector((s) => s.user)
 
     const getUserData = async () => {
-        try {
-          const { data } = await axios.get(`http://localhost:3001/user/${params.id}`) // instance.get(`/user/${params.id}`) || axios.get(`http://localhost:3001/user/${params.id}`)
+
+          const { data } = await instance.get(`/user/${params.id}`) // instance.get(`/user/${params.id}`) || axios.get(`http://localhost:3001/user/${params.id}`)
           console.log(data)
           return data
         } catch (error) {
@@ -78,7 +78,7 @@ export default function MyAccountInfo() {
 
     const handleSaveChanges = async () => {
         try {
-            await axios.put(`http://localhost:3001/user/${user.userID}`, user); // instance.put(`user/${user.userID}`, user) || axios.put(`http://localhost:3001/user/${user.userID}`, user)
+            await instance.put(`user/${user.userID}`, user); // instance.put(`user/${user.userID}`, user) || axios.put(`http://localhost:3001/user/${user.userID}`, user)
             getUserData().then((data) => {
                 dispatch(getUserById(data));
                 setUser(data);
