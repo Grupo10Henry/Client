@@ -16,6 +16,7 @@ const Loader = () => {
           viewBox="0 0 350 590"
           backgroundColor="gray"
           foregroundColor="#ecebeb"
+          key={crypto.randomUUID()}
         >
           <rect x="-3" y="0" rx="3" ry="3" width="351" height="588" />
         </ContentLoader>

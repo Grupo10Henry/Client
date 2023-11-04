@@ -144,6 +144,11 @@
   transform: scale(0.95);
 }
 
+.toastConfirm b {
+  display: block;
+  margin-bottom: 20px;
+}
+
 .toastConfirmBtns {
   display: flex;
   gap: 20px;
@@ -152,14 +157,15 @@
 }
 
 .toastConfirmBtns button {
-  background-color: var(--turquesa);
+  background-color: #efefef;
   padding: 10px 20px;
   border-radius: 3px;
-  color: #efefef;
+  color: var(--negro);
 }
 
 .toastConfirmBtns button:nth-of-type(2) {
   background-color: var(--danger);
+  color: #efefef;
 }
 
 @media (width > 500px) {
