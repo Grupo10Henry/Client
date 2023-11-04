@@ -1,12 +1,18 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { handlerIsFilter } from "../redux/eventsSlice"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
-export const useSarchbar = (handlerFilter) => {
+import toast from "react-hot-toast"
+export const useSarchbar = (handlerFilter, resetPropFilters) => {
   const [input, setInput] = useState("")
+  const { reset } = useSelector((s) => s.events)
 
   const dispatch = useDispatch()
 
+  const notify = () =>
+    toast.error("Por favor ingresa algo", {
+      duration: 1500,
+    })
   const handlerChange = (e) => {
     setInput(e.target.value)
   }
@@ -14,18 +20,23 @@ export const useSarchbar = (handlerFilter) => {
   const handlerSearch = (e) => {
     e.preventDefault()
     if (input.trim().length === 0) {
-      alert("Por favor, ingresa algo")
+      notify()
       return
     }
-    console.log("pidiendo a back:", input)
     handlerFilter("search", input)
     dispatch(handlerIsFilter())
-    setInput("")
   }
 
   const handlerDeleteInput = () => {
     setInput("")
+    resetPropFilters({ propToDelete: "search" })
   }
+
+  useEffect(() => {
+    if (reset) {
+      setInput("")
+    }
+  }, [reset])
 
   return { handlerChange, handlerSearch, handlerDeleteInput, input }
 }

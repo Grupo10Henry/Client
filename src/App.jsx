@@ -15,59 +15,107 @@ import Detail from "./Pages/User/Detail/Detail"
 import Footer from "./Components/User/Footer/Footer"
 import FAQ from "./Pages/User/FAQ/FAQ"
 import ScrollToTop from "./Components/UserAndAdmin/ScrollToTop"
+import BookingSeats from "./Components/User/Booking/BookingSeats/BookingSeatsDemo"
 
+import {instance, config} from "./axios/config"
 import axios from "axios"
+import NotFound from "./Components/User/NotFound/NotFound"
 
 function App() {
   const location = useLocation()
   const navigate = useNavigate()
-  /* La función login deberá verificar el email y el password del usuario en la ruta http://localhost:3001/login/ 
-   Si e usuario existe, deberá verificar si el usuario es admin true o false en http://localhost:3001/user  
-    Si es admin, deberá redirigir a la ruta /admin
-    Si no es admin, deberá redirigir a la ruta /micuenta/:id
-    si no existe deberá mostrar un mensaje de error
-    en ambos casos, deberá guardar el token en localStorage
-  */
 
-  async function login(userData) {
-    const { email, password } = userData
-    const URL = "http://localhost:3001/login/"
-
+const getUserEmailFromGoogle = async (token) => {
     try {
-      const response = await axios.post(URL, { email, password })
-      const token = response.data.token
-      if (token) {
-        localStorage.setItem("token", token)
-
-        const userResponse = await axios.get("http://localhost:3001/user", {
+      const response = await axios.get(
+        "https://www.googleapis.com/oauth2/v3/userinfo",
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
-        const user = userResponse.data
-
-        if (user.isAdmin) {
-          navigate("/admin")
-        } else {
-          navigate("/")
         }
-      } else {
-        alert("Usuario o contraseña incorrectos")
-      }
+      );
+  
+      return response.data.email;
     } catch (error) {
-      console.error(error) // Muestra la respuesta del servidor en la consola
-      alert("Error en el inicio de sesión")
+      console.error("Error al obtener el correo electrónico del usuario de Google", error);
+      return null; // Manejo de error, puedes ajustar esto según tus necesidades
     }
-  }
+  };
+  
 
+    const login = async (userData) => {
+      const { email, password, token } = userData;
+      const URL = `${config.baseURL}/login`;
+    
+      try {
+        // Comprobar si se proporciona un token en la URL
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const tokenFromURL = urlSearchParams.get("token");
+
+        let userEmail = email;
+
+        if (tokenFromURL) {
+          // Si hay un token en la URL, obtén el correo electrónico del usuario desde Google
+          userEmail = await getUserEmailFromGoogle(tokenFromURL);
+          if (!userEmail) {
+            // Manejo de error, puedes mostrar un mensaje o redirigir al usuario
+            alert("Error al obtener el correo electrónico del usuario.");
+            return;
+          }
+        }
+    
+        // Incluir el token en el cuerpo de la solicitud si se encuentra en la URL
+        const requestBody = tokenFromURL
+          ? { email, password, token: tokenFromURL }
+          : { email, password };
+
+          console.log("Datos de la solicitud POST:", requestBody);
+    
+        const response = await axios.post(URL, requestBody);
+        const token = response.data.token;
+    
+        if (token) {
+          localStorage.setItem("token", token);
+    
+          const userResponse = await instance.get("/user", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+    
+          const user = userResponse.data;
+    
+          if (user.isAdmin) {
+            navigate("/admin");
+          } else {
+            navigate("/");
+          }
+        } else {
+          alert("Usuario o contraseña incorrectos");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Error en el inicio de sesión");
+      }
+    };
+        
+    
+
+  const allowedPaths = [
+    "/admin",
+    "/faq",
+    "/reserva",
+    "/carrito",
+    "/micuenta",
+    "/detalle",
+  ]
+  const shouldRenderNavbar = allowedPaths.some(
+    (path) => location.pathname === path || location.pathname.includes(path)
+  )
   return (
     <div className={styles.App}>
-      {(location.pathname === "/" ||
-        location.pathname === "/admin" ||
-        location.pathname === "/faq" ||
-        location.pathname === "/reserva" ||
-        location.pathname === "/carrito" ||
-        location.pathname.includes("/detalle")) && <Navbar />}
+      {(location.pathname === "/" || shouldRenderNavbar) && <Navbar />}
       <Contact />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -80,6 +128,8 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
+        <Route path="/reserva/seats" element={<BookingSeats />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />
       {location.pathname === "admin" ? null : <Footer />}

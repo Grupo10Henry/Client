@@ -15,8 +15,10 @@ import {
 import EventsFiltered from "../../../Components/User/Events/EventsFiltered/EventsFiltered"
 
 import style from "./Home.module.css"
+
 import Reviews from "../../../Components/User/Reviews/Reviews"
 
+import AllEvents from "../../../Components/User/Events/AllEvents/AllEvents"
 
 const Home = () => {
   const { pathname } = useLocation()
@@ -69,14 +71,9 @@ const Home = () => {
     <div className={style.home}>
       <Banner />
       <EventsText />
-      <EventsSections />
       {pathname === "/" && <Filters />}
-
       {isFilter ? <EventsFiltered /> : <EventsSections />}
-      <Reviews/><br />
-
-      {isFilter ? <EventsFiltered /> : <AllEvents />}
-      
+      <Reviews />
     </div>
   )
 }

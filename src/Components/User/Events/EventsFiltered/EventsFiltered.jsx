@@ -4,21 +4,26 @@ import style from "./EventsFiltered.module.css"
 import Cards from "../../Cards/Cards"
 import Loader from "../../Loader/Loader"
 
+const renderItem = new Map()
+
 const EventsFiltered = () => {
-  const { eventsFiltered, isLoading } = useSelector((s) => s.events)
-
-  if (isLoading) {
-    return <Loader />
-  }
-
-  if (eventsFiltered.length === 0) {
-    return <h2>NO SE ENCONTRARON EVENTOS</h2>
-  }
+  const { eventsFiltered, isLoading, isError } = useSelector((s) => s.events)
 
   return (
-    <section className={style.eventsFiltered}>
-      {/* <div>EventsFiltered</div> */}
-      <Cards data={eventsFiltered} />
+    <section className={style.eventsFilteredContainer}>
+      {isLoading && <Loader />}
+      {!isLoading && !isError && (
+        <section className={style.eventsFilteredCards}>
+          <Cards data={eventsFiltered} />
+        </section>
+      )}
+      {isError && (
+        <h2 className={style.eventsFilteredError}>
+          {typeof isError === "string"
+            ? isError
+            : "Algo salió mal. Por favor, inténtelo de nuevo más tarde."}
+        </h2>
+      )}
     </section>
   )
 }

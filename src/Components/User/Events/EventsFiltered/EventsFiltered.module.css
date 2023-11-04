@@ -1,3 +1,11 @@
-.eventsFiltered {
-  /* padding: 10px 0; */
+.eventsFilteredContainer {
+  padding-bottom: 80px;
+}
+
+.eventsFilteredError {
+  font-size: clamp(18px, 2vw, 25px);
+  color: var(--danger);
+  font-weight: 600;
+  max-width: 600px;
+  margin-inline: auto;
 }

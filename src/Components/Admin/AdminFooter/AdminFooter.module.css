@@ -1,48 +1,61 @@
 .AdminFooterContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 50px auto;
-    max-width: 600px;
-  }
-  
-  .AdminFooterContainer h1 {
-    margin-bottom: 20px;
-  }
-  
-  .AdminFooterContainer form {
-    width: 100%;
-  }
-  
-  .AdminFooterContainer div {
-    margin-bottom: 15px;
-  }
-  
-  .AdminFooterContainer label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .AdminFooterContainer input,
-  .AdminFooterContainer textarea {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 5px;
-  }
-  
-  .AdminFooterContainer button {
-    background-color: #6ed6c5;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .AdminFooterContainer button:hover {
-    background-color: #2f9291;
-  }
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  width: 800px;
+}
+
+.AdminFooterContainer h2 {
+  color: #2ca8a6;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.InfoContactoAdmin,
+.infoRedesAdmin {
+  margin-top: 20px;
+}
+
+.InfoContactoAdmin h2,
+.infoRedesAdmin h2 {
+  margin-top: 20px;
+  color: #3f3f3f;
+  font-weight: bold;
+}
+
+.InfoContactoAdmin label,
+.infoRedesAdmin label {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  color: #3d3d3d;
+}
+
+.InfoContactoAdmin input,
+.infoRedesAdmin input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  resize: vertical;
+  height: 50px;
+  font-size: 14px;
+}
+
+.AdminFooterContainer button {
+  display: block;
+  margin-top: 20px;
+  padding: 10px;
+  color: #fbfbfb;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  background-color: #2ca8a6;
+}
+
+.AdminFooterContainer button:hover {
+  background-color: #7fc5c3;
+  color: #484848;
+}

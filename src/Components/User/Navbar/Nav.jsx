@@ -6,16 +6,9 @@ import useNav from "../../../hooks/useNav"
 import style from "./Navbar.module.css"
 
 const Nav = () => {
-  const { isOpen, setIsOpen, handlerOpenContact, links } = useNav()
-
-  const linksClass = isOpen && style.showme
-
-  const navigate = useNavigate()
-  const handleLogout = () => {
-    localStorage.removeItem("token")
-    // Realiza alguna acción adicional, como redirigir a otra página después de eliminar el token
-    navigate("/") // Cambia '/nuevaruta' por la ruta a la que deseas redirigir
-  }
+  const { isOpen, setIsOpen, handlerOpenContact, handleLogout, links } =
+    useNav()
+  const linksClass = isOpen ? style.showme : ""
 
   const isLogged = localStorage.getItem("token")
 
@@ -38,12 +31,18 @@ const Nav = () => {
             <NavLink
               key={link.id}
               to={link.to}
-              className={({ isActive }) => isActive && style.active}
+              className={({ isActive }) => (isActive ? style.active : "")}
             >
               {link.text}
             </NavLink>
           ))}
           <button onClick={handlerOpenContact}>Contacto</button>
+          <NavLink
+            to="/admin"
+            className={({ isActive }) => (isActive ? style.active : "")}
+          >
+            Administrador
+          </NavLink>
         </div>
         {isLogged ? (
           <div className={style.options}>

@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import styles from "./Booking.module.css";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import {instance} from "../../../axios/config";
+import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsDemo";
 
 const Booking = () => {
   const { id } = useParams();
@@ -24,19 +25,59 @@ const Booking = () => {
     mapLocation: "",
     planImage: "",
     views: "",
+    type: "",
   });
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/event/${id}`)
-      .then((response) => {
+    const fetchEventData = async () => {
+      try {
+        const response = await instance.get(`/seat/${id}`);
         if (response.data) {
-          setEventDetails(response.data);
+          setSectorPrices(response.data);
         }
-      })
-      .catch((error) => {
+      } catch (error) {
+        console.error("Error al obtener los sectores y precios:", error);
+      }
+    };
+    const fetchEventDetails = async () => {
+      try {
+        const response = await instance.get(`/event/${id}`);
+        if (response.data) {
+          const {
+            name,
+            date,
+            time,
+            locationName,
+            adressLocation,
+            image,
+            capacity,
+            mapLocation,
+            planImage,
+            views,
+            type,
+          } = response.data;
+
+          setEventDetails({
+            name,
+            date,
+            time,
+            locationName,
+            adressLocation,
+            image,
+            capacity,
+            mapLocation,
+            planImage,
+            views,
+            type,
+          });
+          
+        }
+      } catch (error) {
         console.error("Error al obtener los detalles del evento:", error);
-      });
+      }
+    };
+    fetchEventData();
+    fetchEventDetails();
   }, [id]);
 
   const navigate = useNavigate();
@@ -100,9 +141,31 @@ const Booking = () => {
       <div className={styles.ContainerPlan}>
         <div className={styles.ContainerSectores}>
           <h3>Datos de los Sectores + Precio</h3>
+          <br />
+          {isDonation ? (
+          <>
+          <p>Ingreso con contribución voluntaria.</p>
+          <input type="number" placeholder="Cantidad de entradas" />
+          <input type="number" placeholder="$ Contribución voluntaria" />
+          </>
+          ) : (
+            <>
+          {sectorPrices.map((sector) => (
+            <div className={styles.ContainerPrices} key={sector[1]}>
+              <p>{sector[1]}</p>
+              <p>$ {sector[0]}</p>
+            </div>
+          ))}
+          </>
+          )
+          }
         </div>
         <div className={styles.ContainerPlanoAsientos}>
-          <img src={eventDetails.planImage} />
+          {eventDetails.type === "Pequeño" ? (
+            <img src={eventDetails.planImage} />
+          ) : (
+            <BookingSeats id={id} />
+          )}
         </div>
       </div>
       <button onClick={handleOnClickcarrito}>Agregar al carrito</button>{" "}

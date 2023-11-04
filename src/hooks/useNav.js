@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { Context } from "../Context/Context"
-
+import Swal from "sweetalert2"
 const useNav = () => {
   const [isOpen, setIsOpen] = useState(false)
 
+  const navigate = useNavigate()
   const location = useLocation()
   const { view, contactTrue } = useContext(Context)
 
@@ -19,22 +20,46 @@ const useNav = () => {
 
   const handlerOpenContact = () => contactTrue()
 
-  // const linksVisitant = [
-  //   { id: 1, text: "Inicio", to: "/" },
-  //   { id: 4, text: "Preguntas frecuentes", to: "/faq" },
-  // ]
-
-  // const linksUser = [
-  //   { id: 1, text: "Inicio", to: "/" },
-  //   { id: 2, text: "Preguntas frecuentes", to: "/faq" },
-  // ]
-
   let links = [
     { id: 1, text: "Inicio", to: "/" },
     { id: 2, text: "Preguntas frecuentes", to: "/faq" },
   ]
 
-  return { isOpen, setIsOpen, handlerOpenContact, links }
+  const handlerActionConfirmed = () => {
+    localStorage.removeItem("token")
+    navigate("/")
+  }
+
+  const showAlert = () => {
+    Swal.fire({
+      title: "¿Deseas cerrar sesión?",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "Salir",
+      backdrop: true,
+      color: "var(--negro)",
+      background: "#efefef",
+      confirmButtonColor: "var(--turquesa)",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Sesión cerrada!",
+          confirmButtonColor: "var(--turquesa)",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            handlerActionConfirmed()
+          }
+        })
+      }
+    })
+  }
+
+  const handleLogout = () => {
+    showAlert()
+    setIsOpen(false)
+  }
+
+  return { isOpen, setIsOpen, handlerOpenContact, handleLogout, links }
 }
 
 export default useNav
