@@ -1,48 +1,56 @@
 // Luissssss
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { instance } from '../../../../axios/config';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'
 import styles from './MyAccountInfo.module.css';
+import { getUserById } from '../../../../redux/userSlice';
+import axios from 'axios';
 
 export default function MyAccountInfo() {
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const params = useParams();
+    // console.log(params.id);
 
-    // const {user} = useSelector((s) => s.user)
+    const {userData} = useSelector((s) => s.user)
 
-    // const getUserData = async () => {
-    //     try {
-    //       const { data } = await instance.get("/user/:id") // http://localhost:3001/user
-    //     //   console.log(data)
-    //       return data
-    //     } catch (error) {
-    //       console.log(error)
-    //     }
-    // };
-    
-    //     useEffect(() => {
-    //       getEvents().then((data) => (dispatch(getUserByID(data)))) // Crear esta función en reducer
-    //     }, []
-    // );
+    const getUserData = async () => {
+        try {
+          const { data } = await axios.get(`http://localhost:3001/user/${params.id}`) // instance.get(`/user/${params.id}`) || axios.get(`http://localhost:3001/user/${params.id}`)
+          console.log(data)
+          return data
+        } catch (error) {
+          console.log(error)
+        }
+    };
 
-    const userData = {
-        userID: 3,
-        isAdmin: false,
-        name: "franco",
-        lastName: "rinque",
-        email: "Franco2@gmail.com",
-        phone: "1122334455",
-        password: "$2a$10$j50dnsZi5UBlsDyYGq/JdeyMJWOO9unSZrO7ydZu5EhvjB6op3ogy",
-        identityCard: "43336633",
-        dob: "2024-04-02",
-        createdAt: "2023-10-31T21:03:24.225Z",
-        updatedAt: "2023-10-31T21:03:24.225Z",
-        deletedAt: null
-      }
+        useEffect(() => {
+          getUserData().then((data) => {
+            dispatch(getUserById(data));
+            setUser(data);
+          });
+        }, []
+    );
 
-    useEffect(() => {
-        setUser(userData)
-    }, []);
+    // const userData = {
+    //     userID: 3,
+    //     isAdmin: false,
+    //     name: "franco",
+    //     lastName: "rinque",
+    //     email: "Franco2@gmail.com",
+    //     phone: "1122334455",
+    //     password: "$2a$10$j50dnsZi5UBlsDyYGq/JdeyMJWOO9unSZrO7ydZu5EhvjB6op3ogy",
+    //     identityCard: "43336633",
+    //     dob: "2024-04-02",
+    //     createdAt: "2023-10-31T21:03:24.225Z",
+    //     updatedAt: "2023-10-31T21:03:24.225Z",
+    //     deletedAt: null
+    //   }
+
+    // useEffect(() => {
+    //     setUser(userData)
+    // }, []);
 
     const [editMode, setEditMode] = useState(false);
     const [user, setUser] = useState({
@@ -55,9 +63,10 @@ export default function MyAccountInfo() {
         password: "",
         identityCard: "",
         dob: "",
+        googleId: "",
+        image: "",
     });
 
-    console.log(editMode);
     console.log(user);
 
     const handleChange = (field, value) => {
@@ -68,13 +77,17 @@ export default function MyAccountInfo() {
     };
 
     const handleSaveChanges = async () => {
-        // try {
-        //     await instance.put(`user/${user.userID}`, user);
-        //     alert('Se ha actualizado exitosamente la información');
+        try {
+            await axios.put(`http://localhost:3001/user/${user.userID}`, user); // instance.put(`user/${user.userID}`, user) || axios.put(`http://localhost:3001/user/${user.userID}`, user)
+            getUserData().then((data) => {
+                dispatch(getUserById(data));
+                setUser(data);
+              });
+            alert('Se ha actualizado exitosamente la información');
             setEditMode(false);
-        // } catch (error) {
-        //     alert(error.response.data.error)
-        // }
+        } catch (error) {
+            alert(error.response.data.error)
+        }
     };
 
     return (
