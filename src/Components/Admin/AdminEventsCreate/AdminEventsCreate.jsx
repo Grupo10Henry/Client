@@ -24,12 +24,18 @@ export default function AdminEventsCreate() {
     
         useEffect(() => {
           getEvents().then((data) => (dispatch(getAllEvents(data))))
-        }, []
+        }, [allEvents]
     );
 
     // console.log(allEvents)
 
     let iframeRegex = /<iframe[^>]+src="([^"]+)"/;
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const currentDay = String(currentDate.getDate()).padStart(2, '0');
+    const minDate = `${currentYear}-${currentMonth}-${currentDay}`;
 
     const types = [
         "Grande",
@@ -80,7 +86,6 @@ export default function AdminEventsCreate() {
     console.log(input);
     console.log(section);
     console.log(sections);
-
     console.log(image, bannerImage, planImage)
 
     function handleChange(e){
@@ -114,7 +119,22 @@ export default function AdminEventsCreate() {
 
     function handleSubmitCreateSection(e){
         e.preventDefault();
+        const repetido = sections.some((existingSection) => existingSection.sector === section.sector)
+        if (repetido) {
+        alert('Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección')
+        } else {
         setSections([...sections, section]);
+        }
+    };
+
+    function deleteLastSection (){
+        if(sections.length === 0) {
+            alert('Actualmente no hay secciones creadas')
+            return;
+        }
+
+        const updatedSections = sections.slice(0, -1);
+        setSections(updatedSections);
     };
 
     const handlePostSections = async () => {
@@ -152,58 +172,15 @@ export default function AdminEventsCreate() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!input.name || !input.description || !input.category || !input.isDonation || !input.capacity || !input.date || !input.time || !input.locationName ||
-            !input.adressLocation || !input.mapLocation || !input.type) {
+            !input.adressLocation || !input.mapLocation || !image || !bannerImage || !planImage || !input.type) {
                 alert('Por favor completa todos los campos para crear el evento');
                 return;
             }
 
         try {
             
-            
             // Código para extraer la URL de source del código de GoogleMaps
             let match = input.mapLocation.match(iframeRegex);
-            
-            // // Cargar imagen en Cloudinary
-            // const formData = new FormData();
-            // formData.append('file', image);
-            // formData.append('upload_preset', 'mibutaca');
-            
-            // const cloudinaryResponse = await axios.post(
-            //     'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
-            //     formData
-            //     );
-                
-            //     // Obtener URL de imagen en Cloudinary
-            //     const imageUrl = cloudinaryResponse.data.secure_url;
-            //     setImageURL(imageUrl);
-                
-            //     // Cargar imagen Banner en Cloudinary
-            //     const formDataB = new FormData();
-            //     formDataB.append('file', bannerImage);
-            //     formDataB.append('upload_preset', 'mibutaca');
-                
-            //     const cloudinaryResponseB = await axios.post(
-            //           'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
-            //           formDataB
-            //           );
-                      
-            //         // Obtener URL de imagen Banner en Cloudinary
-            //         const bannerImageUrl = cloudinaryResponseB.data.secure_url;
-            //         setBannerImageURL(bannerImageUrl);
-                    
-            //         // Cargar imagen Plano en Cloudinary
-            //         const formDataP = new FormData();
-            //         formDataP.append('file', planImage);
-            //         formDataP.append('upload_preset', 'mibutaca');
-                    
-            //         const cloudinaryResponseP = await axios.post(
-            //             'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
-            //             formDataP
-            //             );
-                        
-            //             // Obtener URL de imagen Plano en Cloudinary
-            //             const planImageUrl = cloudinaryResponseP.data.secure_url;
-            //         setPlanImageURL(planImageUrl);
 
             // Upload all images concurrently and wait for all of them to complete
         const [imageResponse, bannerResponse, planResponse] = await Promise.all([
@@ -327,7 +304,7 @@ export default function AdminEventsCreate() {
                     <input className={styles.formInputText}
                     type="date"
                     name='date'
-                    // Poner límite inferior igual a fecha de hoy
+                    min={minDate}
                     value={input.date}
                     onChange={handleChange} />
                     </div>
@@ -548,6 +525,7 @@ export default function AdminEventsCreate() {
                     </table>
                      : null}
                      {sections.length ? <button className={styles.formButton} onClick={handlePostSections}>Agregar secciones a evento</button> : null}
+                     {sections.length ? <button className={styles.formButton} onClick={deleteLastSection}>Eliminar sección</button> : null}
             </div>
            </div>
     )
