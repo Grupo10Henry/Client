@@ -8,7 +8,7 @@ import EventsText from "../../../Components/User/EventsText/EventsText"
 import Filters from "../../../Components/User/Filters/Filters"
 import { instance } from "../../../axios/config"
 import {
-  getAllEvents,
+  // getAllEvents,
   setEventsDate,
   getNextEvents,
 } from "../../../redux/eventsSlice"
@@ -41,16 +41,16 @@ const Home = () => {
     return newDates
   }
 
-  //obtiene los eventos
-  const getEvents = async () => {
-    try {
-      const { data } = await instance.get("/event") // http://localhost:3001/event
-      dispatch(setEventsDate(convertUniquesDates(data)))
-      return data
-    } catch (error) {
-      console.log(error?.response?.data.error || error)
-    }
-  }
+  // //obtiene los eventos
+  // const getEvents = async () => {
+  //   try {
+  //     const { data } = await instance.get("/event") // http://localhost:3001/event
+  //     dispatch(setEventsDate(convertUniquesDates(data)))
+  //     return data
+  //   } catch (error) {
+  //     console.log(error?.response?.data.error || error)
+  //   }
+  // }
   //obtiene los proximos eventos
   const NextEvents = async () => {
     try {
@@ -63,7 +63,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    getEvents().then((data) => dispatch(getAllEvents(data)))
+    // getEvents().then((data) => dispatch(getAllEvents(data)))
     NextEvents().then((data) => dispatch(getNextEvents(data)))
   }, [])
 

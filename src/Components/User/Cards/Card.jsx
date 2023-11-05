@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux"
 import { HiLocationMarker } from "react-icons/hi"
 import { formatoPesosColombianos } from "../../../utils/formatPrice"
 import { setEventID } from "../../../redux/eventIDSlice"
+import { instance } from "../../../axios/config"
+
 import style from "./Card.module.css"
 
 // recibo "name" "date" "time" "image" "locationName" y "id" para el detail
@@ -16,9 +18,11 @@ const Card = (props) => {
   const { name, image, time, date, locationName, eventID, priceMin } = props
   const formatPrice = priceMin && formatoPesosColombianos.format(priceMin)
 
-  const setEventIDInRedux = () => {
-    console.log(eventID, "eventID en card")
+  const setEventIDInRedux = async () => {
+  // console.log(eventID, "eventID en card")
+
     dispatch(setEventID(eventID));
+    await instance.put(`/event/views/${eventID}`)
   };
 
   return (

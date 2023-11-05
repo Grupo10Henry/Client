@@ -20,23 +20,15 @@ import "swiper/css/autoplay"
 import style from "./MostPupular.module.css"
 import "./MostPupular.module.css"
 
-const MostPopular = () => {
-  const { allEvents } = useSelector((s) => s.events)
-  // ejemplo de lo que se veria cuando no hayan eventos disponibles
-  const orden = []
-  const noLink = '/'
-  // CUANDO NO ME PONGAN LINKS DE GOOGLE MEET EN LOS BANNERS, events PASARA A SER allEvents
+//! ordena el array con los eventos segun las views para mostrar los banners de los primeros 3
 
-    // ordena el array con los eventos segun las views para mostrar los banners de los primeros 3
-  orden.sort((a, b) => {
-    if (a.views < b.views) {
-      return 1
-      } else if (a.views > b.views) {
-        return -1
-      } else {
-      return 0
-      }
-    })
+const MostPopular = () => {
+  const noLink = '/'
+
+  const { nextEvents } = useSelector((s) => s.events)
+  let orden = nextEvents
+  // console.log(orden)
+  // orden.sort((a, b) => b.views - a.views)
 
 
     return (
@@ -74,13 +66,26 @@ const MostPopular = () => {
           className="swiper_container"
         >
           <SwiperSlide>
-            <Link to={orden[0]?.eventID ? `/detalle/${orden[0].eventID}` : noLink}>
+            <Link to={orden[3]?.eventID ? `/detalle/${orden[3].eventID}` : noLink}>
               <button className={style.buttonInfo}>
                 {"-> Mas informacion aqui <-"}
               </button>
             </Link>
             <img
-              src={orden[0]?.bannerImage ? orden[0].bannerImage : noBanner}
+              src={orden[3]?.bannerImage ? orden[3].bannerImage : noBanner}
+              alt="image"
+              className={style.image}
+            />
+          </SwiperSlide>
+          <br />
+          <SwiperSlide>
+            <Link to={orden[6]?.eventID ? `/detalle/${orden[6].eventID}` : noLink}>
+              <button className={style.buttonInfo}>
+                {"-> Mas informacion aqui <-"}
+              </button>
+            </Link>
+            <img
+              src={orden[6]?.bannerImage ? orden[6].bannerImage : noBanner}
               alt="image"
               className={style.image}
             />
@@ -94,19 +99,6 @@ const MostPopular = () => {
             </Link>
             <img
               src={orden[1]?.bannerImage ? orden[1].bannerImage : noBanner}
-              alt="image"
-              className={style.image}
-            />
-          </SwiperSlide>
-          <br />
-          <SwiperSlide>
-            <Link to={orden[2]?.eventID ? `/detalle/${orden[2].eventID}` : noLink}>
-              <button className={style.buttonInfo}>
-                {"-> Mas informacion aqui <-"}
-              </button>
-            </Link>
-            <img
-              src={orden[2]?.bannerImage ? orden[2].bannerImage : noBanner}
               alt="image"
               className={style.image}
             />
