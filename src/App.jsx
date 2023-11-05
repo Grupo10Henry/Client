@@ -47,9 +47,10 @@ function App() {
   }
 
   const login = async (userData) => {
-    const { email, password, token } = userData
-    const URL = "http://localhost:3001/login"
 
+    const { email, password, token } = userData;
+    const URL = config.baseURL + '/login';
+  
     try {
       // Comprobar si se proporciona un token en la URL
       const urlSearchParams = new URLSearchParams(window.location.search)
