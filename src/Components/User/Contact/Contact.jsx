@@ -4,6 +4,7 @@ import { useContext, useState } from "react"
 import style from "./Contact.module.css"
 import { Context } from "../../../Context/Context"
 import { instance } from "../../../axios/config"
+import {AiOutlineClose } from "react-icons/ai";
 // necesito ayuda con el diseño de la tarjeta de Contacto :(
 
 const Contact = () => {
@@ -143,7 +144,7 @@ const Contact = () => {
         </button>
       </form>
       <button onClick={contactFalse} className={style.close}>
-        Cerrar
+        <AiOutlineClose/>
       </button>
     </div>
     </>

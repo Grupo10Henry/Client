@@ -120,7 +120,7 @@ const ReviewsUser = () => {
                 {/* Btn izquierda */}
                 <div className={style.btnReviewsUser}>
                     <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                        <FaChevronLeft />
+                        {currentPage > 1 && <FaChevronLeft />}
                     </button>
                 </div>
 
@@ -150,7 +150,7 @@ const ReviewsUser = () => {
                 {/* Btn derecha */}
                 <div className={style.btnReviewsUser}>
                     <button onClick={handleNextPage} disabled={indexOfLastReview >= reviews.length}>
-                        <FaChevronRight />
+                    {indexOfLastReview < reviews.length && <FaChevronRight />}
                     </button>
                 </div>
 
