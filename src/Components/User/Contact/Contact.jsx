@@ -4,7 +4,11 @@ import { useContext, useState } from "react"
 import style from "./Contact.module.css"
 import { Context } from "../../../Context/Context"
 import { instance } from "../../../axios/config"
+
 import {AiOutlineClose } from "react-icons/ai";
+
+import toast, { Toaster } from 'react-hot-toast' 
+
 // necesito ayuda con el diseño de la tarjeta de Contacto :(
 
 const Contact = () => {
@@ -37,7 +41,10 @@ const Contact = () => {
 
     try {
       await instance.post('/contactForm', newConsultation)
-      window.alert('Se envio su consulta exitosamente! los encargados estaran al tanto de su consulta. Gracias por su tiempo')
+      toast.success('Su consulta se envio correctamente. Muchas gracias por su tiempo!', {
+        duration: 3000,
+        position: "top-center"
+      }) 
       setUserData({
         name: "",
         lastName: "",
@@ -139,7 +146,7 @@ const Contact = () => {
             />
           </div>
         </div>
-        <button type="submit" className={style.btn}>
+          <button type="submit" className={style.btn}>
           Enviar
         </button>
       </form>
