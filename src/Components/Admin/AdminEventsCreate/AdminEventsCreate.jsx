@@ -6,6 +6,7 @@ import { instance } from '../../../axios/config';
 import { categories } from '../../../utils/categories';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllEvents } from '../../../redux/eventsSlice';
+import Swal from 'sweetalert2';
 
 export default function AdminEventsCreate() {
 
@@ -24,7 +25,7 @@ export default function AdminEventsCreate() {
     
         useEffect(() => {
           getEvents().then((data) => (dispatch(getAllEvents(data))))
-        }, [allEvents]
+        }, []
     );
 
     // console.log(allEvents)
@@ -119,9 +120,15 @@ export default function AdminEventsCreate() {
 
     function handleSubmitCreateSection(e){
         e.preventDefault();
-        const repetido = sections.some((existingSection) => existingSection.sector === section.sector)
+        const repetido = sections.some((existingSection) => existingSection.sector.toLowerCase() === section.sector.toLowerCase())
         if (repetido) {
-        alert('Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección')
+        // alert('Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección')
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección',
+            footer: '<a href="">Why do I have this issue?</a>'
+          })
         } else {
         setSections([...sections, section]);
         }
@@ -219,8 +226,9 @@ export default function AdminEventsCreate() {
 
                 try {
                     // const post = await axios.post('http://localhost:3001/event/', input)
-                    const post = await instance.post('/event/', newEvent)
-                    alert("Evento creado exitosamente")
+                    const post = await instance.post('/event/', newEvent);
+                    getEvents().then((data) => (dispatch(getAllEvents(data))));
+                    alert("Evento creado exitosamente");
                 } catch (error) {
                     alert(error.response.data.error);
                 }                
