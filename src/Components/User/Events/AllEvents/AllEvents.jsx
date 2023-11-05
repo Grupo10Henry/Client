@@ -6,13 +6,13 @@ import Cards from "../../Cards/Cards"
 import "./AllEvents.module.css"
 
 const AllEvents = () => {
-  const { allEvents } = useSelector((s) => s.events)
+  const { nextEvents } = useSelector((s) => s.events)
   return (
     <div>
       <h2 className="subtitle gradient-text">
         <b>Todos Los Eventos Disponibles</b>
       </h2>
-      {allEvents ? <Cards data={allEvents} /> : "No hay eventos disponibles :c"}
+      {nextEvents ? <Cards data={nextEvents} /> : "No hay eventos disponibles :c"}
     </div>
   )
 }

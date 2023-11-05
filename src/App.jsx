@@ -116,6 +116,11 @@ const getUserEmailFromGoogle = async (token) => {
   const shouldRenderNavbar = allowedPaths.some(
     (path) => location.pathname === path || location.pathname.includes(path)
   )
+
+  const shouldRenderFooter = allowedPaths.some(
+    (path) => location.pathname === path || location.pathname.includes(path)
+  ) && !location.pathname.startsWith("/admin");
+
   return (
     <div className={styles.App}>
       {(location.pathname === "/" || shouldRenderNavbar) && <Navbar />}
@@ -135,7 +140,9 @@ const getUserEmailFromGoogle = async (token) => {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />
-      {location.pathname === "admin" ? null : <Footer />}
+      
+      {(location.pathname === "/" || shouldRenderFooter) && <Footer />}
+
     </div>
   )
 }
