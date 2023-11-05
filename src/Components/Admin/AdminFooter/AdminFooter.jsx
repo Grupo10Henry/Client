@@ -10,7 +10,6 @@ const AdminFooter = () => {
         phone: '',
         email: '',
         businessHours: '',
-        dataPolicy: '',
     })
 
     const editHandler = (event) => {
@@ -27,8 +26,10 @@ const AdminFooter = () => {
 
     return(
         <div className={style.AdminFooterContainer}>
-            <h1>Información de contacto</h1>
+            
             <form onSubmit={submitHandler}>
+                <div className={style.InfoContactoAdmin}>
+                <h2>Información de contacto</h2>
                 <div>
                     <label>Dirección</label>
                     <input
@@ -65,14 +66,19 @@ const AdminFooter = () => {
                     onChange={editHandler}
                     />
                 </div>
-                <div>
-                    <label>Politica de datos</label>
-                    <textarea
-                        name="dataPolicy"
-                        value={form.dataPolicy}
-                        onChange={editHandler}
-                    />
                 </div>
+                <div className={style.infoRedesAdmin}>
+                <h2>Redes sociales</h2>
+                <label>Link instagram</label>
+                <input/>
+                <label>Link facebook</label>
+                <input/>
+                <label>Link Linkedin</label>
+                <input/>
+                <label>Link whatApp</label>
+                <input/>
+                </div>
+
                 <button type="submit">Guardar</button>
             </form>
         </div>

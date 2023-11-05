@@ -46,7 +46,8 @@ const getUserEmailFromGoogle = async (token) => {
 
     const login = async (userData) => {
       const { email, password, token } = userData;
-      const URL = `${config.baseURL}/login`;
+      const URL =  "http://localhost:3001/login";
+
     
       try {
         // Comprobar si se proporciona un token en la URL
