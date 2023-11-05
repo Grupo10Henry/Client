@@ -199,7 +199,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   className="block w-full flex-grow rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  id="phone"
+                  id="phoneS"
                   name="phone"
                   onChange={handleChange}
                   value={user.phone}
@@ -282,6 +282,7 @@ const SignUp = () => {
           passwordInput.type === "password" ? "text" : "password";
       }}
       className="absolute inset-y-0 bottom-4 right-0 flex items-center pr-2 cursor-pointer text-gray-600"
+      type="button"
     >
       👁️
     </button>
@@ -312,6 +313,7 @@ const SignUp = () => {
           passwordInput.type === "password" ? "text" : "password";
       }}
       className="absolute inset-y-0 bottom-4 right-0 flex items-center pr-2 cursor-pointer text-gray-600 top-4"
+      type="button"
     >
       👁️
     </button>

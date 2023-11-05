@@ -17,11 +17,33 @@ const Detail = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      // Cuando los datos se cargan con éxito, cambia isLoading a falso
-      setIsLoading(false);
-    }, 2000); // Simula una carga de 2 segundos
-  }, []);
+    const fetchEventData = async () => {
+      try {
+        const response = await instance.get(`/seat/${eventID}`);
+        if (response.data) {
+          setSectorPrices(response.data);
+          setIsLoading(false); // Cambia isLoading a falso una vez que los datos se han cargado
+        }
+      } catch (error) {
+        console.error("Error al obtener los sectores y precios:", error);
+      }
+    };
+  
+    const fetchEventDetails = async () => {
+      try {
+        const response = await instance.get(`/event/${eventID}`);
+        if (response.data) {
+          // ...
+          setIsLoading(false); // Cambia isLoading a falso una vez que los datos se han cargado
+        }
+      } catch (error) {
+        console.error("Error al obtener los detalles del evento:", error);
+      }
+    };
+  
+    fetchEventData();
+    fetchEventDetails();
+  }, [eventID]);
 
   const navigate = useNavigate();
 
@@ -163,9 +185,9 @@ const Detail = () => {
   return (
     <>
       <div className={styles.ContainerGlobal}>
+      
       {isLoading ? ( // Verifica si isLoading es verdadero
-      <div className={styles.loader}></div>
-    ) : (
+    
       <>
         <div className={styles.ContainerBanner}>
           <img src={eventDetails.bannerImage} alt={eventDetails.name} />
@@ -244,10 +266,13 @@ const Detail = () => {
           <BookingButton  />
           </Link>
         </div>
+      
       </>
-    )}
-      </div>
-    </>
+      ) : (
+        <div className={styles.loader}></div>
+        )};
+        </div>
+        </>
   );
 };
 

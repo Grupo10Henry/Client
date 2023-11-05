@@ -44,62 +44,64 @@ const getUserEmailFromGoogle = async (token) => {
   };
   
 
-    const login = async (userData) => {
-      const { email, password, token } = userData;
-      const URL =  "http://localhost:3001/login";
-
-    
-      try {
-        // Comprobar si se proporciona un token en la URL
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        const tokenFromURL = urlSearchParams.get("token");
-
-        let userEmail = email;
-
-        if (tokenFromURL) {
-          // Si hay un token en la URL, obtén el correo electrónico del usuario desde Google
-          userEmail = await getUserEmailFromGoogle(tokenFromURL);
-          if (!userEmail) {
-            // Manejo de error, puedes mostrar un mensaje o redirigir al usuario
-            alert("Error al obtener el correo electrónico del usuario.");
-            return;
-          }
+  const login = async (userData) => {
+    const { email, password, token } = userData;
+    const URL = "http://localhost:3001/login";
+  
+    try {
+      // Comprobar si se proporciona un token en la URL
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const tokenFromURL = urlSearchParams.get("token");
+  
+      let userEmail = email;
+  
+      if (tokenFromURL) {
+        // Si hay un token en la URL, obtén el correo electrónico del usuario desde Google
+        userEmail = await getUserEmailFromGoogle(tokenFromURL);
+        if (!userEmail) {
+          // Manejo de error, puedes mostrar un mensaje o redirigir al usuario
+          alert("Error al obtener el correo electrónico del usuario.");
+          return;
         }
-    
-        // Incluir el token en el cuerpo de la solicitud si se encuentra en la URL
-        const requestBody = tokenFromURL
-          ? { email, password, token: tokenFromURL }
-          : { email, password };
-
-          console.log("Datos de la solicitud POST:", requestBody);
-    
-        const response = await axios.post(URL, requestBody);
-        const token = response.data.token;
-    
-        if (token) {
-          localStorage.setItem("token", token);
-    
-          const userResponse = await instance.get("/user", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-    
-          const user = userResponse.data;
-    
-          if (user.isAdmin) {
-            navigate("/admin");
-          } else {
-            navigate("/");
-          }
-        } else {
-          alert("Usuario o contraseña incorrectos");
-        }
-      } catch (error) {
-        console.error(error);
-        alert("Error en el inicio de sesión");
       }
-    };
+  
+      // Incluir el token en el cuerpo de la solicitud si se encuentra en la URL
+      const requestBody = tokenFromURL
+        ? { email, password, token: tokenFromURL }
+        : { email, password };
+  
+      console.log("Datos de la solicitud POST:", requestBody);
+  
+      const response = await axios.post(URL, requestBody);
+      const responseData = response.data;
+  
+      if (responseData.token) {
+        localStorage.setItem("token", responseData.token.token);
+  
+        // Aquí verifica la propiedad isAdmin
+        const isAdmin = responseData.token.isAdmin;
+        localStorage.setItem("isAdmin", isAdmin);
+  
+        console.log("isAdmin:", isAdmin);
+  
+        if (isAdmin) {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
+      } else {
+        alert("Usuario o contraseña incorrectos");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error en el inicio de sesión");
+    }
+  };
+  
+  
+
+    
+        
         
     
 
