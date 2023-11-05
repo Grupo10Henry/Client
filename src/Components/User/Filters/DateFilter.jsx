@@ -19,11 +19,11 @@ const DateFilter = ({ handlerFilter }) => {
   const handlerDropdown = () => {
     setShowme(!showme)
   }
-  const handlerDate = (name, value) => {
+  const handlerDate = (name, text, value) => {
     //pedir a back
     console.log("pidiendo a back:", value)
 
-    setSelectedOption(value)
+    setSelectedOption(text)
     handlerFilter(name, value)
     dispatch(handlerIsFilter())
   }
@@ -54,7 +54,7 @@ const DateFilter = ({ handlerFilter }) => {
             <span
               key={element.id}
               className={style.option}
-              onClick={() => handlerDate("date", element.value)}
+              onClick={() => handlerDate("date", element.text, element.value)}
             >
               {element.text}
             </span>

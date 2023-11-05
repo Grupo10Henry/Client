@@ -12,6 +12,7 @@ export const useSarchbar = (handlerFilter, resetPropFilters) => {
   const notify = () =>
     toast.error("Por favor ingresa algo", {
       duration: 1500,
+      position: "bottom-center",
     })
   const handlerChange = (e) => {
     setInput(e.target.value)
@@ -21,6 +22,7 @@ export const useSarchbar = (handlerFilter, resetPropFilters) => {
     e.preventDefault()
     if (input.trim().length === 0) {
       notify()
+
       return
     }
     handlerFilter("search", input)
