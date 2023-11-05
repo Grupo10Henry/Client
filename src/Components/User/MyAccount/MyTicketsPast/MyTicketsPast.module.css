@@ -1,13 +1,37 @@
-.activeTickets {
-    width: 100%;
-    height: 150px;
-    background-color: rgb(150, 150, 150);
-    font-weight: bold;
+.pTicketContainer {
+    background-color: rgb(150, 149, 149);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 0px 25px 0px;
 }
 
-.pastTickets {
-    width: 100%;
-    height: 150px;
-    background-color: rgb(184, 183, 183);
+.pastTicketsTitle {
+    color: aliceblue;
     font-weight: bold;
+    font-size: 18px;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 0px 5px 0px;
+}
+
+.pTicketInfoContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.pTicketInfoContainer .pTicketInfo {
+    color: aliceblue;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.pTicketInfoContainer .pTicketButton {
+    color: rgb(16, 117, 112);
+    font-size: 15px;
+    margin: 3px 5px 3px 5px;
+    padding: 0px 0px 0px 0px;
 }
