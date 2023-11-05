@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import style from "./AdminFAQ.module.css";
+import { TiDeleteOutline } from "react-icons/ti";
 
 const AdminFAQ = () => {
   const [formData, setFormData] = useState({
@@ -25,9 +26,16 @@ const AdminFAQ = () => {
     setFormData({ question: "", answer: "" });
   };
 
+  const handleDelete = (index) => {
+    // Eliminar la pregunta y respuesta correspondiente
+    const updatedFaqList = [...faqList];
+    updatedFaqList.splice(index, 1);
+    setFaqList(updatedFaqList);
+  };
+
   return (
     <div className={style.AdminFAQ}>
-      <h1>Crear preguntas y respuestas</h1>
+      <h1>CREAR PREGUNTAS Y RESPUESTAS</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Pregunta:
@@ -56,6 +64,7 @@ const AdminFAQ = () => {
             <strong>Pregunta:</strong> {faq.question}
             <br />
             <strong>Respuesta:</strong> {faq.answer}
+            <TiDeleteOutline className={style.btnEliminar} onClick={() => handleDelete(index)} />
             <hr />
           </div>
         ))}

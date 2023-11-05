@@ -8,11 +8,7 @@ import style from "./NextEvents.module.css"
 
 const NextEvents = () => {
   const { nextEvents } = useSelector((s) => s.events)
-  let events = undefined
-  if (nextEvents != undefined) {
-    events = [nextEvents[0], nextEvents[1], nextEvents[2], nextEvents[3]]
-  }
-  const Events = events
+  const Events = nextEvents === undefined ? nextEvents : nextEvents.slice(0, 4)
 
   return (
     <div>
