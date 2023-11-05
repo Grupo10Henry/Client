@@ -21,7 +21,7 @@ const DateFilter = ({ handlerFilter }) => {
   }
   const handlerDate = (name, text, value) => {
     //pedir a back
-    console.log("pidiendo a back:", value)
+    // console.log("pidiendo a back:", value)
 
     setSelectedOption(text)
     handlerFilter(name, value)

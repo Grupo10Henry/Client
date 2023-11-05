@@ -17,7 +17,7 @@ import FAQ from "./Pages/User/FAQ/FAQ"
 import ScrollToTop from "./Components/UserAndAdmin/ScrollToTop"
 import BookingSeats from "./Components/User/Booking/BookingSeats/BookingSeatsDemo"
 
-import {instance, config} from "./axios/config"
+import { instance, config } from "./axios/config"
 import axios from "axios"
 import NotFound from "./Components/User/NotFound/NotFound"
 
@@ -25,7 +25,7 @@ function App() {
   const location = useLocation()
   const navigate = useNavigate()
 
-const getUserEmailFromGoogle = async (token) => {
+  const getUserEmailFromGoogle = async (token) => {
     try {
       const response = await axios.get(
         "https://www.googleapis.com/oauth2/v3/userinfo",
@@ -34,76 +34,72 @@ const getUserEmailFromGoogle = async (token) => {
             Authorization: `Bearer ${token}`,
           },
         }
-      );
-  
-      return response.data.email;
+      )
+
+      return response.data.email
     } catch (error) {
-      console.error("Error al obtener el correo electrónico del usuario de Google", error);
-      return null; // Manejo de error, puedes ajustar esto según tus necesidades
+      console.error(
+        "Error al obtener el correo electrónico del usuario de Google",
+        error
+      )
+      return null // Manejo de error, puedes ajustar esto según tus necesidades
     }
-  };
-  
+  }
 
   const login = async (userData) => {
+
     const { email, password, token } = userData;
     const URL = config.baseURL + '/login';
   
     try {
       // Comprobar si se proporciona un token en la URL
-      const urlSearchParams = new URLSearchParams(window.location.search);
-      const tokenFromURL = urlSearchParams.get("token");
-  
-      let userEmail = email;
-  
+      const urlSearchParams = new URLSearchParams(window.location.search)
+      const tokenFromURL = urlSearchParams.get("token")
+
+      let userEmail = email
+
       if (tokenFromURL) {
         // Si hay un token en la URL, obtén el correo electrónico del usuario desde Google
-        userEmail = await getUserEmailFromGoogle(tokenFromURL);
+        userEmail = await getUserEmailFromGoogle(tokenFromURL)
         if (!userEmail) {
           // Manejo de error, puedes mostrar un mensaje o redirigir al usuario
-          alert("Error al obtener el correo electrónico del usuario.");
-          return;
+          alert("Error al obtener el correo electrónico del usuario.")
+          return
         }
       }
-  
+
       // Incluir el token en el cuerpo de la solicitud si se encuentra en la URL
       const requestBody = tokenFromURL
         ? { email, password, token: tokenFromURL }
-        : { email, password };
-  
-      console.log("Datos de la solicitud POST:", requestBody);
-  
-      const response = await axios.post(URL, requestBody);
-      const responseData = response.data;
-  
+        : { email, password }
+
+      console.log("Datos de la solicitud POST:", requestBody)
+
+      const response = await axios.post(URL, requestBody)
+      const responseData = response.data
+      console.log(responseData.token)
       if (responseData.token) {
-        localStorage.setItem("token", responseData.token.token);
-  
+        localStorage.setItem("token", responseData.token.token)
+
         // Aquí verifica la propiedad isAdmin
-        const isAdmin = responseData.token.isAdmin;
-        localStorage.setItem("isAdmin", isAdmin);
-  
-        console.log("isAdmin:", isAdmin);
-  
+        const isAdmin = responseData.token.isAdmin
+        localStorage.setItem("isAdmin", isAdmin)
+
+        console.log("isAdmin:", isAdmin)
+
         if (isAdmin) {
-          navigate("/admin");
+          navigate("/admin")
         } else {
-          navigate("/");
+          navigate("/")
         }
       } else {
-        alert("Usuario o contraseña incorrectos");
+        alert("Usuario o contraseña incorrectos")
       }
     } catch (error) {
-      console.error(error);
-      alert("Error en el inicio de sesión");
+      console.error(error)
+      alert("Error en el inicio de sesión")
     }
-  };
-  
-  
-
-    
-        
-        
-    
+  }
 
   const allowedPaths = [
     "/admin",
@@ -117,9 +113,10 @@ const getUserEmailFromGoogle = async (token) => {
     (path) => location.pathname === path || location.pathname.includes(path)
   )
 
-  const shouldRenderFooter = allowedPaths.some(
-    (path) => location.pathname === path || location.pathname.includes(path)
-  ) && !location.pathname.startsWith("/admin");
+  const shouldRenderFooter =
+    allowedPaths.some(
+      (path) => location.pathname === path || location.pathname.includes(path)
+    ) && !location.pathname.startsWith("/admin")
 
   return (
     <div className={styles.App}>
@@ -140,9 +137,8 @@ const getUserEmailFromGoogle = async (token) => {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />
-      
-      {(location.pathname === "/" || shouldRenderFooter) && <Footer />}
 
+      {(location.pathname === "/" || shouldRenderFooter) && <Footer />}
     </div>
   )
 }

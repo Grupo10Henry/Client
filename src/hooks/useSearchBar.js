@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { handlerIsFilter } from "../redux/eventsSlice"
 import { useDispatch, useSelector } from "react-redux"
+import Swal from "sweetalert2"
 
-import toast from "react-hot-toast"
 export const useSarchbar = (handlerFilter, resetPropFilters) => {
   const [input, setInput] = useState("")
   const { reset } = useSelector((s) => s.events)
@@ -10,9 +10,11 @@ export const useSarchbar = (handlerFilter, resetPropFilters) => {
   const dispatch = useDispatch()
 
   const notify = () =>
-    toast.error("Por favor ingresa algo", {
-      duration: 1500,
-      position: "bottom-center",
+    Swal.fire({
+      title: "Por favor ingresa algo",
+      icon: "warning",
+      iconColor: "var(--danger)",
+      confirmButtonColor: "var(--turquesa)",
     })
   const handlerChange = (e) => {
     setInput(e.target.value)
