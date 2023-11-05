@@ -16,9 +16,9 @@ const Cart = () => {
     useEffect(() => {
     // Datos ficticios de eventos
     const eventosFicticios = [
-        { id: 1, title: 'Evento 1', price: 25000, quantity: 0 },
-        { id: 2, title: 'Evento 2', price: 30000, quantity: 0 },
-        { id: 3, title: 'Evento 3', price: 50000, quantity: 0 },
+        { id: 1, title: 'Concierto Lorem', price: 25000, quantity: 0 },
+        { id: 2, title: 'Cine Infantil', price: 30000, quantity: 0 },
+        { id: 3, title: 'Recital Pop', price: 50000, quantity: 0 },
     ];
         // Agrega los eventos ficticios al carrito
         setCart(eventosFicticios);
@@ -94,7 +94,7 @@ const Cart = () => {
             <div className="fixed inset-0 z-1000 flex items-center justify-center backdrop-filter backdrop-blur-lg">
                 {/* Este div se utilizará para el fondo desenfocado */}
             </div>
-            <div style={{ marginTop: '5rem' }} className="fixed inset-0 z-1001 flex flex-col items-center justify-center">
+            <div style={{ marginTop: '5rem' }} className="fixed inset-0 z-1001 flex flex-col items-center justify-center md:mt-10 lg:mt-20">
                 {/* Contenedor principal del formulario */}
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm p-6 space-y-0 bg-white rounded-lg shadow-lg">
                     <img className="mx-auto h-8 w-auto" src={logo} alt="Mi Butaca" />

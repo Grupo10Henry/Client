@@ -2,50 +2,18 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-
-//import { getDetail } from "../../../redux/eventSlice";
-//import { getSeat } from "../../../redux/seatSlice";
 import { selectEventID } from "../../../redux/eventIDSlice";
 import { useSelector } from "react-redux";
 import {instance} from "../../../axios/config";
 import styles from "./Detail.module.css";
 import BookingButton from "./BookingButton";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "../../../Components/UserAndAdmin/Loader/Loader";
 
 const Detail = () => {
   const eventID = useSelector(selectEventID);
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchEventData = async () => {
-      try {
-        const response = await instance.get(`/seat/${eventID}`);
-        if (response.data) {
-          setSectorPrices(response.data);
-          setIsLoading(false); // Cambia isLoading a falso una vez que los datos se han cargado
-        }
-      } catch (error) {
-        console.error("Error al obtener los sectores y precios:", error);
-      }
-    };
-  
-    const fetchEventDetails = async () => {
-      try {
-        const response = await instance.get(`/event/${eventID}`);
-        if (response.data) {
-          // ...
-          setIsLoading(false); // Cambia isLoading a falso una vez que los datos se han cargado
-        }
-      } catch (error) {
-        console.error("Error al obtener los detalles del evento:", error);
-      }
-    };
-  
-    fetchEventData();
-    fetchEventDetails();
-  }, [eventID]);
-
-  const navigate = useNavigate();
+const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/reserva/${eventID}?isDonation=${isDonation}`);
@@ -65,6 +33,7 @@ const Detail = () => {
     mapLocation: "",
     bannerImage: "",
     capacity: "",
+    views: "",
   });
 
   useEffect(() => {
@@ -76,6 +45,10 @@ const Detail = () => {
         );
         if (response.data) {
           setSectorPrices(response.data);
+          if(eventDetails.name ) {
+
+            setIsLoading(false);
+          }
         }
       } catch (error) {
         console.error("Error al obtener los sectores y precios:", error);
@@ -100,7 +73,9 @@ const Detail = () => {
             bannerImage,
             capacity,
             planImage,
+            views,
           } = response.data;
+          
 
           setEventDetails({
             name,
@@ -113,9 +88,13 @@ const Detail = () => {
             bannerImage,
             capacity,
             planImage,
+            views,
           });
 
           setIsDonation(response.data.isDonation);
+          if (sectorPrices.length > 0) {
+          setIsLoading(false);
+          }
         }
       } catch (error) {
         console.error("Error al obtener los detalles del evento:", error);
@@ -125,7 +104,7 @@ const Detail = () => {
     fetchEventData();
 
     fetchEventDetails();
-  }, [eventID]);
+  }, [eventID, sectorPrices, eventDetails]);
 
   const originalDate = eventDetails.date;
   const parts = originalDate.split("-");
@@ -185,9 +164,9 @@ const Detail = () => {
   return (
     <>
       <div className={styles.ContainerGlobal}>
-      
       {isLoading ? ( // Verifica si isLoading es verdadero
-    
+          <Loader />
+          ) : (
       <>
         <div className={styles.ContainerBanner}>
           <img src={eventDetails.bannerImage} alt={eventDetails.name} />
@@ -203,6 +182,8 @@ const Detail = () => {
             <h3>Dirección: {eventDetails.adressLocation}</h3>
             <h4>Capacidad Total: {eventDetails.capacity} personas. </h4>
           </div>
+          <br />
+          <h5>A {eventDetails.views} usuarios les interesa este evento.</h5>
         </div>
 
         <div className={styles.ContainerRightColumn}>
@@ -266,13 +247,11 @@ const Detail = () => {
           <BookingButton  />
           </Link>
         </div>
-      
       </>
-      ) : (
-        <div className={styles.loader}></div>
-        )};
-        </div>
-        </>
+  
+    )}
+      </div>
+    </>
   );
 };
 
