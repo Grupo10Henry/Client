@@ -3,13 +3,19 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-  name: "",
-  lastName: "",
-  email: "",
-  phone: "",
-  identityCard: "",
-  dob: "",
-  password: "",
+  token: "",
+  isAdmin: false,
+  userInfo: {
+    userID: "",
+    name: "",
+    lastName: "",
+    email: "",
+    password: "",
+    phone: "",
+    identityCard: "",
+    dob: "",
+    image: "",
+  },
   allUsers: [],
   userData: [],
 }
@@ -18,6 +24,11 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    loginSuccess: (state, action) => {
+      state.token = action.payload.token
+      state.isAdmin = action.payload.isAdmin
+      state.userInfo = action.payload.userInfo
+    },
     addUser: (state, action) => {
       const { name, lastName, email, password, phone, dob, identityCard } =
         action.payload
@@ -52,6 +63,7 @@ export const userSlice = createSlice({
     getUserById: (state, action) => {
       state.userData = action.payload
     },
+    
   },
 })
 
@@ -64,5 +76,6 @@ export const {
   changePhone,
   changeIdentificationCard,
   getUserById,
-} = userSlice.actions
+  loginSuccess,
+} = userSlice.actions;
 export default userSlice.reducer
