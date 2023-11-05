@@ -136,7 +136,7 @@ export default function MyAccountInfo() {
                 </div>
             </div>
             <div className={styles.infoRowContainer}>
-                <div className={styles.infoInputContainer}>
+                {/* <div className={styles.infoInputContainer}>
                     <label className={styles.infoLabel}>Email:</label>
                     <input className={styles.infoInput}
                     placeholder={userData.email}
@@ -144,7 +144,7 @@ export default function MyAccountInfo() {
                     value={user.email}
                     onChange={(e) => handleChange('email', e.target.value)}
                     />
-                </div>
+                </div> */}
                 <div className={styles.infoInputContainer}>
                     <label className={styles.infoLabel}>Teléfono:</label>
                     <input className={styles.infoInput}
@@ -180,10 +180,10 @@ export default function MyAccountInfo() {
                     </div>
                 </div>
                 <div className={styles.infoRowContainer}>
-                    <div className={styles.infoInputContainer}>
+                    {/* <div className={styles.infoInputContainer}>
                     <p className={styles.infoLabel}>Email:</p>
                     <p className={styles.infoDisplay}>{userData.email}</p>
-                    </div>
+                    </div> */}
                     <div className={styles.infoInputContainer}>
                     <p className={styles.infoLabel}>Teléfono:</p>
                     <p className={styles.infoDisplay}>{userData.phone}</p>
