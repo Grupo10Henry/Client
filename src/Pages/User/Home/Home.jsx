@@ -1,24 +1,18 @@
 // Kevin -^-
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useLocation } from "react-router-dom"
 import Banner from "../../../Components/User/Banner/Banner"
+import EventsFiltered from "../../../Components/User/Events/EventsFiltered/EventsFiltered"
 import EventsSections from "../../../Components/User/Events/EventsSections/EventsSections"
 import EventsText from "../../../Components/User/EventsText/EventsText"
 import Filters from "../../../Components/User/Filters/Filters"
 import { instance } from "../../../axios/config"
-import {
-  // getAllEvents,
-  setEventsDate,
-  getNextEvents,
-} from "../../../redux/eventsSlice"
-import EventsFiltered from "../../../Components/User/Events/EventsFiltered/EventsFiltered"
+import { getNextEvents, setEventsDate } from "../../../redux/eventsSlice"
+import Reviews from "../../../Components/User/Reviews/Reviews"
+import convertUniquesDates from "../../../utils/convertUniqueDates"
 
 import style from "./Home.module.css"
-
-import Reviews from "../../../Components/User/Reviews/Reviews"
-
-import AllEvents from "../../../Components/User/Events/AllEvents/AllEvents"
 
 const Home = () => {
   const { pathname } = useLocation()
@@ -26,31 +20,6 @@ const Home = () => {
 
   const dispatch = useDispatch()
 
-  // function to set unique dates in state
-  const convertUniquesDates = (arr) => {
-    const onlyDateSet = [...new Set(arr.map((event) => event.date))]
-
-    const newDates = onlyDateSet?.map((date) => {
-      return {
-        id: crypto.randomUUID(),
-        text: date,
-        value: date,
-      }
-    })
-
-    return newDates
-  }
-
-  // //obtiene los eventos
-  // const getEvents = async () => {
-  //   try {
-  //     const { data } = await instance.get("/event") // http://localhost:3001/event
-  //     dispatch(setEventsDate(convertUniquesDates(data)))
-  //     return data
-  //   } catch (error) {
-  //     console.log(error?.response?.data.error || error)
-  //   }
-  // }
   //obtiene los proximos eventos
   const NextEvents = async () => {
     try {
@@ -63,7 +32,6 @@ const Home = () => {
   }
 
   useEffect(() => {
-    // getEvents().then((data) => dispatch(getAllEvents(data)))
     NextEvents().then((data) => dispatch(getNextEvents(data)))
   }, [])
 
