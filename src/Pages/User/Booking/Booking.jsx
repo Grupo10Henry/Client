@@ -161,7 +161,7 @@ const Booking = () => {
           }
         </div>
         <div className={styles.ContainerPlanoAsientos}>
-          {eventDetails.type === "Pequeño" ? (
+          {eventDetails.type === "Grande" ? (
             <img src={eventDetails.planImage} />
           ) : (
             <BookingSeats id={id} />

@@ -2,40 +2,61 @@
     width: 100%;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-image: url("../../../assets/fondo-tres-scaled.jpg");  
+    background-size: cover;
+    background-position: center;
+    font-size: 30px;
+    font-weight: bold;
+    position: relative; /* Agregamos position: relative para que los elementos internos se posicionen en relación a este contenedor */
+}
   
-  }
+    .logo {
+      height: 35px;
+      width: auto;
+      position: absolute; /* Usamos position: absolute para posicionar el logo encima del loader */
+      top: 43%; /* Lo posicionamos en el centro verticalmente */
+      left: 50%; /* Lo posicionamos en el centro horizontalmente */
+      transform: translate(-50%, -50%); /* Lo ajustamos al centro exacto */
+    }
   
-  .loader {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    position: relative;
-    animation: rotate 1s linear infinite
-  }
-  .loader::before , .loader::after {
-    content: "";
-    box-sizing: border-box;
-    position: absolute;
-    inset: 0px;
-    border-radius: 50%;
-    border: 5px solid #FFF;
-    animation: prixClipFix 2s linear infinite ;
-  }
-  .loader::after{
-    inset: 8px;
-    transform: rotate3d(90, 90, 0, 180deg );
-    border-color: #FF3D00;
-  }
+    .loader {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      position: relative;
+      animation: rotate 1s linear infinite;
+    }
+    
+    .loader::before,
+    .loader::after {
+      content: "";
+      box-sizing: border-box;
+      position: absolute;
+      inset: 0px;
+      border-radius: 50%;
+      border: 5px solid rgb(106, 15, 136);
+      animation: prixClipFix 2s linear infinite;
+    }
+    
+    .loader::after {
+      inset: 8px;
+      transform: rotate3d(90, 90, 0, 180deg);
+      border-color: #0d8783;
+    }
+    
+    @keyframes rotate {
+      0% {transform: rotate(0deg)}
+      100% {transform: rotate(360deg)}
+    }
+    
+    @keyframes prixClipFix {
+      0% {clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0)}
+      50% {clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0)}
+      75%,
+      100% {clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%)}
+    }
   
-  @keyframes rotate {
-    0%   {transform: rotate(0deg)}
-    100%   {transform: rotate(360deg)}
-  }
   
-  @keyframes prixClipFix {
-      0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
-      50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
-      75%, 100%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
-  }
