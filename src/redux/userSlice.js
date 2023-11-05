@@ -2,7 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-  token: "",
+  token: null,
   isAdmin: false,
   userInfo: {},
   allUsers: [],
@@ -20,6 +20,8 @@ export const userSlice = createSlice({
     },
 
     userLogout: (state, action) => {
+      state.token = null
+      state.isAdmin = false
       state.userInfo = {}
     },
     checkEmail: (state, action) => {
