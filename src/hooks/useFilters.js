@@ -23,13 +23,13 @@ const useFilters = () => {
       })
       dispatch(setFilteredEvents(data))
       dispatch(handlerIsLoading(false))
-      console.log(data)
+
       return data
     } catch (error) {
       dispatch(setFilteredEvents([])) //reset eventsFiltered
       dispatch(handlerIsLoading(false))
-      console.log(error?.response?.data.error)
       dispatch(setEventsFilteredFailed(error?.response?.data.error))
+      console.error(error?.response?.data.error)
     }
   }
 
