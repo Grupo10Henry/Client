@@ -63,6 +63,9 @@ export const userSlice = createSlice({
     getUserById: (state, action) => {
       state.userData = action.payload
     },
+    getAllUsers: (state, action) => {
+      state.allUsers = action.payload
+    },
     
   },
 })
@@ -77,5 +80,6 @@ export const {
   changeIdentificationCard,
   getUserById,
   loginSuccess,
+  getAllUsers
 } = userSlice.actions;
 export default userSlice.reducer
