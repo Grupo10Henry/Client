@@ -9,12 +9,11 @@ import style from "./Navbar.module.css"
 const Nav = () => {
   const { isOpen, setIsOpen, handlerOpenContact, handleLogout, links } =
     useNav()
+  const { isAdmin, userInfo, token } = useSelector((s) => s.user)
 
-  const { isAdmin, userInfo } = useSelector((s) => s.user)
-  const isLogged = localStorage.getItem("token")
   return (
     <nav className={style.nav}>
-      <Logo  />
+      <Logo />
       <button
         className={`${style.icon} ${style.iconToggle}`}
         onClick={() => setIsOpen(!isOpen)}
@@ -24,9 +23,8 @@ const Nav = () => {
 
       <Menu
         isAdmin={isAdmin}
-        userId={userInfo.userID}
-        name={userInfo.name}
-        isLogged={isLogged}
+        userInfo={userInfo}
+        token={token}
         isOpen={isOpen}
         links={links}
         handleLogout={handleLogout}
