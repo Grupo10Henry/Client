@@ -14,7 +14,7 @@ const Nav = () => {
   const isLogged = localStorage.getItem("token")
   return (
     <nav className={style.nav}>
-      <Logo />
+      <Logo  />
       <button
         className={`${style.icon} ${style.iconToggle}`}
         onClick={() => setIsOpen(!isOpen)}
@@ -25,6 +25,7 @@ const Nav = () => {
       <Menu
         isAdmin={isAdmin}
         userId={userInfo.userID}
+        name={userInfo.name}
         isLogged={isLogged}
         isOpen={isOpen}
         links={links}
