@@ -6,6 +6,7 @@ import style from "./Menu.module.css"
 const Menu = ({
   isAdmin,
   userId,
+  name,
   isOpen,
   links,
   isLogged,
@@ -39,6 +40,7 @@ const Menu = ({
       </div>
       {isLogged ? (
         <div className={style.options}>
+          <p>{name} </p>
           <NavLink
             title="Mi perfil"
             to={`micuenta/${userId}`}
