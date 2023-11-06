@@ -1,15 +1,10 @@
 // JULI
-
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-  name: "",
-  lastName: "",
-  email: "",
-  phone: "",
-  identityCard: "",
-  dob: "",
-  password: "",
+  token: null,
+  isAdmin: false,
+  userInfo: {},
   allUsers: [],
   userData: [],
 }
@@ -18,18 +13,17 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    addUser: (state, action) => {
-      const { name, lastName, email, password, phone, dob, identityCard } =
-        action.payload
-      state.name = name
-      state.lastName = lastName
-      state.email = email
-      state.password = password
-      state.phone = phone
-      state.dob = dob
-      state.identityCard = identityCard
+    loginSuccess: (state, action) => {
+      state.token = action.payload.token
+      state.isAdmin = action.payload.isAdmin
+      state.userInfo = action.payload.userInfo
     },
 
+    userLogout: (state, action) => {
+      state.token = null
+      state.isAdmin = false
+      state.userInfo = {}
+    },
     checkEmail: (state, action) => {
       state.email = action.payload
     },
@@ -52,11 +46,15 @@ export const userSlice = createSlice({
     getUserById: (state, action) => {
       state.userData = action.payload
     },
+    getAllUsers: (state, action) => {
+      state.allUsers = action.payload
+    },
+    
   },
 })
 
 export const {
-  addUser,
+  userLogout,
   checkEmail,
   changeName,
   changeEmail,
@@ -64,5 +62,7 @@ export const {
   changePhone,
   changeIdentificationCard,
   getUserById,
-} = userSlice.actions
+  loginSuccess,
+  getAllUsers
+} = userSlice.actions;
 export default userSlice.reducer

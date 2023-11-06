@@ -1,4 +1,5 @@
 // Luissssss
+import { useNavigate } from 'react-router-dom';
 import AdminEvents from '../../../Components/Admin/AdminEvents/AdminEvents';
 import AdminEventsCreate from '../../../Components/Admin/AdminEventsCreate/AdminEventsCreate';
 import AdminFAQ from '../../../Components/Admin/AdminFAQ/AdminFAQ';
@@ -9,13 +10,27 @@ import AdminUsers from '../../../Components/Admin/AdminUsers/AdminUsers';
 import styles from './AdminHome.module.css';
 import { useState } from 'react';
 
+const isUserAdmin = () => {
+    const isAdmin = localStorage.getItem('isAdmin')
+    return isAdmin === 'true'
+}
+
 export default function AdminHome() {
 
     const [display, setDisplay] = useState({
         show: "home"
     });
 
+    const navigate = useNavigate();
+
+    const isAdmin = isUserAdmin();
+    if (!isAdmin) {
+        navigate('/iniciarsesion')
+        return <div>No tienes permisos para ver el panel del administrador</div>
+    }
+
     return (
+
         <div className={styles.AdminHomeContainer}>
             <div>
             <AdminNavbar

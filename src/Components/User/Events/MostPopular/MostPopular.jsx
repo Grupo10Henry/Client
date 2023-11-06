@@ -8,7 +8,7 @@ import {
   Navigation,
   Autoplay,
 } from "swiper/modules"
-import events from "../Events"
+// import events from "../Events"
 
 import noBanner from "../../../../assets/noBanner.jpeg"
 import "swiper/css"
@@ -21,23 +21,13 @@ import style from "./MostPupular.module.css"
 import "./MostPupular.module.css"
 
 const MostPopular = () => {
-  const { allEvents } = useSelector((s) => s.events)
-  // ejemplo de lo que se veria cuando no hayan eventos disponibles
-  const orden = []
   const noLink = '/'
-  // CUANDO NO ME PONGAN LINKS DE GOOGLE MEET EN LOS BANNERS, events PASARA A SER allEvents
 
-    // ordena el array con los eventos segun las views para mostrar los banners de los primeros 3
-  orden.sort((a, b) => {
-    if (a.views < b.views) {
-      return 1
-      } else if (a.views > b.views) {
-        return -1
-      } else {
-      return 0
-      }
-    })
+  const { nextEvents } = useSelector((s) => s.events)
+  let orden = [...nextEvents]
 
+  // ordena el array con los eventos segun las views para mostrar los banners de los primeros 3
+  orden.sort((a, b) => b.views - a.views)
 
     return (
       <div className={style.container} id="mostPopular">

@@ -18,6 +18,7 @@
   color: #efefef;
   height: 100vh;
   overflow-y: scroll;
+  background-color: rgb(253, 251, 251);
 }
 
 .contactShow {
@@ -49,14 +50,24 @@
   margin: 10px 0;
 }
 
-.btn {
-  width: 100%;
-  height: 40px;
+.contact .btn {
   background-color: var(--turquesa);
+  margin-top: 15px;
+  padding: 8px;
+  border-radius: 15px;
+  font-size: 16px;
+  width: 20%;
 }
-
+.contact .btn:hover{
+  box-shadow: 5px 5px 5px rgb(159, 157, 157);
+}
 .close {
   position: absolute;
   right: 10px;
   top: 10px;
+  color:rgb(116, 115, 115);
+}
+
+.contact label{
+  color:rgb(116, 115, 115);
 }

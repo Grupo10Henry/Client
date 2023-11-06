@@ -1,6 +1,8 @@
 /* Juli >>>>>>>> */
 
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../../redux/userSlice";
 import logo from "../../../assets/logo_mi_butaca_color.svg";
 //import styles from "./UserLogin.module.css";
 //import validateLogin from "./validateLogin";
@@ -51,18 +53,61 @@ const Login = ({ login }) => {
     });
   };
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const validationErrors = validateForm(user);
 
     if (validationErrors) {
       setErrors(validationErrors);
-      alert("Hay errores en el login");
+      alert("Hay errores en el inicio de sesión");
     } else {
-      console.log("Datos del formulario enviados:", user);
-      login(user);
+      const response = await login(user);
+      if (response && response.token) {
+        localStorage.setItem("token", response.token.token);
+        const isAdmin = response.token.isAdmin;
+        localStorage.setItem("isAdmin", isAdmin);
+
+        console.log("isAdmin:", isAdmin);
+
+        const userInfo = response.token.userInfo;
+        const userID = userInfo.userID;
+        const name = userInfo.name;
+        const lastName = userInfo.lastName;
+        const email = userInfo.email;
+        const password = userInfo.password;
+        const phone = userInfo.phone;
+        const image = userInfo.image;
+        const dob = userInfo.dob;
+        const identityCard = userInfo.identityCard;
+
+        const userInfoData = {
+          userID,
+          name,
+          lastName,
+          email,
+          password,
+          phone,
+          image,
+          dob,
+          identityCard,
+        };
+
+      console.log("Información del usuario antes de dispatch:", response);
+
+        if (isAdmin) {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
+        
+        dispatch(loginSuccess({token: response.token.token, isAdmin, userInfo: userInfoData}));
+        console.log('Información del usuario en el estado después del dispatch:', userInfoData);
+      }
     }
   };
+      
 
   const validateForm = (formData) => {
     const errors = {};
