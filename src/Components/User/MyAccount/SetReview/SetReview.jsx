@@ -63,10 +63,10 @@ export default function SetReview () {
         <div className={styles.reviewContainer}>
             <select className={styles.reviewOption} onChange={handleChange}>
                 <option value="">-- Selecciona una opción --</option>
-            {rating > 3 ? goodReviews.map((rev) => (
-                <option>{rev}</option>
-            )) : badReviews.map((rev) => (
-                <option >{rev}</option>
+            {rating > 3 ? goodReviews.map((rev, index) => (
+                <option key={`goodReview-${index}`}>{rev}</option>
+            )) : badReviews.map((rev, index) => (
+                <option key={`badReview-${index}`}>{rev}</option>
             ))}
             </select>
         </div>
