@@ -82,11 +82,11 @@ function App() {
 
       if (responseData.token) {
         dispatch(loginSuccess(responseData.token))
-        localStorage.setItem("token", responseData.token.token)
+        // localStorage.setItem("token", responseData.token.token)
 
         // Aquí verifica la propiedad isAdmin
         const isAdmin = responseData.token.isAdmin
-        localStorage.setItem("isAdmin", isAdmin)
+        // localStorage.setItem("isAdmin", isAdmin)
 
         console.log("isAdmin:", isAdmin)
 
