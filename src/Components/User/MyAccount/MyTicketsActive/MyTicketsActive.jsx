@@ -22,7 +22,6 @@ export default function MyTicketsActive() {
                 </div>
             </div>
             <div>
-                <h1>Calificación por estrellas</h1>
                 <SetReview />
             </div>
         </div>

@@ -8,7 +8,11 @@ import styles from './MyAccount.module.css';
 export default function MyAccount() {
     return (
         <div>
-            <h1>My Account :{")"}</h1>
+            <div className={styles.AccountSections}>
+            <button className={styles.AccountSectionsText}>Entradas activas</button>
+            <button className={styles.AccountSectionsText}>Entradas anteriores</button>
+            <button className={styles.AccountSectionsText}>Datos personales</button>
+            </div>
             <MyTicketsActive />
             <MyTicketsPast />
             <MyAccountInfo />

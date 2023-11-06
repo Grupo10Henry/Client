@@ -1,3 +1,57 @@
-.abc {
+.setReviewContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviewTitle {
     background-color: blueviolet;
+    margin: 0px 0px 0px 0px;
+    padding: 2px 0px 2px 0px;
+    font-size: 15px;
+    width: 360px;
+    text-align: center;
+}
+
+.ratingContainer {
+    margin: 5px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.reviewContainer {
+
+}
+
+.reviewContainer .reviewOption {
+    font-size: 12px;
+    width: 360px;
+    height: 25px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 5px;
+    border-radius: 5px;
+    border-color: rgb(160, 160, 160);
+}
+
+.onStar {
+    color: gold;
+}
+
+.offStar {
+
+}
+
+.setReviewContainer .setReviewButton {
+    background-color: rgb(16, 117, 112);
+    color: aliceblue;
+    border-radius: 5px;
+    margin: 15px 0px 10px 0px;
+    padding: 3px 8px 3px 8px;
+    font-size: 14px;
+    font-weight: bold;
+    width: 145px;
+}
+
+.setReviewContainer .setReviewButton:hover {
+    background-color: rgb(33, 158, 152);
 }
