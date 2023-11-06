@@ -1,18 +1,23 @@
 import { AiOutlineArrowDown } from "react-icons/ai"
+import { useScrollTo } from "../../../hooks/useScrollTo"
+import { useSelector } from "react-redux"
 
 import style from "./Banner.module.css"
-import { useScrollTo } from "../../../hooks/useScrollTo"
 
 const Banner = () => {
   const { handleScrollClick } = useScrollTo()
+  const { userInfo } = useSelector((s) => s.user)
 
+  const renderText = userInfo?.name
+    ? `Hola ${userInfo?.name}, ¡Bienvenido a Mi
+  Butaca!
+`
+    : "¡Bienvenido a Mi Butaca"
   return (
     <section className={style.banner}>
       <div className={style.bannerBg}></div>
       <div className={style.bannerContent}>
-        <h1 className={`${style.bannerH1} gradient-text`}>
-          ¡Bienvenido a Mi Butaca!
-        </h1>
+        <h1 className={`${style.bannerH1} gradient-text`}>{renderText}</h1>
         <p className={style.bannerParagraph}>
           En Mi Butaca, estamos dedicados a brindarte una experiencia
           inolvidable en la industria del entretenimiento. Desde los eventos más

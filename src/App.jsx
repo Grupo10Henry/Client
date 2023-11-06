@@ -1,29 +1,32 @@
 import React from "react"
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import styles from "./App.module.css"
+import BookingSeats from "./Components/User/Booking/BookingSeats/BookingSeatsDemo"
 import Cart from "./Components/User/Cart/Cart"
 import Contact from "./Components/User/Contact/Contact"
-import Navbar from "./Components/User/Navbar/Navbar"
-import MyAccount from "./Pages/User/MyAccount/MyAccount"
-import Login from "./Components/User/Login/Login"
-import AdminHome from "./Pages/Admin/AdminHome/AdminHome"
-import SignUp from "./Components/User/SignUp/SignUp"
-import Booking from "./Pages/User/Booking/Booking"
-import Home from "./Pages/User/Home/Home"
-import PasswordRecover from "./Components/User/Login/PasswordRecover"
-import Detail from "./Pages/User/Detail/Detail"
 import Footer from "./Components/User/Footer/Footer"
-import FAQ from "./Pages/User/FAQ/FAQ"
+import Login from "./Components/User/Login/Login"
+import PasswordRecover from "./Components/User/Login/PasswordRecover"
+import Navbar from "./Components/User/Navbar/Navbar"
+import SignUp from "./Components/User/SignUp/SignUp"
 import ScrollToTop from "./Components/UserAndAdmin/ScrollToTop"
-import BookingSeats from "./Components/User/Booking/BookingSeats/BookingSeatsDemo"
+import AdminHome from "./Pages/Admin/AdminHome/AdminHome"
+import Booking from "./Pages/User/Booking/Booking"
+import Detail from "./Pages/User/Detail/Detail"
+import FAQ from "./Pages/User/FAQ/FAQ"
+import Home from "./Pages/User/Home/Home"
+import MyAccount from "./Pages/User/MyAccount/MyAccount"
 
-import { instance, config } from "./axios/config"
 import axios from "axios"
+import { useDispatch } from "react-redux"
 import NotFound from "./Components/User/NotFound/NotFound"
+import { config } from "./axios/config"
+import { loginSuccess } from "./redux/userSlice"
 
 function App() {
   const location = useLocation()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const getUserEmailFromGoogle = async (token) => {
     try {
@@ -48,7 +51,7 @@ function App() {
 
   const login = async (userData) => {
     const { email, password, token } = userData
-    const URL = "http://localhost:3001/login"
+    const URL = config.baseURL + "/login"
 
     try {
       // Comprobar si se proporciona un token en la URL
@@ -76,8 +79,9 @@ function App() {
 
       const response = await axios.post(URL, requestBody)
       const responseData = response.data
-      console.log(responseData.token)
+
       if (responseData.token) {
+        dispatch(loginSuccess(responseData.token))
         localStorage.setItem("token", responseData.token.token)
 
         // Aquí verifica la propiedad isAdmin

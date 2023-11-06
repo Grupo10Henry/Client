@@ -1,21 +1,10 @@
 // JULI
-
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-  token: "",
+  token: null,
   isAdmin: false,
-  userInfo: {
-    userID: "",
-    name: "",
-    lastName: "",
-    email: "",
-    password: "",
-    phone: "",
-    identityCard: "",
-    dob: "",
-    image: "",
-  },
+  userInfo: {},
   allUsers: [],
   userData: [],
 }
@@ -29,18 +18,12 @@ export const userSlice = createSlice({
       state.isAdmin = action.payload.isAdmin
       state.userInfo = action.payload.userInfo
     },
-    addUser: (state, action) => {
-      const { name, lastName, email, password, phone, dob, identityCard } =
-        action.payload
-      state.name = name
-      state.lastName = lastName
-      state.email = email
-      state.password = password
-      state.phone = phone
-      state.dob = dob
-      state.identityCard = identityCard
-    },
 
+    userLogout: (state, action) => {
+      state.token = null
+      state.isAdmin = false
+      state.userInfo = {}
+    },
     checkEmail: (state, action) => {
       state.email = action.payload
     },
@@ -71,7 +54,7 @@ export const userSlice = createSlice({
 })
 
 export const {
-  addUser,
+  userLogout,
   checkEmail,
   changeName,
   changeEmail,
