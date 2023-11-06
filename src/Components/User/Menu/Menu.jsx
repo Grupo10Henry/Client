@@ -4,13 +4,14 @@ import { useSelector } from "react-redux"
 import style from "./Menu.module.css"
 
 const Menu = ({
+  isAdmin,
+  userId,
   isOpen,
   links,
   isLogged,
   handleLogout,
   handlerOpenContact,
 }) => {
-  const { isAdmin } = useSelector((s) => s.user)
   const linksClass = isOpen ? style.showme : ""
 
   const renderLinks = links.map((link) => (
@@ -40,7 +41,7 @@ const Menu = ({
         <div className={style.options}>
           <NavLink
             title="Mi perfil"
-            to={`micuenta/2`}
+            to={`micuenta/${userId}`}
             className={style.optionsBtn}
           >
             Mi perfil

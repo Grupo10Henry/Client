@@ -1,6 +1,56 @@
+.eventsTableContainer {
+    width: 87.8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.eventsTableTitle {
+    font-weight: bold;
+    margin: 20px 0px 20px 0px;
+    font-size: 15px;
+}
+
+.eventsTable {
+    border-collapse: collapse;
+    margin: 0px 0px 0px 0px;
+    font-size: 14px;
+    border-radius: 8px 8px 0px 0px;
+    overflow: hidden;
+}
+
+.eventsTableHead {
+    background-color: rgb(132, 132, 133);
+    color: aliceblue;
+}
+
+.eventsTableHeadContent {
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 5px 5px 5px;
+}
+
+.eventTableRows {
+    border-bottom: 1px solid rgb(196, 196, 196);
+}
+
+.eventTableRows:nth-of-type(even) {
+    border-bottom: 1px solid rgb(196, 196, 196);
+    background-color: rgb(228, 228, 228);
+}
+
+.eventTableRowsContent {
+    margin: 0px 0px 0px 0px;
+    padding: 5px 5px 5px 5px;
+    text-align: left;
+}
+
 .etablebutton {
     background-color: rgb(69, 192, 149);
     border-radius: 5px;
     padding: 3px 10px 3px 10px;
     margin: 0px 0px 0px 0px;
+    font-size: 12px;
+    font-weight: bold;
 }

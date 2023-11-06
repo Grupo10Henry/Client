@@ -1,6 +1,7 @@
 // Luiiisssss
 import { useState } from 'react';
 import styles from './SetReview.module.css';
+import {AiOutlineStar, AiFillStar} from 'react-icons/ai';
 
 export default function SetReview () {
 
@@ -21,7 +22,9 @@ export default function SetReview () {
     ];
 
     const [rating, setRating] = useState(0);
+    const [review, setReview] = useState();
     console.log(rating);
+    console.log(review);
 
     const handleClick1 = () => {
         setRating(1)
@@ -43,26 +46,31 @@ export default function SetReview () {
         setRating(5)
     };
 
+    const handleChange = (e) => {
+        setReview(e.target.value)
+    };
+
     return (
-        <div>
-        <h1 className={styles.abc}>Califica tu experiencia</h1>
-        <div>
-        {rating > 0 ? <button onClick={handleClick1}>X</button> : <button onClick={handleClick1}>O</button> }
-        {rating > 1 ? <button onClick={handleClick2}>X</button> : <button onClick={handleClick2}>O</button> }
-        {rating > 2 ? <button onClick={handleClick3}>X</button> : <button onClick={handleClick3}>O</button> }
-        {rating > 3 ? <button onClick={handleClick4}>X</button> : <button onClick={handleClick4}>O</button> }
-        {rating > 4 ? <button onClick={handleClick5}>X</button> : <button onClick={handleClick5}>O</button> }
+        <div className={styles.setReviewContainer}>
+        <h1 className={styles.reviewTitle}>Califica tu experiencia</h1>
+        <div className={styles.ratingContainer}>
+        {rating > 0 ? <button onClick={handleClick1}><AiFillStar className={styles.onStar} /></button> : <button onClick={handleClick1}><AiOutlineStar className={styles.offStar} /></button> }
+        {rating > 1 ? <button onClick={handleClick2}><AiFillStar className={styles.onStar} /></button> : <button onClick={handleClick2}><AiOutlineStar className={styles.offStar} /></button> }
+        {rating > 2 ? <button onClick={handleClick3}><AiFillStar className={styles.onStar} /></button> : <button onClick={handleClick3}><AiOutlineStar className={styles.offStar} /></button> }
+        {rating > 3 ? <button onClick={handleClick4}><AiFillStar className={styles.onStar} /></button> : <button onClick={handleClick4}><AiOutlineStar className={styles.offStar} /></button> }
+        {rating > 4 ? <button onClick={handleClick5}><AiFillStar className={styles.onStar} /></button> : <button onClick={handleClick5}><AiOutlineStar className={styles.offStar} /></button> }
         </div>
-        <div>
-            <select>
-                <option>-- Selecciona una opción --</option>
+        <div className={styles.reviewContainer}>
+            <select className={styles.reviewOption} onChange={handleChange}>
+                <option value="">-- Selecciona una opción --</option>
             {rating > 3 ? goodReviews.map((rev) => (
                 <option>{rev}</option>
             )) : badReviews.map((rev) => (
-                <option>{rev}</option>
+                <option >{rev}</option>
             ))}
             </select>
         </div>
+        {rating && review ? <button className={styles.setReviewButton}>Enviar calificación</button>: null}
         </div>
     )
 }

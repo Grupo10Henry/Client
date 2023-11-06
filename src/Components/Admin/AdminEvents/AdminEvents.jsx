@@ -38,37 +38,41 @@ export default function AdminEvents() {
   };
 
     return (
-        <div>
-            <h1>Editar y eliminar eventos creados</h1>
-            <table>
-         <thead>
+        <div className={styles.eventsTableContainer}>
+            <h1 className={styles.eventsTableTitle}>Editar y eliminar eventos creados</h1>
+            <table className={styles.eventsTable}>
+         <thead className={styles.eventsTableHead}>
            <tr>
-             <th>Nombre</th>
-             <th>Categoría</th>
-             <th>Afoto</th>
-             <th>Fecha</th>
-             <th>Hora</th>
-             <th>Precio Mínimo</th>
-             <th>Ubicación</th>
-             <th>Imagen</th>
+             <th className={styles.eventsTableHeadContent}>Nombre</th>
+             <th className={styles.eventsTableHeadContent}>Categoría</th>
+             <th className={styles.eventsTableHeadContent}>Aforo</th>
+             <th className={styles.eventsTableHeadContent}>Fecha</th>
+             <th className={styles.eventsTableHeadContent}>Hora</th>
+             <th className={styles.eventsTableHeadContent}>Precio Mínimo</th>
+             <th className={styles.eventsTableHeadContent}>Ubicación</th>
+             <th className={styles.eventsTableHeadContent}>Evento pago</th>
+             <th className={styles.eventsTableHeadContent}>Tipo</th>
+             <th className={styles.eventsTableHeadContent}>Editar</th>
+             <th className={styles.eventsTableHeadContent}>Eliminar</th>
            </tr>
          </thead>
          <tbody>
            {allEvents?.map((event) => (
 
-               <tr key={event.eventID}>
-               <td>{event.name}</td>
-               <td>{event.category}</td>
-               <td>{event.capacity}</td>
-               <td>{event.date}</td>
-               <td>{event.time}</td>
-               <td>{event.priceMin}</td>
-               <td>{event.locationName}</td>
-               <td>{event.image}</td>
-               <td>
+               <tr className={styles.eventTableRows} key={event.eventID}>
+               <td className={styles.eventTableRowsContent}>{event.name}</td>
+               <td className={styles.eventTableRowsContent}>{event.category}</td>
+               <td className={styles.eventTableRowsContent}>{event.capacity}</td>
+               <td className={styles.eventTableRowsContent}>{event.date}</td>
+               <td className={styles.eventTableRowsContent}>{event.time}</td>
+               <td className={styles.eventTableRowsContent}>{event.priceMin}</td>
+               <td className={styles.eventTableRowsContent}>{event.locationName}</td>
+               <td className={styles.eventTableRowsContent}>{event.isDonation === false ? 'Sí' : 'No'}</td>
+               <td className={styles.eventTableRowsContent}>{event.type}</td>
+               <td className={styles.eventTableRowsContent}>
                  <button className={styles.etablebutton} onClick={() => handleBlockUser(event.eventID)}>Editar</button>
                </td>
-               <td>
+               <td className={styles.eventTableRowsContent}>
                  <button className={styles.etablebutton} onClick={() => handleDeleteEvent(event.eventID)}>Eliminar</button>
                </td>
              </tr>
