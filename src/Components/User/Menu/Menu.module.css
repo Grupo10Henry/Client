@@ -65,6 +65,11 @@
   margin-top: 20px;
 }
 
+.options p {
+  color: rgb(14, 132, 89);
+  font-size: 14px;
+}
+
 .optionsBtn {
   border: thin solid #efefef;
   color: #efefef;
