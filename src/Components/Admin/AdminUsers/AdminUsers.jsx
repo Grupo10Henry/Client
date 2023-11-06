@@ -10,6 +10,49 @@ export default function AdminUsers() {
   const dispatch = useDispatch();
   const {allUsers} = useSelector((s) => s.user);
 
+  const Users = [
+      {
+          isAdmin: false,
+          name: 'Luis',
+          lastName: 'Carrillo',
+          email: 'lccarrillo247@gmail.com',
+          phone: '1234567',
+          password: 'Luchito123',
+          identityCard: '1234567',
+          dob: '10-12-1989'
+      },
+      {
+          isAdmin: false,
+          name: 'Luis',
+          lastName: 'Carrillo',
+          email: 'lccarrillo247@gmail.com',
+          phone: '1234567',
+          password: 'Luchito123',
+          identityCard: '1234567',
+          dob: '10-12-1989'
+      },
+      {
+          isAdmin: false,
+          name: 'Luis',
+          lastName: 'Carrillo',
+          email: 'lccarrillo247@gmail.com',
+          phone: '1234567',
+          password: 'Luchito123',
+          identityCard: '1234567',
+          dob: '10-12-1989'
+      },
+      {
+          isAdmin: false,
+          name: 'Luis',
+          lastName: 'Carrillo',
+          email: 'lccarrillo247@gmail.com',
+          phone: '1234567',
+          password: 'Luchito123',
+          identityCard: '1234567',
+          dob: '10-12-1989'
+      },
+  ]
+
   const getAllUsersData = async () => {
     try {
       const { data } = await instance.get(`/user/`) // instance.get(`/user/`) || axios.get(`http://localhost:3001/user/`)
@@ -26,48 +69,42 @@ export default function AdminUsers() {
     });
   }, []);
 
-    const Users = [
-        {
-            isAdmin: false,
-            name: 'Luis',
-            lastName: 'Carrillo',
-            email: 'lccarrillo247@gmail.com',
-            phone: '1234567',
-            password: 'Luchito123',
-            identityCard: '1234567',
-            dob: '10-12-1989'
-        },
-        {
-            isAdmin: false,
-            name: 'Luis',
-            lastName: 'Carrillo',
-            email: 'lccarrillo247@gmail.com',
-            phone: '1234567',
-            password: 'Luchito123',
-            identityCard: '1234567',
-            dob: '10-12-1989'
-        },
-        {
-            isAdmin: false,
-            name: 'Luis',
-            lastName: 'Carrillo',
-            email: 'lccarrillo247@gmail.com',
-            phone: '1234567',
-            password: 'Luchito123',
-            identityCard: '1234567',
-            dob: '10-12-1989'
-        },
-        {
-            isAdmin: false,
-            name: 'Luis',
-            lastName: 'Carrillo',
-            email: 'lccarrillo247@gmail.com',
-            phone: '1234567',
-            password: 'Luchito123',
-            identityCard: '1234567',
-            dob: '10-12-1989'
-        },
-    ]
+  const handleSetAdminUser = async (userID) => {
+    try {
+      await instance.put(`user/${userID}?isAdmin=true`); // instance.put(`user/${user.userID}`, user) || axios.put(`http://localhost:3001/user/${user.userID}`, user)
+      getAllUsersData().then((data) => {
+        dispatch(getAllUsers(data));
+      });
+      alert('Se ha asignado correctamente al usuario como administrador');
+  } catch (error) {
+      alert(error.response.data.error)
+  }
+};
+
+  const handleRemoveAdminUser = async (userID) => {
+    try {
+      await instance.put(`user/${userID}?isAdmin=false`); // instance.put(`user/${user.userID}`, user) || axios.put(`http://localhost:3001/user/${user.userID}`, user)
+      getAllUsersData().then((data) => {
+        dispatch(getAllUsers(data));
+      });
+      alert('Se ha reomvido correctamente el acceso de administrador al usuario');
+  } catch (error) {
+      alert(error.response.data.error)
+  }
+  };
+
+  const handleBlockUser = async (userID) => {
+    try {
+      await instance.delete(`user/${userID}`); // instance.put(`user/${user.userID}`, user) || axios.put(`http://localhost:3001/user/${user.userID}`, user)
+      getAllUsersData().then((data) => {
+        dispatch(getAllUsers(data));
+      });
+      alert('Se ha bloqueado al usuario correctamente');
+  } catch (error) {
+      alert(error.response.data.error)
+  }
+  };
+
 
     return (
         <div className={styles.usersTableContainer}>
@@ -81,20 +118,26 @@ export default function AdminUsers() {
              <th className={styles.usersTableHeadContent}>Teléfono</th>
              <th className={styles.usersTableHeadContent}>Documento</th>
              <th className={styles.usersTableHeadContent}>Fecha de nacimiento</th>
-             <th className={styles.usersTableHeadContent}>Acción</th>
+             <th className={styles.usersTableHeadContent}>Admin</th>
+             <th className={styles.usersTableHeadContent}>Acceso</th>
            </tr>
          </thead>
          <tbody>
-           {allUsers.map((user, index) => (
-               <tr className={styles.userTableRows} key={index}>
+           {allUsers.map((user) => (
+               <tr className={styles.userTableRows} key={user.userID}>
                <td className={styles.userTableRowsContent}>{user.name}</td>
                <td className={styles.userTableRowsContent}>{user.lastName}</td>
                <td className={styles.userTableRowsContent}>{user.email}</td>
                <td className={styles.userTableRowsContent}>{user.phone}</td>
                <td className={styles.userTableRowsContent}>{user.identityCard}</td>
                <td className={styles.userTableRowsContent}>{user.dob}</td>
+               {user.isAdmin === false ? (<td className={styles.userTableRowsContent}>
+                 <button className={styles.utablebutton} onClick={() => handleSetAdminUser(user.userID)}>Hacer Admin</button>
+               </td>) : (<td className={styles.userTableRowsContent}>
+                 <button className={styles.utablebuttonN} onClick={() => handleRemoveAdminUser(user.userID)}>Quitar Admin</button>
+               </td>)}
                <td className={styles.userTableRowsContent}>
-                 <button className={styles.utablebutton} onClick={() => handleBlockUser(index)}>Bloquear</button>
+                 <button className={styles.utablebutton} onClick={() => handleBlockUser(user.userID)}>Bloquear</button>
                </td>
              </tr>
            ))}

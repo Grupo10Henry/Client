@@ -26,8 +26,9 @@
 }
 
 .usersTableHeadContent {
+    text-align: center;
     margin: 0px 0px 0px 0px;
-    padding: 5px 0px 5px 0px;
+    padding: 5px 5px 5px 5px;
 }
 
 .userTableRows {
@@ -47,6 +48,15 @@
 
 .utablebutton {
     background-color: rgb(69, 192, 149);
+    border-radius: 5px;
+    padding: 3px 10px 3px 10px;
+    margin: 0px 0px 0px 0px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.utablebuttonN {
+    background-color: rgb(255, 107, 107);
     border-radius: 5px;
     padding: 3px 10px 3px 10px;
     margin: 0px 0px 0px 0px;
