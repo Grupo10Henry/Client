@@ -1,22 +1,21 @@
 .header {
-  margin-top: var(--h-nav);
-  --bg: #c9bada;
-  --bg: #282828;
-}
-
-.nav {
-  padding: 0 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: var(--h-nav);
-  background-color: var(--bg);
-
   position: fixed;
   z-index: 2000;
   top: 0;
   left: 0;
   width: 100%;
+  background-color: var(--negro);
+  height: var(--h-nav);
+}
+
+.nav {
+  padding: 0 15px;
+  display: flex;
+  width: min(100%, var(--max-width));
+  margin-inline: auto;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
 }
 
 .toastConfirm b {
@@ -32,7 +31,7 @@
 }
 
 .toastConfirmBtns button {
-  background-color: #efefef;
+  background-color: var(--white);
   padding: 10px 20px;
   border-radius: 3px;
   color: var(--negro);
@@ -40,13 +39,13 @@
 
 .toastConfirmBtns button:nth-of-type(2) {
   background-color: var(--danger);
-  color: #efefef;
+  color: var(--white);
 }
 .iconToggle {
   background-color: transparent;
   border: none;
   outline: none;
-  color: #efefef;
+  color: var(--white);
   font-size: 25px;
 }
 
