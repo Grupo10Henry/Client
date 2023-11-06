@@ -71,7 +71,7 @@ export default function AdminUsers() {
 
   const handleSetAdminUser = async (userID) => {
     try {
-      await instance.put(`user/${userID}?isAdmin=true`); // instance.put(`user/${user.userID}`, user) || axios.put(`http://localhost:3001/user/${user.userID}`, user)
+      await instance.put(`user/isAdmin/${userID}?isAdmin=true`); // instance.put(`user/isAdmin/${userID}?isAdmin=true`) || axios.put(`http://localhost:3001/user/isAdmin/${userID}?isAdmin=true`)
       getAllUsersData().then((data) => {
         dispatch(getAllUsers(data));
       });
@@ -83,11 +83,11 @@ export default function AdminUsers() {
 
   const handleRemoveAdminUser = async (userID) => {
     try {
-      await instance.put(`user/${userID}?isAdmin=false`); // instance.put(`user/${user.userID}`, user) || axios.put(`http://localhost:3001/user/${user.userID}`, user)
+      await instance.put(`user/isAdmin/${userID}?isAdmin=false`); // instance.put(`user/isAdmin/${userID}?isAdmin=false`) || axios.put(`http://localhost:3001/user/isAdmin/${userID}?isAdmin=false`)
       getAllUsersData().then((data) => {
         dispatch(getAllUsers(data));
       });
-      alert('Se ha reomvido correctamente el acceso de administrador al usuario');
+      alert('Se ha removido correctamente el acceso de administrador al usuario');
   } catch (error) {
       alert(error.response.data.error)
   }
@@ -104,6 +104,18 @@ export default function AdminUsers() {
       alert(error.response.data.error)
   }
   };
+
+  const handleUnblockUser = async (userID) => {
+    try {
+      await instance.delete(`/restore/user/${userID}`); // instance.put(`user/${user.userID}`, user) || axios.put(`http://localhost:3001/user/${user.userID}`, user)
+      getAllUsersData().then((data) => {
+        dispatch(getAllUsers(data));
+      });
+      alert('Se ha desbloqueado al usuario correctamente');
+  } catch (error) {
+      alert(error.response.data.error)
+  }
+  };  
 
 
     return (
@@ -136,9 +148,11 @@ export default function AdminUsers() {
                </td>) : (<td className={styles.userTableRowsContent}>
                  <button className={styles.utablebuttonN} onClick={() => handleRemoveAdminUser(user.userID)}>Quitar Admin</button>
                </td>)}
-               <td className={styles.userTableRowsContent}>
-                 <button className={styles.utablebutton} onClick={() => handleBlockUser(user.userID)}>Bloquear</button>
-               </td>
+               {user.deletedAt === null ? (<td className={styles.userTableRowsContent}>
+                 <button className={styles.utablebuttonN} onClick={() => handleBlockUser(user.userID)}>Bloquear</button>
+               </td>) : (<td className={styles.userTableRowsContent}>
+                 <button className={styles.utablebutton} onClick={() => handleUnblockUser(user.userID)}>Bloquear</button>
+               </td>)}
              </tr>
            ))}
          </tbody>

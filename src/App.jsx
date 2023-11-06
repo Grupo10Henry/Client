@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux"
 import NotFound from "./Components/User/NotFound/NotFound"
 import { config } from "./axios/config"
 import { loginSuccess } from "./redux/userSlice"
+import Ticket from "./Components/User/MyAccount/Ticket/Ticket"
 
 function App() {
   const location = useLocation()
@@ -82,11 +83,11 @@ function App() {
 
       if (responseData.token) {
         dispatch(loginSuccess(responseData.token))
-        // localStorage.setItem("token", responseData.token.token)
+        localStorage.setItem("token", responseData.token.token)
 
         // Aquí verifica la propiedad isAdmin
         const isAdmin = responseData.token.isAdmin
-        // localStorage.setItem("isAdmin", isAdmin)
+        localStorage.setItem("isAdmin", isAdmin)
 
         console.log("isAdmin:", isAdmin)
 
@@ -133,8 +134,10 @@ function App() {
         <Route path="/reserva/:id" element={<Booking />} />
         <Route path="/carrito" element={<Cart />} />
         <Route path="/micuenta/:id" element={<MyAccount />} />
+        <Route path="/ticket/:id" element={<Ticket />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<AdminHome />} />
+        <Route path="/evento/:id" element={<AdminHome />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
         <Route path="/reserva/seats" element={<BookingSeats />} />
         <Route path="*" element={<NotFound />} />
