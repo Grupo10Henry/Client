@@ -1,4 +1,10 @@
 import { NavLink } from "react-router-dom"
+import {
+  PiSignOutBold,
+  PiUserBold,
+  PiSignInBold,
+  PiUserPlusBold,
+} from "react-icons/pi"
 
 import style from "./Menu.module.css"
 
@@ -38,24 +44,30 @@ const Menu = ({
       </div>
       {token ? (
         <div className={style.options}>
-          <p>{userInfo?.name} </p>
+          {/* <p>{userInfo?.name} </p> */}
           <NavLink
             title="Mi perfil"
             to={`micuenta/${userInfo?.userID}`}
             className={style.optionsBtn}
           >
-            Mi perfil
+            <PiUserBold />
           </NavLink>
           <button onClick={handleLogout} className={style.optionsBtn}>
-            Salir
+            <PiSignOutBold />
           </button>
         </div>
       ) : (
         <div className={style.options}>
-          <NavLink to="iniciarsesion" className={style.optionsBtn}>
-            Iniciar sesión
+          <NavLink
+            to="iniciarsesion"
+            className={`${style.optionsBtn} ${style.optionsBtnSession}`}
+          >
+            Iniciar Sesión
           </NavLink>
-          <NavLink to="registro" className={style.optionsBtn}>
+          <NavLink
+            to="registro"
+            className={`${style.optionsBtn} ${style.optionsBtnSession}`}
+          >
             Registrarse
           </NavLink>
         </div>
