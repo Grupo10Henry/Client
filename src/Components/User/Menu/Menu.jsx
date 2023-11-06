@@ -1,15 +1,13 @@
 import { NavLink } from "react-router-dom"
-import { useSelector } from "react-redux"
 
 import style from "./Menu.module.css"
 
 const Menu = ({
   isAdmin,
-  userId,
-  name,
+  userInfo,
+  token,
   isOpen,
   links,
-  isLogged,
   handleLogout,
   handlerOpenContact,
 }) => {
@@ -38,12 +36,12 @@ const Menu = ({
           </NavLink>
         )}
       </div>
-      {isLogged ? (
+      {token ? (
         <div className={style.options}>
-          <p>{name} </p>
+          <p>{userInfo?.name} </p>
           <NavLink
             title="Mi perfil"
-            to={`micuenta/${userId}`}
+            to={`micuenta/${userInfo?.userID}`}
             className={style.optionsBtn}
           >
             Mi perfil
