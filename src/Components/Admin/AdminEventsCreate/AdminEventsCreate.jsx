@@ -415,7 +415,7 @@ export default function AdminEventsCreate() {
 
                 <form className={styles.sectionForm} onSubmit={handleSubmitCreateSection}>
                     <p className={styles.sectionFormTitle}>Creador de secciones</p>
-                    <p className={styles.formLabel}>Para crear una nueva sección, completa los campos y haz clic en "Añadir sección"</p>
+                    <p className={styles.sectionFormSubtitle}>Para crear una nueva sección, completa los campos y haz clic en "Añadir sección"</p>
                     <div className={styles.formFields}>
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>

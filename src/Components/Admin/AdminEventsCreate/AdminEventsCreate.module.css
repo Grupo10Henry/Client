@@ -13,7 +13,7 @@
     font-size: 14px;
     font-weight: bold;
     padding: 0px 0px 0px 0px;
-    margin: 0px 0px 0px 0px;
+    margin: 15px 0px 15px 0px;
 }
 
 .formFields {
@@ -74,6 +74,12 @@
     font-weight: bold;
     padding: 0px 0px 0px 0px;
     margin: 0px 0px 0px 0px;
+}
+
+.sectionFormSubtitle {
+    font-size: 13px;
+    padding: 0px 0px 0px 0px;
+    margin: 10px 0px 10px 0px;
 }
 
 .form .formButton {
