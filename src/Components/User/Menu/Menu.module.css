@@ -1,4 +1,5 @@
 .menu {
+  --active-color: #efefef;
   width: 100%;
   display: grid;
   grid-auto-flow: row;
@@ -10,7 +11,7 @@
   gap: 20px;
   transform: translateX(100vw);
   transition: transform ease 200ms;
-  background-color: var(--bg);
+  background-color: var(--negro);
 }
 
 .menu.showme {
@@ -23,13 +24,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
 }
 
 .links a {
   text-decoration: none;
   cursor: pointer;
-  color: #efefef;
+  color: var(--white);
   font-size: clamp(14px, 2vw, 16px);
 }
 
@@ -38,60 +39,92 @@
   border: none;
   outline: none;
   cursor: pointer;
-  color: #efefef;
+  color: var(--white);
   font-size: 14px;
 }
 
 .links a.active {
   color: var(--turquesa);
+  color: var(--active-color);
 }
 
 .icon {
   font-size: 20px;
   cursor: pointer;
-  color: #efefef;
+  color: var(--white);
 }
 
 .links .profile {
   font-size: 25px;
 }
 
+.links a,
+.links button {
+  user-select: none;
+  width: max-content;
+  font-size: 14px;
+  text-align: center;
+  position: relative;
+}
+
+.links a::before,
+.links button::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  bottom: -10px;
+  width: 0%;
+  height: 3px;
+  background-color: var(--turquesa);
+  background-color: var(--active-color);
+  transition: width ease 400ms;
+  border-radius: 3px;
+}
+
+.links a:hover::before,
+.links button:hover::before {
+  width: 100%;
+  transition: width ease 400ms;
+}
+
+.links a.active::before {
+  width: 100%;
+  transition: width ease 400ms;
+}
+
 .options {
   display: flex;
-  gap: 30px;
+  gap: 20px;
   align-items: center;
   justify-content: center;
   height: 100%;
   margin-top: 20px;
 }
 
-.options p {
-  color: rgb(14, 132, 89);
-  font-size: 14px;
-}
-
 .optionsBtn {
-  border: thin solid #efefef;
-  color: #efefef;
-  height: 35px;
-  padding: 0 20px;
-  text-align: center;
-  display: flex;
-  align-items: center;
+  --size: 30px;
+  background-color: var(--white);
+  color: var(--negro);
   border-radius: 3px;
-  font-size: 12px;
+  padding: 8px;
+  font-size: 20px;
   transition: transform ease 200ms;
 }
 
-.optionsBtn:nth-child(2) {
-  background-color: #efefef;
-  color: var(--negro);
-  border: none;
+.optionsBtnSession {
+  padding: 10px 20px;
+  font-size: 12px;
+}
+
+.optionsBtnSession:nth-of-type(1) {
+  background-color: transparent;
+  border: 1px solid var(--white);
+  color: var(--white);
 }
 
 .optionsBtn:hover {
   transition: transform ease 200ms;
-  transform: scale(0.95);
+  transform: scale(1.1);
 }
 
 @media (width > 800px) {
@@ -115,56 +148,13 @@
     padding: 0 50px;
   }
 
-  .links a,
-  .links button {
-    user-select: none;
-    width: max-content;
-    font-size: 14px;
-    text-align: center;
-    position: relative;
-  }
-
-  .links a:hover,
-  .links button:hover {
-    transition: color ease 200ms;
-    color: var(--turquesa);
-  }
-
-  .links a::before,
-  .links button::before {
-    content: "";
-    position: absolute;
-    left: 0px;
-    bottom: -10px;
-    width: 0%;
-    height: 3px;
-    background-color: var(--turquesa);
-    transition: width ease 400ms;
-    border-radius: 3px;
-  }
-
-  .links a:hover::before,
-  .links button:hover::before {
-    width: 100%;
-    transition: width ease 400ms;
-  }
-
-  .links a.active::before {
-    width: 100%;
-    transition: width ease 400ms;
-  }
-
   .options {
     width: 100%;
-    gap: 20px;
+    gap: 15px;
     margin-top: 0;
     margin-left: auto;
   }
 
-  .options button:hover,
-  .options a:hover {
-    color: none;
-  }
   .options button:hover::before,
   .options a:hover::before {
     width: unset;
