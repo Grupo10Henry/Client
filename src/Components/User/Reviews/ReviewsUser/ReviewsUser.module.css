@@ -1,71 +1,42 @@
-.reviewUserEvent{
-    color:rgb(225, 16, 204);
-    font-size: 14px;
-    font-weight: bold;
+.reviewSwiper {
+  margin: 80px auto;
+  width: 95%;
+  height: 350px;
+  user-select: none;
 }
 
-.averageRating{
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    margin-left: 6%;
-    margin-top: 20px;
-    gap:10px;
-    font-size: 16px;
-    color:rgb(115, 115, 115);
+.reviewSwiperSlide {
+  background-color: #fff;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  gap: 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
-.averageRating p {
-    margin: 0;
+.reviewSwiperSlide h3 {
+  color: var(--magenta);
+  font-size: clamp(18px, 2vw, 20px);
+  font-weight: bold;
 }
 
-.reviewsUser{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.reviewUserContainer {
-    display: flex;
-    flex-wrap: wrap;
-    width: 90%;
-}
-.reviewUserContainer h3{
-    color: rgb(66, 124, 124);
-    font-size: 14px;
-}
-.reviewUser{
-    flex: 0 0 calc(33.33% - 20px);
-    margin: 10px;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    background-color: rgb(255, 255, 255);
-    border-radius: 5px ;
-    box-shadow: 5px 5px 5px rgb(181, 180, 180);
-    margin-bottom: 50px;
-}
-.reviewUser p{
-    color:rgb(115, 115, 115);
-    font-size: 14px;
-    text-align: left;
+.reviewEvent p:first-child {
+  color: var(--magenta);
+  margin-bottom: 10px;
 }
 
-.reviewUser h3 span {
-    font-weight: bold; 
-    font-size: 15px;
+.reviewEvent p:last-child {
+  max-width: 300px;
+  margin-inline: auto;
+  font-size: 14px;
+  text-align: center;
 }
+
 .reviewStars {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    color: rgb(14, 162, 162);
+  display: flex;
+  justify-content: center;
+  color: rgb(14, 162, 162);
 }
-
-.btnReviewsUser {
-    margin-top: 20px;
-    color: rgb(13, 132, 132);
-    margin-bottom: 50px;
-}
-
-

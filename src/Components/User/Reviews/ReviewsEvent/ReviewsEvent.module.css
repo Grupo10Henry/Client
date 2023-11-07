@@ -23,11 +23,7 @@
   flex-direction: column;
   align-items: center;
 }
-.infoEventContainer p {
-  margin-top: 15px;
-  color: rgb(225, 16, 204);
-  font-weight: bold;
-}
+
 .reviewEventStars {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -39,4 +35,17 @@
   height: 100%;
   object-fit: cover;
   filter: brightness(0.4);
+}
+
+.nameEvent {
+  color: rgb(225, 16, 204);
+  font-weight: bold;
+  font-size: clamp(18px, 2vw, 20px);
+}
+
+.dateEvent {
+  color: rgb(115, 115, 115);
+  font-size: 14px;
+  max-width: 200px;
+  margin: 10px 0;
 }
