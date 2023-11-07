@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import style from "./ReviewsEvent.module.css"
 import { IoStar, IoStarHalf } from "react-icons/io5"
 import { instance } from "../../../../axios/config"
+import changeOrderDate from "../../../../utils/orderDate"
 
 // const reviews = [
 //     {
@@ -76,7 +77,11 @@ const ReviewsEvent = () => {
             />
           </div>
           <div className={style.infoEventContainer}>
-            <p>{review.name}</p>
+            <h4 className={style.nameEvent}>{review.name}</h4>
+            <p className={style.dateEvent}>
+              Realizado el: {changeOrderDate(review.date)} a las: {review.time}
+              hs.
+            </p>
             <div className={style.reviewEventStars}>{renderStars(5)}</div>
           </div>
         </div>
