@@ -5,6 +5,7 @@ import { FaEnvelope} from "react-icons/fa6"; //EMAIL
 import { IoCall, IoLocationSharp} from "react-icons/io5"; //TEL UBI
 import { BsLinkedin, BsFacebook, BsWhatsapp, BsInstagram} from "react-icons/bs"; //LINKEDIN FACE
 import { IoLogoWhatsapp } from "react-icons/io"; //WPP
+import { AiFillClockCircle } from "react-icons/ai"
 //GET - Trae la info del back 
 import logo1 from "../../../assets/logo_tres__blanco_720-1024x689.png"
 import { useDispatch, useSelector } from "react-redux";
@@ -57,7 +58,7 @@ const Footer = () => {
                     <p><IoCall/> {contactData?.[0]?.phone}</p>
                     <p><IoLogoWhatsapp/> {contactData?.[0]?.dataPolicy}</p>
                     <p><FaEnvelope/> {contactData?.[0]?.email}</p>
-                    <p><FaEnvelope/> {contactData?.[0]?.businessHours}</p>
+                    <p><AiFillClockCircle/> {contactData?.[0]?.businessHours}</p>
                     <div className={style.footerRedes}>
                         <p><BsFacebook/></p>
                         <p><BsWhatsapp/></p> 
