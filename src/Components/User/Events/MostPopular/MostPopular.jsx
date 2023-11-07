@@ -23,7 +23,7 @@ import "./MostPupular.module.css"
 const MostPopular = () => {
   const noLink = "/"
 
-  const { nextEvents } = useSelector((s) => s.events);
+  const { nextEvents } = useSelector((s) => s.events)
 
   if (!nextEvents) {
     return <p>Cargando eventos...</p>
@@ -68,7 +68,7 @@ const MostPopular = () => {
         }}
         className="swiper_container"
       >
-        <SwiperSlide>
+        <SwiperSlide className={style.slide}>
           <Link
             to={orden[0]?.eventID ? `/detalle/${orden[0].eventID}` : noLink}
           >
