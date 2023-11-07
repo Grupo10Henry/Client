@@ -10,6 +10,8 @@ import eventIDReducer from "./eventIDSlice"
 import counterReducer from "./counterSlice"
 import eventsCountReducer from "./eventsCountSlice"
 import bookSeatReducer from "./bookSeatsSlice"
+import footerReducer from "./footerSlice"
+import faqReducer from "./faqSlice"
 
 const persistConfig = {
   key: "root", // key para almacenar solo el estado del usuario
@@ -26,6 +28,8 @@ const rootReducer = combineReducers({
   counter: counterReducer,
   eventsCount: eventsCountReducer,
   bookSeat: bookSeatReducer,
+  footer: footerReducer,
+  faq: faqReducer
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

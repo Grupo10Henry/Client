@@ -5,23 +5,32 @@ import style from "./AdminFooter.module.css"
 
 const AdminFooter = () => {
 
-    const [form, setForm] = useState({
-        address: '',
-        phone: '',
+    const [editMode, setEditMode] = useState(false);
+
+    const [footerInfo, setFooterInfo] = useState({
         email: '',
+        phone: '',
+        adress: '',
         businessHours: '',
     })
 
+    console.log(footerInfo);
+
     const editHandler = (event) => {
-        setForm({
-            ...form,
+        setFooterInfo({
+            ...footerInfo,
             [event.target.name]: event.target.value,
         });
     }
 
     const submitHandler = (event) => {
         event.preventDefault()
-        //dispatch(postFooter(form))
+
+    // try {
+    //     await 
+    // } catch (error) {
+        
+    // }
     }
 
     return(
@@ -35,7 +44,7 @@ const AdminFooter = () => {
                     <input
                     type="text"
                     name="address"
-                    value={form.address}
+                    value={footerInfo.address}
                     onChange={editHandler}
                     />
                 </div>
@@ -44,16 +53,16 @@ const AdminFooter = () => {
                     <input
                     type="text"
                     name="phone"
-                    value={form.phone}
+                    value={footerInfo.phone}
                     onChange={editHandler}
                     />
                 </div>
                 <div>
                     <label>Email</label>
                     <input
-                    type="text"
+                    type="email"
                     name="email"
-                    value={form.email}
+                    value={footerInfo.email}
                     onChange={editHandler}
                     />
                 </div>
@@ -62,12 +71,12 @@ const AdminFooter = () => {
                     <input
                     type="text"
                     name="businessHours"
-                    value={form.businessHours}
+                    value={footerInfo.businessHours}
                     onChange={editHandler}
                     />
                 </div>
                 </div>
-                <div className={style.infoRedesAdmin}>
+                {/* <div className={style.infoRedesAdmin}>
                 <h2>Redes sociales</h2>
                 <label>Link instagram</label>
                 <input/>
@@ -77,9 +86,10 @@ const AdminFooter = () => {
                 <input/>
                 <label>Link whatApp</label>
                 <input/>
-                </div>
+                </div> */}
 
                 <button type="submit">Guardar</button>
+                <button>Cancelar</button>
             </form>
         </div>
     )
