@@ -1,7 +1,12 @@
+/* .container {
+  padding: 0 20px;
+} */
+
 .buttonInfo {
-   background-color: #a2dcbb;
+  background-color: #a2dcbb;
 }
 
 .image {
-   height: 400px;
+  width: 100%;
+  height: 400px;
 }
