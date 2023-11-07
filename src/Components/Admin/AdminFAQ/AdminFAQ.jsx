@@ -1,8 +1,33 @@
 import React, { useState } from "react";
-import style from "./AdminFAQ.module.css";
 import { TiDeleteOutline } from "react-icons/ti";
+import { useDispatch, useSelector } from "react-redux";
+import { instance } from "../../../axios/config";
+import { useEffect } from "react";
+import { getAllFaqs } from "../../../redux/faqSlice";
+import style from "./AdminFAQ.module.css";
 
 const AdminFAQ = () => {
+
+  const dispatch = useDispatch();
+  const {allFaqs} = useSelector((s) => s.faq)
+
+  const getFaqs = async () => {
+      try {
+        const { data } = await instance.get(`/faq/`) // instance.get(`/user/${params.id}`) || axios.get(`http://localhost:3001/user/${params.id}`)
+      //   console.log(data)
+        return data
+      } catch (error) {
+        console.log(error)
+      }
+  };
+
+      useEffect(() => {
+        getFaqs().then((data) => {
+          dispatch(getAllFaqs(data));
+        });
+      }, []
+  );
+
   const [formData, setFormData] = useState({
     question: "",
     answer: "",
@@ -18,25 +43,24 @@ const AdminFAQ = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Agregar la pregunta y respuesta al array
-    setFaqList([...faqList, formData]);
-    // Limpiar el formulario después de guardar
-    setFormData({ question: "", answer: "" });
+  const handleCreateFAQ = () => {
+
   };
 
-  const handleDelete = (index) => {
-    // Eliminar la pregunta y respuesta correspondiente
-    const updatedFaqList = [...faqList];
-    updatedFaqList.splice(index, 1);
-    setFaqList(updatedFaqList);
+  const handleDeleteFAQ = (index) => {
+
   };
+
+  const handleEditFAQ = (index) => {
+
+  };
+
+  
 
   return (
     <div className={style.AdminFAQ}>
       <h1>CREAR PREGUNTAS Y RESPUESTAS</h1>
-      <form onSubmit={handleSubmit}>
+      <div>
         <label>
           Pregunta:
           <input
@@ -55,7 +79,7 @@ const AdminFAQ = () => {
           ></textarea>
         </label>
         <button type="submit">Guardar</button>
-      </form>
+      </div>
 
       {/* Mostrar preguntas y respuestas guardadas */}
       <div className={style.FaqList}>
