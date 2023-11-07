@@ -1,24 +1,17 @@
 .contact {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  inset: 0;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
-  width: 50%;
-  position: fixed;
-  padding: 10px;
-  left: 50%;
-  top: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  transition: opacity ease 200ms;
+  backdrop-filter: blur(5px);
   opacity: 0;
   visibility: hidden;
-  transition: opacity ease 200ms;
-  transform: translate(-50%, -50%);
-  background-color: var(--negro);
-  z-index: 2000;
-  color: #efefef;
-  height: 100vh;
-  overflow-y: scroll;
-  background-color: rgb(253, 251, 251);
 }
 
 .contactShow {
@@ -27,47 +20,84 @@
   transition: opacity ease 200ms;
 }
 
+.form {
+  width: 100%;
+  min-width: 300px;
+  height: 100vh;
+  overflow-y: auto;
+  color: var(--white);
+  background-color: var(--negro);
+  padding: 20px;
+  border-radius: 3px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 20px;
+}
+
 .title {
-  font-size: 25px;
-  margin-bottom: 30px;
+  text-align: center;
+  font-size: clamp(25px, 3vw, 30px);
+  font-weight: bold;
+  margin-top: 40px;
+  margin-bottom: 20px;
   color: var(--turquesa);
 }
 
-.contact form {
-  width: 100%;
-  height: 100%;
-  position: center;
+.subtitle {
+  font-size: clamp(12px, 2vw, 16px);
+  line-height: 1.7;
   text-align: center;
-  margin-top: 43px;
+  margin-bottom: 20px;
 }
+
+.inputs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
 .inputField {
-  margin: 10px 0;
-  color: black;
+  flex: 1 0 200px;
 }
 
-.contact form input {
+.inputField input {
   width: 100%;
-  margin: 10px 0;
+  border-radius: 3px;
 }
 
-.contact .btn {
+.inputField label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.btnWrapper {
+  display: flex;
+}
+
+.btnWrapper .btn {
+  margin-top: 30px;
+  margin-left: auto;
   background-color: var(--turquesa);
-  margin-top: 15px;
-  padding: 8px;
-  border-radius: 15px;
-  font-size: 16px;
-  width: 20%;
-}
-.contact .btn:hover{
-  box-shadow: 5px 5px 5px rgb(159, 157, 157);
-}
-.close {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  color:rgb(116, 115, 115);
+  height: 35px;
+  padding: 0 20px;
+  border-radius: 3px;
 }
 
-.contact label{
-  color:rgb(116, 115, 115);
+@media (width > 600px) {
+  .form {
+    width: 60%;
+    height: 85vh;
+    padding: 30px;
+  }
+
+  .title {
+    margin-top: 0;
+  }
 }
