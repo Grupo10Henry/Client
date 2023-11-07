@@ -1,73 +1,154 @@
 //Guada
-import { useState } from "react";
-import style from "./AdminFooter.module.css"
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getContactData } from "../../../redux/footerSlice";
+import { instance } from "../../../axios/config";
+import style from "./AdminFooter.module.css";
 //POST - EDIT - Envia al back la nueva información
 
 const AdminFooter = () => {
 
-    const [form, setForm] = useState({
-        address: '',
-        phone: '',
+    const dispatch = useDispatch();
+    const {contactData} = useSelector((s) => s.footer)
+
+    const getFooterInfo = async () => {
+        try {
+          const { data } = await instance.get(`/companyInfo/`) // instance.get(`/companyInfo/`) || axios.get(`http://localhost:3001//companyInfo/`)
+        //   console.log(data)
+          return data
+        } catch (error) {
+          console.log(error)
+        }
+    };
+
+        useEffect(() => {
+          getFooterInfo().then((data) => {
+            dispatch(getContactData(data));
+            setFooterInfo(data);
+          });
+        }, []
+    );
+
+    const [editMode, setEditMode] = useState(false);
+
+    const [footerInfo, setFooterInfo] = useState({
         email: '',
+        phone: '',
+        adress: '',
         businessHours: '',
-    })
+        dataPolicy: "",
+        companyInfoID: "",
+    });
+
+    const [footerCopy, setFooterCopy] = useState({
+        email: '',
+        phone: '',
+        adress: '',
+        businessHours: '',
+        dataPolicy: "",
+        companyInfoID: "",
+    });
+
+    console.log(footerInfo);
+    console.log(footerCopy);
 
     const editHandler = (event) => {
-        setForm({
-            ...form,
+        setFooterInfo({
+            ...footerInfo,
             [event.target.name]: event.target.value,
         });
     }
 
-    const submitHandler = (event) => {
-        event.preventDefault()
-        //dispatch(postFooter(form))
+    const HandleEditMode = () => {
+        setEditMode(true);
+        setFooterCopy(footerInfo);
     }
+
+    const handleCancelChanges = async () => {
+            setEditMode(false);
+            setFooterInfo(footerCopy);
+            setFooterCopy({
+                email: '',
+                phone: '',
+                adress: '',
+                businessHours: '',
+                dataPolicy: "",
+                companyInfoID: "",
+            });
+        };
+
+        const handleSaveChanges = async () => {
+            try {
+                await instance.put(`companyInfo/${footerInfo[0].companyInfoID}`, footerInfo); // instance.put(`companyInfo/${footerInfo[0].companyInfoID}`, footerInfo) || axios.put(`http://localhost:3001/`companyInfo/${footerInfo[0].companyInfoID}`, footerInfo)
+                getFooterInfo().then((data) => {
+                    dispatch(getContactData(data));
+                    setFooterInfo(data);
+                  });
+                alert('Se ha actualizado correctamente la información');
+                setEditMode(false);
+            } catch (error) {
+                alert(error.response.data.error)
+            }
+        };
 
     return(
         <div className={style.AdminFooterContainer}>
-            
-            <form onSubmit={submitHandler}>
+            {editMode ? (
+            <div>
                 <div className={style.InfoContactoAdmin}>
                 <h2>Información de contacto</h2>
                 <div>
                     <label>Dirección</label>
                     <input
+                    placeholder={contactData?.[0]?.adress}
                     type="text"
-                    name="address"
-                    value={form.address}
+                    name="adress"
+                    value={footerInfo.adress}
                     onChange={editHandler}
                     />
                 </div>
                 <div>
                     <label>Teléfono</label>
                     <input
+                    placeholder={contactData?.[0]?.phone}
                     type="text"
                     name="phone"
-                    value={form.phone}
+                    value={footerInfo.phone}
+                    onChange={editHandler}
+                    />
+                </div>
+                <div>
+                    <label>WhatsApp</label>
+                    <input
+                    placeholder={contactData?.[0]?.dataPolicy}
+                    type="text"
+                    name="dataPolicy"
+                    value={footerInfo.dataPolicy}
                     onChange={editHandler}
                     />
                 </div>
                 <div>
                     <label>Email</label>
                     <input
-                    type="text"
+                    placeholder={contactData?.[0]?.email}
+                    type="email"
                     name="email"
-                    value={form.email}
+                    value={footerInfo.email}
                     onChange={editHandler}
                     />
                 </div>
                 <div>
                     <label>Horario de atención</label>
                     <input
+                    placeholder={contactData?.[0]?.businessHours}
                     type="text"
                     name="businessHours"
-                    value={form.businessHours}
+                    value={footerInfo.businessHours}
                     onChange={editHandler}
                     />
                 </div>
                 </div>
-                <div className={style.infoRedesAdmin}>
+                {/* <div className={style.infoRedesAdmin}>
                 <h2>Redes sociales</h2>
                 <label>Link instagram</label>
                 <input/>
@@ -77,10 +158,48 @@ const AdminFooter = () => {
                 <input/>
                 <label>Link whatApp</label>
                 <input/>
-                </div>
+                </div> */}
 
-                <button type="submit">Guardar</button>
-            </form>
+                <button onClick={handleSaveChanges}>Guardar</button>
+                <button onClick={handleCancelChanges}>Cancelar</button>
+            </div>) : (
+                            <div>
+                            <div className={style.InfoContactoAdmin}>
+                            <h2>Información de contacto</h2>
+                            <div>
+                                <label>Dirección</label>
+                                <p>
+                                {contactData?.[0]?.adress}
+                                </p>
+                            </div>
+                            <div>
+                                <label>Teléfono</label>
+                                <p>
+                                {contactData?.[0]?.phone}
+                                </p>
+                            </div>
+                            <div>
+                                <label>WhatsApp</label>
+                                <p>
+                                {contactData?.[0]?.dataPolicy}
+                                </p>
+                            </div>
+                            <div>
+                                <label>Email</label>
+                                <p>
+                                {contactData?.[0]?.email}
+                                </p>
+                            </div>
+                            <div>
+                                <label>Horario de atención</label>
+                                <p>
+                                {contactData?.[0]?.businessHours}
+                                </p>
+                            </div>
+                            </div>
+                            <button onClick={HandleEditMode}>Editar</button>
+                        </div>
+            )}
         </div>
     )
 }

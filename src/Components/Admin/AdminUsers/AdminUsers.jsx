@@ -107,7 +107,7 @@ export default function AdminUsers() {
 
   const handleUnblockUser = async (userID) => {
     try {
-      await instance.delete(`/restore/user/${userID}`); // instance.put(`user/${user.userID}`, user) || axios.put(`http://localhost:3001/user/${user.userID}`, user)
+      await instance.delete(`/user/restore/${userID}`); // instance.put(`user/${user.userID}`, user) || axios.put(`http://localhost:3001/user/${user.userID}`, user)
       getAllUsersData().then((data) => {
         dispatch(getAllUsers(data));
       });
@@ -120,7 +120,7 @@ export default function AdminUsers() {
 
     return (
         <div className={styles.usersTableContainer}>
-            <h1 className={styles.usersTableTitle}>Bloquear y desbloquear usuarios</h1>
+            <h1 className={styles.usersTableTitle}>Asignar/desasignar Admins y bloquear/desbloquear usuarios</h1>
          <table className={styles.usersTable}>
          <thead className={styles.usersTableHead}>
            <tr>
@@ -151,7 +151,7 @@ export default function AdminUsers() {
                {user.deletedAt === null ? (<td className={styles.userTableRowsContent}>
                  <button className={styles.utablebuttonN} onClick={() => handleBlockUser(user.userID)}>Bloquear</button>
                </td>) : (<td className={styles.userTableRowsContent}>
-                 <button className={styles.utablebutton} onClick={() => handleUnblockUser(user.userID)}>Bloquear</button>
+                 <button className={styles.utablebutton} onClick={() => handleUnblockUser(user.userID)}>Desbloquear</button>
                </td>)}
              </tr>
            ))}
