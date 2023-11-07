@@ -1,5 +1,7 @@
 // Kevin :3
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
+import { useSelector } from "react-redux"
+
 
 import style from "./Contact.module.css"
 import { Context } from "../../../Context/Context"
@@ -13,14 +15,28 @@ import toast, { Toaster } from 'react-hot-toast'
 
 const Contact = () => {
   const { view, contactFalse } = useContext(Context)
+  const { userInfo } = useSelector((s) => s.user)
 
   const [userData, setUserData] = useState({
-    name: "",
-    lastName: "",
-    email: "",
-    phone: "",
+    name: userInfo ? userInfo.name : "",
+    lastName: userInfo ? userInfo.lastName : "",
+    email: userInfo ? userInfo.email : "",
+    phone: userInfo ? userInfo.phone : "",
     consultation: "",
   })
+
+  useEffect(() => {
+    if (userInfo) {
+      setUserData({
+        name: userInfo.name || "",
+        lastName: userInfo.lastName || "",
+        email: userInfo.email || "",
+        phone: userInfo.phone || "",
+        consultation: userData.consultation,
+      });
+    }
+  }, [userInfo]);
+
   const Show = view && style.contactShow;
 
   const handlerChange = (e) => {

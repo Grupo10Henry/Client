@@ -23,7 +23,12 @@ import "./MostPupular.module.css"
 const MostPopular = () => {
   const noLink = "/"
 
-  const { nextEvents } = useSelector((s) => s.events)
+  const { nextEvents } = useSelector((s) => s.events);
+
+  if (!nextEvents) {
+    return <p>Cargando eventos...</p>
+  }
+
   let orden = [...nextEvents]
 
   // ordena el array con los eventos segun las views para mostrar los banners de los primeros 3
