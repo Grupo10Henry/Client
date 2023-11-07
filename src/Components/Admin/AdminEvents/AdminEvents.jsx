@@ -73,7 +73,7 @@ export default function AdminEvents() {
                  <button className={styles.etablebutton} onClick={() => handleBlockUser(event.eventID)}>Editar</button>
                </td>
                <td className={styles.eventTableRowsContent}>
-                 <button className={styles.etablebutton} onClick={() => handleDeleteEvent(event.eventID)}>Eliminar</button>
+                 <button className={styles.etablebuttonN} onClick={() => handleDeleteEvent(event.eventID)}>Eliminar</button>
                </td>
              </tr>
            ))}
