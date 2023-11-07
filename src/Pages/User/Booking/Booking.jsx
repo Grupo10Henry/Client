@@ -5,82 +5,93 @@ import styles from "./Booking.module.css";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import {instance} from "../../../axios/config";
-import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsDemo";
+import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeats";
+import { useSelector } from "react-redux";
+import Loader from "../../../Components/UserAndAdmin/Loader/Loader";
 
 const Booking = () => {
-  const { id } = useParams();
+  const navigate = useNavigate();
 
+  const token = useSelector((state) => state.user.token);
+  const [loading, setLoading] = useState(true);
+  const [sectorPrices, setSectorPrices] = useState([]);
+  const [eventDetails, setEventDetails] = useState({
+  name: "",
+  date: "",
+  time: "",
+  locationName: "",
+  adressLocation: "",
+  image: "",
+  capacity: "",
+  mapLocation: "",
+  planImage: "",
+  views: "",
+  type: "",
+});
+  const { id } = useParams();
   const { isDonation } = new URLSearchParams(window.location.search);
 
-  const [sectorPrices, setSectorPrices] = useState([]);
-
-  const [eventDetails, setEventDetails] = useState({
-    name: "",
-    date: "",
-    time: "",
-    locationName: "",
-    adressLocation: "",
-    image: "",
-    capacity: "",
-    mapLocation: "",
-    planImage: "",
-    views: "",
-    type: "",
-  });
-
   useEffect(() => {
-    const fetchEventData = async () => {
-      try {
-        const response = await instance.get(`/seat/${id}`);
-        if (response.data) {
-          setSectorPrices(response.data);
-        }
-      } catch (error) {
-        console.error("Error al obtener los sectores y precios:", error);
-      }
-    };
-    const fetchEventDetails = async () => {
-      try {
-        const response = await instance.get(`/event/${id}`);
-        if (response.data) {
-          const {
-            name,
-            date,
-            time,
-            locationName,
-            adressLocation,
-            image,
-            capacity,
-            mapLocation,
-            planImage,
-            views,
-            type,
-          } = response.data;
+    if (!token) {
+      window.alert("Por favor inicia sesión para poder reservar una entrada.");
+      navigate("/iniciarsesion");
+      setLoading(false); // Agregamos esto para manejar la carga en caso de no estar autenticado
+    } else {
+      const fetchData = async () => {
+        try {
+          const responseSeat = await instance.get(`/seat/${id}`);
+          const responseEvent = await instance.get(`/event/${id}`);
 
-          setEventDetails({
-            name,
-            date,
-            time,
-            locationName,
-            adressLocation,
-            image,
-            capacity,
-            mapLocation,
-            planImage,
-            views,
-            type,
-          });
-          
-        }
-      } catch (error) {
-        console.error("Error al obtener los detalles del evento:", error);
-      }
-    };
-    fetchEventData();
-    fetchEventDetails();
-  }, [id]);
+          if (responseSeat.data) {
+            setSectorPrices(responseSeat.data);
+          }
 
-  const navigate = useNavigate();
+          if (responseEvent.data) {
+            const {
+              name,
+              date,
+              time,
+              locationName,
+              adressLocation,
+              image,
+              capacity,
+              mapLocation,
+              planImage,
+              views,
+              type,
+            } = responseEvent.data;
+
+            setEventDetails({
+              name,
+              date,
+              time,
+              locationName,
+              adressLocation,
+              image,
+              capacity,
+              mapLocation,
+              planImage,
+              views,
+              type,
+            });
+          }
+        } catch (error) {
+          console.error("Error al obtener los datos:", error);
+          navigate("/iniciarsesion");
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchData();
+    }
+  }, [token, navigate, id]);
+
+  if (loading) {
+    return <Loader/>;
+  }
+
+
 
   const originalDate = eventDetails.date;
   const parts = originalDate.split("-");
@@ -95,6 +106,8 @@ const Booking = () => {
   const handleOnClickcarrito = () => {
     navigate("/carrito");
   };
+
+ 
 
   return (
     <div className={styles.ContainerGlobal}>
@@ -161,7 +174,7 @@ const Booking = () => {
           }
         </div>
         <div className={styles.ContainerPlanoAsientos}>
-          {eventDetails.type === "Pequeño" ? (
+          {eventDetails.type === "Grande" ? (
             <img src={eventDetails.planImage} />
           ) : (
             <BookingSeats id={id} />

@@ -1,6 +1,65 @@
+.usersTableContainer {
+    width: 87.8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.usersTableTitle {
+    font-weight: bold;
+    margin: 20px 0px 20px 0px;
+    font-size: 15px;
+}
+
+.usersTable {
+    border-collapse: collapse;
+    margin: 0px 0px 30px 0px;
+    font-size: 14px;
+    border-radius: 8px 8px 0px 0px;
+    overflow: hidden;
+}
+
+.usersTableHead {
+    background-color: rgb(132, 132, 133);
+    color: aliceblue;
+}
+
+.usersTableHeadContent {
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 5px 5px 5px;
+}
+
+.userTableRows {
+    border-bottom: 1px solid rgb(196, 196, 196);
+}
+
+.userTableRows:nth-of-type(even) {
+    border-bottom: 1px solid rgb(196, 196, 196);
+    background-color: rgb(228, 228, 228);
+}
+
+.userTableRowsContent {
+    margin: 0px 0px 0px 0px;
+    padding: 5px 5px 5px 5px;
+    text-align: left;
+}
+
 .utablebutton {
     background-color: rgb(69, 192, 149);
     border-radius: 5px;
     padding: 3px 10px 3px 10px;
     margin: 0px 0px 0px 0px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.utablebuttonN {
+    background-color: blueviolet;
+    border-radius: 5px;
+    padding: 3px 10px 3px 10px;
+    margin: 0px 0px 0px 0px;
+    font-size: 12px;
+    font-weight: bold;
 }

@@ -1,0 +1,31 @@
+.logo {
+  height: 100%;
+  width: 100px;
+  display: grid;
+  place-content: center;
+}
+
+.logo:hover {
+  animation: logoAnimation ease 3000ms infinite reverse;
+}
+
+.logo img {
+  object-fit: contain;
+}
+
+@keyframes logoAnimation {
+  from {
+    transform: none;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  to {
+    transform: none;
+  }
+}
+@media (width > 500px) {
+  .logo {
+    width: 120px;
+  }
+}

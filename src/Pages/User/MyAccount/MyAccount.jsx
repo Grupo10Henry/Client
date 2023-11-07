@@ -1,13 +1,20 @@
 // Luissssss
 import MyAccountInfo from '../../../Components/User/MyAccount/MyAccountInfo/MyAccountInfo';
-import MyTickets from '../../../Components/User/MyAccount/MyTickets/MyTickets';
+import MyTicketsActive from '../../../Components/User/MyAccount/MyTicketsActive/MyTicketsActive';
+import MyTicketsPast from '../../../Components/User/MyAccount/MyTicketsPast/MyTicketsPast';
+
 import styles from './MyAccount.module.css';
 
 export default function MyAccount() {
     return (
         <div>
-            <h1>My Account :{")"}</h1>
-            <MyTickets />
+            <div className={styles.AccountSections}>
+            <button className={styles.AccountSectionsText}>Entradas activas</button>
+            <button className={styles.AccountSectionsText}>Entradas anteriores</button>
+            <button className={styles.AccountSectionsText}>Datos personales</button>
+            </div>
+            <MyTicketsActive />
+            <MyTicketsPast />
             <MyAccountInfo />
         </div>
     )

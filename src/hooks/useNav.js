@@ -1,11 +1,15 @@
 import { useContext, useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 import { useLocation, useNavigate } from "react-router-dom"
 import { Context } from "../Context/Context"
+import { userLogout } from "../redux/userSlice"
 import Swal from "sweetalert2"
+
 const useNav = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const location = useLocation()
   const { view, contactTrue } = useContext(Context)
 
@@ -27,6 +31,7 @@ const useNav = () => {
 
   const handlerActionConfirmed = () => {
     localStorage.removeItem("token")
+    dispatch(userLogout())
     navigate("/")
   }
 

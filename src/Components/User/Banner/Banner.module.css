@@ -2,6 +2,7 @@
   width: 100%;
   height: 450px;
   position: relative;
+  margin-top: var(--h-nav);
   margin-bottom: 50px;
 }
 
@@ -36,6 +37,8 @@
 .bannerH1 {
   font-size: 30px;
   font-weight: 600;
+  max-width: 400px;
+  margin-inline: auto;
 }
 
 .bannerParagraph {
@@ -46,10 +49,11 @@
 }
 
 .bannerBtn {
-  --size: 30px;
+  --size: 35px;
   width: var(--size);
   height: var(--size);
   background-color: var(--verde-claro);
+  background: var(--gradient);
   display: grid;
   place-content: center;
   margin-inline: auto;

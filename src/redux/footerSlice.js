@@ -8,10 +8,11 @@ const initialState = {
     email: '',
     businessHours: '',
     dataPolicy: '',
+    contactData: [],
 };
 
 export const footerSlice = createSlice({
-    name:'footer',
+    name: "footer",
     initialState,
     reducers:{
         addInfo: (state, action) => {
@@ -22,9 +23,11 @@ export const footerSlice = createSlice({
             state.businessHours = businessHours;
             state.dataPolicy = dataPolicy;
         },
-        
-    }
+        getContactData: (state, action) => {
+            state.contactData = action.payload
+        },
+    },
 })
 
-export const {addInfo} = userSlice.actions;
-export default userSlice.reducer;
+export const {addInfo, getContactData} = footerSlice.actions;
+export default footerSlice.reducer;

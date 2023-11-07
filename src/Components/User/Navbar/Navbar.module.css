@@ -1,147 +1,21 @@
 .header {
-  margin-top: var(--h-nav);
-  --bg: #c9bada;
-  --bg: #282828;
-}
-
-.nav {
-  padding: 0 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: var(--h-nav);
-  background-color: var(--bg);
-
   position: fixed;
   z-index: 2000;
   top: 0;
   left: 0;
   width: 100%;
+  background-color: var(--negro);
+  height: var(--h-nav);
 }
 
-.logo {
+.nav {
+  padding: 0 15px;
+  display: flex;
+  width: min(100%, var(--max-width));
+  margin-inline: auto;
+  justify-content: space-between;
+  align-items: center;
   height: 100%;
-  width: 70px;
-  display: grid;
-  place-content: center;
-}
-
-.logo:hover {
-  animation: logoAnimation ease 3000ms infinite reverse;
-}
-
-.logo img {
-  object-fit: contain;
-}
-
-@keyframes logoAnimation {
-  from {
-    transform: none;
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  to {
-    transform: none;
-  }
-}
-
-.menu {
-  width: 100%;
-  display: grid;
-  grid-auto-flow: row;
-  position: fixed;
-  z-index: 99;
-  right: 0;
-  top: var(--h-nav);
-  height: calc(100vh - var(--h-nav));
-  gap: 20px;
-  transform: translateX(100vw);
-  transition: transform ease 200ms;
-  background-color: var(--bg);
-}
-
-.menu.showme {
-  transition: transform ease 200ms;
-  transform: translateX(0px);
-}
-
-.links {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
-.links a {
-  text-decoration: none;
-  cursor: pointer;
-  color: #efefef;
-  font-size: clamp(14px, 2vw, 16px);
-}
-
-.links button {
-  background-color: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  color: #efefef;
-  font-size: 14px;
-}
-
-.links a.active {
-  color: var(--turquesa);
-}
-
-.icon {
-  font-size: 20px;
-  cursor: pointer;
-  color: #efefef;
-}
-
-.iconToggle {
-  background-color: transparent;
-  border: none;
-  outline: none;
-  color: #efefef;
-}
-
-.links .profile {
-  font-size: 25px;
-}
-
-.options {
-  display: flex;
-  gap: 30px;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  margin-top: 20px;
-}
-
-.optionsBtn {
-  border: thin solid #efefef;
-  color: #efefef;
-  height: 35px;
-  padding: 0 20px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  border-radius: 3px;
-  font-size: 12px;
-  transition: transform ease 200ms;
-}
-
-.optionsBtn:nth-child(2) {
-  background-color: #efefef;
-  color: var(--negro);
-  border: none;
-}
-
-.optionsBtn:hover {
-  transition: transform ease 200ms;
-  transform: scale(0.95);
 }
 
 .toastConfirm b {
@@ -157,7 +31,7 @@
 }
 
 .toastConfirmBtns button {
-  background-color: #efefef;
+  background-color: var(--white);
   padding: 10px 20px;
   border-radius: 3px;
   color: var(--negro);
@@ -165,13 +39,14 @@
 
 .toastConfirmBtns button:nth-of-type(2) {
   background-color: var(--danger);
-  color: #efefef;
+  color: var(--white);
 }
-
-@media (width > 500px) {
-  .logo {
-    width: 130px;
-  }
+.iconToggle {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: var(--white);
+  font-size: 25px;
 }
 
 @media (width > 800px) {
@@ -179,76 +54,7 @@
     padding: 0 20px;
   }
 
-  .menu {
-    grid-template-columns: 2fr max-content;
-    position: unset;
-    padding: 0;
-    background-color: transparent;
-    height: 100%;
-    transition: none;
-    transform: none;
-  }
-
-  .links {
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-    height: 100%;
-  }
-
-  .links a,
-  .links button {
-    padding: 0 10px;
-    position: relative;
-  }
-
-  .links a:hover,
-  .links button:hover {
-    transition: color ease 200ms;
-    color: var(--turquesa);
-  }
-
-  .links a::before,
-  .links button::before {
-    content: "";
-    position: absolute;
-    left: 0px;
-    bottom: -10px;
-    width: 0%;
-    height: 3px;
-    background-color: var(--turquesa);
-    transition: width ease 400ms;
-    border-radius: 3px;
-  }
-
-  .links a:hover::before,
-  .links button:hover::before {
-    width: 100%;
-    transition: width ease 400ms;
-  }
-
-  .links a.active::before {
-    width: 100%;
-    transition: width ease 400ms;
-  }
   .iconToggle {
     display: none;
-  }
-
-  .options {
-    width: 100%;
-    gap: 20px;
-    margin-top: 0;
-    margin-left: auto;
-  }
-
-  .options button:hover,
-  .options a:hover {
-    color: none;
-  }
-  .options button:hover::before,
-  .options a:hover::before {
-    width: unset;
   }
 }
