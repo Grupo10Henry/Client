@@ -1,5 +1,5 @@
 //Guada
-import style from "./AdminReview.module.css"
+import style from "./AdminReviews.module.css"
 
 
 const AdminReviews = () => {

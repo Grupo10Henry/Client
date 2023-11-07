@@ -9,6 +9,7 @@ import AdminReviews from '../../../Components/Admin/AdminReviews/AdminReviews';
 import AdminUsers from '../../../Components/Admin/AdminUsers/AdminUsers';
 import styles from './AdminHome.module.css';
 import { useState } from 'react';
+import AdminReports from '../../../Components/Admin/AdminReports/AdminReports';
 
 const isUserAdmin = () => {
     const isAdmin = localStorage.getItem('isAdmin')
@@ -46,6 +47,7 @@ export default function AdminHome() {
             {display.show === "editContact" ? <AdminFooter /> : null}
             {display.show === "editFAQ" ? <AdminFAQ /> : null}
             {display.show === "viewReviews" ? <AdminReviews /> : null}
+            {display.show === "viewReports" ? <AdminReports /> : null}
             </div>
         </div>
     )

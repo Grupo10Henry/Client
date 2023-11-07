@@ -67,7 +67,22 @@ export default function MyAccountInfo() {
         image: "",
     });
 
+    const [userCopy, setUserCopy] = useState({
+        userID: "",
+        isAdmin: "",
+        name: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        password: "",
+        identityCard: "",
+        dob: "",
+        googleId: "",
+        image: "",
+    });
+
     console.log(user);
+    console.log(userCopy);
 
     const handleChange = (field, value) => {
         setUser({
@@ -90,6 +105,38 @@ export default function MyAccountInfo() {
         }
     };
 
+    const handleCancelChanges = async () => {
+    //   try {
+    //       getUserData().then((data) => {
+    //             dispatch(getUserById(data));
+    //             setUser(data);
+    //       });
+    //         setEditMode(false);
+    //   } catch (error) {
+    //     alert(error.response.data.error)
+    //   }  
+        setEditMode(false);
+        setUser(userCopy);
+        setUserCopy({
+            userID: "",
+            isAdmin: "",
+            name: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            password: "",
+            identityCard: "",
+            dob: "",
+            googleId: "",
+            image: "",
+        });
+    };
+
+    const HandleEditMode = () => {
+        setEditMode(true);
+        setUserCopy(user);
+    }
+
     return (
         <div className={styles.infoContainer}>
             <h1 className={styles.infoTitle}>Datos personales:</h1>
@@ -99,7 +146,7 @@ export default function MyAccountInfo() {
                 <div className={styles.infoInputContainer}>
                     <label className={styles.infoLabel}>Nombre:</label>
                     <input className={styles.infoInput}
-                    placeholder={userData.name}
+                    placeholder={userData?.name}
                     type="text"
                     value={user.name}
                     onChange={(e) => handleChange('name', e.target.value)}
@@ -108,7 +155,7 @@ export default function MyAccountInfo() {
                 <div className={styles.infoInputContainer}>
                     <label className={styles.infoLabel}>Apellido:</label>
                     <input className={styles.infoInput}
-                    placeholder={userData.lastName}
+                    placeholder={userData?.lastName}
                     type="text"
                     value={user.lastName}
                     onChange={(e) => handleChange('lastName', e.target.value)}
@@ -119,7 +166,7 @@ export default function MyAccountInfo() {
                 <div className={styles.infoInputContainer}>
                     <label className={styles.infoLabel}>Fecha de nacimiento:</label>
                     <input className={styles.infoInput}
-                    placeholder={userData.dob}
+                    placeholder={userData?.dob}
                     type="date"
                     value={user.dob}
                     onChange={(e) => handleChange('dob', e.target.value)}
@@ -128,7 +175,7 @@ export default function MyAccountInfo() {
                 <div className={styles.infoInputContainer}>
                     <label className={styles.infoLabel}>Documento de identidad:</label>
                     <input className={styles.infoInput}
-                    placeholder={userData.identityCard}
+                    placeholder={userData?.identityCard}
                     type="number"
                     value={user.identityCard}
                     onChange={(e) => handleChange('identityCard', e.target.value)}
@@ -139,7 +186,7 @@ export default function MyAccountInfo() {
                 {/* <div className={styles.infoInputContainer}>
                     <label className={styles.infoLabel}>Email:</label>
                     <input className={styles.infoInput}
-                    placeholder={userData.email}
+                    placeholder={userData?.email}
                     type="text"
                     value={user.email}
                     onChange={(e) => handleChange('email', e.target.value)}
@@ -148,48 +195,54 @@ export default function MyAccountInfo() {
                 <div className={styles.infoInputContainer}>
                     <label className={styles.infoLabel}>Teléfono:</label>
                     <input className={styles.infoInput}
-                    placeholder={userData.phone}
+                    placeholder={userData?.phone}
                     type="number"
                     value={user.phone}
                     onChange={(e) => handleChange('phone', e.target.value)}
                     />
                 </div>
             </div>
+            <div>
             <button className={styles.saveButton} onClick={handleSaveChanges}>Guardar cambios</button>
+            <button className={styles.saveButton} onClick={handleCancelChanges}>Cancelar</button>
+            </div>
             </div>
             ) : (
             <div className={styles.infoContainer}>
                 <div className={styles.infoRowContainer}>
                     <div className={styles.infoInputContainer}>
                     <p className={styles.infoLabel}>Nombre:</p>
-                    <p className={styles.infoDisplay}>{userData.name}</p>
+                    <p className={styles.infoDisplay}>{userData?.name}</p>
                     </div>
                     <div className={styles.infoInputContainer}>
                     <p className={styles.infoLabel}>Apellido:</p>
-                    <p className={styles.infoDisplay}>{userData.lastName}</p>
+                    <p className={styles.infoDisplay}>{userData?.lastName}</p>
                     </div>
                 </div>
                 <div className={styles.infoRowContainer}>
                     <div className={styles.infoInputContainer}>
                     <p className={styles.infoLabel}>Fecha de nacimiento:</p>
-                    <p className={styles.infoDisplay}>{userData.dob}</p>
+                    <p className={styles.infoDisplay}>{userData?.dob}</p>
                     </div>
                     <div className={styles.infoInputContainer}>
                     <p className={styles.infoLabel}>Documento de identidad:</p>
-                    <p className={styles.infoDisplay}>{userData.identityCard}</p>
+                    <p className={styles.infoDisplay}>{userData?.identityCard}</p>
                     </div>
                 </div>
                 <div className={styles.infoRowContainer}>
                     {/* <div className={styles.infoInputContainer}>
                     <p className={styles.infoLabel}>Email:</p>
-                    <p className={styles.infoDisplay}>{userData.email}</p>
+                    <p className={styles.infoDisplay}>{userData?.email}</p>
                     </div> */}
                     <div className={styles.infoInputContainer}>
                     <p className={styles.infoLabel}>Teléfono:</p>
-                    <p className={styles.infoDisplay}>{userData.phone}</p>
+                    <p className={styles.infoDisplay}>{userData?.phone}</p>
                     </div>
                 </div>
-                <button className={styles.saveButton} onClick={()=>setEditMode(true)}>Editar</button>
+                <button className={styles.saveButton} onClick={
+                    // ()=>setEditMode(true)
+                    HandleEditMode
+                    }>Editar</button>
                 </div>
             )}
         </div>
