@@ -1,9 +1,12 @@
 .ticket {
-    margin: 0;
+    margin: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: calc(550px + 40px); /* 40px arriba + 20px abajo */
+    background-image: linear-gradient(to top, #a9d16b, #d2bb55, #f0a25b, #fe8b75, #f87c98, #e37cb2, #c380c5, #9c86cf, #768bcb, #588cbe, #4a8bab, #4c8797);
+    width: calc(350px + 40px);
+    box-shadow: 5px 5px 5px grey;
 }
 
 .ticket .ticketContainer {
@@ -11,13 +14,12 @@
     height: 550px;
     display: flex;
     flex-direction: column;
-    box-shadow: 5px 5px 5px rgb(156, 155, 155);
 }
 
 .subtitles {
     display: flex;
     justify-content: space-between;
-    color: #7176b6;
+    color: #4c8797;
     font-weight: bold;
     font-size: 14px;
     padding-top: 3px;
@@ -27,32 +29,36 @@
 .mainInfo .subtitles {
     display: flex;
     justify-content: space-between;
-    color: #5e5e5e;
+    color: #4c8797;
     font-weight: bold;
     font-size: 14px;
 }
 
 .ticket .mainInfo {
-    background-image: linear-gradient(to bottom, #01a9cb, #00a6d8, #26a2e4, #4e9ceb, #7294ed, #878fed, #9b89eb, #af83e7, #bb81e6, #c77ee4, #d37be1, #de78de);
+    background-color: #ffffff;
     height: 35%;
     padding: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    
 }
 
 .mainInfo h2 {
     font-weight: bold;
-    color: #3d3c3c;
+    color:#067290;
     font-size: 20px;
     margin: 0;
+    
 }
 
 .mainInfo h3 {
     font-weight: bold;
-    color: #3d3c3c;
-    font-size: 14px;
+    color:#067290;
+    font-size: 16px;
     margin: 0;
+    padding-bottom: 10px;
 }
 
 .ticket .time {
@@ -73,7 +79,7 @@
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 5px;
-    color: #737272;
+    color: #626262;
     border-bottom: 1px solid #ddd;
 }
 
@@ -133,6 +139,6 @@
 }
 
 .ticket .mainInfo .titles .logo img {
-    width: 80px;
+    width: 120px;
     margin-left: 10px;
 }
