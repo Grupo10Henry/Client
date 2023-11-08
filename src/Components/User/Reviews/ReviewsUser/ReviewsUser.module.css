@@ -1,43 +1,54 @@
 .reviewSwiper {
   margin: 80px auto;
   width: 95%;
-  height: 350px;
+  height: 280px;
   user-select: none;
 }
 
 .reviewSwiperSlide {
   background-color: #fff;
-  height: 80%;
+  height: 75%;
   display: flex;
   flex-direction: column;
   align-content: center;
-  justify-content: center;
+  justify-content: space-around;
   gap: 20px;
+  padding: 50px 40px;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
-.reviewSwiperSlide h3 {
+.reviewSwiperSlide .reviewTitle {
   color: var(--magenta);
   font-size: clamp(18px, 2vw, 20px);
   font-weight: bold;
+  text-align: start;
+}
+.reviewEvent {
+  text-align: start;
 }
 
-.reviewEvent p:first-child {
-  color: var(--magenta);
+.reviewEvent .reviewName {
   margin-bottom: 10px;
+  font-size: 16px;
 }
 
-.reviewEvent p:last-child {
-  max-width: 300px;
-  margin-inline: auto;
+.reviewEvent .reviewComment {
   font-size: 14px;
-  text-align: center;
+  font-size: 12px;
 }
 
 .reviewStars {
   display: flex;
-  justify-content: center;
-  color: rgb(14, 162, 162);
+  align-items: center;
+  gap: 2px;
+  justify-content: flex-start;
+  color: var(--turquesa);
+}
+
+.reviewStars p {
+  margin-left: 10px;
+  font-size: 14px;
+  color: gray;
 }

@@ -1,10 +1,12 @@
 //Guada
 
 import React, { useEffect, useState } from "react"
-import style from "./ReviewsEvent.module.css"
 import { IoStar, IoStarHalf } from "react-icons/io5"
 import { instance } from "../../../../axios/config"
 import changeOrderDate from "../../../../utils/orderDate"
+import Loader from "../../Loader/Loader"
+
+import style from "./ReviewsEvent.module.css"
 
 // const reviews = [
 //     {
@@ -47,23 +49,42 @@ const renderStars = (rating) => {
   )
 }
 
-const getPrevEvents = async () => {
-  const { data } = await instance.get(`/event/previus`)
-  return data
-}
-
 const ReviewsEvent = () => {
   //Recibe del usuario: rating - nombre de evento - foto de evento
   const [prevEvents, setPrevEvents] = useState([])
+  const [loading, setLoading] = useState(false)
   //Muestra las estrellas según la calificación.
 
+  const getPrevEvents = async () => {
+    try {
+      const response = await instance.get("/event/previus")
+      return response?.data
+    } catch (error) {
+      throw error // Propaga el error para que sea capturado por el código que llama a getPrevEvents
+    }
+  }
+
+  const fetchData = async () => {
+    try {
+      setLoading(true)
+      const data = await getPrevEvents()
+      setPrevEvents(data)
+    } catch (error) {
+      console.error("Error al traer los eventos previos:", error)
+      setLoading(false)
+      // Manejo de errores, como mostrar un mensaje al usuario o realizar otras acciones necesarias
+    } finally {
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
-    getPrevEvents()
-      .then((data) => {
-        setPrevEvents(data)
-      })
-      .catch((error) => console.error(error))
+    fetchData()
   }, [])
+
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div className={style.reviewsEvent}>
