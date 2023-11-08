@@ -2,10 +2,9 @@ import ContentLoader from "react-content-loader"
 
 import style from "./Loader.module.css"
 
-const size = 4
-const arr = new Array(size).fill(0)
+const Loader = ({ size = 4 }) => {
+  const arr = new Array(size).fill(0)
 
-const Loader = () => {
   return (
     <div className={style.loaderWrapper}>
       {arr.map((el) => (

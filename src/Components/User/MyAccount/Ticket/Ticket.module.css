@@ -1,0 +1,144 @@
+.ticket {
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(550px + 40px); /* 40px arriba + 20px abajo */
+    background-image: linear-gradient(to top, #a9d16b, #d2bb55, #f0a25b, #fe8b75, #f87c98, #e37cb2, #c380c5, #9c86cf, #768bcb, #588cbe, #4a8bab, #4c8797);
+    width: calc(350px + 40px);
+    box-shadow: 5px 5px 5px grey;
+}
+
+.ticket .ticketContainer {
+    width: 350px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+}
+
+.subtitles {
+    display: flex;
+    justify-content: space-between;
+    color: #4c8797;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.mainInfo .subtitles {
+    display: flex;
+    justify-content: space-between;
+    color: #4c8797;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.ticket .mainInfo {
+    background-color: #ffffff;
+    height: 35%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    
+}
+
+.mainInfo h2 {
+    font-weight: bold;
+    color:#067290;
+    font-size: 20px;
+    margin: 0;
+    
+}
+
+.mainInfo h3 {
+    font-weight: bold;
+    color:#067290;
+    font-size: 16px;
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+.ticket .time {
+    display: flex;
+    justify-content: space-between;
+    color: #555555;
+}
+
+.ticket .location {
+    display: flex;
+    justify-content: space-between;
+    color: #555555;
+}
+
+.ticket .info {
+    background-color: #ffffff;
+    height: 25%;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    color: #626262;
+    border-bottom: 1px solid #ddd;
+}
+
+.ticket .info p {
+    padding-top: 8px;
+    font-size: 14px;
+}
+
+.ticket .lastInfo {
+    background-color: #ffffff;
+    height: 15%;
+    padding: 15px;
+    color: #737272;
+}
+
+.ticket .lastInfo .idPrice {
+    display: flex;
+    justify-content: space-between;
+    color: #737272;
+}
+
+.ticket .qrTicket {
+    background-color: #ffffff;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ticket .qrTicket .qrContainer {
+    width: 35%;
+    height: 90%;
+    background-color: rgb(141, 141, 141);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.ticket .qrTicket .qrContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.ticket .mainInfo .titles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.ticket .mainInfo .titles .logo {
+    display: flex;
+    align-items: center;
+}
+
+.ticket .mainInfo .titles .logo img {
+    width: 120px;
+    margin-left: 10px;
+}

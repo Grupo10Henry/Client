@@ -1,4 +1,5 @@
 // Luissssss
+import { NavLink } from 'react-router-dom';
 import SetReview from '../SetReview/SetReview';
 import styles from './MyTicketsActive.module.css';
 
@@ -16,7 +17,9 @@ export default function MyTicketsActive() {
                     <p className={styles.aTicketInfo}>Estadio Atanasio Girardot</p>
                 </div>
                 <div>
+                    <NavLink to='/ticket/1'>
                     <button className={styles.aTicketButton}>Ver</button>
+                    </NavLink>
                     <button className={styles.aTicketButton}>Imprimir</button>
                     <button className={styles.aTicketButton}>Descargar</button>
                 </div>

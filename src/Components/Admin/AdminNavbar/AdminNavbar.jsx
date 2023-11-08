@@ -48,6 +48,13 @@ export default function AdminNavbar({display, setDisplay}) {
                     Reseñas
                 </button>
             </div>
+            <div>
+                <button
+                className={`${display.show === 'viewReports' ? styles.adminNavbarButtonActive : styles.adminNavbarButton}`}
+                onClick={() => {setDisplay({...display, show: "viewReports"})}}>
+                    Informes
+                </button>
+            </div>
         </div>
     )
 }

@@ -12,7 +12,7 @@ const Banner = () => {
     ? `Hola ${userInfo?.name}, ¡Bienvenido a Mi
   Butaca!
 `
-    : "¡Bienvenido a Mi Butaca"
+    : "¡Bienvenido a Mi Butaca!"
   return (
     <section className={style.banner}>
       <div className={style.bannerBg}></div>
