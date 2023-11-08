@@ -1,36 +1,14 @@
-// bookSeatSlice.js
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Define la inicialización del estado
+import { createSlice } from '@reduxjs/toolkit';
+
+
 const initialState = {
-  seats: [], // Almacena la información de los asientos
+  seats: [], 
   selectedSeats: [], // Almacena los asientos seleccionados
-  totalPrice: 0, // Almacena el precio total
-  eventId: null, // Almacena el ID del evento actual
-  status: 'loading', // Puede ser 'loading', 'succeeded', o 'failed' según el estado de la solicitud
+  totalPrice: 0, 
+  eventId: null,
+  status: 'idle', // es el estado del Slice, no del asiento
 };
-
-export const fetchSeats = createAsyncThunk('bookSeat/fetchSeats', async (eventId, { rejectWithValue }) => {
-  try {
-    const response = await fetch('/seat/seat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ eventID: eventId }),
-    });
-
-    if (!response.ok) {
-      throw new Error('No se pudo cargar la información de los asientos.');
-    }
-
-    const seats = await response.json();
-    return seats;
-  } catch (error) {
-    return rejectWithValue(error.message);
-  }
-});
-
 
 const bookSeatSlice = createSlice({
   name: 'bookSeat',
@@ -45,19 +23,6 @@ const bookSeatSlice = createSlice({
       state.selectedSeats = state.selectedSeats.filter(seat => seat.seatID !== action.payload.seatID);
       state.totalPrice -= action.payload.price; // Restar el precio al quitar el asiento
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchSeats.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchSeats.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.seats = action.payload;
-      })
-      .addCase(fetchSeats.rejected, (state) => {
-        state.status = 'failed';
-      });
   },
 });
 
