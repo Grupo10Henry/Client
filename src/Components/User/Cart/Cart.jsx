@@ -13,56 +13,33 @@ const Cart = () => {
     const [total, setTotal] = useState(0);
     const [totalEntradas, setTotalEntradas] = useState(0);
 
+ 
+
+
     useEffect(() => {
-    // Datos ficticios de eventos
-    const eventosFicticios = [
-        { id: 1, title: 'Concierto Lorem', price: 25000, quantity: 0 },
-        { id: 2, title: 'Cine Infantil', price: 30000, quantity: 0 },
-        { id: 3, title: 'Recital Pop', price: 50000, quantity: 0 },
-    ];
-        // Agrega los eventos ficticios al carrito
-        setCart(eventosFicticios);
-    }, []);
-
-
-    /*useEffect(() => {
         // Agrega el "id" a la URL
         const getCart = async () => {
             const res = await instance.get(`/cart/${id}`);
             setCart(res.data);
         };
         getCart();
-    }, [id]);*/
+    }, [id]);
 
-    /*const deleteItem = async (id) => {
+    const deleteItem = async (id) => {
         await instance.delete(`/cart/${id}`);
         setCart((prevCart) => prevCart.filter((item) => item.id !== id));
-    };*/
-
-    const deleteItem = (id) => {
-        const confirmDelete = window.confirm('¿Estás seguro de eliminar este evento?');
-        if (confirmDelete) {
-            setCart((prevCart) => prevCart.filter((item) => item.id !== id));
-        }
     };
 
-    /*const updateItem = async (id, newQuantity) => {
+    
+
+    const updateItem = async (id, newQuantity) => {
         await axios.put(`http://localhost:5173/api/cart/${id}`, { quantity: newQuantity });
         setCart((prevCart) =>
             prevCart.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item))
         );
-    };*/
-
-    const updateItem = (id, newQuantity) => {
-        const updatedCart = cart.map((item) => {
-            if (item.id === id) {
-                item.quantity = newQuantity;
-            }
-            return item;
-        });
-        setCart(updatedCart);
-        getTotal();
     };
+
+    
     
     const handleQuantityChange = (id, change) => {
         const updatedQuantity = cart.find((item) => item.id === id).quantity + change;
@@ -88,6 +65,10 @@ const Cart = () => {
         }, 0);
         setTotalEntradas(totalEntradas);
     };
+
+    const handleCheckout = () => {
+        //esperar que la pasarela de pagos este lista
+    }
 
     return (
         <>

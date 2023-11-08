@@ -1,201 +1,185 @@
 /* Juli >>>>>>>> */
 
 .ContainerGlobal {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+  margin-top: 95px;
+  justify-content: space-around;
+  /*height: auto;*/
   
-    padding: 5px;
-    /*espacio entre los elementos*/
-    justify-content: space-around;
-  }
-  
-/* Estilos para dispositivos pequeños */
-@media (max-width: 768px) {
-    .ContainerUp {
-      flex-direction: column; /* Cambia la dirección de la distribución a column */
-    }
-  
-    .ContainerBanner {
-      order: 1; /* Cambia el orden, lo mueve arriba */
-      margin-bottom: 0; /* Elimina el margen inferior para que estén más pegados */
-      flex: 0; /* Evita que ocupe espacio en la parte superior */
-    }
-  
-    .ContainerTitulo {
-      order: 2; /* Cambia el orden, lo mueve abajo */
-      margin-left: 0; /* Elimina el margen izquierdo para que estén más pegados */
-      flex: 0; /* Evita que ocupe espacio en la parte superior */
-    }
-  
-    .ContainerBanner img {
-      height: auto; /* Ajusta la altura de la imagen */
-    }
-  }
-  
-  
+}
 
-  .ContainerUp {
-    width: 100%;
-    height:fit-content;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  
+@media (max-width: 768px) {
+  .ContainerGlobal {
+    flex-direction: column;
+    align-items: center; /* Centra los elementos horizontalmente */
   }
-  
+  .ContainerUp {
+    flex-direction: column;
+    align-items: center; /* Centra los elementos horizontalmente */
+  }
 
   .ContainerBanner {
-    margin-bottom: 15px;
-    flex: 1;
-    width: 100%;
-    max-height: fit-content;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: aliceblue;
-    overflow: hidden;
-    margin-right: 15px;
-    margin-top: 5px;
-  }
-  
-  .ContainerBanner img {
-    width: 100%; /* Ajusta el ancho según tus necesidades */
-    height: auto;
-    object-fit: cover;
-    object-position: center center;
-  }
-  
-  /* Estilos para pantallas pequeñas */
-  @media (max-width: 768px) {
-    .ContainerBanner img {
-      object-fit: none; /* Esto desactiva el reajuste y muestra la imagen completa */
-    }
-  }
-  
-  
-
-  .ContainerTitulo {
-    flex: 2;
-    height: auto;
-    margin-right: 30px;
-    margin-left: 15px;
-    
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    
-  }
-
-  .ContainerTitulo h1 {
-    color: brown;
-    font-size: 36px;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .ContainerTitulo h2 {
-    color:black;
-    font-size: 2.px;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .ContainerTitulo p {
-    color:brown;
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .ContainerDate {
-    background-color: rgb(211, 170, 119);
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-size: 18px;
-    font-weight: bold;
-    height: 40px;
-    padding: 10px 10px;
-  }
-
-  .ContainerDate h3 {
-    text-align: center;
-    justify-content: center;
-    
-  }
-
-  .ContainerLocation {
-    background-color: rgb(172, 197, 170);
-    align-items: center;
-    justify-content: center;
-    margin-top: 5px;
-    padding: auto;
-  }
-
-  .ContainerLocation p{
-    color: black;
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .ContainerGoogleMap {
-    width: 100%;
-    max-height: fit-content;
-    padding: 0;
-  }
-
-
-  .iframe{
-    margin-top: 10px;
-    width: 100%;
-    height: auto;
-
-    border: none;
-  }
-
-
-  .ContainerPlan {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-top: 10px;
-    background-color: white;
+    margin-bottom: 0; /* Elimina el margen inferior para que estén más pegados */
   }
 
   .ContainerSectores {
-    background-color: rgb(254, 203, 149);
-    flex: 1;
-    text-align: center;
-    padding: 0 15px;
+    margin-left: 0; /* Elimina el margen izquierdo para que estén más pegados */
   }
+}
 
-  .ContainerPlanoAsientos {
-    display: flex;
-    justify-content: center;
-    flex: 4;
-    align-items: center;
-    
+.ContainerUp {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.ContainerBanner {
+  flex: 1;
+  width: 100%;
+  max-height: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+  overflow: hidden;
+  margin-right: 15px;
+}
+
+.ContainerBanner img {
+  width: 100%; /* Ajusta el ancho según tus necesidades */
+  height: auto;
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 768px) {
+  .ContainerBanner img {
+    object-fit: none; /* Esto desactiva el reajuste y muestra la imagen completa */
   }
+}
 
-  .ContainerPlanoAsientos img {
-    width: 50%;
-    height: auto;
-    justify-content: center;
-  }
+.ContainerTitulo {
+  flex: 2;
+  height: auto;
+  margin-right: 30px;
+  margin-left: 15px;
+  margin-bottom: 5px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
 
-  .ContainerPrices {
-    display: flex;
-    justify-content: space-between;
-    font-size: 16px;
-    margin: 5px 0;
-    color: black;
-    background-color:rgb(254, 189, 149);
-  }
+.ContainerTitulo h1 {
+  color: brown;
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+}
 
+.ContainerTitulo h2 {
+  color: black;
+  font-size: 2px;
+  font-weight: bold;
+  text-align: center;
+}
 
-  
+.ContainerTitulo p {
+  color: brown;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.ContainerDate {
+  background-color: rgb(211, 170, 119);
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  height: 40px;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+}
+
+.ContainerDate h3 {
+  text-align: center;
+  justify-content: center;
+}
+
+.ContainerLocation {
+  background-color: rgb(172, 197, 170);
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  padding: 10px;
+}
+
+.ContainerLocation p {
+  color: black;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.ContainerGoogleMap {
+  width: 100%;
+  height: 150px; /*300px*/
+  margin-top: 10px;
+  padding-bottom: 5px;
+}
+
+.iframe {
+  margin-top: 10px;
+  width: 100%;
+  height: auto;
+
+  border: none;
+}
+
+.ContainerPlan {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 10px;
+  background-color: white;
+}
+
+.ContainerSectores {
+  background-color: rgb(254, 203, 149);
+  flex: 1;
+  text-align: center;
+  padding: 10px 15px;
+}
+
+.ContainerPlanoAsientos {
+  display: flex;
+  justify-content: center;
+  flex: 4;
+  align-items: center;
+  height: 300px;
+
+}
+
+.ContainerPlanoAsientos img {
+  max-width: 100%;
+  height: auto;
+  justify-content: center;
+}
+
+.ContainerPrices {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  margin: 5px 0;
+  color: black;
+  background-color: rgb(254, 189, 149);
+}

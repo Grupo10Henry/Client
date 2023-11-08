@@ -10,19 +10,27 @@ const initialState = {
   status: 'loading', // Puede ser 'loading', 'succeeded', o 'failed' según el estado de la solicitud
 };
 
-// Define una acción asincrónica para obtener los asientos desde la API
 export const fetchSeats = createAsyncThunk('bookSeat/fetchSeats', async (eventId, { rejectWithValue }) => {
   try {
-    const response = await fetch(`/seat/?eventID=${eventId}`);
+    const response = await fetch('/seat/seat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ eventID: eventId }),
+    });
+
     if (!response.ok) {
       throw new Error('No se pudo cargar la información de los asientos.');
     }
+
     const seats = await response.json();
     return seats;
   } catch (error) {
     return rejectWithValue(error.message);
   }
 });
+
 
 const bookSeatSlice = createSlice({
   name: 'bookSeat',
