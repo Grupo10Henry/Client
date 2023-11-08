@@ -9,6 +9,8 @@ import "swiper/css/pagination"
 import style from "./ReviewsUser.module.css"
 
 import { Pagination } from "swiper/modules"
+import moment from "moment"
+import convertToRealtiveDate from "../../../../utils/relativeDate"
 
 const ReviewsUser = () => {
   //Recibe del admin: respuestas sugeridas
@@ -25,49 +27,49 @@ const ReviewsUser = () => {
     {
       name: "Micaela",
       lastName: "Bellone",
-      date: new Date(2023, 2, 14),
+      date: "2023-11-07",
       rating: 4,
       event: "Karol G",
     },
     {
       name: "Belén",
       lastName: "Gonzales",
-      date: new Date(2023, 5, 21),
+      date: "2023-11-04",
       rating: 3,
       event: "Shakira",
     },
     {
       name: "Carlos",
       lastName: "Marinez",
-      date: new Date(2023, 8, 9),
+      date: "2023-11-08",
       rating: 5,
       event: "Maria Becerra",
     },
     {
       name: "Nicolas",
       lastName: "Perez",
-      date: new Date(2023, 1, 5),
+      date: "2023-11-01",
       rating: 5,
       event: "TINI",
     },
     {
       name: "Guillermo",
       lastName: "Román",
-      date: new Date(2023, 10, 3),
+      date: "2023-11-05",
       rating: 2,
       event: "Maluma",
     },
     {
       name: "Juan",
       lastName: "Gomez",
-      date: new Date(2023, 9, 6),
+      date: "2023-11-08",
       rating: 4,
       event: "Luis Fonsi",
     },
     {
       name: "Sofia",
       lastName: "Aguirre",
-      date: new Date(2023, 5, 2),
+      date: "2023-11-07",
       rating: 3,
       event: "Karol G",
     },
@@ -107,22 +109,24 @@ const ReviewsUser = () => {
       }}
     >
       {reviews.map((review, index) => (
-        //Review
         <SwiperSlide key={index} className={style.reviewSwiperSlide}>
-          <h3>
-            {review.name} {review.lastName}- {review.date.getDate()}/
-            {review.date.getMonth() + 1}/{review.date.getFullYear()}
-          </h3>
           {/* Estrellas usuario */}
           <div className={style.reviewStars}>
             {[...Array(review.rating)].map((_, starIndex) => (
               <IoStar key={starIndex} />
             ))}
+            <p>{convertToRealtiveDate(review.date)}</p>
           </div>
+          <h3 className={style.reviewTitle}>
+            <p>{review.event}</p>
+          </h3>
+
           {/* Evento - comentario */}
           <div className={style.reviewEvent}>
-            <p>{review.event}</p>
-            <p>{comments[review.rating - 1]}</p>
+            <p className={style.reviewName}>
+              {review.name} {review.lastName}
+            </p>
+            <p className={style.reviewComment}>{comments[review.rating - 1]}</p>
           </div>
         </SwiperSlide>
       ))}
