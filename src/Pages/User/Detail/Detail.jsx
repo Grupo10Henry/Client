@@ -16,7 +16,10 @@ const Detail = () => {
 const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/reserva/${eventID}?isDonation=${isDonation}`);
+    console.log("Sector Prices:", sectorPrices);
+    navigate(`/reserva/${eventID}?isDonation=${isDonation}`, {
+      state: { sectorPrices }
+    });
   };
 
   const [isDonation, setIsDonation] = useState(false);
