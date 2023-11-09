@@ -165,8 +165,8 @@
   justify-content: center;
   flex: 4;
   align-items: center;
-  height: 300px;
-
+  height: 700px;
+background-color: aqua;
 }
 
 .ContainerPlanoAsientos img {

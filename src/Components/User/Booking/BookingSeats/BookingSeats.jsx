@@ -1,10 +1,8 @@
-// SeatMap.js
 import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useParams } from "react-router-dom"
 import {
   selectSeats,
-  fetchSeats,
   removeSelectedSeat,
   addSelectedSeat,
 } from "../../../../redux/bookSeatsSlice" // Asegúrate de importar las acciones y selectores adecuados
