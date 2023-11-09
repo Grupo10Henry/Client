@@ -47,7 +47,7 @@ const AdminFAQ = () => {
 
   const handleCreateFAQ = async () => {
       try {
-        await instance.post(`/faq/`, newFaq) // instance.get(`/user/${params.id}`) || axios.get(`http://localhost:3001/user/${params.id}`)
+        await instance.post(`/faq/`, newFaq) // instance.post(`/faq/`, newFaq) || axios.post(`http://localhost:3001/faq/`, newFaq)
         getFaqs().then((data) => {
           dispatch(getAllFaqs(data));
         });
@@ -57,8 +57,16 @@ const AdminFAQ = () => {
       }
   };
 
-  const handleDeleteFAQ = (index) => {
-
+  const handleDeleteFAQ = async (faqID) => {
+    try {
+      await instance.delete(`/faq/${faqID}`) // instance.get(`/user/${params.id}`) || axios.get(`http://localhost:3001/user/${params.id}`)
+      getFaqs().then((data) => {
+        dispatch(getAllFaqs(data));
+      });
+      alert('Se ha eliminado la pregunta exitosamente');
+    } catch (error) {
+      alert(error)
+    }
   };
 
   const handleEditFAQ = (index) => {
@@ -93,12 +101,12 @@ const AdminFAQ = () => {
 
       {/* Mostrar preguntas y respuestas guardadas */}
       <div className={style.FaqList}>
-        {allFaqs.map((faq, index) => (
-          <div key={index}>
+        {allFaqs.map((faq) => (
+          <div key={faq.faqID}>
             <strong>Pregunta:</strong> {faq.question}
             <br />
             <strong>Respuesta:</strong> {faq.answer}
-            <TiDeleteOutline className={style.btnEliminar} onClick={() => handleDelete(index)} />
+            <TiDeleteOutline className={style.btnEliminar} onClick={() => handleDeleteFAQ(faq.faqID)} />
             <hr />
           </div>
         ))}
