@@ -4,15 +4,21 @@ import { useSelector } from "react-redux"
 import Cards from "../../Cards/Cards"
 
 import "./AllEvents.module.css"
+import Loader from "../../Loader/Loader"
 
 const AllEvents = () => {
-  const { nextEvents } = useSelector((s) => s.events)
+  const { nextEvents, isLoading } = useSelector((s) => s.events)
+
+  if (isLoading) {
+    return <Loader />
+  }
+
   return (
     <div>
       <h2 className="subtitle gradient-text">
         <b>Todos Los Eventos Disponibles</b>
       </h2>
-      {nextEvents ? <Cards data={nextEvents} /> : "No hay eventos disponibles :c"}
+      <Cards data={nextEvents} />
     </div>
   )
 }
