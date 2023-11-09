@@ -13,8 +13,8 @@ const Detail = () => {
     eventDetails,
     isDonation,
     sectorPrices,
-    isLoading,
-    error,
+    //isLoading,
+    //error,
     handleClick,
     countdown,
   } = useDetail(params?.id)
@@ -32,12 +32,10 @@ const Detail = () => {
   return (
     <>
       <div className={styles.ContainerGlobal}>
-       {/*
-        {isLoading ? ( 
+        {/*{isLoading ? ( // Verifica si isLoading es verdadero
           <Loader />
-        ) : (
-        */}
-        <>
+  ) : (*/}
+          <>
             <div className={styles.ContainerBanner}>
               <img src={eventDetails.bannerImage} alt={eventDetails.name} />
             </div>
@@ -120,14 +118,11 @@ const Detail = () => {
             </div>
             <div className={styles.ContainerBookingButton}>
               <Link to={`/reserva/${params?.id}`}>
-                <BookingButton />
+                <BookingButton onClick={handleClick}/>
               </Link>
             </div>
           </>
-          {/*
-          )}
-        */}
-
+        )}
       </div>
     </>
   )

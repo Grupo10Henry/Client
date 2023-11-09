@@ -34,6 +34,12 @@ const selectSeatState = (state) => state.seat;
 export const { setSeats } = seatSlice.actions;
 
 // Define el selector en el mismo archivo
-export const selectSeats = createSelector(selectSeatState, (seatState) => Object.values(seatState.seats));
+export const selectSeats = createSelector(selectSeatState, (seatState) => {
+  if (seatState && seatState.seats) {
+    return Object.values(seatState.seats);
+  } else {
+    return []; // Return an empty array if seats are undefined or null
+  }
+});
 
 export default seatSlice.reducer;

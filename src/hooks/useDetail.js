@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { instance } from "../axios/config"
 import { setEventID } from "../redux/eventIDSlice"
+import axios from "axios"
 
 const initialEventsDetail = {
   name: "",
@@ -37,7 +38,7 @@ const useDetail = (id) => {
   const fetchEventData = async () => {
     try {
       /* traer de la ruta /seat/:eventID los sectores y precios. La respuesta es un array de arrays, que contiene [price, sector] */
-      const response = await instance.get(`/seat/${id}`)
+      const response = await axios.get(`http://localhost:3001/seat/${id}`)
       setSectorPrices(response.data)
     } catch (error) {
       throw Error(
@@ -48,7 +49,7 @@ const useDetail = (id) => {
 
   const fetchEventDetails = async () => {
     try {
-      const response = await instance.get(`/event/${id}`)
+      const response = await axios.get(`http://localhost:3001/event/${id}`)
       if (response?.data) {
         const {
           name,

@@ -215,19 +215,23 @@ const Booking = () => {
           ) : (
             <>
               <h3>Selecciona un sector:</h3>
-              {sectorPrices.map((sector, index) => (
-                <div
-                  key={index}
-                  className={
-                    selectedSector === sector[1]
-                      ? styles.selectedSector
-                      : styles.sector
-                  }
-                  onClick={() => handleSectorSelect(sector[1])}
-                >
-                  {sector[1]} - $ {sector[0]}
-                </div>
-              ))}
+              {sectorPrices && sectorPrices.length > 0 ? (
+  sectorPrices.map((sector, index) => (
+    <div
+      key={index}
+      className={
+        selectedSector === sector[1]
+          ? styles.selectedSector
+          : styles.sector
+      }
+      onClick={() => handleSectorSelect(sector[1])}
+    >
+      {sector[1]} - $ {sector[0]}
+    </div>
+  ))
+) : (
+  <p>No sector prices available.</p>
+)}
               <div className={styles.ContainerBookingSeatsInfo}>
   <div>Total Seats Selected: {sectorInfo.selectedSeats}</div>
   <div>Total Price: {sectorInfo.totalPrice}</div>
