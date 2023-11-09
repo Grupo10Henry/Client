@@ -98,7 +98,7 @@ const AdminFAQ = () => {
             onChange={handleChange}
           ></textarea>
         </div>
-        <button className={styles.adminFaqButton} onClick={handleCreateFAQ}>Guardar</button>
+        <button className={styles.adminFaqButton} onClick={handleCreateFAQ}>Crear</button>
       </div>
 
       {/* Mostrar preguntas y respuestas guardadas */}
