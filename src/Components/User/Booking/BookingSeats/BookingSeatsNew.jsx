@@ -6,6 +6,7 @@ import { selectSelectedSeats, addSelectedSeat, removeSelectedSeat } from '../../
 import styles from './BookingSeats.module.css';
 import asiento from '../../../../assets/asiento.svg';
 import asientoFree from '../../../../assets/asiento-free.svg';
+import asientoSelected from '../../../../assets/asiento-ocup.svg';
 
 const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQuery }) => {
   const dispatch = useDispatch();
@@ -50,53 +51,52 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
         <h3>Sector {sector}</h3>
         <table className={styles.seatGrid}>
           <tbody>
-          {Array.from({ length: rows }, (_, rowIndex) => (
-  <tr key={rowIndex}>
-    {Array.from({ length: columns }, (_, colIndex) => {
-      const currentSeat = seats[rowIndex * columns + colIndex];
+            {Array.from({ length: rows }, (_, rowIndex) => (
+              <tr key={rowIndex}>
+                {Array.from({ length: columns }, (_, colIndex) => {
+                  const currentSeat = seats[rowIndex * columns + colIndex];
 
-      return (
-        <td key={colIndex}>
-          {currentSeat && (
-            <div>
-              {currentSeat.status ? (
-                <div>
-                  <img
-                    key={currentSeat.seatID}
-                    src={asientoFree}
-                    alt={`Seat ${currentSeat.seatLocation}`}
-                    className={`${styles.seat} ${
-                      selectedSeats.includes(currentSeat)
-                        ? styles.selected
-                        : ''
-                    }`}
-                    onClick={() => handleSeatClick(currentSeat)}
-                  />
-                  <p className={styles.seatLocation}>
-                    {currentSeat.seatLocation}
-                  </p>
-                </div>
-              ) : (
-                <div>
-                  <img
-                    key={currentSeat.seatID}
-                    src={asiento}
-                    alt={`Seat ${currentSeat.seatLocation}`}
-                    className={styles.seat}
-                  />
-                  <p className={styles.seatLocation}>
-                    {currentSeat.seatLocation}
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
-        </td>
-      );
-    })}
-  </tr>
-))}
-
+                  return (
+                    <td key={colIndex}>
+                      {currentSeat && (
+                        <div>
+                          {currentSeat.status ? (
+                            <div>
+                              <img
+                                key={currentSeat.seatID}
+                                src={selectedSeats.includes(currentSeat) ? asiento : asientoFree}
+                                alt={`Seat ${currentSeat.seatLocation}`}
+                                className={`${styles.seat} ${
+                                  selectedSeats.includes(currentSeat)
+                                    ? styles.selected
+                                    : ''
+                                }`}
+                                onClick={() => handleSeatClick(currentSeat)}
+                              />
+                              <p className={styles.seatLocation}>
+                                {currentSeat.seatLocation}
+                              </p>
+                            </div>
+                          ) : (
+                            <div>
+                              <img
+                                key={currentSeat.seatID}
+                                src={asientoSelected}
+                                alt={`Seat ${currentSeat.seatLocation}`}
+                                className={styles.seat}
+                              />
+                              <p className={styles.seatLocation}>
+                                {currentSeat.seatLocation}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -110,6 +110,7 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
       </div>
     </div>
   );
+
 };
 
 export default BookingSeats;
