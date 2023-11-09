@@ -23,6 +23,8 @@ import NotFound from "./Components/User/NotFound/NotFound"
 import { config } from "./axios/config"
 import { loginSuccess } from "./redux/userSlice"
 import Ticket from "./Components/User/MyAccount/Ticket/Ticket"
+import AdminFAQDetail from "./Components/Admin/AdminFAQDetail/AdminFAQDetail"
+import AdminEventsDetail from "./Components/Admin/AdminEventsDetail/AdminEventsDetail"
 
 function App() {
   const location = useLocation()
@@ -137,7 +139,8 @@ function App() {
         <Route path="/ticket/:id" element={<Ticket />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<AdminHome />} />
-        <Route path="/evento/:id" element={<AdminHome />} />
+        <Route path="/evento/:id" element={<AdminEventsDetail />} />
+        <Route path="/preguntas/:id" element={<AdminFAQDetail />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
         <Route path="/reserva/seats" element={<BookingSeats />} />
         <Route path="*" element={<NotFound />} />
