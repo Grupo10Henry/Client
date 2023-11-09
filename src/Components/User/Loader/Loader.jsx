@@ -18,7 +18,7 @@ const Loader = ({ size = 4, slide }) => {
       {arr.map((el) => (
         <ContentLoader
           speed={2}
-          width={inSlide}
+          width={300}
           height={590}
           viewBox="0 0 350 590"
           backgroundColor="gray"
