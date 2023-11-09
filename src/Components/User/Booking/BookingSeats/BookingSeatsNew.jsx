@@ -6,7 +6,6 @@ import asiento from '../../../../assets/asiento.svg';
 import axios from 'axios';
 
 const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQuery }) => {
-  
   const dispatch = useDispatch();
   const [seats, setSeats] = useState([]);
   const [rows, setRows] = useState(0);
@@ -84,47 +83,44 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
   };
 
   return (
-  <div className={styles.seatMap}>
-    <div className={styles.sector}>
-      <h3>Sector {sector}</h3>
-      <table className={styles.seatGrid}>
-        <tbody>
-          {Array.from({ length: rows }, (_, rowIndex) => (
-            <tr key={rowIndex}>
-              {Array.from({ length: columns }, (_, colIndex) => {
-                const currentSeat = seats.find(
-                  (seat) => seat.seatLocation === `${rowIndex + 1}-${colIndex + 1}`
-                );
+    <div className={styles.seatMap}>
+      <div className={styles.sector}>
+        <h3>Sector {sector}</h3>
+        <table className={styles.seatGrid}>
+          <tbody>
+            {Array.from({ length: rows }, (_, rowIndex) => (
+              <tr key={rowIndex}>
+                {Array.from({ length: columns }, (_, colIndex) => {
+                  const currentSeat = seats.find(
+                    (seat) => seat.seatLocation === `${rowIndex + 1}-${colIndex + 1}`
+                  );
 
-                console.log('Renderizando celda de asiento en columna:', colIndex);
-                
-                return (
-                  <td key={colIndex}>
-                    {currentSeat && (
-                      <img
-                        key={currentSeat.seatID}
-                        src={asiento}
-                        alt={`Seat ${currentSeat.seatLocation}`}
-                        className={`${styles.seat} ${selectedSeats.includes(currentSeat) ? styles.selected : ''}`}
-                        onClick={() => handleSeatClick(currentSeat)}
-                      />
-                    )}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  return (
+                    <td key={colIndex}>
+                      {currentSeat && (
+                        <img
+                          key={currentSeat.seatID}
+                          src={asiento}
+                          alt={`Seat ${currentSeat.seatLocation}`}
+                          className={`${styles.seat} ${selectedSeats.includes(currentSeat) ? styles.selected : ''}`}
+                          onClick={() => handleSeatClick(currentSeat)}
+                        />
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className={styles.selectedInfo}>
+        <div>Total Seats Selected: {selectedSeats.length}</div>
+        <div>Total Price: {selectedSeats.reduce((total, seat) => total + seat.Price, 0)}</div>
+        <div>Time Left: {formatTime(countdown)}</div>
+      </div>
     </div>
-    <div className={styles.selectedInfo}>
-      <div>Total Seats Selected: {selectedSeats.length}</div>
-      <div>Total Price: {selectedSeats.reduce((total, seat) => total + seat.Price, 0)}</div>
-      <div>Time Left: {formatTime(countdown)}</div>
-    </div>
-  </div>
-);
-
+  );
 };
 
 export default BookingSeats;
