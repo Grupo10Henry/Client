@@ -28,23 +28,33 @@ const AdminFAQ = () => {
       }, []
   );
 
-  const [formData, setFormData] = useState({
+  
+  const [newFaq, setNewFaq] = useState({
     question: "",
     answer: "",
   });
-
-  const [faqList, setFaqList] = useState([]);
+  
+  console.log(allFaqs);
+  console.log(newFaq);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setNewFaq({
+      ...newFaq,
       [name]: value,
     });
   };
 
-  const handleCreateFAQ = () => {
-
+  const handleCreateFAQ = async () => {
+      try {
+        await instance.post(`/faq/`, newFaq) // instance.get(`/user/${params.id}`) || axios.get(`http://localhost:3001/user/${params.id}`)
+        getFaqs().then((data) => {
+          dispatch(getAllFaqs(data));
+        });
+        alert('Se ha creado la pregunta exitosamente');
+      } catch (error) {
+        alert(error)
+      }
   };
 
   const handleDeleteFAQ = (index) => {
@@ -66,7 +76,7 @@ const AdminFAQ = () => {
           <input
             type="text"
             name="question"
-            value={formData.question}
+            value={newFaq.question}
             onChange={handleChange}
           />
         </label>
@@ -74,16 +84,16 @@ const AdminFAQ = () => {
           Respuesta:
           <textarea
             name="answer"
-            value={formData.answer}
+            value={newFaq.answer}
             onChange={handleChange}
           ></textarea>
         </label>
-        <button type="submit">Guardar</button>
+        <button onClick={handleCreateFAQ}>Guardar</button>
       </div>
 
       {/* Mostrar preguntas y respuestas guardadas */}
       <div className={style.FaqList}>
-        {faqList.map((faq, index) => (
+        {allFaqs.map((faq, index) => (
           <div key={index}>
             <strong>Pregunta:</strong> {faq.question}
             <br />
