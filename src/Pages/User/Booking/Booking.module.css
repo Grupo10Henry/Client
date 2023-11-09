@@ -183,3 +183,16 @@
   color: black;
   background-color: rgb(254, 189, 149);
 }
+
+.selectedSector {
+  background-color: rgb(14, 161, 115);
+  cursor: pointer;
+}
+
+.ContainerSectores h3 {
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+}

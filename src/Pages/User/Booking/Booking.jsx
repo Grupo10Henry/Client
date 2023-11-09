@@ -35,11 +35,31 @@ const Booking = () => {
   const { isDonation } = new URLSearchParams(window.location.search)
   const [selectedSector, setSelectedSector] = useState(null)
   const [selectedSeats, setSelectedSeats] = useState([])
-  const [countdown, setCountdown] = useState(900) // 15 minutos en segundos
+ 
 
   const location = useLocation()
   const sectorPrices = location.state && location.state.sectorPrices
   const [sectorPricesQuery, setSectorPricesQuery] = useState("")
+
+  const [sectorInfo, setSectorInfo] = useState({
+    selectedSeats: [],
+    totalPrice: 0,
+  });
+
+  const handleSectorInfoUpdate = () => {
+    // Calcula el total de asientos seleccionados y el precio total
+    const totalSeatsSelected = selectedSeats.length;
+    const totalPrice = selectedSeats.reduce((total, seat) => total + seat.price, 0);
+  
+    // Actualiza el estado sectorInfo
+    setSectorInfo({
+      selectedSeats: totalSeatsSelected,
+      totalPrice,
+    });
+  };
+
+
+  
 
   useEffect(() => {
     if (sectorPrices && sectorPrices.length > 0) {
@@ -208,6 +228,12 @@ const Booking = () => {
                   {sector[1]} - $ {sector[0]}
                 </div>
               ))}
+              <div className={styles.ContainerBookingSeatsInfo}>
+  <div>Total Seats Selected: {sectorInfo.selectedSeats}</div>
+  <div>Total Price: {sectorInfo.totalPrice}</div>
+  
+</div>
+
             </>
           )}
         </div>
@@ -223,6 +249,7 @@ const Booking = () => {
               selectedSeats={selectedSeats}
               onSeatSelect={handleSeatSelect}
               sectorPricesQuery={sectorPricesQuery}
+              handleSectorInfoUpdate={handleSectorInfoUpdate}
             />
           )}
         </div>

@@ -8,7 +8,7 @@ import asiento from '../../../../assets/asiento.svg';
 import asientoFree from '../../../../assets/asiento-free.svg';
 import asientoSelected from '../../../../assets/asiento-ocup.svg';
 
-const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQuery }) => {
+const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQuery, handleSectorInfoUpdate }) => {
   const dispatch = useDispatch();
   const seats = useSelector(selectSeats);
   console.log('Seats en BookingSeats:', seats);
@@ -37,6 +37,7 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
     if (onSeatSelect) {
       onSeatSelect(seat);
     }
+    handleSectorInfoUpdate();
   };
 
   const formatTime = (time) => {
@@ -44,6 +45,7 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
     const seconds = time % 60;
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
+  
 
   return (
     <div className={styles.seatMap}>
@@ -101,13 +103,9 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
         </table>
       </div>
       <div className={styles.selectedInfo}>
-        <div>Total Seats Selected: {selectedSeats.length}</div>
-        <div>
-          Total Price:{' '}
-          {selectedSeats.reduce((total, seat) => total + seat.price, 0)}
-        </div>
+       
         <div>Time Left: {formatTime(900)}</div>
-      </div>
+              </div>
     </div>
   );
 
