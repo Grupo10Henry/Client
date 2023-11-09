@@ -4,11 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { instance } from "../../../axios/config";
 import { useEffect } from "react";
 import { getAllFaqs } from "../../../redux/faqSlice";
-import style from "./AdminFAQ.module.css";
+import { useNavigate } from "react-router-dom";
+import styles from "./AdminFAQ.module.css";
+import { AiFillEdit } from 'react-icons/ai';
+import { BsFillTrashFill } from 'react-icons/bs';
 
 const AdminFAQ = () => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {allFaqs} = useSelector((s) => s.faq)
 
   const getFaqs = async () => {
@@ -69,48 +73,55 @@ const AdminFAQ = () => {
     }
   };
 
-  const handleEditFAQ = (index) => {
-
+  const handleEditFAQ = (faqID) => {
+    navigate(`/preguntas/${faqID}`)
   };
 
-  
-
   return (
-    <div className={style.AdminFAQ}>
-      <h1>CREAR PREGUNTAS Y RESPUESTAS</h1>
-      <div>
-        <label>
-          Pregunta:
-          <input
+    <div className={styles.adminFAQContainer}>
+      <h1 className={styles.adminFaqTitle}>Crear, editar y eliminar preguntas frecuentes</h1>
+      <div className={styles.adminFaqCreateContainer}>
+      <div className={styles.adminFaqCreateFields}>
+        <label className={styles.adminFaqLabel}>Pregunta:</label>
+          <input className={styles.adminFaqInputText}
             type="text"
             name="question"
             value={newFaq.question}
             onChange={handleChange}
           />
-        </label>
-        <label>
-          Respuesta:
-          <textarea
+        </div>
+        <div className={styles.adminFaqCreateFields}>
+        <label className={styles.adminFaqLabel}>Respuesta:</label>
+          <textarea className={styles.adminFaqInputTextArea}
             name="answer"
             value={newFaq.answer}
             onChange={handleChange}
           ></textarea>
-        </label>
-        <button onClick={handleCreateFAQ}>Guardar</button>
+        </div>
+        <button className={styles.adminFaqButton} onClick={handleCreateFAQ}>Guardar</button>
       </div>
 
       {/* Mostrar preguntas y respuestas guardadas */}
-      <div className={style.FaqList}>
-        {allFaqs.map((faq) => (
-          <div key={faq.faqID}>
-            <strong>Pregunta:</strong> {faq.question}
-            <br />
-            <strong>Respuesta:</strong> {faq.answer}
-            <TiDeleteOutline className={style.btnEliminar} onClick={() => handleDeleteFAQ(faq.faqID)} />
-            <hr />
-          </div>
+      <table className={styles.faqTable}>
+        <thead className={styles.faqTableHead}>
+          <tr>
+            <th className={styles.faqTableHeadContent}>Pregunta</th>
+            <th className={styles.faqTableHeadContent}>Respuesta</th>
+            <th className={styles.faqTableHeadContent}>Editar</th>
+            <th className={styles.faqTableHeadContent}>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+        {allFaqs?.map((faq) => (
+          <tr className={styles.faqTableRows} key={faq.faqID}>
+            <td className={styles.faqTableRowsContent}>{faq.question}</td>
+            <td className={styles.faqTableRowsContent}>{faq.answer}</td>
+            <td className={styles.faqTableRowsContent}><AiFillEdit className={styles.faqEditButton} onClick={() => handleEditFAQ(faq.faqID)}/></td>
+            <td className={styles.faqTableRowsContent}><BsFillTrashFill className={styles.faqDeleteButton} onClick={() => handleDeleteFAQ(faq.faqID)}/></td>
+          </tr>
         ))}
-      </div>
+        </tbody>
+      </table>
     </div>
   );
 };
