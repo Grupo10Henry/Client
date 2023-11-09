@@ -3,7 +3,7 @@ import styles from "./Booking.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { instance } from "../../../axios/config";
-import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsDemo";
+import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsNew";
 import { useSelector } from "react-redux";
 import Loader from "../../../Components/UserAndAdmin/Loader/Loader";
 
