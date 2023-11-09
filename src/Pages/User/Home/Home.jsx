@@ -33,7 +33,11 @@ const Home = () => {
         dispatch(setDataSuccess(data))
       }
     } catch (error) {
-      console.log(error?.response?.data.error || error)
+      if (error?.response.data.error) {
+        console.error(error?.response.data.error)
+      } else {
+        console.error("Error al obtener los eventos:", error)
+      }
     }
   }
 

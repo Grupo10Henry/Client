@@ -19,20 +19,21 @@ import "swiper/css/autoplay"
 
 import style from "./MostPupular.module.css"
 import "./MostPupular.module.css"
+import Loader from "../../Loader/Loader"
 
 const MostPopular = () => {
   const noLink = "/"
 
-  const { nextEvents } = useSelector((s) => s.events)
-
-  if (!nextEvents) {
-    return <p>Cargando eventos...</p>
-  }
+  const { nextEvents, isLoading } = useSelector((s) => s.events)
 
   let orden = [...nextEvents]
 
   // ordena el array con los eventos segun las views para mostrar los banners de los primeros 3
   orden.sort((a, b) => b.views - a.views)
+
+  if (isLoading) {
+    return <Loader size={1} slide />
+  }
 
   return (
     <div className={style.container} id="mostPopular">
@@ -73,11 +74,11 @@ const MostPopular = () => {
           <Link
             to={orden[0]?.eventID ? `/detalle/${orden[0].eventID}` : noLink}
           >
-          <img
-            src={orden[0]?.bannerImage ? orden[0].bannerImage : noBanner}
-            alt="image"
-            className={style.image}
-          />
+            <img
+              src={orden[0]?.bannerImage ? orden[0].bannerImage : noBanner}
+              alt="image"
+              className={style.image}
+            />
           </Link>
         </SwiperSlide>
         <br />
@@ -85,11 +86,11 @@ const MostPopular = () => {
           <Link
             to={orden[1]?.eventID ? `/detalle/${orden[1].eventID}` : noLink}
           >
-          <img
-            src={orden[1]?.bannerImage ? orden[1].bannerImage : noBanner}
-            alt="image"
-            className={style.image}
-          />
+            <img
+              src={orden[1]?.bannerImage ? orden[1].bannerImage : noBanner}
+              alt="image"
+              className={style.image}
+            />
           </Link>
         </SwiperSlide>
         <br />
@@ -97,11 +98,11 @@ const MostPopular = () => {
           <Link
             to={orden[2]?.eventID ? `/detalle/${orden[2].eventID}` : noLink}
           >
-          <img
-            src={orden[2]?.bannerImage ? orden[2].bannerImage : noBanner}
-            alt="image"
-            className={style.image}
-          />
+            <img
+              src={orden[2]?.bannerImage ? orden[2].bannerImage : noBanner}
+              alt="image"
+              className={style.image}
+            />
           </Link>
         </SwiperSlide>
         <br />
