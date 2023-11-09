@@ -1,4 +1,150 @@
-.AdminFAQ {
+.adminFAQContainer {
+  width: 87.8vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.adminFaqTitle {
+  font-size: 15px;
+  font-weight: bold;
+  padding: 0px 0px 0px 0px;
+  margin: 15px 0px 15px 0px;
+}
+
+.adminFaqCreateContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.adminFaqCreateFields {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 20px 0px 20px;
+  margin: 0px 0px 0px 0px;
+}
+
+.adminFaqLabel {
+  font-size: 14px;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+}
+
+.adminFaqCreateFields .adminFaqInputText {
+  font-size: 14px;
+  border-color: rgb(143, 143, 143);
+  height: 25px;
+  border-radius: 5px;
+  padding: 0px 0px 0px 10px;
+  margin: 0px 0px 0px 0px;
+  width: 200px;
+}
+
+.adminFaqCreateFields .adminFaqInputTextArea {
+  font-size: 14px;
+  border-color: rgb(143, 143, 143);
+  border-radius: 5px;
+  padding: 0px 0px 0px 10px;
+  margin: 0px 0px 0px 0px;
+  width: 200px;
+}
+
+.adminFaqButton {
+  background-color: rgb(69, 192, 149);
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+  margin: 0px 20px 0px 20px;
+  font-size: 14px;
+  color: aliceblue;
+  font-weight: bold;
+}
+
+.adminFaqButton:hover {
+  background-color: rgb(91, 214, 171);
+}
+
+.faqTableContainer {
+  width: 87.8vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.faqTableTitle {
+  font-weight: bold;
+  margin: 20px 0px 20px 0px;
+  font-size: 15px;
+}
+
+.faqTable {
+  border-collapse: collapse;
+  margin: 30px 30px 30px 30px;
+  font-size: 14px;
+  border-radius: 8px 8px 0px 0px;
+  overflow: hidden;
+}
+
+.faqTableHead {
+  background-color: rgb(132, 132, 133);
+  color: aliceblue;
+}
+
+.faqTableHeadContent {
+  text-align: center;
+  margin: 0px 0px 0px 0px;
+  padding: 5px 5px 5px 5px;
+}
+
+.faqTableRows {
+  border-bottom: 1px solid rgb(196, 196, 196);
+}
+
+.faqTableRows:nth-of-type(even) {
+  border-bottom: 1px solid rgb(196, 196, 196);
+  background-color: rgb(228, 228, 228);
+}
+
+.faqTableRowsContent {
+  margin: 0px 0px 0px 0px;
+  padding: 5px 5px 5px 5px;
+  text-align: left;
+}
+
+.ftablebutton {
+  background-color: rgb(69, 192, 149);
+  border-radius: 5px;
+  padding: 3px 10px 3px 10px;
+  margin: 0px 0px 0px 0px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.ftablebuttonN {
+  background-color: blueviolet;
+  border-radius: 5px;
+  padding: 3px 10px 3px 10px;
+  margin: 0px 0px 0px 0px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.faqEditButton {
+  cursor: pointer;
+  color: rgb(69, 192, 149);
+}
+
+.faqDeleteButton {
+  cursor: pointer;
+  color: blueviolet;
+}
+
+/* .AdminFAQ {
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -85,7 +231,7 @@
 .AdminFAQ .FaqList strong {
   color: #2ca8a6;
   font-weight: bold;
-}
+} */
 
 
 
