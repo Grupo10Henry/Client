@@ -1,25 +1,67 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectSeats, fetchAndSetSeats } from '../../../../redux/seatSlice';
+import { selectSeats } from '../../../../redux/seatSlice';
+
 import { selectSelectedSeats, addSelectedSeat, removeSelectedSeat } from '../../../../redux/bookSeatsSlice';
 
 import styles from './BookingSeats.module.css';
 import asiento from '../../../../assets/asiento.svg';
 import asientoFree from '../../../../assets/asiento-free.svg';
+import axios from 'axios';
 
 const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQuery }) => {
   const dispatch = useDispatch();
-  const seats = useSelector(selectSeats);
-  console.log('Seats en BookingSeats:', seats);
-  const rows = seats.length > 0 ? seats[0].rows : 0; // Obtenemos las filas de los asientos
-  const columns = seats.length > 0 ? seats[0].columns : 0; // Obtenemos las columnas de los asientos
-  console.log('Rows in Bookingseats:', rows, 'Columns:', columns);
+  const [seats, setSeats] = useState([]);
+  const [rows, setRows] = useState(0);
+  const [columns, setColumns] = useState(0);
+
+  const [countdown, setCountdown] = useState(900);
+  const [timerActive, setTimerActive] = useState(false);
 
   useEffect(() => {
-    
-    // Cuando el componente se monta, obtén los asientos del servidor
-    dispatch(fetchAndSetSeats(id, sector, sectorPricesQuery));
-  }, [id, sector, sectorPricesQuery, dispatch]);
+    const fetchRealSeats = async () => {
+      try {
+        console.log('Fetching seats for event ID:', id, 'and sector:', sector);
+        const response = await axios.post(`http://localhost:3001/seat/${id}/${sector}`);
+        console.log('Response from server:', response.data);
+        const realSeats = response.data;
+
+        // Obtenemos rows y columns del primer objeto
+        const firstSeat = realSeats[0];
+        const { rows, columns } = firstSeat || { rows: 0, columns: 0 };
+
+        console.log('Fetched seats:', realSeats);
+        console.log('Rows:', rows, 'Columns:', columns);
+
+        setRows(rows);
+        setColumns(columns);
+        setSeats(realSeats);
+  
+      } catch (error) {
+        console.error('Error al obtener los asientos:', error);
+      }
+    };
+
+    fetchRealSeats();
+  }, [id, sector, sectorPricesQuery]);
+
+  useEffect(() => {
+    let interval;
+
+    if (timerActive && countdown > 0) {
+      interval = setInterval(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+    }
+
+    if (countdown === 0) {
+      clearInterval(interval);
+      setTimerActive(false);
+      alert('El tiempo ha expirado. Los asientos volverán a estar disponibles.');
+    }
+
+    return () => clearInterval(interval);
+  }, [countdown, timerActive]);
 
   const handleSeatClick = (seat) => {
     if (!seat.status) {
@@ -31,6 +73,8 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
       dispatch(removeSelectedSeat(seat));
     } else {
       dispatch(addSelectedSeat(seat));
+      setTimerActive(true);
+      setCountdown(900);
     }
 
     if (onSeatSelect) {
@@ -53,8 +97,8 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
           {Array.from({ length: rows }, (_, rowIndex) => (
   <tr key={rowIndex}>
     {Array.from({ length: columns }, (_, colIndex) => {
-      const currentSeat = seats[rowIndex * columns + colIndex];
-
+      const currentSeat = seats[colIndex]; // Usar colIndex para acceder a los objetos
+      
       return (
         <td key={colIndex}>
           {currentSeat && (
@@ -102,11 +146,8 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
       </div>
       <div className={styles.selectedInfo}>
         <div>Total Seats Selected: {selectedSeats.length}</div>
-        <div>
-          Total Price:{' '}
-          {selectedSeats.reduce((total, seat) => total + seat.price, 0)}
-        </div>
-        <div>Time Left: {formatTime(900)}</div>
+        <div>Total Price: {selectedSeats.reduce((total, seat) => total + seat.Price, 0)}</div>
+        <div>Time Left: {formatTime(countdown)}</div>
       </div>
     </div>
   );

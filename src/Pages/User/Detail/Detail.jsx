@@ -32,10 +32,12 @@ const Detail = () => {
   return (
     <>
       <div className={styles.ContainerGlobal}>
-        {isLoading ? ( // Verifica si isLoading es verdadero
+       {/*
+        {isLoading ? ( 
           <Loader />
         ) : (
-          <>
+        */}
+        <>
             <div className={styles.ContainerBanner}>
               <img src={eventDetails.bannerImage} alt={eventDetails.name} />
             </div>
@@ -122,7 +124,10 @@ const Detail = () => {
               </Link>
             </div>
           </>
-        )}
+          {/*
+          )}
+        */}
+
       </div>
     </>
   )
