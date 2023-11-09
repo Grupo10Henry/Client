@@ -8,9 +8,7 @@ import { instance } from "../../../axios/config"
 
 import { AiOutlineClose } from "react-icons/ai"
 
-import toast, { Toaster } from "react-hot-toast"
-
-// necesito ayuda con el diseño de la tarjeta de Contacto :(
+import toast from "react-hot-toast"
 
 const Contact = () => {
   const { view, contactFalse } = useContext(Context)
@@ -31,7 +29,7 @@ const Contact = () => {
         lastName: userInfo.lastName || "",
         email: userInfo.email || "",
         phone: userInfo.phone || "",
-        consultation: userData.consultation,
+        consultation: "",
       })
     }
   }, [userInfo])
@@ -45,7 +43,7 @@ const Contact = () => {
   const handlerSubmit = async (e) => {
     e.preventDefault()
 
-    // se guarda la informacion a enviar al back
+    // se guarda la informacion para enviar al back
     let newConsultation = {
       name: userData.name,
       lastName: userData.lastName,
@@ -74,14 +72,19 @@ const Contact = () => {
       console.log(error?.response?.data.error || error)
     }
   }
+
+  //onClick={contactFalse}
+
   return (
     <>
-      <div className={`${style.contact} ${Show}`} onClick={contactFalse}>
+      <div className={`${style.contact} ${Show}`}>
         <form onSubmit={handlerSubmit} className={style.form}>
           <button onClick={contactFalse} className={style.close} type="button">
             <AiOutlineClose />
           </button>
-
+          <br />
+          <br />
+          <br />
           <h3 className={style.title}>¿Tienes alguna consulta?</h3>
           <p className={style.subtitle}>
             Estamos aquí para ayudarte. Si tienes preguntas, comentarios o

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Ticket.module.css';
 import QRImage from "../../../../assets/qrRandom.jpg";
-import logo from "../../../../assets/logo_mi_butaca_blanco.svg"
+import logo from "../../../../assets/logo_mi_butaca_color.svg"
 
 const Ticket = () => {
     const infoTicket = {
