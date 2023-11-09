@@ -114,13 +114,17 @@ function App() {
     "/carrito",
     "/micuenta",
     "/detalle",
+    "/preguntas",
+    "/evento",
   ]
+  const allowedPathsFooter = ["/faq", "/reserva", "/carrito", "/detalle"]
+
   const shouldRenderNavbar = allowedPaths.some(
     (path) => location.pathname === path || location.pathname.includes(path)
   )
 
   const shouldRenderFooter =
-    allowedPaths.some(
+    allowedPathsFooter.some(
       (path) => location.pathname === path || location.pathname.includes(path)
     ) && !location.pathname.startsWith("/admin")
 
