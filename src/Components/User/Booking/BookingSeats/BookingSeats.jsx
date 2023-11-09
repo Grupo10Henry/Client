@@ -1,58 +1,65 @@
 // SeatMap.js
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { 
-    selectSeats,  
-    fetchSeats, 
-    removeSelectedSeat, 
-    addSelectedSeat, 
-} from '../../../../redux/bookSeatsSlice'; // Asegúrate de importar las acciones y selectores adecuados
-import styles from './BookingSeats.module.css';
-import asiento from '../../../../assets/asiento.svg';
-import { instance } from '../../../../axios/config';
-import axios from 'axios';
+import React, { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { useParams } from "react-router-dom"
+import {
+  selectSeats,
+  fetchSeats,
+  removeSelectedSeat,
+  addSelectedSeat,
+} from "../../../../redux/bookSeatsSlice" // Asegúrate de importar las acciones y selectores adecuados
+import styles from "./BookingSeats.module.css"
+import asiento from "../../../../assets/asiento.svg"
+import { instance } from "../../../../axios/config"
+import axios from "axios"
 
-const BookingSeats = ({sector, selectedSeats, onSeatSelect, sectorPricesQuery}) => {
-  const {id} = useParams();
+const BookingSeats = ({
+  sector,
+  selectedSeats,
+  onSeatSelect,
+  sectorPricesQuery,
+}) => {
+  const { id } = useParams()
   // eventID es = id
-  const dispatch = useDispatch();
-  const seats = useSelector(selectSeats);
+  const dispatch = useDispatch()
+  const seats = useSelector(selectSeats)
 
   useEffect(() => {
     const fetchRealSeats = async () => {
       try {
-        const response = await axios.post(`http://localhost:3001/seat/${id}/${sector}`);
-        console.log(response.data, "response.data en BookingSeats");
-        const realSeats = response.data;
-    
-    console.log(sector, "sector recibido en BookingSeats");
+        const response = await axios.post(
+          `http://localhost:3001/seat/${id}/${sector}`
+        )
+        console.log(response.data, "response.data en BookingSeats")
+        const realSeats = response.data
+
+        console.log(sector, "sector recibido en BookingSeats")
       } catch (error) {
-        console.error('Error al obtener los asientos:', error);
+        console.error("Error al obtener los asientos:", error)
       }
-    };
+    }
     console.log(sector, "sector recibido en BookingSeats")
     console.log(id, "id recibido en BookingSeats")
-    fetchRealSeats();
-  }, [id, sector, sectorPricesQuery]);
+    fetchRealSeats()
+  }, [id, sector, sectorPricesQuery])
 
   const handleSeatClick = (seat) => {
-    if (seat.status === 'occupied') {
+    if (seat.status === "occupied") {
       // Si el asiento está ocupado, no se puede seleccionar
-      return;
+      return
     }
 
     if (selectedSeats.includes(seat)) {
       // Si el asiento ya está seleccionado, quítalo de los asientos seleccionados
-      dispatch(removeSelectedSeat(seat));
+      dispatch(removeSelectedSeat(seat))
     } else {
       // Si el asiento no está seleccionado, agrégalo a los asientos seleccionados
-      dispatch(addSelectedSeat(seat));
+      dispatch(addSelectedSeat(seat))
     }
     if (onSeatSelect) {
-      onSeatSelect(seat);
+      onSeatSelect(seat)
     }
-  };
+  }
 
   return (
     <div className={styles.seatMap}>
@@ -65,8 +72,9 @@ const BookingSeats = ({sector, selectedSeats, onSeatSelect, sectorPricesQuery}) 
                 <tr key={rowIndex}>
                   {Array.from({ length: seat.columns }, (_, colIndex) => {
                     const currentSeat = seat.find(
-                      (s) => s.seatLocation === `${rowIndex + 1}-${colIndex + 1}`
-                    );
+                      (s) =>
+                        s.seatLocation === `${rowIndex + 1}-${colIndex + 1}`
+                    )
                     return (
                       <td key={colIndex}>
                         {currentSeat && (
@@ -75,13 +83,15 @@ const BookingSeats = ({sector, selectedSeats, onSeatSelect, sectorPricesQuery}) 
                             src={asiento}
                             alt={`Seat ${currentSeat.seatLocation}`}
                             className={`${styles.seat} ${
-                              selectedSeats.includes(currentSeat) ? styles.selected : ''
+                              selectedSeats.includes(currentSeat)
+                                ? styles.selected
+                                : ""
                             }`}
                             onClick={() => handleSeatClick(currentSeat)}
                           />
                         )}
                       </td>
-                    );
+                    )
                   })}
                 </tr>
               ))}
@@ -90,7 +100,7 @@ const BookingSeats = ({sector, selectedSeats, onSeatSelect, sectorPricesQuery}) 
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default BookingSeats;
+export default BookingSeats
