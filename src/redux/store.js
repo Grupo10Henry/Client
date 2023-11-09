@@ -1,22 +1,21 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 import { persistStore, persistReducer } from "redux-persist"
 import storage from "redux-persist/lib/storage"
-// import storageSession from "redux-persist/es/storage/session";
 import userReducer from "./userSlice"
 import detailReducer from "./detailSlice"
 import seatReducer from "./seatSlice"
 import eventsReducer from "./eventsSlice"
-import eventIDReducer from "./eventIDSlice"
 import counterReducer from "./counterSlice"
 import eventsCountReducer from "./eventsCountSlice"
 import bookSeatReducer from "./bookSeatsSlice"
 import footerReducer from "./footerSlice"
 import faqReducer from "./faqSlice"
+import eventIDReducer from "./eventIDSlice"
 
 const persistConfig = {
-  key: "root", // key para almacenar solo el estado del usuario
+  key: "root",
   storage,
-  whiteList: ["user"],
+  whiteList: ["user"], // aca se agregan las keys que se van a persistir (se deben llamar igual el key del reducer de abajo)
 }
 
 const rootReducer = combineReducers({
@@ -29,7 +28,7 @@ const rootReducer = combineReducers({
   eventsCount: eventsCountReducer,
   bookSeat: bookSeatReducer,
   footer: footerReducer,
-  faq: faqReducer
+  faq: faqReducer,
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

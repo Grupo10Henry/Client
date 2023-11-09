@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import styles from "./Booking.module.css";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { instance } from "../../../axios/config";
-import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsDemo";
-import { useSelector } from "react-redux";
-import Loader from "../../../Components/UserAndAdmin/Loader/Loader";
+import React, { useState, useEffect } from "react"
+import styles from "./Booking.module.css"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
+import { instance } from "../../../axios/config"
+import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsDemo"
+import { useSelector } from "react-redux"
+import Loader from "../../../Components/UserAndAdmin/Loader/Loader"
 
 const Booking = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const token = useSelector((state) => state.user.token);
-  const [loading, setLoading] = useState(true);
+  const token = useSelector((state) => state.user.token)
+  const [loading, setLoading] = useState(true)
   // Cambié el nombre de esta variable para mantener la consistencia
   const [eventDetails, setEventDetails] = useState({
     name: "",
@@ -25,35 +25,37 @@ const Booking = () => {
     planImage: "",
     views: "",
     type: "",
-  });
-  const { id } = useParams();
-  const { isDonation } = new URLSearchParams(window.location.search);
-  const [selectedSector, setSelectedSector] = useState(null);
-  const [selectedSeats, setSelectedSeats] = useState([]);
-  const [countdown, setCountdown] = useState(900); // 15 minutos en segundos
+  })
+  const { id } = useParams()
+  const { isDonation } = new URLSearchParams(window.location.search)
+  const [selectedSector, setSelectedSector] = useState(null)
+  const [selectedSeats, setSelectedSeats] = useState([])
+  const [countdown, setCountdown] = useState(900) // 15 minutos en segundos
 
-  const location = useLocation();
-  const sectorPrices = location.state && location.state.sectorPrices;
-  const [sectorPricesQuery, setSectorPricesQuery] = useState("");
+  const location = useLocation()
+  const sectorPrices = location.state && location.state.sectorPrices
+  const [sectorPricesQuery, setSectorPricesQuery] = useState("")
 
   useEffect(() => {
     if (sectorPrices && sectorPrices.length > 0) {
-      const sectorPricesJSON = JSON.stringify(sectorPrices);
-      const encodedSectorPrices = encodeURIComponent(sectorPricesJSON);
-      setSectorPricesQuery(`?sectorPrices=${encodedSectorPrices}`);
+      const sectorPricesJSON = JSON.stringify(sectorPrices)
+      const encodedSectorPrices = encodeURIComponent(sectorPricesJSON)
+      setSectorPricesQuery(`?sectorPrices=${encodedSectorPrices}`)
     }
-  }, [sectorPrices]);
+  }, [sectorPrices])
 
   useEffect(() => {
     if (!token) {
-      window.alert("Por favor inicia sesión para poder reservar una entrada.");
-      navigate("/iniciarsesion");
-      setLoading(false); // Agregamos esto para manejar la carga en caso de no estar autenticado
+      window.alert("Por favor inicia sesión para poder reservar una entrada.")
+      navigate("/iniciarsesion")
+      setLoading(false) // Agregamos esto para manejar la carga en caso de no estar autenticado
     } else {
       const fetchData = async () => {
         try {
-          /*const responseSeat = await instance.get(`/seat/${id}`);*/
-          const responseEvent = await instance.get(`/event/${id}`);
+          const responseSeat = await instance.get(`/seat/${id}`)
+          const responseEvent = await instance.get(`/event/${id}`)
+
+          console.log("RESPONSESEAT", responseSeat)
 
           if (responseEvent.data) {
             const {
@@ -68,7 +70,7 @@ const Booking = () => {
               planImage,
               views,
               type,
-            } = responseEvent.data;
+            } = responseEvent.data
 
             setEventDetails({
               name,
@@ -82,52 +84,52 @@ const Booking = () => {
               planImage,
               views,
               type,
-            });
+            })
           }
         } catch (error) {
-          console.error("Error al obtener los datos:", error);
-          navigate("/iniciarsesion");
+          console.error("Error al obtener los datos:", error)
+          navigate("/iniciarsesion")
         } finally {
-          setLoading(false);
+          setLoading(false)
         }
-      };
+      }
 
-      fetchData();
+      fetchData()
     }
-  }, [token, navigate, id]);
+  }, [token, navigate, id])
 
   if (loading) {
-    return <Loader />;
+    return <Loader />
   }
 
-  const originalDate = eventDetails.date;
-  const parts = originalDate.split("-");
+  const originalDate = eventDetails.date
+  const parts = originalDate.split("-")
 
-  let dateToRender;
+  let dateToRender
   if (parts.length === 3) {
-    const newDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
-    dateToRender = newDate;
+    const newDate = `${parts[2]}/${parts[1]}/${parts[0]}`
+    dateToRender = newDate
   } else {
-    dateToRender = eventDetails.date; // Corregí esta parte para evitar un error
+    dateToRender = eventDetails.date // Corregí esta parte para evitar un error
   }
 
   const handleOnClickcarrito = () => {
-    navigate("/carrito");
-  };
+    navigate("/carrito")
+  }
 
   const handleSeatSelect = (seat) => {
     if (seat.status === true) {
       const updatedSeats = selectedSeats.includes(seat)
         ? selectedSeats.filter((s) => s !== seat)
-        : [...selectedSeats, seat];
-      setSelectedSeats(updatedSeats);
+        : [...selectedSeats, seat]
+      setSelectedSeats(updatedSeats)
     }
-  };
+  }
 
   const handleSectorSelect = (sectorName) => {
-    setSelectedSector(sectorName);
-    console.log(sectorName, "sector seleccionado en Booking");
-  };
+    setSelectedSector(sectorName)
+    console.log(sectorName, "sector seleccionado en Booking")
+  }
 
   /*const handleCheckout = () => {
     // iniciar el proceso de pago
@@ -220,7 +222,7 @@ const Booking = () => {
       </div>
       <button onClick={handleOnClickcarrito}>Agregar al carrito</button>{" "}
     </div>
-  );
-};
+  )
+}
 
-export default Booking;
+export default Booking

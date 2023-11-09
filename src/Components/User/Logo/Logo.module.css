@@ -10,7 +10,7 @@
 }
 
 .logo img {
-  object-fit: contain;
+  object-fit: cover;
 }
 
 @keyframes logoAnimation {
@@ -22,10 +22,5 @@
   }
   to {
     transform: none;
-  }
-}
-@media (width > 500px) {
-  .logo {
-    width: 120px;
   }
 }

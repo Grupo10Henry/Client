@@ -1,10 +1,6 @@
+import { PiSignOutBold, PiUserBold } from "react-icons/pi"
+import { BiCart } from "react-icons/bi"
 import { NavLink } from "react-router-dom"
-import {
-  PiSignOutBold,
-  PiUserBold,
-  PiSignInBold,
-  PiUserPlusBold,
-} from "react-icons/pi"
 
 import style from "./Menu.module.css"
 
@@ -54,6 +50,9 @@ const Menu = ({
           </NavLink>
           <button onClick={handleLogout} className={style.optionsBtn}>
             <PiSignOutBold />
+          </button>
+          <button className={style.optionsBtn}>
+            <BiCart />
           </button>
         </div>
       ) : (
