@@ -46,17 +46,17 @@
 }	
 
 .selected {
-  background-color: #00ff00; /* Cambia el color de fondo cuando se selecciona */
+  background-color: #00ffbf;
 }
 
-/* Cuando el asiento esté ocupado */
+
 .seat.occupied svg {
-  fill: #ff0000; /* Cambia el color de relleno del SVG a rojo */
+  fill: #ff0000; 
 }
 
-/* Cuando el asiento esté libre */
+
 .seat.free svg {
-  fill: #00ff00; /* Cambia el color de relleno del SVG a verde */
+  fill: #00ffaa; 
 }
 
 .seatInfo {

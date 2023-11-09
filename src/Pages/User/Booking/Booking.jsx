@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styles from "./Booking.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -7,10 +8,12 @@ import { instance } from "../../../axios/config";
 import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsNew";
 import { useSelector } from "react-redux";
 import Loader from "../../../Components/UserAndAdmin/Loader/Loader";
+import { fetchAndSetSeats } from "../../../redux/seatSlice";
 
 
 const Booking = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const token = useSelector((state) => state.user.token)
   const [loading, setLoading] = useState(true)
@@ -32,11 +35,31 @@ const Booking = () => {
   const { isDonation } = new URLSearchParams(window.location.search)
   const [selectedSector, setSelectedSector] = useState(null)
   const [selectedSeats, setSelectedSeats] = useState([])
-  const [countdown, setCountdown] = useState(900) // 15 minutos en segundos
+ 
 
   const location = useLocation()
   const sectorPrices = location.state && location.state.sectorPrices
   const [sectorPricesQuery, setSectorPricesQuery] = useState("")
+
+  const [sectorInfo, setSectorInfo] = useState({
+    selectedSeats: [],
+    totalPrice: 0,
+  });
+
+  const handleSectorInfoUpdate = () => {
+    // Calcula el total de asientos seleccionados y el precio total
+    const totalSeatsSelected = selectedSeats.length;
+    const totalPrice = selectedSeats.reduce((total, seat) => total + seat.price, 0);
+  
+    // Actualiza el estado sectorInfo
+    setSectorInfo({
+      selectedSeats: totalSeatsSelected,
+      totalPrice,
+    });
+  };
+
+
+  
 
   useEffect(() => {
     if (sectorPrices && sectorPrices.length > 0) {
@@ -46,59 +69,61 @@ const Booking = () => {
     }
   }, [sectorPrices])
 
-  useEffect(() => {
-    if (!token) {
-      window.alert("Por favor inicia sesión para poder reservar una entrada.")
-      navigate("/iniciarsesion")
-      setLoading(false) // Agregamos esto para manejar la carga en caso de no estar autenticado
-    } else {
-      const fetchData = async () => {
-        try {
-          const responseSeat = await instance.get(`/seat/${id}`)
-          const responseEvent = await instance.get(`/event/${id}`)
-
-          console.log("RESPONSESEAT", responseSeat)
-
-          if (responseEvent.data) {
-            const {
-              name,
-              date,
-              time,
-              locationName,
-              adressLocation,
-              image,
-              capacity,
-              mapLocation,
-              planImage,
-              views,
-              type,
-            } = responseEvent.data
-
-            setEventDetails({
-              name,
-              date,
-              time,
-              locationName,
-              adressLocation,
-              image,
-              capacity,
-              mapLocation,
-              planImage,
-              views,
-              type,
-            })
+  
+    useEffect(() => {
+      if (!token) {
+        window.alert("Por favor inicia sesión para poder reservar una entrada.");
+        navigate("/iniciarsesion");
+        setLoading(false);
+      } else {
+        const fetchData = async () => {
+          try {
+            if (selectedSector) {
+              dispatch(fetchAndSetSeats(id, selectedSector));
+            }
+            const responseEvent = await instance.get(`/event/${id}`);
+    
+            if (responseEvent.data) {
+              const {
+                name,
+                date,
+                time,
+                locationName,
+                adressLocation,
+                image,
+                capacity,
+                mapLocation,
+                planImage,
+                views,
+                type,
+              } = responseEvent.data;
+    
+              setEventDetails({
+                name,
+                date,
+                time,
+                locationName,
+                adressLocation,
+                image,
+                capacity,
+                mapLocation,
+                planImage,
+                views,
+                type,
+              });
+            }
+          } catch (error) {
+            console.error("Error al obtener los datos:", error);
+            navigate("/iniciarsesion");
+          } finally {
+            setLoading(false);
           }
-        } catch (error) {
-          console.error("Error al obtener los datos:", error)
-          navigate("/iniciarsesion")
-        } finally {
-          setLoading(false)
-        }
+        };
+    
+        fetchData();
       }
-
-      fetchData()
-    }
-  }, [token, navigate, id])
+    }, [token, navigate, id, selectedSector]);
+    
 
   if (loading) {
     return <Loader />
@@ -203,6 +228,12 @@ const Booking = () => {
                   {sector[1]} - $ {sector[0]}
                 </div>
               ))}
+              <div className={styles.ContainerBookingSeatsInfo}>
+  <div>Total Seats Selected: {sectorInfo.selectedSeats}</div>
+  <div>Total Price: {sectorInfo.totalPrice}</div>
+  
+</div>
+
             </>
           )}
         </div>
@@ -218,6 +249,7 @@ const Booking = () => {
               selectedSeats={selectedSeats}
               onSeatSelect={handleSeatSelect}
               sectorPricesQuery={sectorPricesQuery}
+              handleSectorInfoUpdate={handleSectorInfoUpdate}
             />
           )}
         </div>

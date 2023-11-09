@@ -1,39 +1,39 @@
-// JULI
-
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 const initialState = {
-    seatID: '',
-    eventID: '',
-    userID: '',
-    paystubID: '',
-    row: '',
-    column: '',
-    sector: '',
-    price: '',
-    status: '',
-    exists: '',
+  seats: {}, // Usa un objeto para almacenar los asientos únicos
 };
 
 export const seatSlice = createSlice({
-    name: 'seat',
-    initialState,
-    reducers: {
-        getSeat: (state, action) => {
-            const {seatID, eventID, userID, paystubID, row, column, sector, price, status, exists} = action.payload;
-            state.seatID = seatID;
-            state.eventID = eventID;
-            state.userID = userID;
-            state.paystubID = paystubID;
-            state.row = row;
-            state.column = column;
-            state.sector = sector;
-            state.price = price;
-            state.status = status;
-            state.exists = exists;
-        },
+  name: 'seat',
+  initialState,
+  reducers: {
+    setSeats: (state, action) => {
+      // Reinicia el objeto de asientos al recibir nuevos datos
+      state.seats = {};
+      action.payload.forEach((seat) => {
+        // Almacena los asientos en el objeto, utilizando seatID como clave
+        state.seats[seat.seatID] = seat;
+      });
     },
+  },
 });
 
-export const {getSeat} = seatSlice.actions;
+export const fetchAndSetSeats = (eventID, sector) => async (dispatch) => {
+  try {
+    const response = await axios.post(`http://localhost:3001/seat/${eventID}/${sector}`);
+    const realSeats = response.data;
+    dispatch(setSeats(realSeats)); // Llama a la acción 'setSeats' para almacenar todos los detalles de los asientos
+  } catch (error) {
+    console.error('Error al obtener los asientos:', error);
+  }
+};
+
+const selectSeatState = (state) => state.seat;
+export const { setSeats } = seatSlice.actions;
+
+// Define el selector en el mismo archivo
+export const selectSeats = createSelector(selectSeatState, (seatState) => Object.values(seatState.seats));
+
 export default seatSlice.reducer;

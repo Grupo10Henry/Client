@@ -1,65 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectSeats, fetchAndSetSeats } from '../../../../redux/seatSlice';
 import { selectSelectedSeats, addSelectedSeat, removeSelectedSeat } from '../../../../redux/bookSeatsSlice';
+
 import styles from './BookingSeats.module.css';
 import asiento from '../../../../assets/asiento.svg';
-import axios from 'axios';
+import asientoFree from '../../../../assets/asiento-free.svg';
+import asientoSelected from '../../../../assets/asiento-ocup.svg';
 
-const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQuery }) => {
+const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQuery, handleSectorInfoUpdate }) => {
   const dispatch = useDispatch();
-  const [seats, setSeats] = useState([]);
-  const [rows, setRows] = useState(0);
-  const [columns, setColumns] = useState(0);
-
-  const [countdown, setCountdown] = useState(900);
-  const [timerActive, setTimerActive] = useState(false);
-
-  useEffect(() => {
-    const fetchRealSeats = async () => {
-      try {
-        console.log('Fetching seats for event ID:', id, 'and sector:', sector);
-        const response = await axios.post(`http://localhost:3001/seat/${id}/${sector}`);
-        console.log('Response from server:', response.data);
-        const realSeats = response.data;
-
-        // Obtenemos rows y columns del primer objeto
-        const firstSeat = realSeats[0];
-        const { rows, columns } = firstSeat || { rows: 0, columns: 0 };
-
-        console.log('Fetched seats:', realSeats);
-        console.log('Rows:', rows, 'Columns:', columns);
-
-        setRows(rows);
-        setColumns(columns);
-        setSeats(realSeats);
-      } catch (error) {
-        console.error('Error al obtener los asientos:', error);
-      }
-    };
-
-    fetchRealSeats();
-  }, [id, sector, sectorPricesQuery]);
+  const seats = useSelector(selectSeats);
+  console.log('Seats en BookingSeats:', seats);
+  const rows = seats.length > 0 ? seats[0].rows : 0; // Obtenemos las filas de los asientos
+  const columns = seats.length > 0 ? seats[0].columns : 0; // Obtenemos las columnas de los asientos
+  console.log('Rows in Bookingseats:', rows, 'Columns:', columns);
 
   useEffect(() => {
-    let interval;
-
-    if (timerActive && countdown > 0) {
-      interval = setInterval(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
-    }
-
-    if (countdown === 0) {
-      clearInterval(interval);
-      setTimerActive(false);
-      alert('El tiempo ha expirado. Los asientos volverán a estar disponibles.');
-    }
-
-    return () => clearInterval(interval);
-  }, [countdown, timerActive]);
+    
+    // Cuando el componente se monta, obtén los asientos del servidor
+    dispatch(fetchAndSetSeats(id, sector, sectorPricesQuery));
+  }, [id, sector, sectorPricesQuery, dispatch]);
 
   const handleSeatClick = (seat) => {
-    if (seat.status === 'occupied') {
+    if (!seat.status) {
+      // El asiento está ocupado, no se puede seleccionar
       return;
     }
 
@@ -67,13 +32,12 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
       dispatch(removeSelectedSeat(seat));
     } else {
       dispatch(addSelectedSeat(seat));
-      setTimerActive(true);
-      setCountdown(900);
     }
 
     if (onSeatSelect) {
       onSeatSelect(seat);
     }
+    handleSectorInfoUpdate();
   };
 
   const formatTime = (time) => {
@@ -81,6 +45,7 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
     const seconds = time % 60;
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
+  
 
   return (
     <div className={styles.seatMap}>
@@ -91,20 +56,43 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
             {Array.from({ length: rows }, (_, rowIndex) => (
               <tr key={rowIndex}>
                 {Array.from({ length: columns }, (_, colIndex) => {
-                  const currentSeat = seats.find(
-                    (seat) => seat.seatLocation === `${rowIndex + 1}-${colIndex + 1}`
-                  );
+                  const currentSeat = seats[rowIndex * columns + colIndex];
 
                   return (
                     <td key={colIndex}>
                       {currentSeat && (
-                        <img
-                          key={currentSeat.seatID}
-                          src={asiento}
-                          alt={`Seat ${currentSeat.seatLocation}`}
-                          className={`${styles.seat} ${selectedSeats.includes(currentSeat) ? styles.selected : ''}`}
-                          onClick={() => handleSeatClick(currentSeat)}
-                        />
+                        <div>
+                          {currentSeat.status ? (
+                            <div>
+                              <img
+                                key={currentSeat.seatID}
+                                src={selectedSeats.includes(currentSeat) ? asiento : asientoFree}
+                                alt={`Seat ${currentSeat.seatLocation}`}
+                                className={`${styles.seat} ${
+                                  selectedSeats.includes(currentSeat)
+                                    ? styles.selected
+                                    : ''
+                                }`}
+                                onClick={() => handleSeatClick(currentSeat)}
+                              />
+                              <p className={styles.seatLocation}>
+                                {currentSeat.seatLocation}
+                              </p>
+                            </div>
+                          ) : (
+                            <div>
+                              <img
+                                key={currentSeat.seatID}
+                                src={asientoSelected}
+                                alt={`Seat ${currentSeat.seatLocation}`}
+                                className={styles.seat}
+                              />
+                              <p className={styles.seatLocation}>
+                                {currentSeat.seatLocation}
+                              </p>
+                            </div>
+                          )}
+                        </div>
                       )}
                     </td>
                   );
@@ -115,12 +103,12 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
         </table>
       </div>
       <div className={styles.selectedInfo}>
-        <div>Total Seats Selected: {selectedSeats.length}</div>
-        <div>Total Price: {selectedSeats.reduce((total, seat) => total + seat.Price, 0)}</div>
-        <div>Time Left: {formatTime(countdown)}</div>
-      </div>
+       
+        <div>Time Left: {formatTime(900)}</div>
+              </div>
     </div>
   );
+
 };
 
 export default BookingSeats;

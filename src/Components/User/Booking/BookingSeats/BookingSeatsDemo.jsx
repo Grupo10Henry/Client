@@ -6,7 +6,7 @@ import {
   removeSelectedSeat,
 } from "../../../../redux/bookSeatsSlice"
 import styles from "./BookingSeats.module.css"
-import asiento from "../../../../assets/asiento.svg"
+import asiento from "../../../../assets/asiento-free.svg"
 
 const sectorData = {
   sector: "General",
