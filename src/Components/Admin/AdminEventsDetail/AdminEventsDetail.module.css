@@ -1,3 +1,8 @@
+.editEventContainer {
+    margin-top: 90px;
+}
+
 .EventsDetailTitle {
     background-color: blueviolet;
+    height: 500px;
 }

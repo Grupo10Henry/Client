@@ -63,3 +63,13 @@
     font-size: 12px;
     font-weight: bold;
 }
+
+.adminEventsEditButton {
+    cursor: pointer;
+    color: rgb(69, 192, 149);
+  }
+  
+.adminEventsDeleteButton {
+    cursor: pointer;
+    color: blueviolet;
+  }
