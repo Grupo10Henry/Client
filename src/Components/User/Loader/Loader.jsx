@@ -2,8 +2,16 @@ import ContentLoader from "react-content-loader"
 
 import style from "./Loader.module.css"
 
-const Loader = ({ size = 4 }) => {
+const Loader = ({ size = 4, slide }) => {
   const arr = new Array(size).fill(0)
+
+  if (slide) {
+    return (
+      <div className={style.loaderSlideWrapper}>
+        <div className={style.loaderSlide}></div>
+      </div>
+    )
+  }
 
   return (
     <div className={style.loaderWrapper}>

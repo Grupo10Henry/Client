@@ -1,129 +1,131 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectSelectedSeats, addSelectedSeat, removeSelectedSeat } from '../../../../redux/bookSeatsSlice';
+import { selectSeats, selectSelectedSeats, fetchAndSetSeats } from '../../../../redux/seatSlice';
+import { addSelectedSeat, removeSelectedSeat } from '../../../../redux/bookSeatsSlice';
 import styles from './BookingSeats.module.css';
 import asiento from '../../../../assets/asiento.svg';
-import axios from 'axios';
+import asientoFree from '../../../../assets/asiento-free.svg';
+import asientoSelected from '../../../../assets/asiento-ocup.svg';
 
-const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQuery }) => {
-  
+const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSectorInfoUpdate, counterActivated, setCounterActivated }) => {  
   const dispatch = useDispatch();
-  const [seats, setSeats] = useState([]);
-  const [rows, setRows] = useState(0);
-  const [columns, setColumns] = useState(0);
+  const seats = useSelector(selectSeats);
+  console.log('Seats en BookingSeats:', seats);
+  const rows = seats.length > 0 ? seats[0].rows : 0; // Obtenemos las filas de los asientos
+  const columns = seats.length > 0 ? seats[0].columns : 0; // Obtenemos las columnas de los asientos
+  console.log('Rows in Bookingseats:', rows, 'Columns:', columns);
+  const [remainingTime, setRemainingTime] = useState(900);
+  const selectedSeats = useSelector(selectSelectedSeats);
+  const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
 
-  const [countdown, setCountdown] = useState(900);
-  const [timerActive, setTimerActive] = useState(false);
 
   useEffect(() => {
-    const fetchRealSeats = async () => {
-      try {
-        console.log('Fetching seats for event ID:', id, 'and sector:', sector);
-        const response = await axios.post(`http://localhost:3001/seat/${id}/${sector}`);
-        console.log('Response from server:', response.data);
-        const realSeats = response.data;
-
-        // Obtenemos rows y columns del primer objeto
-        const firstSeat = realSeats[0];
-        const { rows, columns } = firstSeat || { rows: 0, columns: 0 };
-
-        console.log('Fetched seats:', realSeats);
-        console.log('Rows:', rows, 'Columns:', columns);
-
-        setRows(rows);
-        setColumns(columns);
-        setSeats(realSeats);
-      } catch (error) {
-        console.error('Error al obtener los asientos:', error);
+    
+    // Cuando el componente se monta, obtén los asientos del servidor
+    dispatch(fetchAndSetSeats(id, sector, sectorPricesQuery));
+    const interval = setInterval(() => {
+      if (counterActivated && remainingTime > 0) {
+        setRemainingTime(remainingTime - 1);
       }
-    };
-
-    fetchRealSeats();
-  }, [id, sector, sectorPricesQuery]);
-
-  useEffect(() => {
-    let interval;
-
-    if (timerActive && countdown > 0) {
-      interval = setInterval(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
-    }
-
-    if (countdown === 0) {
-      clearInterval(interval);
-      setTimerActive(false);
-      alert('El tiempo ha expirado. Los asientos volverán a estar disponibles.');
-    }
+    }, 1000); // Actualizar cada segundo
 
     return () => clearInterval(interval);
-  }, [countdown, timerActive]);
+  }, [id, sector, sectorPricesQuery, dispatch, counterActivated, remainingTime]);
 
   const handleSeatClick = (seat) => {
-    if (seat.status === 'occupied') {
+    if (!seat.status) {
+      // El asiento está ocupado, no se puede seleccionar
       return;
     }
-
-    if (selectedSeats.includes(seat)) {
-      dispatch(removeSelectedSeat(seat));
-    } else {
-      dispatch(addSelectedSeat(seat));
-      setTimerActive(true);
-      setCountdown(900);
-    }
-
+  
+    setSelectedSeatStatus((prevStatus) => ({
+      ...prevStatus,
+      [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
+    }));
+  
     if (onSeatSelect) {
       onSeatSelect(seat);
     }
+    handleSectorInfoUpdate();
   };
+  
+  
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
+  
 
   return (
-  <div className={styles.seatMap}>
-    <div className={styles.sector}>
-      <h3>Sector {sector}</h3>
-      <table className={styles.seatGrid}>
-        <tbody>
-          {Array.from({ length: rows }, (_, rowIndex) => (
-            <tr key={rowIndex}>
-              {Array.from({ length: columns }, (_, colIndex) => {
-                const currentSeat = seats.find(
-                  (seat) => seat.seatLocation === `${rowIndex + 1}-${colIndex + 1}`
-                );
+    <div className={styles.seatMap}>
+      <div className={styles.sector}>
+        <h3>Sector: {sector}</h3>
+        <div className={styles.selectedInfo}>
+        {counterActivated && (
+            <div className={`${styles.Time} ${remainingTime > 0 ? '' : styles.hidden}`}>
+              <p>
+                Reservaremos tus asientos por los próximos:{" "}
+                <span className={styles.TimeText}>{formatTime(remainingTime)}</span> minutos.
+              </p>
+            </div>
+          )}
 
-                console.log('Renderizando celda de asiento en columna:', colIndex);
-                
-                return (
-                  <td key={colIndex}>
-                    {currentSeat && (
-                      <img
-                        key={currentSeat.seatID}
-                        src={asiento}
-                        alt={`Seat ${currentSeat.seatLocation}`}
-                        className={`${styles.seat} ${selectedSeats.includes(currentSeat) ? styles.selected : ''}`}
-                        onClick={() => handleSeatClick(currentSeat)}
-                      />
-                    )}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              </div>
+        <table className={styles.seatGrid}>
+          <tbody>
+            {Array.from({ length: rows }, (_, rowIndex) => (
+              <tr key={rowIndex}>
+                {Array.from({ length: columns }, (_, colIndex) => {
+                  const currentSeat = seats[rowIndex * columns + colIndex];
+
+                  return (
+                    <td key={colIndex}>
+                      {currentSeat && (
+                        <div>
+                          {currentSeat.status ? (
+                            <div>
+                              <img
+  key={currentSeat.seatID}
+  src={selectedSeatStatus[currentSeat.seatID] ? asiento : asientoFree}
+  alt={`Seat ${currentSeat.seatLocation}`}
+  className={`${styles.seat} ${
+    selectedSeatStatus[currentSeat.seatID] ? styles.selected : ''
+  }`}
+  onClick={() => handleSeatClick(currentSeat)}
+/>
+
+                              <p className={styles.seatLocation}>
+                                {currentSeat.seatLocation}
+                              </p>
+                            </div>
+                          ) : (
+                            <div>
+                              <img
+                                key={currentSeat.seatID}
+                                src={asientoSelected}
+                                alt={`Seat ${currentSeat.seatLocation}`}
+                                className={styles.seat}
+                              />
+                              <p className={styles.seatLocation}>
+                                {currentSeat.seatLocation}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
     </div>
-    <div className={styles.selectedInfo}>
-      <div>Total Seats Selected: {selectedSeats.length}</div>
-      <div>Total Price: {selectedSeats.reduce((total, seat) => total + seat.Price, 0)}</div>
-      <div>Time Left: {formatTime(countdown)}</div>
-    </div>
-  </div>
-);
+  );
 
 };
 

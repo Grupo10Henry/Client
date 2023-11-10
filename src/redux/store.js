@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 import { persistStore, persistReducer } from "redux-persist"
+import thunk from "redux-thunk"
 import storage from "redux-persist/lib/storage"
 import userReducer from "./userSlice"
 import detailReducer from "./detailSlice"
@@ -15,7 +16,7 @@ import eventIDReducer from "./eventIDSlice"
 const persistConfig = {
   key: "root",
   storage,
-  whiteList: ["user"], // aca se agregan las keys que se van a persistir (se deben llamar igual el key del reducer de abajo)
+  whitelist: ["user"], // aca se agregan las keys que se van a persistir (se deben llamar igual el key del reducer de abajo)
 }
 
 const rootReducer = combineReducers({
@@ -34,6 +35,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
   reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => [
+    thunk,
+    ...getDefaultMiddleware({ serializableCheck: false }),
+  ],
 })
 
 export const persistor = persistStore(store)

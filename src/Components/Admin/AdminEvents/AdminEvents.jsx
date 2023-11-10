@@ -1,15 +1,18 @@
 // Luissssss
 import styles from './AdminEvents.module.css';
-import events from '../../User/Events/Events';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllEvents } from '../../../redux/eventsSlice';
 import { useEffect } from 'react';
 import { instance } from '../../../axios/config';
+import { AiFillEdit } from 'react-icons/ai';
+import { BsFillTrashFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminEvents() {
 
   const dispatch = useDispatch();
   const {allEvents} = useSelector((s) => s.events)
+  const navigate = useNavigate();
 
   const getEvents = async () => {
       try {
@@ -36,6 +39,10 @@ export default function AdminEvents() {
       alert(error.response.data.error)
     }
   };
+
+  const handleEditEvent = (eventID) => {
+    navigate(`../evento/${eventID}`)
+  }
 
     return (
         <div className={styles.eventsTableContainer}>
@@ -70,10 +77,10 @@ export default function AdminEvents() {
                <td className={styles.eventTableRowsContent}>{event.isDonation === false ? 'Sí' : 'No'}</td>
                <td className={styles.eventTableRowsContent}>{event.type}</td>
                <td className={styles.eventTableRowsContent}>
-                 <button className={styles.etablebutton} onClick={() => handleBlockUser(event.eventID)}>Editar</button>
+                 <AiFillEdit className={styles.adminEventsEditButton} onClick={() => handleEditEvent(event.eventID)} />
                </td>
                <td className={styles.eventTableRowsContent}>
-                 <button className={styles.etablebuttonN} onClick={() => handleDeleteEvent(event.eventID)}>Eliminar</button>
+                 <BsFillTrashFill className={styles.adminEventsDeleteButton} onClick={() => handleDeleteEvent(event.eventID)} />
                </td>
              </tr>
            ))}

@@ -1,5 +1,5 @@
 .formContainer {
-    width: 1070px;
+    width: 87.8vw;
 }
 
 .form {
@@ -10,10 +10,10 @@
 }
 
 .formTitle {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     padding: 0px 0px 0px 0px;
-    margin: 15px 0px 15px 0px;
+    margin: 20px 0px 20px 0px;
 }
 
 .formFields {
@@ -70,16 +70,26 @@
 }
 
 .sectionFormTitle {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     padding: 0px 0px 0px 0px;
-    margin: 0px 0px 0px 0px;
+    margin: 10px 0px 10px 0px;
 }
 
 .sectionFormSubtitle {
     font-size: 13px;
     padding: 0px 0px 0px 0px;
     margin: 10px 0px 10px 0px;
+}
+
+.formFields .formInputTextSection {
+    font-size: 13px;
+    border-color: rgb(143, 143, 143);
+    height: 25px;
+    border-radius: 5px;
+    padding: 0px 0px 0px 10px;
+    margin: 0px 0px 0px 0px;
+    width: 200px;
 }
 
 .form .formButton {

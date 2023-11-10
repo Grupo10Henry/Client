@@ -1,0 +1,86 @@
+.editFaqContainer {
+    background-color: rgb(190, 190, 190);
+    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.editFaqTitle {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 0px 0px 0px 0px;
+    margin: 25px 0px 15px 0px;
+}
+
+.editFaqFieldContainer {
+    padding: 0px 0px 0px 0px;
+    margin: 20px 0px 20px 0px;
+}
+
+.editFaqLabel {
+    font-size: 14px;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 10px 0px 0px;
+}
+
+.editFaqContainer .editFaqInput {
+    font-size: 14px;
+    border-color: rgb(143, 143, 143);
+    height: 60px;
+    width: 300px;
+    border-radius: 5px;
+    padding: 0px 0px 0px 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+.editFaqContainer .editFaqInputTA {
+    font-size: 14px;
+    border-color: rgb(143, 143, 143);
+    border-radius: 5px;
+    padding: 0px 0px 0px 10px;
+    margin: 0px 0px 0px 0px;
+    height: 90px;
+    width: 500px;
+}
+
+.editFaqButton {
+    background-color: rgb(69, 192, 149);
+    border-radius: 5px;
+    padding: 3px 10px 3px 10px;
+    margin: 0px 10px 10px 0px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.editFaqButton:hover {
+    background-color: rgb(90, 212, 170);
+}
+
+.editFaqButtonCancel {
+    background-color: blueviolet;
+    border-radius: 5px;
+    padding: 3px 10px 3px 10px;
+    margin: 0px 10px 0px 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.editFaqButtonCancel:hover {
+    background-color: rgb(166, 100, 228);
+}
+
+.editFaqButtonReturn {
+    background-color: rgb(46, 46, 46);
+    border-radius: 5px;
+    padding: 3px 10px 3px 10px;
+    margin: 0px 10px 0px 10px;
+    font-size: 13px;
+    font-weight: bold;
+    color:aliceblue
+}
+
+.editFaqButtonReturn:hover {
+    background-color: rgb(97, 97, 97);
+}

@@ -8,7 +8,11 @@ import EventsSections from "../../../Components/User/Events/EventsSections/Event
 import EventsText from "../../../Components/User/EventsText/EventsText"
 import Filters from "../../../Components/User/Filters/Filters"
 import { instance } from "../../../axios/config"
-import { getNextEvents, setEventsDate } from "../../../redux/eventsSlice"
+import {
+  setDataStart,
+  setDataSuccess,
+  setEventsDate,
+} from "../../../redux/eventsSlice"
 import Reviews from "../../../Components/User/Reviews/Reviews"
 import convertUniquesDates from "../../../utils/convertUniqueDates"
 
@@ -20,20 +24,26 @@ const Home = () => {
 
   const dispatch = useDispatch()
 
-  //obtiene los proximos eventos
-  const NextEvents = async () => {
+  const fetchAvailableEvents = () => async (dispatch) => {
+    dispatch(setDataStart())
     try {
-      const { data } = await instance.get("/event/next") // http://localhost:3001/event/next
-      dispatch(setEventsDate(convertUniquesDates(data)))
-      return data
+      const { data } = await instance.get("/event/next")
+      if (data) {
+        dispatch(setEventsDate(convertUniquesDates(data)))
+        dispatch(setDataSuccess(data))
+      }
     } catch (error) {
-      console.log(error?.response?.data.error || error)
+      if (error?.response.data.error) {
+        console.error(error?.response.data.error)
+      } else {
+        console.error("Error al obtener los eventos:", error)
+      }
     }
   }
 
   useEffect(() => {
-    NextEvents().then((data) => dispatch(getNextEvents(data)))
-  }, [])
+    dispatch(fetchAvailableEvents())
+  }, [dispatch])
 
   return (
     <div className={style.home}>
