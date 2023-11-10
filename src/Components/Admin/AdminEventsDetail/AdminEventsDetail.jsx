@@ -15,7 +15,7 @@ export default function AdminEventsDetail () {
     const currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0');
     const currentDay = String(currentDate.getDate()).padStart(2, '0');
     const minDate = `${currentYear}-${currentMonth}-${currentDay}`;
-    
+
     const dispatch = useDispatch();
     const params = useParams();
     
@@ -95,9 +95,8 @@ export default function AdminEventsDetail () {
 
     return (
         <div className={styles.editEventContainer}>
-            <h1 className={styles.EventsDetailTitle}> Edita el evento creado</h1>
-            <form className={styles.form}>
-                    <p className={styles.formTitle}>Completa la información para crear un evento</p>
+            <div className={styles.form}>
+                    <p className={styles.formTitle}>Edita el evento creado</p>
                     <div className={styles.formFields}>
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
@@ -263,9 +262,10 @@ export default function AdminEventsDetail () {
                     </div>
 
                     <button className={styles.formButton}
-                    type="submit"
-                    >Crear evento</button>
-                </form>
+                    >Editar evento</button>
+                    <button className={styles.formButton}
+                    >Cancelar</button>
+                </div>
         </div>
     )
 
