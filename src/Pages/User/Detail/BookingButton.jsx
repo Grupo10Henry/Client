@@ -3,7 +3,7 @@ import styles from "./BookingButton.module.css";
 import { useNavigate } from "react-router-dom";
 
 
-function BookingButton() {
+function BookingButton({handleClick}) {
 const navigate = useNavigate();
 
 
@@ -12,6 +12,7 @@ const navigate = useNavigate();
         <div>
         <button
             className={styles.bookingButton}
+            onClick={handleClick}
 
         >Reservar ahora!</button>
         </div>
