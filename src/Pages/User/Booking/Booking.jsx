@@ -7,7 +7,7 @@ import { instance } from "../../../axios/config";
 import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsNew";
 import { useSelector } from "react-redux";
 import Loader from "../../../Components/UserAndAdmin/Loader/Loader";
-import { fetchAndSetSeats } from "../../../redux/seatSlice";
+import { addSelectedSeat, removeSelectedSeat, selectSelectedSeats, fetchAndSetSeats } from "../../../redux/seatSlice";
 import axios from "axios";
 
 const Booking = () => {
@@ -33,7 +33,7 @@ const Booking = () => {
   const { id } = useParams();
   const { isDonation } = new URLSearchParams(window.location.search);
   const [selectedSector, setSelectedSector] = useState(null);
-  const [selectedSeats, setSelectedSeats] = useState([]);
+  const selectedSeats = useSelector(selectSelectedSeats);
 
   const location = useLocation();
   const sectorPrices = location.state && location.state.sectorPrices;
@@ -146,10 +146,11 @@ const Booking = () => {
 
   const handleSeatSelect = (seat) => {
     if (seat.status === true) {
-      const updatedSeats = selectedSeats.includes(seat)
-        ? selectedSeats.filter((s) => s !== seat)
-        : [...selectedSeats, seat];
-      setSelectedSeats(updatedSeats);
+      if (selectedSeats.includes(seat)) {
+        dispatch(removeSelectedSeat(seat));
+      } else {
+        dispatch(addSelectedSeat(seat));
+      }
     }
   };
 
@@ -251,7 +252,6 @@ const Booking = () => {
             <BookingSeats
               id={id}
               sector={selectedSector}
-              selectedSeats={selectedSeats}
               onSeatSelect={handleSeatSelect}
               sectorPricesQuery={sectorPricesQuery}
               handleSectorInfoUpdate={handleSectorInfoUpdate}
