@@ -13,8 +13,8 @@ const Detail = () => {
     eventDetails,
     isDonation,
     sectorPrices,
-    isLoading,
-    error,
+    //isLoading,
+    //error,
     handleClick,
     countdown,
   } = useDetail(params?.id)
@@ -32,12 +32,10 @@ const Detail = () => {
   return (
     <>
       <div className={styles.ContainerGlobal}>
-       {/*
-        {isLoading ? ( 
+        {/*{isLoading ? ( // Verifica si isLoading es verdadero
           <Loader />
-        ) : (
-        */}
-        <>
+  ) : (*/}
+          <>
             <div className={styles.ContainerBanner}>
               <img src={eventDetails.bannerImage} alt={eventDetails.name} />
             </div>
@@ -50,10 +48,11 @@ const Detail = () => {
               <div className={styles.ContainerAddress}>
                 <h3>Lugar: {eventDetails.locationName}</h3>
                 <h3>Dirección: {eventDetails.adressLocation}</h3>
-                <h4>Capacidad Total: {eventDetails.capacity} personas. </h4>
+                <h4>Capacidad Total: {eventDetails.capacity.toLocaleString("es-ES")} personas.</h4>
+
               </div>
               <br />
-              <h5>A {eventDetails.views} usuarios les interesa este evento.</h5>
+              <h5>A {eventDetails.views.toLocaleString("es-ES")} usuarios les interesa este evento.</h5>
             </div>
 
             <div className={styles.ContainerRightColumn}>
@@ -97,11 +96,12 @@ const Detail = () => {
                   <>
                     <h2>Sectores:</h2>
                     {sectorPrices.map((sector) => (
-                      <div className={styles.ContainerPrices} key={sector[1]}>
-                        <p>{sector[1]}</p>
-                        <p>$ {sector[0]}</p>
-                      </div>
-                    ))}
+  <div className={styles.ContainerPrices} key={sector[1]}>
+    <p>{sector[1]}</p>
+    <p>$ {Number(sector[0]).toLocaleString("es-ES")}</p>
+  </div>
+))}
+
 
                     <button onClick={handleClick}>
                       Ver sectores y Reservar
@@ -119,15 +119,12 @@ const Detail = () => {
               ></iframe>
             </div>
             <div className={styles.ContainerBookingButton}>
-              <Link to={`/reserva/${params?.id}`}>
-                <BookingButton />
-              </Link>
+              
+                <BookingButton handleClick={handleClick}/>
+              
             </div>
           </>
-          {/*
-          )}
-        */}
-
+        {/* )} */}
       </div>
     </>
   )

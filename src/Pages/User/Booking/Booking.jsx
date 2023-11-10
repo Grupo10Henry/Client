@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./Booking.module.css";
@@ -8,15 +7,15 @@ import { instance } from "../../../axios/config";
 import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsNew";
 import { useSelector } from "react-redux";
 import Loader from "../../../Components/UserAndAdmin/Loader/Loader";
-import { fetchAndSetSeats } from "../../../redux/seatSlice";
-
+import { addSelectedSeat, removeSelectedSeat, selectSelectedSeats, fetchAndSetSeats } from "../../../redux/seatSlice";
+import axios from "axios";
 
 const Booking = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const token = useSelector((state) => state.user.token)
-  const [loading, setLoading] = useState(true)
+  const token = useSelector((state) => state.user.token);
+  const [loading, setLoading] = useState(true);
   // Cambié el nombre de esta variable para mantener la consistencia
   const [eventDetails, setEventDetails] = useState({
     name: "",
@@ -30,133 +29,135 @@ const Booking = () => {
     planImage: "",
     views: "",
     type: "",
-  })
-  const { id } = useParams()
-  const { isDonation } = new URLSearchParams(window.location.search)
-  const [selectedSector, setSelectedSector] = useState(null)
-  const [selectedSeats, setSelectedSeats] = useState([])
- 
+  });
+  const { id } = useParams();
+  const { isDonation } = new URLSearchParams(window.location.search);
+  const [selectedSector, setSelectedSector] = useState(null);
+  const selectedSeats = useSelector(selectSelectedSeats);
 
-  const location = useLocation()
-  const sectorPrices = location.state && location.state.sectorPrices
-  const [sectorPricesQuery, setSectorPricesQuery] = useState("")
+  const location = useLocation();
+  const sectorPrices = location.state && location.state.sectorPrices;
+  const [sectorPricesQuery, setSectorPricesQuery] = useState("");
 
   const [sectorInfo, setSectorInfo] = useState({
     selectedSeats: [],
     totalPrice: 0,
   });
+  const [counterActivated, setCounterActivated] = useState(false);
+  
 
   const handleSectorInfoUpdate = () => {
     // Calcula el total de asientos seleccionados y el precio total
     const totalSeatsSelected = selectedSeats.length;
-    const totalPrice = selectedSeats.reduce((total, seat) => total + seat.price, 0);
-  
+    const totalPrice = selectedSeats.reduce(
+      (total, seat) => total + seat.price,
+      0
+    );
+
     // Actualiza el estado sectorInfo
     setSectorInfo({
       selectedSeats: totalSeatsSelected,
       totalPrice,
     });
+    setCounterActivated(true);
   };
-
-
-  
 
   useEffect(() => {
     if (sectorPrices && sectorPrices.length > 0) {
-      const sectorPricesJSON = JSON.stringify(sectorPrices)
-      const encodedSectorPrices = encodeURIComponent(sectorPricesJSON)
-      setSectorPricesQuery(`?sectorPrices=${encodedSectorPrices}`)
+      const sectorPricesJSON = JSON.stringify(sectorPrices);
+      const encodedSectorPrices = encodeURIComponent(sectorPricesJSON);
+      setSectorPricesQuery(`?sectorPrices=${encodedSectorPrices}`);
     }
-  }, [sectorPrices])
+  }, [sectorPrices]);
 
-  
-    useEffect(() => {
-      if (!token) {
-        window.alert("Por favor inicia sesión para poder reservar una entrada.");
-        navigate("/iniciarsesion");
-        setLoading(false);
-      } else {
-        const fetchData = async () => {
-          try {
-            if (selectedSector) {
-              dispatch(fetchAndSetSeats(id, selectedSector));
-            }
-            const responseEvent = await instance.get(`/event/${id}`);
-    
-            if (responseEvent.data) {
-              const {
-                name,
-                date,
-                time,
-                locationName,
-                adressLocation,
-                image,
-                capacity,
-                mapLocation,
-                planImage,
-                views,
-                type,
-              } = responseEvent.data;
-    
-              setEventDetails({
-                name,
-                date,
-                time,
-                locationName,
-                adressLocation,
-                image,
-                capacity,
-                mapLocation,
-                planImage,
-                views,
-                type,
-              });
-            }
-          } catch (error) {
-            console.error("Error al obtener los datos:", error);
-            navigate("/iniciarsesion");
-          } finally {
-            setLoading(false);
+  useEffect(() => {
+    if (!token) {
+      window.alert("Por favor inicia sesión para poder reservar una entrada.");
+      navigate("/iniciarsesion");
+      setLoading(false);
+    } else {
+      const fetchData = async () => {
+        try {
+          if (selectedSector) {
+            dispatch(fetchAndSetSeats(id, selectedSector));
           }
-        };
-    
-        fetchData();
-      }
-    }, [token, navigate, id, selectedSector]);
-    
+          const responseEvent = await axios.get(`http://localhost:3001/event/${id}`);
+
+          if (responseEvent.data) {
+            const {
+              name,
+              date,
+              time,
+              locationName,
+              adressLocation,
+              image,
+              capacity,
+              mapLocation,
+              planImage,
+              views,
+              type,
+            } = responseEvent.data;
+
+            setEventDetails({
+              name,
+              date,
+              time,
+              locationName,
+              adressLocation,
+              image,
+              capacity,
+              mapLocation,
+              planImage,
+              views,
+              type,
+            });
+          }
+        } catch (error) {
+          console.error("Error al obtener los datos:", error);
+          navigate("/iniciarsesion");
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchData();
+    }
+  }, [token, navigate, id, selectedSector]);
 
   if (loading) {
-    return <Loader />
+    //return <Loader />
+    return null;
   }
 
-  const originalDate = eventDetails.date
-  const parts = originalDate.split("-")
+  const originalDate = eventDetails.date;
+  const parts = originalDate.split("-");
 
-  let dateToRender
+  let dateToRender;
   if (parts.length === 3) {
-    const newDate = `${parts[2]}/${parts[1]}/${parts[0]}`
-    dateToRender = newDate
+    const newDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+    dateToRender = newDate;
   } else {
-    dateToRender = eventDetails.date // Corregí esta parte para evitar un error
+    dateToRender = eventDetails.date; // Corregí esta parte para evitar un error
   }
 
   const handleOnClickcarrito = () => {
-    navigate("/carrito")
-  }
+    navigate("/carrito");
+  };
 
   const handleSeatSelect = (seat) => {
     if (seat.status === true) {
-      const updatedSeats = selectedSeats.includes(seat)
-        ? selectedSeats.filter((s) => s !== seat)
-        : [...selectedSeats, seat]
-      setSelectedSeats(updatedSeats)
+      if (selectedSeats.includes(seat)) {
+        dispatch(removeSelectedSeat(seat));
+      } else {
+        dispatch(addSelectedSeat(seat));
+      }
     }
-  }
+  };
 
   const handleSectorSelect = (sectorName) => {
-    setSelectedSector(sectorName)
-    console.log(sectorName, "sector seleccionado en Booking")
-  }
+    setSelectedSector(sectorName);
+    console.log(sectorName, "sector seleccionado en Booking");
+  };
 
   /*const handleCheckout = () => {
     // iniciar el proceso de pago
@@ -214,26 +215,31 @@ const Booking = () => {
             </>
           ) : (
             <>
-              <h3>Selecciona un sector:</h3>
-              {sectorPrices.map((sector, index) => (
-                <div
-                  key={index}
-                  className={
-                    selectedSector === sector[1]
-                      ? styles.selectedSector
-                      : styles.sector
-                  }
-                  onClick={() => handleSectorSelect(sector[1])}
-                >
-                  {sector[1]} - $ {sector[0]}
-                </div>
-              ))}
+               <h3>Selecciona un sector:</h3>
+              <div className={styles.ContainerSelect}>
+              {sectorPrices && sectorPrices.length > 0 ? (
+                sectorPrices.map((sector, index) => (
+                  <div
+                    key={index}
+                    className={
+                      selectedSector === sector[1]
+                        ? styles.selectedSector
+                        : styles.sector
+                    }
+                    onClick={() => handleSectorSelect(sector[1])}
+                  >
+                    {sector[1]} - ${" "}
+                    {parseFloat(sector[0]).toLocaleString("es-ES")}
+                  </div>
+                ))
+              ) : (
+                <p>Error en la carga de precios.</p>
+              )}
+              </div>
               <div className={styles.ContainerBookingSeatsInfo}>
-  <div>Total Seats Selected: {sectorInfo.selectedSeats}</div>
-  <div>Total Price: {sectorInfo.totalPrice}</div>
-  
-</div>
-
+                <div>Total asientos seleccionados: {sectorInfo.selectedSeats}</div>
+                <div>Total: $ {sectorInfo.totalPrice.toLocaleString()}</div>
+              </div>
             </>
           )}
         </div>
@@ -246,17 +252,18 @@ const Booking = () => {
             <BookingSeats
               id={id}
               sector={selectedSector}
-              selectedSeats={selectedSeats}
               onSeatSelect={handleSeatSelect}
               sectorPricesQuery={sectorPricesQuery}
               handleSectorInfoUpdate={handleSectorInfoUpdate}
+              counterActivated={counterActivated}
+              setCounterActivated={setCounterActivated}
             />
           )}
         </div>
       </div>
       <button onClick={handleOnClickcarrito}>Agregar al carrito</button>{" "}
     </div>
-  )
-}
+  );
+};
 
-export default Booking
+export default Booking;

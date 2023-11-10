@@ -1,14 +1,21 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
   seats: {}, // Usa un objeto para almacenar los asientos únicos
+  selectedSeats: [],
 };
 
 export const seatSlice = createSlice({
   name: 'seat',
   initialState,
   reducers: {
+    addSelectedSeat: (state, action) => {
+      state.selectedSeats.push(action.payload);
+    },
+    removeSelectedSeat: (state, action) => {
+      state.selectedSeats = state.selectedSeats.filter(seat => seat !== action.payload);
+    },
     setSeats: (state, action) => {
       // Reinicia el objeto de asientos al recibir nuevos datos
       state.seats = {};
@@ -30,10 +37,9 @@ export const fetchAndSetSeats = (eventID, sector) => async (dispatch) => {
   }
 };
 
-const selectSeatState = (state) => state.seat;
-export const { setSeats } = seatSlice.actions;
+export const { addSelectedSeat, removeSelectedSeat, setSeats } = seatSlice.actions;
 
-// Define el selector en el mismo archivo
-export const selectSeats = createSelector(selectSeatState, (seatState) => Object.values(seatState.seats));
+export const selectSelectedSeats = state => state.seat.selectedSeats;
+export const selectSeats = state => Object.values(state.seat.seats);
 
 export default seatSlice.reducer;

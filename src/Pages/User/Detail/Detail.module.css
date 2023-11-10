@@ -52,7 +52,7 @@
 }
 
 .ContainerLeftColumn {
-  background-color: antiquewhite;
+  background-color: rgb(213, 230, 224);
   flex: 3;
   margin-right: 50px;
 }
@@ -65,7 +65,7 @@
 }
 
 .ContainerRightColumn {
-  background-color: rgb(254, 203, 149);
+  background-color: rgb(148, 167, 160);
   text-align: center;
   flex: 1;
   align-items: center;
@@ -77,6 +77,11 @@
   width: 100%;
   height: 20em;
   margin-bottom: 100px;
+}
+
+.ContainerGoogleMap h3 {
+  font-weight: bold;
+  margin-left: 5px;
 }
 
 .iframe{
@@ -144,10 +149,12 @@
 .ContainerPrices {
   display: flex;
   justify-content: space-between;
-  font-size: 16px;
-  margin: 5px 0;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 5px 3px;
+  padding: 3px;
   color: black;
-  background-color:rgb(254, 189, 149);
+  background-color:rgb(122, 170, 151);
 }
 
 .ContainerGlobal button {
@@ -166,7 +173,7 @@
 }
 
 .ContainerAddress {
-  background-color:rgb(246, 214, 198);
+  background-color:rgb(175, 203, 191);
   
 }
 
@@ -175,6 +182,6 @@
 }
 
 .ContainerAddress h3{
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bold;
 }
