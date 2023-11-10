@@ -51,9 +51,9 @@ const Menu = ({
           <button onClick={handleLogout} className={style.optionsBtn}>
             <PiSignOutBold />
           </button>
-          <button className={style.optionsBtn}>
+          <NavLink className={style.optionsBtn} to="/carrito">
             <BiCart />
-          </button>
+          </NavLink>
         </div>
       ) : (
         <div className={style.options}>

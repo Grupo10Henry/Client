@@ -20,7 +20,7 @@ import style from "./Home.module.css"
 
 const Home = () => {
   const { pathname } = useLocation()
-  const { isFilter } = useSelector((s) => s.events)
+  const { nextEvents, isFilter } = useSelector((s) => s.events)
 
   const dispatch = useDispatch()
 
@@ -42,7 +42,9 @@ const Home = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchAvailableEvents())
+    if (!nextEvents.length) {
+      dispatch(fetchAvailableEvents())
+    }
   }, [dispatch])
 
   return (
