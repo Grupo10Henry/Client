@@ -420,7 +420,7 @@ export default function AdminEventsCreate() {
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Selecciona un evento</label>
-                    <select className={styles.formInputText}
+                    <select className={styles.formInputTextSection}
                     name='eventID'
                     value={section.eventID}
                     onChange={handleChangeSection} >
@@ -434,7 +434,7 @@ export default function AdminEventsCreate() {
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Nombre de la sección</label>
-                    <input className={styles.formInputText}
+                    <input className={styles.formInputTextSection}
                     type="text"
                     name='sector'
                     value={section.sector}
@@ -462,7 +462,7 @@ export default function AdminEventsCreate() {
                     <div className={styles.formRows}>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Precio por entrada</label>
-                    <input className={styles.formInputText}
+                    <input className={styles.formInputTextSection}
                     type="number"
                     min="0"
                     name='price'
@@ -483,7 +483,7 @@ export default function AdminEventsCreate() {
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Cantidad de filas</label>
                     {/* {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='rows' value='0' readOnly /> : */}
-                    <input className={styles.formInputText}
+                    <input className={styles.formInputTextSection}
                     type="number"
                     min="0"
                     name='rows'
@@ -494,7 +494,7 @@ export default function AdminEventsCreate() {
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Cantidad de columnas</label>
                     {/* {input.type === 'Grande' ? <input className={styles.formInputText} type="number" name='columns' value='0' readOnly /> :  */}
-                    <input className={styles.formInputText}
+                    <input className={styles.formInputTextSection}
                     type="number"
                     min="0"
                     name='columns'
