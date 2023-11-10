@@ -1,6 +1,5 @@
 // Luissssss
 import styles from './AdminEvents.module.css';
-import events from '../../User/Events/Events';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllEvents } from '../../../redux/eventsSlice';
 import { useEffect } from 'react';
