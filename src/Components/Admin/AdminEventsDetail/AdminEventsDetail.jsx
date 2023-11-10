@@ -1,9 +1,10 @@
 // Luiiiis...
 import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { instance } from '../../../axios/config';
 import { useEffect, useState } from 'react';
 import { categories } from '../../../utils/categories';
+import axios from 'axios';
 import styles from './AdminEventsDetail.module.css'
 
 export default function AdminEventsDetail () {
@@ -17,6 +18,7 @@ export default function AdminEventsDetail () {
     const minDate = `${currentYear}-${currentMonth}-${currentDay}`;
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const params = useParams();
     
     const [updatedEvent, setUpdatedEvent] = useState({
@@ -37,6 +39,7 @@ export default function AdminEventsDetail () {
         isDonation: "",
         type: "",
         eventID: "",
+        views: "",
     });
 
     const [image, setImage] =useState();
@@ -92,6 +95,99 @@ export default function AdminEventsDetail () {
         const file = e.target.files[0];
         setPlanImage(file);
       };
+
+    const uploadImage = async (image) => {
+        const formData = new FormData();
+        formData.append('file', image);
+        formData.append('upload_preset', 'mibutaca');
+    
+        const response = await axios.post(
+            'https://api.cloudinary.com/v1_1/dwbvvo9u2/image/upload',
+            formData
+        );
+    
+        if (response.status === 200) {
+            return response.data.secure_url;
+        } else {
+            return null; // Indicate that the upload failed
+        }
+    };
+
+    const handleSubmit = async () => {
+        if (!updatedEvent.name || !updatedEvent.description || !updatedEvent.category || updatedEvent.isDonation === "" || !updatedEvent.capacity || !updatedEvent.date || !updatedEvent.time || !updatedEvent.locationName ||
+            !updatedEvent.adressLocation || !updatedEvent.mapLocation || !updatedEvent.type) {
+                alert('Por favor completa todos los campos para editar el evento');
+                return;
+            }
+        try {
+            
+            let ubicacion = "";
+            let imageURL = "";
+            let bannerImageURL = "";
+            let planImageURL = "";
+            
+            if (updatedEvent.mapLocation.substring(0,1) === "<") {
+                let match = updatedEvent.mapLocation.match(iframeRegex);
+                ubicacion = match[1]
+            } else {
+                ubicacion = updatedEvent.mapLocation
+            }
+
+            if (!image) {
+                imageURL = updatedEvent.image
+            } else {
+                imageURL = await uploadImage(image)
+            }
+
+            if (!bannerImage) {
+                bannerImageURL = updatedEvent.bannerImage
+            } else {
+                bannerImageURL = await uploadImage(bannerImage)
+            }
+
+            if (!planImage) {
+                planImageURL = updatedEvent.planImage
+            } else {
+                planImageURL = await uploadImage(planImage)
+            }
+            
+    let newEvent = {
+        name: updatedEvent.name,
+        description: updatedEvent.description,
+        category: updatedEvent.category,
+        capacity: updatedEvent.capacity,
+        date: updatedEvent.date,
+        time: updatedEvent.time,
+        locationName: updatedEvent.locationName,
+        adressLocation: updatedEvent.adressLocation,
+        mapLocation: ubicacion,
+        image: imageURL,
+        bannerImage: bannerImageURL,
+        planImage: planImageURL,
+        views: updatedEvent.views,
+        priceMin: updatedEvent.priceMin,
+        priceMax: updatedEvent.priceMax,
+        isDonation: updatedEvent.isDonation,
+        type: updatedEvent.type,
+    };
+    
+    try {
+        await instance.put(`/event/${updatedEvent.eventID}`, newEvent)
+        getEvent().then((data) => {
+            setUpdatedEvent(data)
+        });
+        alert('Se ha editado el evento exitosamente')
+    } catch (error) {
+        alert(error.response.data.error);
+    }
+} catch (error) {
+    alert(error);
+}
+    
+    }
+
+    console.log(updatedEvent)
+    console.log(image, bannerImage, planImage)
 
     return (
         <div className={styles.editEventContainer}>
@@ -191,7 +287,7 @@ export default function AdminEventsDetail () {
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Precio mínimo</label>
-                    {updatedEvent.isDonation === "false" ? (<input className={styles.formInputText}
+                    {updatedEvent.isDonation === "false"  || updatedEvent.isDonation === false ? (<input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='priceMin'
@@ -200,7 +296,7 @@ export default function AdminEventsDetail () {
                     </div>
                     <div className={styles.fieldContainer}>
                     <label className={styles.formLabel}>Precio máximo</label>
-                    {updatedEvent.isDonation === "false" ? (<input className={styles.formInputText}
+                    {updatedEvent.isDonation === "false" || updatedEvent.isDonation === false ? (<input className={styles.formInputText}
                     type="number"
                     min="0"
                     name='priceMax'
@@ -261,12 +357,9 @@ export default function AdminEventsDetail () {
                     </div>
                     </div>
 
-                    <button className={styles.formButton}
-                    >Editar evento</button>
-                    <button className={styles.formButton}
-                    >Cancelar</button>
-                    <button className={styles.formButton}
-                    >Regresar</button>
+                    <button onClick={handleSubmit} className={styles.formButton}>Editar evento</button>
+                    <button onClick={() => {navigate(`/admin`)}} className={styles.formButton}>Cancelar</button>
+                    <button onClick={() => {navigate(`/admin`)}} className={styles.formButton}>Regresar</button>
                 </div>
         </div>
     )

@@ -72,7 +72,7 @@ const Detail = () => {
             <br />
 
             <div className={styles.divCount}>
-              <p>Restan...</p>
+              <p>Faltan...</p>
               <div className={styles.countdownContainer}>
                 <div>
                   <h1>{countdown.days}</h1>
