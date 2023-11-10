@@ -48,7 +48,7 @@ const useNav = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: "Sesión cerrada!",
+          title: "¡Sesión cerrada!",
           confirmButtonColor: "var(--turquesa)",
         }).then((result) => {
           if (result.isConfirmed) {
