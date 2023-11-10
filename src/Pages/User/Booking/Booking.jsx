@@ -156,7 +156,7 @@ const Booking = () => {
 
   const handleSectorSelect = (sectorName) => {
     setSelectedSector(sectorName);
-    console.log(sectorName, "sector seleccionado en Booking");
+    
   };
 
   /*const handleCheckout = () => {

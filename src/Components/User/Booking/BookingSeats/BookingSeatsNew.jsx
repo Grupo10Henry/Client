@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSeats, selectSelectedSeats, fetchAndSetSeats } from '../../../../redux/seatSlice';
 import { addSelectedSeat, removeSelectedSeat } from '../../../../redux/bookSeatsSlice';
@@ -13,7 +13,7 @@ const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSecto
   console.log('Seats en BookingSeats:', seats);
   const rows = seats.length > 0 ? seats[0].rows : 0; // Obtenemos las filas de los asientos
   const columns = seats.length > 0 ? seats[0].columns : 0; // Obtenemos las columnas de los asientos
-  console.log('Rows in Bookingseats:', rows, 'Columns:', columns);
+  
   const [remainingTime, setRemainingTime] = useState(900);
   const selectedSeats = useSelector(selectSelectedSeats);
   const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
@@ -32,25 +32,25 @@ const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSecto
     return () => clearInterval(interval);
   }, [id, sector, sectorPricesQuery, dispatch, counterActivated, remainingTime]);
 
-  const handleSeatClick = (seat) => {
-    if (!seat.status) {
-      // El asiento está ocupado, no se puede seleccionar
-      return;
-    }
-  
-    setSelectedSeatStatus((prevStatus) => ({
+  const handleSeatClick = useCallback(
+    (seat) => {
+      if (!seat.status) {
+        return;
+      }
+      setSelectedSeatStatus((prevStatus) => ({
       ...prevStatus,
-      [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
-    }));
-  
-    if (onSeatSelect) {
-      onSeatSelect(seat);
-    }
-    handleSectorInfoUpdate();
-  };
-  
-  
+          [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
+        }));
 
+        if (onSeatSelect) {
+          console.log('Asiento seleccionado:', seat);
+          onSeatSelect(seat);
+        }
+        handleSectorInfoUpdate();
+      },
+      [onSeatSelect, handleSectorInfoUpdate]
+      ); 
+      
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
