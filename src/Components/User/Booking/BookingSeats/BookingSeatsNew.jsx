@@ -7,7 +7,7 @@ import asiento from '../../../../assets/asiento.svg';
 import asientoFree from '../../../../assets/asiento-free.svg';
 import asientoSelected from '../../../../assets/asiento-ocup.svg';
 
-const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSectorInfoUpdate, counterActivated, setCounterActivated }) => {  
+const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSectorInfoUpdate }) => {  
   const dispatch = useDispatch();
   const seats = useSelector(selectSeats);
   console.log('Seats en BookingSeats:', seats);
@@ -17,7 +17,7 @@ const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSecto
   const [remainingTime, setRemainingTime] = useState(900);
   const selectedSeats = useSelector(selectSelectedSeats);
   const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
-
+const [counterActivated, setCounterActivated] = useState(false);
 
   useEffect(() => {
     
@@ -30,7 +30,7 @@ const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSecto
     }, 1000); // Actualizar cada segundo
 
     return () => clearInterval(interval);
-  }, [id, sector, sectorPricesQuery, dispatch, counterActivated, remainingTime]);
+  }, [id, sector, sectorPricesQuery, dispatch, counterActivated, remainingTime, setCounterActivated ]);
 
   const handleSeatClick = useCallback(
     (seat) => {
@@ -45,10 +45,21 @@ const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSecto
         if (onSeatSelect) {
           console.log('Asiento seleccionado:', seat);
           onSeatSelect(seat);
-        }
+
+          if(!counterActivated) {
+            setCounterActivated(true);
+          }
+        } else {
+          const noSelectedSeats = selectedSeats.length === 0;
+
+            if (noSelectedSeats) {
+              console.log('No hay asientos seleccionados');
+              setCounterActivated(false);
+            }
+          }
         handleSectorInfoUpdate();
       },
-      [onSeatSelect, handleSectorInfoUpdate]
+      [onSeatSelect, handleSectorInfoUpdate, counterActivated, setCounterActivated, selectedSeats]
       ); 
       
   const formatTime = (time) => {
