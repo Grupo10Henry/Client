@@ -109,48 +109,47 @@ const useDetail = (id) => {
     }
   }, [id])
 
-  // counter down timer
   const targetDateTime = new Date(
     `${eventDetails.date} ${eventDetails.time}`
-  ).getTime()
-  const currentDate = new Date().getTime()
-  const timeDifference = targetDateTime - currentDate
-
+  ).getTime();
+  const currentDate = new Date().getTime();
+  const timeDifference = targetDateTime - currentDate;
+  
   const [countdown, setCountdown] = useState({
     days: Math.floor(timeDifference / (1000 * 60 * 60 * 24)),
-    hours: Math.floor(
-      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    ),
+    hours: Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
     minutes: Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)),
     seconds: Math.floor((timeDifference % (1000 * 60)) / 1000),
-  })
+  });
+  
+  const formatTimeValue = (value) => {
+    return value.toString().padStart(2, '0');
+  };
+  
   useEffect(() => {
     const interval = setInterval(() => {
-      const newTimeDifference = targetDateTime - new Date().getTime()
+      const newTimeDifference = targetDateTime - new Date().getTime();
       if (newTimeDifference < 0) {
-        clearInterval(interval)
+        clearInterval(interval);
         setCountdown({
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-        })
+          days: '00',
+          hours: '00',
+          minutes: '00',
+          seconds: '00',
+        });
       } else {
         setCountdown({
-          days: Math.floor(newTimeDifference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor(
-            (newTimeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-          ),
-          minutes: Math.floor(
-            (newTimeDifference % (1000 * 60 * 60)) / (1000 * 60)
-          ),
-          seconds: Math.floor((newTimeDifference % (1000 * 60)) / 1000),
-        })
+          days: formatTimeValue(Math.floor(newTimeDifference / (1000 * 60 * 60 * 24))),
+          hours: formatTimeValue(Math.floor((newTimeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))),
+          minutes: formatTimeValue(Math.floor((newTimeDifference % (1000 * 60 * 60)) / (1000 * 60))),
+          seconds: formatTimeValue(Math.floor((newTimeDifference % (1000 * 60)) / 1000)),
+        });
       }
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [targetDateTime])
+    }, 1000);
+  
+    return () => clearInterval(interval);
+  }, [targetDateTime]);
+  
 
   return {
     eventDetails,
