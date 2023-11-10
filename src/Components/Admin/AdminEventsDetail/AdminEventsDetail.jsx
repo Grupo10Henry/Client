@@ -265,6 +265,8 @@ export default function AdminEventsDetail () {
                     >Editar evento</button>
                     <button className={styles.formButton}
                     >Cancelar</button>
+                    <button className={styles.formButton}
+                    >Regresar</button>
                 </div>
         </div>
     )
