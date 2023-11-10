@@ -190,16 +190,15 @@ export default function AdminEventsCreate() {
             // Código para extraer la URL de source del código de GoogleMaps
             let match = input.mapLocation.match(iframeRegex);
 
-            // Upload all images concurrently and wait for all of them to complete
+            // Cargar todas las imágenes y esperar a que estén completas
         const [imageResponse, bannerResponse, planResponse] = await Promise.all([
             uploadImage(image),
             uploadImage(bannerImage),
             uploadImage(planImage)
         ]);
 
-        // Ensure all image uploads were successful
         if (!imageResponse || !bannerResponse || !planResponse) {
-            alert('Error uploading images');
+            alert('Error al cargar imágenes');
             return;
         }
 
