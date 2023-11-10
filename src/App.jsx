@@ -25,6 +25,7 @@ import { loginSuccess } from "./redux/userSlice"
 import Ticket from "./Components/User/MyAccount/Ticket/Ticket"
 import AdminFAQDetail from "./Components/Admin/AdminFAQDetail/AdminFAQDetail"
 import AdminEventsDetail from "./Components/Admin/AdminEventsDetail/AdminEventsDetail"
+import AuthGuard from "./guards/AuthGuard"
 
 function App() {
   const location = useLocation()
@@ -134,20 +135,24 @@ function App() {
       <Contact />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="*" element={<NotFound />} />
+        <Route element={<AuthGuard />}>
+          {/* adentro van las rutas que se van a proteger */}
+          <Route path="/micuenta/:id" element={<MyAccount />} />
+          <Route path="/admin" element={<AdminHome />} />
+        </Route>
+
         <Route path="/registro" element={<SignUp />} />
         <Route path="/iniciarsesion" element={<Login login={login} />} />
         <Route path="/detalle/:id" element={<Detail />} />
         <Route path="/reserva/:id" element={<Booking />} />
         <Route path="/carrito" element={<Cart />} />
-        <Route path="/micuenta/:id" element={<MyAccount />} />
         <Route path="/ticket/:id" element={<Ticket />} />
         <Route path="/faq" element={<FAQ />} />
-        <Route path="/admin" element={<AdminHome />} />
         <Route path="/evento/:id" element={<AdminEventsDetail />} />
         <Route path="/preguntas/:id" element={<AdminFAQDetail />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
         <Route path="/reserva/seats" element={<BookingSeats />} />
-        <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />
 
