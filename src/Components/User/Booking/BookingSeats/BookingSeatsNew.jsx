@@ -69,6 +69,7 @@ const BookingSeats = ({
     }));
 
     if (handleSeatSelect) {
+      console.log("Información enviada a handleSeatSelect:", seat);
       handleSeatSelect(seat);
     }
     handleSectorInfoUpdate();
@@ -86,115 +87,123 @@ const BookingSeats = ({
 
   return (
     <div className={styles.seatMap}>
-      {eventType === "Grande" ? (
-        <img src={bannerImage} alt="Banner Image" />
-      ) : (
-       
       <div className={styles.sector}>
-        <h3>Sector: {sector}</h3>
-        <div className={styles.selectedInfo}>
-          {counterActivated && (
-            <div
-              className={`${styles.Time} ${
-                remainingTime > 0 ? "" : styles.hidden
-              }`}
-            >
-              <p>
-                Reservaremos tus asientos por los próximos:{" "}
-                <span className={styles.TimeText}>
-                  {formatTime(remainingTime)}
-                </span>{" "}
-                minutos.
-              </p>
+        {eventType === "Grande" ? (
+          <img
+            src={bannerImage}
+            alt="Banner Image"
+            className={styles.BannerImage}
+          />
+        ) : (
+          <>
+            <h3>Sector: {sector}</h3>
+            <div className={styles.selectedInfo}>
+              {counterActivated && (
+                <div
+                  className={`${styles.Time} ${
+                    remainingTime > 0 ? "" : styles.hidden
+                  }`}
+                >
+                  <p>
+                    Reservaremos tus asientos por los próximos:{" "}
+                    <span className={styles.TimeText}>
+                      {formatTime(remainingTime)}
+                    </span>{" "}
+                    minutos.
+                  </p>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <table className={styles.seatGrid}>
-          <tbody>
-            {Array.from({ length: rows }, (_, rowIndex) => (
-              <tr key={rowIndex}>
-                {Array.from({ length: columns }, (_, colIndex) => {
-                  const currentSeat = seats[rowIndex * columns + colIndex];
+            <table className={styles.seatGrid}>
+              <tbody>
+                {Array.from({ length: rows }, (_, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {Array.from({ length: columns }, (_, colIndex) => {
+                      const currentSeat = seats[rowIndex * columns + colIndex];
 
-                  return (
-                    <td key={colIndex}>
-                      {currentSeat && (
-                        <div>
-                          {currentSeat.status ? (
+                      return (
+                        <td key={colIndex}>
+                          {currentSeat && (
                             <div>
-                              <img
-                                key={currentSeat.seatID}
-                                src={
-                                  selectedSeatStatus[currentSeat.seatID]
-                                    ? asiento
-                                    : asientoFree
-                                }
-                                alt={`Seat ${currentSeat.seatLocation}`}
-                                className={`${styles.seat} ${
-                                  selectedSeatStatus[currentSeat.seatID]
-                                    ? styles.selected
-                                    : ""
-                                }`}
-                                onClick={() => handleSeatClick(currentSeat)}
-                              />
+                              {currentSeat.status ? (
+                                <div>
+                                  <img
+                                    key={currentSeat.seatID}
+                                    src={
+                                      selectedSeatStatus[currentSeat.seatID]
+                                        ? asiento
+                                        : asientoFree
+                                    }
+                                    alt={`Seat ${currentSeat.seatLocation}`}
+                                    className={`${styles.seat} ${
+                                      selectedSeatStatus[currentSeat.seatID]
+                                        ? styles.selected
+                                        : ""
+                                    }`}
+                                    onClick={() => handleSeatClick(currentSeat)}
+                                  />
 
-                              <p className={styles.seatLocation}>
-                                {currentSeat.seatLocation}
-                              </p>
-                            </div>
-                          ) : (
-                            <div>
-                              <img
-                                key={currentSeat.seatID}
-                                src={asientoSelected}
-                                alt={`Seat ${currentSeat.seatLocation}`}
-                                className={styles.seat}
-                              />
-                              <p className={styles.seatLocation}>
-                                {currentSeat.seatLocation}
-                              </p>
+                                  <p className={styles.seatLocation}>
+                                    {currentSeat.seatLocation}
+                                  </p>
+                                </div>
+                              ) : (
+                                <div>
+                                  <img
+                                    key={currentSeat.seatID}
+                                    src={asientoSelected}
+                                    alt={`Seat ${currentSeat.seatLocation}`}
+                                    className={styles.seat}
+                                  />
+                                  <p className={styles.seatLocation}>
+                                    {currentSeat.seatLocation}
+                                  </p>
+                                </div>
+                              )}
                             </div>
                           )}
-                        </div>
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
       </div>
-      )}
-      <div className= {styles.seatInfo}>
+      <div className={styles.seatInfo}>
         <div className={styles.TituloBlink}>
           <h3>Selecciona un sector:</h3>
         </div>
-      <div className={styles.ContainerSelect}>
-        {sectorPrices && sectorPrices.length > 0 ? (
-          sectorPrices.map((sector, index) => (
-            <div
-              key={index}
-              className={
-                sector === sector[1]
-                  ? styles.selectedSector
-                  : styles.sector
-              }
-              onClick={() => handleSectorSelect(sector[1])}
-            >
-              {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
-            </div>
-          ))
-        ) : (
-          <p>Error en la carga de precios.</p>
-        )}
+        <div className={styles.ContainerSelect}>
+          {sectorPrices && sectorPrices.length > 0 ? (
+            sectorPrices.map((sector, index) => (
+              <div
+                key={index}
+                className={
+                  sector === sector[1] ? styles.selectedSector : styles.sector
+                }
+                onClick={() => handleSectorSelect(sector[1])}
+              >
+                {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
+              </div>
+            ))
+          ) : (
+            <p>Error en la carga de precios.</p>
+          )}
         </div>
         <h3>Asientos seleccionados: {selectedSeats.length}</h3>
-        <h3> Total: $ {selectedSeats
-                                    .reduce((acc, curr) => acc + curr.price, 0)
-                                    .toLocaleString()}
+        <h3>
+          {" "}
+          Total: ${" "}
+          {selectedSeats
+            .reduce((acc, curr) => acc + curr.price, 0)
+            .toLocaleString()}
         </h3>
-      <button className={styles.Carrito} onClick={handleOnClickcarrito}>Agregar al carrito</button>
+        <button className={styles.Carrito} onClick={handleOnClickcarrito}>
+          Agregar al carrito
+        </button>
       </div>
     </div>
   );

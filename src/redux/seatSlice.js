@@ -11,10 +11,14 @@ export const seatSlice = createSlice({
   initialState,
   reducers: {
     addSelectedSeat: (state, action) => {
+      console.log('Antes de agregar:', state.selectedSeats);
       state.selectedSeats.push(action.payload);
+      console.log('Después de agregar:', state.selectedSeats);
     },
     removeSelectedSeat: (state, action) => {
+      console.log('Antes de quitar:', state.selectedSeats);
       state.selectedSeats = state.selectedSeats.filter(seat => seat !== action.payload);
+      console.log('Después de quitar:', state.selectedSeats);
     },
     setSeats: (state, action) => {
       // Reinicia el objeto de asientos al recibir nuevos datos
