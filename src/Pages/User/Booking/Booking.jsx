@@ -7,7 +7,12 @@ import { instance } from "../../../axios/config";
 import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsNew";
 import { useSelector } from "react-redux";
 import Loader from "../../../Components/UserAndAdmin/Loader/Loader";
-import { addSelectedSeat, removeSelectedSeat, selectSelectedSeats, fetchAndSetSeats } from "../../../redux/seatSlice";
+import {
+  addSelectedSeat,
+  removeSelectedSeat,
+  selectSelectedSeats,
+  fetchAndSetSeats,
+} from "../../../redux/seatSlice";
 import axios from "axios";
 
 const Booking = () => {
@@ -44,7 +49,6 @@ const Booking = () => {
     totalPrice: 0,
   });
   const [counterActivated, setCounterActivated] = useState(false);
-  
 
   const handleSectorInfoUpdate = () => {
     // Calcula el total de asientos seleccionados y el precio total
@@ -81,7 +85,9 @@ const Booking = () => {
           if (selectedSector) {
             dispatch(fetchAndSetSeats(id, selectedSector));
           }
-          const responseEvent = await axios.get(`http://localhost:3001/event/${id}`);
+          const responseEvent = await axios.get(
+            `http://localhost:3001/event/${id}`
+          );
 
           if (responseEvent.data) {
             const {
@@ -140,10 +146,6 @@ const Booking = () => {
     dateToRender = eventDetails.date; // Corregí esta parte para evitar un error
   }
 
-  const handleOnClickcarrito = () => {
-    navigate("/carrito");
-  };
-
   const handleSeatSelect = (seat) => {
     if (seat.status === true) {
       if (selectedSeats.includes(seat)) {
@@ -156,13 +158,7 @@ const Booking = () => {
 
   const handleSectorSelect = (sectorName) => {
     setSelectedSector(sectorName);
-    
   };
-
-  /*const handleCheckout = () => {
-    // iniciar el proceso de pago
-    // enviar los datos de la compra al backend
-  };*/
 
   return (
     <div className={styles.ContainerGlobal}>
@@ -206,9 +202,7 @@ const Booking = () => {
         </div>
 
         <div className={styles.ContainerSectores}>
-          
-              <img src={eventDetails.planImage}/>
-            
+          <img src={eventDetails.planImage} />
         </div>
       </div>
       <div className={styles.ContainerPlan}>
@@ -218,7 +212,6 @@ const Booking = () => {
           ) : (
             <BookingSeats
               id={id}
-    
               sector={selectedSector}
               sectorPrices={sectorPrices}
               handleSectorSelect={handleSectorSelect}
@@ -227,11 +220,11 @@ const Booking = () => {
               handleSectorInfoUpdate={handleSectorInfoUpdate}
               counterActivated={counterActivated}
               setCounterActivated={setCounterActivated}
+              bannerImage={eventDetails.bannerImage}
             />
           )}
         </div>
       </div>
-      <button onClick={handleOnClickcarrito}>Agregar al carrito</button>{" "}
     </div>
   );
 };

@@ -30,6 +30,8 @@
 
 .sector h3 {
   font-weight: bold;
+  font-size: 20px;
+  color: brown;
 }
 
 .Time {
@@ -132,4 +134,17 @@
   100% {
     opacity: 0;
   }
+}
+
+.Carrito {
+  background-color: rgb(32, 169, 144);
+  box-shadow: 0px 0px 20px black;
+  font-weight: bold;
+  font-size: 20px;
+  color: black;
+  height: 50px;
+  border-radius: 50% 50%;
+  width:100%;
+  margin-top: 15px;
+  align-items: center;
 }

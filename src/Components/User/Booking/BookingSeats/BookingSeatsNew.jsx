@@ -16,6 +16,8 @@ import asientoSelected from "../../../../assets/asiento-ocup.svg";
 import PropTypes from "prop-types";
 
 const BookingSeats = ({
+  eventType,
+  bannerImage,
   id,
   sector,
   sectorPrices,
@@ -78,8 +80,16 @@ const BookingSeats = ({
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
+  const handleOnClickcarrito = () => {
+    navigate("/carrito");
+  };
+
   return (
     <div className={styles.seatMap}>
+      {eventType === "Grande" ? (
+        <img src={bannerImage} alt="Banner Image" />
+      ) : (
+       
       <div className={styles.sector}>
         <h3>Sector: {sector}</h3>
         <div className={styles.selectedInfo}>
@@ -155,6 +165,7 @@ const BookingSeats = ({
           </tbody>
         </table>
       </div>
+      )}
       <div className= {styles.seatInfo}>
         <div className={styles.TituloBlink}>
           <h3>Selecciona un sector:</h3>
@@ -183,6 +194,7 @@ const BookingSeats = ({
                                     .reduce((acc, curr) => acc + curr.price, 0)
                                     .toLocaleString()}
         </h3>
+      <button className={styles.Carrito} onClick={handleOnClickcarrito}>Agregar al carrito</button>
       </div>
     </div>
   );
@@ -193,6 +205,7 @@ BookingSeats.propTypes = {
   sectorPrices: PropTypes.array,
   sector: PropTypes.string,
   handleSectorSelect: PropTypes.func,
+  eventType: PropTypes.string,
 };
 
 export default BookingSeats;
