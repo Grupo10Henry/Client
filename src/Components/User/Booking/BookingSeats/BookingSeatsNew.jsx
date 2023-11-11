@@ -6,7 +6,7 @@ import {
   fetchAndSetSeats,
 } from "../../../../redux/seatSlice";
 import { clearSelectedSeats } from "../../../../redux/seatSlice";
-import {agregarAlCarrito} from "../../../../redux/carritoSlice";
+import { agregarAlCarrito } from "../../../../redux/carritoSlice";
 import styles from "./BookingSeats.module.css";
 import asiento from "../../../../assets/asiento.svg";
 import asientoFree from "../../../../assets/asiento-free.svg";
@@ -91,7 +91,6 @@ const BookingSeats = ({
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
-
   useEffect(() => {
     const clearSelectedSeatsTimer = setTimeout(() => {
       dispatch(clearSelectedSeats());
@@ -146,7 +145,7 @@ const BookingSeats = ({
     dispatch(clearSelectedSeats());
 
     // Navegar a la página del carrito
-    navigate('/carrito', {
+    navigate("/carrito", {
       state: {
         ...eventData,
         seatsData,
