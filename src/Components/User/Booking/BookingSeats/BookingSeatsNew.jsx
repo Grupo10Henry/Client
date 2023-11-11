@@ -69,7 +69,7 @@ const BookingSeats = ({
     console.log("selectedSeats local state in BookingSeats:", selectedSeats);
     if (handleSeatSelect) {
       console.log("Información enviada a handleSeatSelect:", seat);
-      handleSeatSelect({...seat, userID: userID});
+      handleSeatSelect({ ...seat, userID: userID });
     }
     handleSectorInfoUpdate();
   };
@@ -95,7 +95,8 @@ const BookingSeats = ({
 
     const handleBeforeUnload = (event) => {
       dispatch(clearSelectedSeats());
-      event.returnValue = "¿Estás seguro de abandonar la página? Se perderán los asientos seleccionados.";
+      event.returnValue =
+        "¿Estás seguro de abandonar la página? Se perderán los asientos seleccionados.";
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -119,7 +120,7 @@ const BookingSeats = ({
           <>
             <h3>Sector: {sector}</h3>
             <div className={styles.selectedInfo}>
-              {counterActivated && (
+              {counterActivated && selectedSeats.length > 0 && (
                 <div
                   className={`${styles.Time} ${
                     remainingTime > 0 ? "" : styles.hidden
