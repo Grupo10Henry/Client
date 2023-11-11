@@ -24,46 +24,33 @@ const Cart = () => {
     seatsData,
     } = state ?? {};
 
-    const { seatCount, seats } = seatsData ?? {};
-
-    console.log("seatsData in Cart", seatsData)
-
-    const [cart, setCart] = useState({
-        seats: seatsData?.seats || [],
-    });
+    const { seats } = seatsData ?? {};
     const [total, setTotal] = useState(0);
     const [totalEntradas, setTotalEntradas] = useState(0);
-    
-
-    
-    const deleteItem = (id) => {
-        setCart((prevCart) => prevCart.filter((item) => item.id !== id));
-        recalculateTotal();
-    };
 
     
 
-    const updateItem = (id, newQuantity) => {
+    /*const [cart, setCart] = useState({
+        seats: seatsData?.seats || [],
+    });*/
 
-        setCart((prevCart) =>
-            prevCart.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item))
-        );
-        recalculateTotal();
-    };
 
     const recalculateTotal = () => {
-        const newTotal = cart.reduce((prev, item) => {
+        const newTotal = seats.reduce((prev, item) => {
             return prev + item.price * item.quantity;
         }, 0);
         setTotal(newTotal);
 
-        const newTotalEntradas = cart.reduce((prev, item) => {
+        const newTotalEntradas = seats.reduce((prev, item) => {
             return prev + item.quantity;
         }, 0);
         setTotalEntradas(newTotalEntradas);
     };
     
-    
+    useEffect(() => {
+        recalculateTotal();
+      }, [seats]);
+
    /*
     const handleQuantityChange = (id, change) => {
         const updatedQuantity = cart.find((item) => item.id === id).quantity + change;
@@ -89,50 +76,59 @@ const Cart = () => {
         }, 0);
         setTotalEntradas(totalEntradas);
     };
-    */
+    
+    const deleteItem = (id) => {
+        setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+        recalculateTotal();
+    };*/
 
     const handleCheckout = () => {
         //esperar que la pasarela de pagos este lista
     }
 
     return (
-        <>
-            <div className="fixed inset-0 z-1000 flex items-center justify-center backdrop-filter backdrop-blur-lg">
-                {/* Este div se utilizará para el fondo desenfocado */}
-            </div>
-            <div style={{ marginTop: '5rem' }} className="fixed inset-0 z-1001 flex flex-col items-center justify-center md:mt-10 lg:mt-20">
-                {/* Contenedor principal del formulario */}
-                <div className="sm:mx-auto sm:w-full sm:max-w-sm p-6 space-y-0 bg-white rounded-lg shadow-lg">
-                    <img className="mx-auto h-8 w-auto" src={logo} alt="Mi Butaca" />
-                    <h1 className="text-2xl text-teal-600 text-center">Finaliza tu compra</h1>
-                    <div className="flex flex-col">
-                        {cart.seats.map((item) => (
-                            <div key={item.seatID}>
-                                <img src={eventImage} alt={eventName} className="w-10" />
-                                <h1 className="text-xl text-gray-900">{eventName}
-                                <p className="text-gray-500">{item.sector} </p>
-                                <p className="text-gray-500">{item.seatLocation} </p>
-                                <h2 className="text-lg font-bold text-fuchsia-500">${item.price}</h2></h1>
-                                <p className="text-gray-500">Cantidad: {item.seatCount}</p>
-                                
-                                <button onClick={() => deleteItem(item.id)} className="bg-fuchsia-200 text-white rounded-full">
-                                    ❌
-                                </button>
-                                <h1 className="text-lg font-bold text-fuchsia-500 text-center">Total: ${total}</h1>
-                                <h1 className="text-lg text-gray-900 text-center">Total entradas: {item.seatCount} </h1>
-                            </div>
-                        ))}
-                    </div>
-                    <div className="flex flex-col items-center">
-                    <a href="/" className="font-bold text-purple-600 hover:text-teal-600 ">
-                        Seguir comprando
-                    </a>
-                    <button className="w-32 bg-teal-600 text-white hover:bg-fuchsia-600">Pagar</button>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+       <>
+      <div className="fixed inset-0 z-1000 flex items-center justify-center backdrop-filter backdrop-blur-lg">
+        {/* Este div se utilizará para el fondo desenfocado */}
+      </div>
+      <div style={{ marginTop: '5rem' }} className="fixed inset-0 z-1001 flex flex-col items-center justify-center md:mt-10 lg:mt-20">
+        {/* Contenedor principal del formulario */}
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm p-6 space-y-0 bg-white rounded-lg shadow-lg">
+          <img className="mx-auto h-8 w-auto" src={logo} alt="Mi Butaca" />
+          <h1 className="text-2xl text-teal-600 text-center">Finaliza tu compra</h1>
+          <div className="flex flex-col">
+            {/* Mostrar datos del evento una sola vez */}
+            <div className="flex items-center">
+  <img src={eventImage} alt={eventName} className="w-10 mt-5" />
+  <h1 className="text-xl text-gray-900 mb-2 ml-2 font-bold">{eventName}</h1>
+</div>
+
+
+            {/* Mostrar información del sector, etc., si aplica */}
+            {seats.map((item) => (
+              <div key={item.seatID}>
+                <p className="text-gray-500">▪{" "}{item.sector}{" | "} {item.seatLocation}{" | "}</p>
+                <h2 className="text-lg font-bold text-fuchsia-500">${item.price}</h2>
+                <button className="text-teal-600">
+                  modificar asiento
+                </button>
+              </div>
+            ))}
+            <h1 className="text-lg font-bold text-fuchsia-500 text-center">Total: ${total}</h1>
+            <h1 className="text-lg text-gray-900 text-center">Total entradas: {totalEntradas}</h1>
+          </div>
+          <div className="flex flex-col items-center">
+            <a href="/" className="font-bold text-purple-600 hover:text-teal-600">
+              Cancelar
+            </a>
+            <button className="w-32 bg-teal-600 text-white hover:bg-fuchsia-600" onClick={handleCheckout}>
+              Pagar
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
     
 };
 
