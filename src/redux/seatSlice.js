@@ -4,6 +4,7 @@ import axios from 'axios';
 const initialState = {
   seats: {}, // Usa un objeto para almacenar los asientos únicos
   selectedSeats: [],
+  deselectedSeats: [],
 };
 
 export const seatSlice = createSlice({
@@ -11,15 +12,20 @@ export const seatSlice = createSlice({
   initialState,
   reducers: {
     addSelectedSeat: (state, action) => {
-      console.log('Antes de agregar:', state.selectedSeats);
-      state.selectedSeats.push(action.payload);
-      console.log('Después de agregar:', state.selectedSeats);
+      const seatToAdd = action.payload;
+      state.selectedSeats.push(seatToAdd);
+      state.deselectedSeats = state.deselectedSeats.filter(seat => seat.seatID !== seatToAdd.seatID);
     },
     removeSelectedSeat: (state, action) => {
-      console.log('Antes de quitar:', state.selectedSeats);
-      state.selectedSeats = state.selectedSeats.filter(seat => seat !== action.payload);
-      console.log('Después de quitar:', state.selectedSeats);
+      const seatToRemove = action.payload;
+      state.selectedSeats = state.selectedSeats.filter(seat => seat.seatID !== seatToRemove.seatID);
+      state.deselectedSeats.push(seatToRemove);
     },
+    clearSelectedSeats: (state) => {
+      state.selectedSeats = [];
+    },
+    
+
     setSeats: (state, action) => {
       // Reinicia el objeto de asientos al recibir nuevos datos
       state.seats = {};
@@ -41,7 +47,7 @@ export const fetchAndSetSeats = (eventID, sector) => async (dispatch) => {
   }
 };
 
-export const { addSelectedSeat, removeSelectedSeat, setSeats } = seatSlice.actions;
+export const { addSelectedSeat, removeSelectedSeat, clearSelectedSeats,setSeats } = seatSlice.actions;
 
 export const selectSelectedSeats = state => state.seat.selectedSeats;
 export const selectSeats = state => Object.values(state.seat.seats);

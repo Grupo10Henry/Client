@@ -20,6 +20,8 @@ const Booking = () => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.user.token);
+  const userID = useSelector((state) => state.user.userInfo.userID);
+
   const [loading, setLoading] = useState(true);
   // Cambié el nombre de esta variable para mantener la consistencia
   const [eventDetails, setEventDetails] = useState({
@@ -147,14 +149,17 @@ const Booking = () => {
   }
 
   const handleSeatSelect = (seat) => {
-    if (seat.status === true) {
-      if (selectedSeats.includes(seat)) {
+  console.log("selectedSeats in Booking antes del dispatch:", selectedSeats);
+  if (seat.status === true) {
+    if (selectedSeats.some(selectedSeat => selectedSeat.seatID === seat.seatID)) {
         dispatch(removeSelectedSeat(seat));
-      } else {
+    } else {
         dispatch(addSelectedSeat(seat));
-      }
     }
-  };
+}
+  console.log("selectedSeats in Booking despues del dispatch:", selectedSeats);
+};
+
 
   const handleSectorSelect = (sectorName) => {
     setSelectedSector(sectorName);
@@ -212,6 +217,8 @@ const Booking = () => {
           ) : (
             <BookingSeats
               id={id}
+              userID={userID}
+              isDonation={isDonation}
               sector={selectedSector}
               sectorPrices={sectorPrices}
               handleSectorSelect={handleSectorSelect}

@@ -5,10 +5,7 @@ import {
   selectSelectedSeats,
   fetchAndSetSeats,
 } from "../../../../redux/seatSlice";
-import {
-  addSelectedSeat,
-  removeSelectedSeat,
-} from "../../../../redux/bookSeatsSlice";
+import { clearSelectedSeats } from "../../../../redux/seatSlice";
 import styles from "./BookingSeats.module.css";
 import asiento from "../../../../assets/asiento.svg";
 import asientoFree from "../../../../assets/asiento-free.svg";
@@ -16,9 +13,11 @@ import asientoSelected from "../../../../assets/asiento-ocup.svg";
 import PropTypes from "prop-types";
 
 const BookingSeats = ({
+  userID,
   eventType,
   bannerImage,
   id,
+  isDonation,
   sector,
   sectorPrices,
   handleSectorSelect,
@@ -67,13 +66,17 @@ const BookingSeats = ({
       ...prevStatus,
       [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
     }));
-
+    console.log("selectedSeats local state in BookingSeats:", selectedSeats);
     if (handleSeatSelect) {
       console.log("Información enviada a handleSeatSelect:", seat);
-      handleSeatSelect(seat);
+      handleSeatSelect({...seat, userID: userID});
     }
     handleSectorInfoUpdate();
   };
+
+  useEffect(() => {
+    console.log("selectedSeats local state in BookingSeats:", selectedSeats);
+  }, [selectedSeats]);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -84,6 +87,24 @@ const BookingSeats = ({
   const handleOnClickcarrito = () => {
     navigate("/carrito");
   };
+
+  useEffect(() => {
+    const clearSelectedSeatsTimer = setTimeout(() => {
+      dispatch(clearSelectedSeats());
+    }, 15 * 60 * 1000);
+
+    const handleBeforeUnload = (event) => {
+      dispatch(clearSelectedSeats());
+      event.returnValue = "¿Estás seguro de abandonar la página? Se perderán los asientos seleccionados.";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      clearTimeout(clearSelectedSeatsTimer);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [dispatch, clearSelectedSeats]);
 
   return (
     <div className={styles.seatMap}>
