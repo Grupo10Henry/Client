@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useCallback } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSeats, selectSelectedSeats, fetchAndSetSeats } from '../../../../redux/seatSlice';
 import { addSelectedSeat, removeSelectedSeat } from '../../../../redux/bookSeatsSlice';
@@ -7,17 +7,17 @@ import asiento from '../../../../assets/asiento.svg';
 import asientoFree from '../../../../assets/asiento-free.svg';
 import asientoSelected from '../../../../assets/asiento-ocup.svg';
 
-const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSectorInfoUpdate }) => {  
+const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSectorInfoUpdate, counterActivated, setCounterActivated }) => {  
   const dispatch = useDispatch();
   const seats = useSelector(selectSeats);
   console.log('Seats en BookingSeats:', seats);
   const rows = seats.length > 0 ? seats[0].rows : 0; // Obtenemos las filas de los asientos
   const columns = seats.length > 0 ? seats[0].columns : 0; // Obtenemos las columnas de los asientos
-  
+  console.log('Rows in Bookingseats:', rows, 'Columns:', columns);
   const [remainingTime, setRemainingTime] = useState(900);
   const selectedSeats = useSelector(selectSelectedSeats);
   const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
-const [counterActivated, setCounterActivated] = useState(false);
+
 
   useEffect(() => {
     
@@ -30,38 +30,27 @@ const [counterActivated, setCounterActivated] = useState(false);
     }, 1000); // Actualizar cada segundo
 
     return () => clearInterval(interval);
-  }, [id, sector, sectorPricesQuery, dispatch, counterActivated, remainingTime, setCounterActivated ]);
+  }, [id, sector, sectorPricesQuery, dispatch, counterActivated, remainingTime]);
 
-  const handleSeatClick = useCallback(
-    (seat) => {
-      if (!seat.status) {
-        return;
-      }
-      setSelectedSeatStatus((prevStatus) => ({
+  const handleSeatClick = (seat) => {
+    if (!seat.status) {
+      // El asiento está ocupado, no se puede seleccionar
+      return;
+    }
+  
+    setSelectedSeatStatus((prevStatus) => ({
       ...prevStatus,
-          [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
-        }));
+      [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
+    }));
+  
+    if (onSeatSelect) {
+      onSeatSelect(seat);
+    }
+    handleSectorInfoUpdate();
+  };
+  
+  
 
-        if (onSeatSelect) {
-          console.log('Asiento seleccionado:', seat);
-          onSeatSelect(seat);
-
-          if(!counterActivated) {
-            setCounterActivated(true);
-          }
-        } else {
-          const noSelectedSeats = selectedSeats.length === 0;
-
-            if (noSelectedSeats) {
-              console.log('No hay asientos seleccionados');
-              setCounterActivated(false);
-            }
-          }
-        handleSectorInfoUpdate();
-      },
-      [onSeatSelect, handleSectorInfoUpdate, counterActivated, setCounterActivated, selectedSeats]
-      ); 
-      
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;

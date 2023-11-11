@@ -71,18 +71,18 @@ const Booking = () => {
   }, [sectorPrices]);
 
   useEffect(() => {
-    if (token && selectedSector) {
-      dispatch (fetchAndSetSeats(id, selectedSector));
-    } else {
-
+    if (!token) {
       window.alert("Por favor inicia sesión para poder reservar una entrada.");
       navigate("/iniciarsesion");
       setLoading(false);
-    }
+    } else {
       const fetchData = async () => {
         try {
+          if (selectedSector) {
+            dispatch(fetchAndSetSeats(id, selectedSector));
+          }
           const responseEvent = await axios.get(`http://localhost:3001/event/${id}`);
-          
+
           if (responseEvent.data) {
             const {
               name,
@@ -121,7 +121,7 @@ const Booking = () => {
       };
 
       fetchData();
-    
+    }
   }, [token, navigate, id, selectedSector]);
 
   if (loading) {
@@ -156,7 +156,7 @@ const Booking = () => {
 
   const handleSectorSelect = (sectorName) => {
     setSelectedSector(sectorName);
-    
+    console.log(sectorName, "sector seleccionado en Booking");
   };
 
   /*const handleCheckout = () => {
