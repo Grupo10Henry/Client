@@ -7,7 +7,12 @@ import { instance } from "../../../axios/config";
 import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsNew";
 import { useSelector } from "react-redux";
 import Loader from "../../../Components/UserAndAdmin/Loader/Loader";
-import { addSelectedSeat, removeSelectedSeat, selectSelectedSeats, fetchAndSetSeats } from "../../../redux/seatSlice";
+import {
+  addSelectedSeat,
+  removeSelectedSeat,
+  selectSelectedSeats,
+  fetchAndSetSeats,
+} from "../../../redux/seatSlice";
 import axios from "axios";
 
 const Booking = () => {
@@ -44,7 +49,6 @@ const Booking = () => {
     totalPrice: 0,
   });
   const [counterActivated, setCounterActivated] = useState(false);
-  
 
   const handleSectorInfoUpdate = () => {
     // Calcula el total de asientos seleccionados y el precio total
@@ -81,7 +85,9 @@ const Booking = () => {
           if (selectedSector) {
             dispatch(fetchAndSetSeats(id, selectedSector));
           }
-          const responseEvent = await axios.get(`http://localhost:3001/event/${id}`);
+          const responseEvent = await axios.get(
+            `http://localhost:3001/event/${id}`
+          );
 
           if (responseEvent.data) {
             const {
@@ -140,10 +146,6 @@ const Booking = () => {
     dateToRender = eventDetails.date; // Corregí esta parte para evitar un error
   }
 
-  const handleOnClickcarrito = () => {
-    navigate("/carrito");
-  };
-
   const handleSeatSelect = (seat) => {
     if (seat.status === true) {
       if (selectedSeats.includes(seat)) {
@@ -156,13 +158,7 @@ const Booking = () => {
 
   const handleSectorSelect = (sectorName) => {
     setSelectedSector(sectorName);
-    console.log(sectorName, "sector seleccionado en Booking");
   };
-
-  /*const handleCheckout = () => {
-    // iniciar el proceso de pago
-    // enviar los datos de la compra al backend
-  };*/
 
   return (
     <div className={styles.ContainerGlobal}>
@@ -206,42 +202,7 @@ const Booking = () => {
         </div>
 
         <div className={styles.ContainerSectores}>
-          <br />
-          {isDonation ? (
-            <>
-              <p>Ingresa un importe voluntario:</p>
-              <input type="number" placeholder="Cantidad de entradas" />
-              <input type="number" placeholder="$ Contribución voluntaria" />
-            </>
-          ) : (
-            <>
-               <h3>Selecciona un sector:</h3>
-              <div className={styles.ContainerSelect}>
-              {sectorPrices && sectorPrices.length > 0 ? (
-                sectorPrices.map((sector, index) => (
-                  <div
-                    key={index}
-                    className={
-                      selectedSector === sector[1]
-                        ? styles.selectedSector
-                        : styles.sector
-                    }
-                    onClick={() => handleSectorSelect(sector[1])}
-                  >
-                    {sector[1]} - ${" "}
-                    {parseFloat(sector[0]).toLocaleString("es-ES")}
-                  </div>
-                ))
-              ) : (
-                <p>Error en la carga de precios.</p>
-              )}
-              </div>
-              <div className={styles.ContainerBookingSeatsInfo}>
-                <div>Total asientos seleccionados: {sectorInfo.selectedSeats}</div>
-                <div>Total: $ {sectorInfo.totalPrice.toLocaleString()}</div>
-              </div>
-            </>
-          )}
+          <img src={eventDetails.planImage} />
         </div>
       </div>
       <div className={styles.ContainerPlan}>
@@ -252,16 +213,18 @@ const Booking = () => {
             <BookingSeats
               id={id}
               sector={selectedSector}
-              onSeatSelect={handleSeatSelect}
+              sectorPrices={sectorPrices}
+              handleSectorSelect={handleSectorSelect}
+              handleSeatSelect={handleSeatSelect}
               sectorPricesQuery={sectorPricesQuery}
               handleSectorInfoUpdate={handleSectorInfoUpdate}
               counterActivated={counterActivated}
               setCounterActivated={setCounterActivated}
+              bannerImage={eventDetails.bannerImage}
             />
           )}
         </div>
       </div>
-      <button onClick={handleOnClickcarrito}>Agregar al carrito</button>{" "}
     </div>
   );
 };
