@@ -21,6 +21,7 @@ const Booking = () => {
 
   const token = useSelector((state) => state.user.token);
   const userID = useSelector((state) => state.user.userInfo.userID);
+  const userName = useSelector((state) => state.user.userInfo.name);
 
   const [loading, setLoading] = useState(true);
   // Cambié el nombre de esta variable para mantener la consistencia
@@ -218,6 +219,7 @@ const Booking = () => {
             <BookingSeats
               id={id}
               userID={userID}
+              userName={userName}
               isDonation={isDonation}
               sector={selectedSector}
               sectorPrices={sectorPrices}

@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 const BookingSeats = ({
   userID,
+  userName,
   eventType,
   bannerImage,
   id,
@@ -120,6 +121,7 @@ const BookingSeats = ({
     // Información del evento y asientos seleccionados
     const eventData = {
       userID: userID,
+      userName: userName,
       eventID: id,
       eventName: eventName, // Otra propiedad del evento que desees enviar
       eventImage: image, // Otra propiedad del evento que desees enviar
@@ -132,6 +134,7 @@ const BookingSeats = ({
         seatLocation: seat.seatLocation,
         sector: seat.sector, // Puedes ajustar esto según la estructura de tu asiento
         price: seat.price, // Puedes ajustar esto según la estructura de tu asiento
+        quantity: 1, // cada asiento será una entrada
         totalPrice: seat.price * selectedSeats.length, // Puedes ajustar esto según la estructura de tu asiento
       })),
     };
