@@ -228,6 +228,8 @@ const Booking = () => {
               counterActivated={counterActivated}
               setCounterActivated={setCounterActivated}
               bannerImage={eventDetails.bannerImage}
+              image={eventDetails.image}
+              eventName={eventDetails.name}
             />
           )}
         </div>

@@ -6,11 +6,13 @@ import {
   fetchAndSetSeats,
 } from "../../../../redux/seatSlice";
 import { clearSelectedSeats } from "../../../../redux/seatSlice";
+import {agregarAlCarrito} from "../../../../redux/carritoSlice";
 import styles from "./BookingSeats.module.css";
 import asiento from "../../../../assets/asiento.svg";
 import asientoFree from "../../../../assets/asiento-free.svg";
 import asientoSelected from "../../../../assets/asiento-ocup.svg";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const BookingSeats = ({
   userID,
@@ -26,9 +28,13 @@ const BookingSeats = ({
   handleSectorInfoUpdate,
   counterActivated,
   setCounterActivated,
+  image,
+  eventName,
 }) => {
   const dispatch = useDispatch();
   const seats = useSelector(selectSeats);
+
+  const navigate = useNavigate();
 
   const rows = seats.length > 0 ? seats[0].rows : 0; // Obtenemos las filas de los asientos
   const columns = seats.length > 0 ? seats[0].columns : 0; // Obtenemos las columnas de los asientos
@@ -84,9 +90,6 @@ const BookingSeats = ({
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
-  const handleOnClickcarrito = () => {
-    navigate("/carrito");
-  };
 
   useEffect(() => {
     const clearSelectedSeatsTimer = setTimeout(() => {
@@ -106,6 +109,47 @@ const BookingSeats = ({
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [dispatch, clearSelectedSeats]);
+
+  const handleOnClickcarrito = () => {
+    // Verificar si hay asientos seleccionados
+    if (selectedSeats.length === 0) {
+      alert("No has seleccionado ningún asiento.");
+      return;
+    }
+
+    // Información del evento y asientos seleccionados
+    const eventData = {
+      userID: userID,
+      eventID: id,
+      eventName: eventName, // Otra propiedad del evento que desees enviar
+      eventImage: image, // Otra propiedad del evento que desees enviar
+    };
+
+    const seatsData = {
+      seatCount: selectedSeats.length, // Agregar la cantidad de asientos seleccionados
+      seats: selectedSeats.map((seat) => ({
+        seatID: seat.seatID,
+        seatLocation: seat.seatLocation,
+        sector: seat.sector, // Puedes ajustar esto según la estructura de tu asiento
+        price: seat.price, // Puedes ajustar esto según la estructura de tu asiento
+        totalPrice: seat.price * selectedSeats.length, // Puedes ajustar esto según la estructura de tu asiento
+      })),
+    };
+
+    // Enviar datos al carrito (puedes ajustar según la estructura de tu carrito)
+    dispatch(agregarAlCarrito({ eventData, seatsData }));
+
+    // Limpiar asientos seleccionados después de agregar al carrito
+    dispatch(clearSelectedSeats());
+
+    // Navegar a la página del carrito
+    navigate('/carrito', {
+      state: {
+        ...eventData,
+        seatsData,
+      },
+    });
+  };
 
   return (
     <div className={styles.seatMap}>
