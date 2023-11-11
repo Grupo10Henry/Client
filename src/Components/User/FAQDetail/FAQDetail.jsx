@@ -13,7 +13,7 @@ const FAQDetail = () => {
     const getFaqs = async () => {
         try {
           const { data } = await instance.get(`/faq/`) // instance.get(`/user/${params.id}`) || axios.get(`http://localhost:3001/user/${params.id}`)
-        //   console.log(data)
+          console.log(data)
           return data
         } catch (error) {
           console.log(error)
@@ -47,7 +47,7 @@ const FAQDetail = () => {
         return(
             <div className={style.faqContainer}>
                 <h1>PREGUNTAS FRECUENTES</h1>
-            {allFaqs.map((faq, index) => (
+            {allFaqs?.map((faq, index) => (
                 <div key={`faq-${index}`}>
                     <p className={style.question}>{faq.question}</p>
                     <p className={style.answer}>{faq.answer}</p>

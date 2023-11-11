@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  allFaqs: [] 
+  allFaqs: [],
+  faqById: [],
 }
 
 export const faqSlice = createSlice({
@@ -11,10 +12,14 @@ export const faqSlice = createSlice({
     getAllFaqs: (state, action) => {
       state.allFaqs = action.payload
     },
+    getFaqById: (state, action) => {
+      state.faqById = action.payload
+    },
   },
 })
 
 export const {
-    getAllFaqs
+    getAllFaqs,
+    getFaqById
 } = faqSlice.actions;
 export default faqSlice.reducer

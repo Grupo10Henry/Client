@@ -4,3 +4,32 @@
   justify-content: center;
   grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
 }
+
+/* loader slice */
+.loaderSlideWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.loaderSlideWrapper .loaderSlide {
+  width: 90%;
+  height: 200px;
+  background: #ccc;
+  position: relative;
+  animation: stretch 2s infinite ease-in-out;
+}
+
+@keyframes stretch {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(2);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}

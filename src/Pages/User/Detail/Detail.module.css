@@ -1,32 +1,31 @@
 /* Juli >>>>>>>> */
 
-
-
-
-
 /* Contenedor padre; ContainerGlobal: 100% ancho, alto auto */
 .ContainerGlobal {
   width: 100%;
   height: auto;
-  display: flex;
-  flex-wrap: wrap;
-
-  padding: 10px;
+  display: grid;
+  grid-template-areas:
+    "banner banner"
+    "left left"
+    "right right"
+    "map map";
+  gap: 10px;
+  padding-top: calc(var(--h-nav) + 10px);
+  padding-left: 20px;
+  padding-right: 20px;
   /*espacio entre los elementos*/
-  justify-content: space-around;
 }
 
-
-
-
 .ContainerGlobal h2 {
-  color: brown;
+  color: var(--white);
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 0;
 }
 /* Hijo 1: ContainerBanner: 100% ancho, alto proporcional */
 .ContainerBanner {
+  grid-area: banner;
   margin-bottom: 15px;
   width: 100%;
   height: auto;
@@ -36,7 +35,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: brown;
+  background-color: var(--danger);
   color: aliceblue;
 }
 
@@ -44,32 +43,36 @@
 .ContainerLeftColumn,
 .ContainerRightColumn {
   padding: 10px;
-  width: 50%;
+  width: 100%;
   height: auto;
-  
-  margin-bottom: 15px;
-  
 }
 
 .ContainerLeftColumn {
-  background-color: rgb(213, 230, 224);
-  flex: 3;
-  margin-right: 50px;
+  grid-area: left;
+  background-color: var(--negro);
+  color: var(--white);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  gap: 15px;
 }
 
 .ContainerLeftColumn h5 {
-  color: brown;
-  font-size: 20px;
+  grid-area: right;
+  color: var(--amarillo-claro);
+  font-size: 18px;
   font-weight: bold;
   margin-bottom: 0;
 }
 
 .ContainerRightColumn {
-  background-color: rgb(148, 167, 160);
+  background-color: var(--negro);
   text-align: center;
   flex: 1;
   align-items: center;
-  padding: 0 30px;
+  padding: 30px;
 }
 
 /* Hijo 4: Ocupa el 100% del ancho y alto proporcional */
@@ -77,6 +80,7 @@
   width: 100%;
   height: 20em;
   margin-bottom: 100px;
+  grid-area: map;
 }
 
 .ContainerGoogleMap h3 {
@@ -84,7 +88,7 @@
   margin-left: 5px;
 }
 
-.iframe{
+.iframe {
   margin-top: 10px;
   width: 100%;
   height: 100%;
@@ -92,22 +96,20 @@
 }
 
 .divCount {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  background-color: brown;
+  background-color: var(--filters-bg);
   color: aliceblue;
   width: 100%;
   text-align: center;
   align-items: center;
   border-radius: 5px;
-  box-shadow: black 0px 0px 10px;
+  padding: 30px 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .divCount p {
   font-size: 10px;
   margin: 0;
-
-  
 }
 
 .divCount h1 {
@@ -117,8 +119,6 @@
   margin: 0;
 }
 .countdownContainer {
-  margin-left: 15px;
-  margin-right: 15px;
   display: flex;
   align-items: center; /* Centra verticalmente los elementos hijos */
   justify-content: center; /* Centra horizontalmente los elementos hijos */
@@ -132,18 +132,17 @@
 }
 
 .ContainerNameDescription h1 {
-  color: brown;
   font-size: 36px;
   font-weight: bold;
   margin: 0;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .ContainerNameDescription p {
   font-size: 16px;
-  /*  italica*/
   font-style: italic;
   margin: 0;
-  
 }
 
 .ContainerPrices {
@@ -151,37 +150,72 @@
   justify-content: space-between;
   font-size: 18px;
   font-weight: bold;
-  margin: 5px 3px;
+  margin: 5px 0;
   padding: 3px;
-  color: black;
-  background-color:rgb(122, 170, 151);
+  color: var(--amarillo-claro);
 }
 
-.ContainerGlobal button {
- 
+.ContainerGlobal .btn {
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  padding: 1px 5px;
+  margin-top: 10px;
+  padding: 10px;
+  color: var(--amarillo-claro);
 }
 
-.ContainerGlobal button:hover {
+.ContainerGlobal .btn:hover {
   background-color: black;
   color: white;
-  border: 1px solid #9e1943;
+  border: 1px solid var(--magenta);
   transition: 0.5s;
 }
 
 .ContainerAddress {
-  background-color:rgb(175, 203, 191);
-  
+  width: 100%;
+  background-color: var(--filters-bg);
+  color: var(--white);
 }
 
-.ContainerAddress h4{
+.ContainerAddress h4 {
   font-size: 15px;
 }
 
-.ContainerAddress h3{
+.ContainerAddress h3 {
   font-size: 18px;
   font-weight: bold;
+}
+
+.loaderWrapper {
+  padding: 20px;
+  grid-area: right;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #fff;
+  border-bottom-color: var(--turquesa);
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (width > 700px) {
+  .ContainerGlobal {
+    grid-template-areas:
+      "banner banner banner"
+      "left left right"
+      "map  map map";
+  }
 }

@@ -47,10 +47,20 @@ export const eventsSlice = createSlice({
       state.isError = action.payload
       state.isLoading = false
     },
+
+    setDataStart: (state, action) => {
+      state.isLoading = true
+    },
+    setDataSuccess: (state, action) => {
+      state.isLoading = false
+      state.nextEvents = action.payload
+    },
   },
 })
 
 export const {
+  setDataStart,
+  setDataSuccess,
   getAllEvents,
   getNextEvents,
   setFilteredEvents,
