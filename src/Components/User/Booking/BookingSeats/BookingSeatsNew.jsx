@@ -5,20 +5,22 @@ import {
   selectSelectedSeats,
   fetchAndSetSeats,
 } from "../../../../redux/seatSlice";
-import {
-  addSelectedSeat,
-  removeSelectedSeat,
-} from "../../../../redux/bookSeatsSlice";
+import { clearSelectedSeats } from "../../../../redux/seatSlice";
+import { agregarAlCarrito } from "../../../../redux/carritoSlice";
 import styles from "./BookingSeats.module.css";
 import asiento from "../../../../assets/asiento.svg";
 import asientoFree from "../../../../assets/asiento-free.svg";
 import asientoSelected from "../../../../assets/asiento-ocup.svg";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const BookingSeats = ({
+  userID,
+  userName,
   eventType,
   bannerImage,
   id,
+  isDonation,
   sector,
   sectorPrices,
   handleSectorSelect,
@@ -27,9 +29,13 @@ const BookingSeats = ({
   handleSectorInfoUpdate,
   counterActivated,
   setCounterActivated,
+  image,
+  eventName,
 }) => {
   const dispatch = useDispatch();
   const seats = useSelector(selectSeats);
+
+  const navigate = useNavigate();
 
   const rows = seats.length > 0 ? seats[0].rows : 0; // Obtenemos las filas de los asientos
   const columns = seats.length > 0 ? seats[0].columns : 0; // Obtenemos las columnas de los asientos
@@ -67,12 +73,17 @@ const BookingSeats = ({
       ...prevStatus,
       [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
     }));
-
+    console.log("selectedSeats local state in BookingSeats:", selectedSeats);
     if (handleSeatSelect) {
-      handleSeatSelect(seat);
+      console.log("Información enviada a handleSeatSelect:", seat);
+      handleSeatSelect({ ...seat, userID: userID });
     }
     handleSectorInfoUpdate();
   };
+
+  useEffect(() => {
+    console.log("selectedSeats local state in BookingSeats:", selectedSeats);
+  }, [selectedSeats]);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -80,121 +91,187 @@ const BookingSeats = ({
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
+  useEffect(() => {
+    const clearSelectedSeatsTimer = setTimeout(() => {
+      dispatch(clearSelectedSeats());
+    }, 15 * 60 * 1000);
+
+    const handleBeforeUnload = (event) => {
+      dispatch(clearSelectedSeats());
+      event.returnValue =
+        "¿Estás seguro de abandonar la página? Se perderán los asientos seleccionados.";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      clearTimeout(clearSelectedSeatsTimer);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [dispatch, clearSelectedSeats]);
+
   const handleOnClickcarrito = () => {
-    navigate("/carrito");
+    // Verificar si hay asientos seleccionados
+    if (selectedSeats.length === 0) {
+      alert("No has seleccionado ningún asiento.");
+      return;
+    }
+
+    // Información del evento y asientos seleccionados
+    const eventData = {
+      userID: userID,
+      userName: userName,
+      eventID: id,
+      eventName: eventName, // Otra propiedad del evento que desees enviar
+      eventImage: image, // Otra propiedad del evento que desees enviar
+    };
+
+    const seatsData = {
+      seatCount: selectedSeats.length, // Agregar la cantidad de asientos seleccionados
+      seats: selectedSeats.map((seat) => ({
+        seatID: seat.seatID,
+        seatLocation: seat.seatLocation,
+        sector: seat.sector, // Puedes ajustar esto según la estructura de tu asiento
+        price: seat.price, // Puedes ajustar esto según la estructura de tu asiento
+        quantity: 1, // cada asiento será una entrada
+        totalPrice: seat.price * selectedSeats.length, // Puedes ajustar esto según la estructura de tu asiento
+      })),
+    };
+
+    // Enviar datos al carrito (puedes ajustar según la estructura de tu carrito)
+    dispatch(agregarAlCarrito({ eventData, seatsData }));
+
+    // Limpiar asientos seleccionados después de agregar al carrito
+    dispatch(clearSelectedSeats());
+
+    // Navegar a la página del carrito
+    navigate("/carrito", {
+      state: {
+        ...eventData,
+        seatsData,
+      },
+    });
   };
 
   return (
     <div className={styles.seatMap}>
-      {eventType === "Grande" ? (
-        <img src={bannerImage} alt="Banner Image" />
-      ) : (
-       
       <div className={styles.sector}>
-        <h3>Sector: {sector}</h3>
-        <div className={styles.selectedInfo}>
-          {counterActivated && (
-            <div
-              className={`${styles.Time} ${
-                remainingTime > 0 ? "" : styles.hidden
-              }`}
-            >
-              <p>
-                Reservaremos tus asientos por los próximos:{" "}
-                <span className={styles.TimeText}>
-                  {formatTime(remainingTime)}
-                </span>{" "}
-                minutos.
-              </p>
+        {eventType === "Grande" ? (
+          <img
+            src={bannerImage}
+            alt="Banner Image"
+            className={styles.BannerImage}
+          />
+        ) : (
+          <>
+            <h3>Sector: {sector}</h3>
+            <div className={styles.selectedInfo}>
+              {counterActivated && selectedSeats.length > 0 && (
+                <div
+                  className={`${styles.Time} ${
+                    remainingTime > 0 ? "" : styles.hidden
+                  }`}
+                >
+                  <p>
+                    Reservaremos tus asientos por los próximos:{" "}
+                    <span className={styles.TimeText}>
+                      {formatTime(remainingTime)}
+                    </span>{" "}
+                    minutos.
+                  </p>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <table className={styles.seatGrid}>
-          <tbody>
-            {Array.from({ length: rows }, (_, rowIndex) => (
-              <tr key={rowIndex}>
-                {Array.from({ length: columns }, (_, colIndex) => {
-                  const currentSeat = seats[rowIndex * columns + colIndex];
+            <table className={styles.seatGrid}>
+              <tbody>
+                {Array.from({ length: rows }, (_, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {Array.from({ length: columns }, (_, colIndex) => {
+                      const currentSeat = seats[rowIndex * columns + colIndex];
 
-                  return (
-                    <td key={colIndex}>
-                      {currentSeat && (
-                        <div>
-                          {currentSeat.status ? (
+                      return (
+                        <td key={colIndex}>
+                          {currentSeat && (
                             <div>
-                              <img
-                                key={currentSeat.seatID}
-                                src={
-                                  selectedSeatStatus[currentSeat.seatID]
-                                    ? asiento
-                                    : asientoFree
-                                }
-                                alt={`Seat ${currentSeat.seatLocation}`}
-                                className={`${styles.seat} ${
-                                  selectedSeatStatus[currentSeat.seatID]
-                                    ? styles.selected
-                                    : ""
-                                }`}
-                                onClick={() => handleSeatClick(currentSeat)}
-                              />
+                              {currentSeat.status ? (
+                                <div>
+                                  <img
+                                    key={currentSeat.seatID}
+                                    src={
+                                      selectedSeatStatus[currentSeat.seatID]
+                                        ? asiento
+                                        : asientoFree
+                                    }
+                                    alt={`Seat ${currentSeat.seatLocation}`}
+                                    className={`${styles.seat} ${
+                                      selectedSeatStatus[currentSeat.seatID]
+                                        ? styles.selected
+                                        : ""
+                                    }`}
+                                    onClick={() => handleSeatClick(currentSeat)}
+                                  />
 
-                              <p className={styles.seatLocation}>
-                                {currentSeat.seatLocation}
-                              </p>
-                            </div>
-                          ) : (
-                            <div>
-                              <img
-                                key={currentSeat.seatID}
-                                src={asientoSelected}
-                                alt={`Seat ${currentSeat.seatLocation}`}
-                                className={styles.seat}
-                              />
-                              <p className={styles.seatLocation}>
-                                {currentSeat.seatLocation}
-                              </p>
+                                  <p className={styles.seatLocation}>
+                                    {currentSeat.seatLocation}
+                                  </p>
+                                </div>
+                              ) : (
+                                <div>
+                                  <img
+                                    key={currentSeat.seatID}
+                                    src={asientoSelected}
+                                    alt={`Seat ${currentSeat.seatLocation}`}
+                                    className={styles.seat}
+                                  />
+                                  <p className={styles.seatLocation}>
+                                    {currentSeat.seatLocation}
+                                  </p>
+                                </div>
+                              )}
                             </div>
                           )}
-                        </div>
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
       </div>
-      )}
-      <div className= {styles.seatInfo}>
+      <div className={styles.seatInfo}>
         <div className={styles.TituloBlink}>
           <h3>Selecciona un sector:</h3>
         </div>
-      <div className={styles.ContainerSelect}>
-        {sectorPrices && sectorPrices.length > 0 ? (
-          sectorPrices.map((sector, index) => (
-            <div
-              key={index}
-              className={
-                sector === sector[1]
-                  ? styles.selectedSector
-                  : styles.sector
-              }
-              onClick={() => handleSectorSelect(sector[1])}
-            >
-              {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
-            </div>
-          ))
-        ) : (
-          <p>Error en la carga de precios.</p>
-        )}
+        <div className={styles.ContainerSelect}>
+          {sectorPrices && sectorPrices.length > 0 ? (
+            sectorPrices.map((sector, index) => (
+              <div
+                key={index}
+                className={
+                  sector === sector[1] ? styles.selectedSector : styles.sector
+                }
+                onClick={() => handleSectorSelect(sector[1])}
+              >
+                {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
+              </div>
+            ))
+          ) : (
+            <p>Error en la carga de precios.</p>
+          )}
         </div>
         <h3>Asientos seleccionados: {selectedSeats.length}</h3>
-        <h3> Total: $ {selectedSeats
-                                    .reduce((acc, curr) => acc + curr.price, 0)
-                                    .toLocaleString()}
+        <h3>
+          {" "}
+          Total: ${" "}
+          {selectedSeats
+            .reduce((acc, curr) => acc + curr.price, 0)
+            .toLocaleString()}
         </h3>
-      <button className={styles.Carrito} onClick={handleOnClickcarrito}>Agregar al carrito</button>
+        <button className={styles.Carrito} onClick={handleOnClickcarrito}>
+          Agregar al carrito
+        </button>
       </div>
     </div>
   );

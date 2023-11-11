@@ -148,3 +148,14 @@
   margin-top: 15px;
   align-items: center;
 }
+
+.sector .BannerImage {
+  width: 50%; /* Establece el ancho al 100% */
+  height: auto; /* Ajusta la altura automáticamente */
+  max-width: 10%; /* Establece el ancho máximo deseado */
+}
+
+/* Clase adicional para ajustar el ancho máximo en caso de "Grande" */
+.GrandeBanner {
+  max-width: 10%; /* Ajusta el ancho máximo específico para el caso "Grande" */
+}
