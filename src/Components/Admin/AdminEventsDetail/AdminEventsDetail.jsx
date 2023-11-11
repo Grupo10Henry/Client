@@ -42,6 +42,8 @@ export default function AdminEventsDetail () {
         views: "",
     });
 
+    const [sections, setSections] = useState();
+
     const [image, setImage] =useState();
     const [imageURL, setImageURL] =useState();
 
@@ -67,9 +69,22 @@ export default function AdminEventsDetail () {
         }
     };
 
+    const getSections = async () => {
+        try {
+            const {data} = await axios.get(`http://localhost:3001/seat/admin/${params.id}`) // axios.get(`http://localhost:3001/seat/admin/${params.id}`) || instance.get(`/seat/admin/${params.id}`)
+            console.log(data)
+            return data
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
     useEffect(() => {
         getEvent().then((data) => {
             setUpdatedEvent(data)
+        })
+        getSections().then((data) => {
+            setSections(data)
         })
     }, []
     );
@@ -356,11 +371,37 @@ export default function AdminEventsDetail () {
                     </div>
                     </div>
                     </div>
-
-                    <button onClick={handleSubmit} className={styles.formButton}>Editar evento</button>
-                    <button onClick={() => {navigate(`/admin`)}} className={styles.formButton}>Cancelar</button>
-                    <button onClick={() => {navigate(`/admin`)}} className={styles.formButton}>Regresar</button>
+                    <div className={styles.buttonContainer}>
+                    <button onClick={handleSubmit} className={styles.editFaqButton}>Editar evento</button>
+                    <button onClick={() => {navigate(`/admin`)}} className={styles.editFaqButtonCancel}>Cancelar</button>
+                    <button onClick={() => {navigate(`/admin`)}} className={styles.editFaqButtonReturn}>Regresar</button>
+                    </div>
                 </div>
+                <h1>Secciones del evento</h1>
+                {sections ? (<table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Filas</th>
+                            <th>Columnas</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {sections?.map((section, index) => (
+                        <tr key={index}>
+                            <td>{section.sector}</td>
+                            <td>{section.price}</td>
+                            <td>{section.rows}</td>
+                            <td>{section.columns}</td>
+                            <td><button>Eliminar</button></td>
+                        </tr>))}
+                    </tbody>
+                </table>
+                ) : (
+                    <h1>El evento no tiene secciones creadas</h1>
+                )}
         </div>
     )
 
