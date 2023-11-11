@@ -10,6 +10,8 @@ const convertToRealtiveDate = (date) => {
 
   if (diffDays === 0) {
     fechaRelativa = "Hoy"
+  } else if (diffDays === 1) {
+    fechaRelativa = "Ayer"
   } else {
     fechaRelativa = `Hace ${Math.abs(diffDays)} días`
   }

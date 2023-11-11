@@ -7,6 +7,7 @@ import changeOrderDate from "../../../../utils/orderDate"
 import Loader from "../../Loader/Loader"
 
 import style from "./ReviewsEvent.module.css"
+import convertToRealtiveDate from "../../../../utils/relativeDate"
 
 // const reviews = [
 //     {
@@ -79,16 +80,24 @@ const ReviewsEvent = () => {
   }
 
   useEffect(() => {
-    fetchData()
+    if (prevEvents.length === 0) {
+      fetchData()
+    }
   }, [])
 
   if (loading) {
     return <Loader />
   }
 
+  const eventosOrdenados = prevEvents?.sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  )
+
+  const eventosMostrados = eventosOrdenados.slice(0, 8)
+
   return (
     <div className={style.reviewsEvent}>
-      {prevEvents?.map((review) => (
+      {eventosMostrados?.map((review) => (
         <div key={review.eventID} className={style.reviewEvent}>
           <div className={style.imgEventContainer}>
             <img
@@ -100,7 +109,7 @@ const ReviewsEvent = () => {
           <div className={style.infoEventContainer}>
             <h4 className={style.nameEvent}>{review.name}</h4>
             <p className={style.dateEvent}>
-              Realizado el: {changeOrderDate(review.date)} a las: {review.time}
+              {convertToRealtiveDate(review.date)} a las: {review.time}
               hs.
             </p>
             <div className={style.reviewEventStars}>{renderStars(5)}</div>
