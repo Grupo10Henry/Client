@@ -1,26 +1,42 @@
-import React, { useState,useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectSeats, selectSelectedSeats, fetchAndSetSeats } from '../../../../redux/seatSlice';
-import { addSelectedSeat, removeSelectedSeat } from '../../../../redux/bookSeatsSlice';
-import styles from './BookingSeats.module.css';
-import asiento from '../../../../assets/asiento.svg';
-import asientoFree from '../../../../assets/asiento-free.svg';
-import asientoSelected from '../../../../assets/asiento-ocup.svg';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectSeats,
+  selectSelectedSeats,
+  fetchAndSetSeats,
+} from "../../../../redux/seatSlice";
+import {
+  addSelectedSeat,
+  removeSelectedSeat,
+} from "../../../../redux/bookSeatsSlice";
+import styles from "./BookingSeats.module.css";
+import asiento from "../../../../assets/asiento.svg";
+import asientoFree from "../../../../assets/asiento-free.svg";
+import asientoSelected from "../../../../assets/asiento-ocup.svg";
+import PropTypes from "prop-types";
 
-const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSectorInfoUpdate, counterActivated, setCounterActivated }) => {  
+const BookingSeats = ({
+  id,
+  sector,
+  sectorPrices,
+  handleSectorSelect,
+  handleSeatSelect,
+  sectorPricesQuery,
+  handleSectorInfoUpdate,
+  counterActivated,
+  setCounterActivated,
+}) => {
   const dispatch = useDispatch();
   const seats = useSelector(selectSeats);
-  console.log('Seats en BookingSeats:', seats);
+
   const rows = seats.length > 0 ? seats[0].rows : 0; // Obtenemos las filas de los asientos
   const columns = seats.length > 0 ? seats[0].columns : 0; // Obtenemos las columnas de los asientos
-  console.log('Rows in Bookingseats:', rows, 'Columns:', columns);
+
   const [remainingTime, setRemainingTime] = useState(900);
   const selectedSeats = useSelector(selectSelectedSeats);
   const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
 
-
   useEffect(() => {
-    
     // Cuando el componente se monta, obtén los asientos del servidor
     dispatch(fetchAndSetSeats(id, sector, sectorPricesQuery));
     const interval = setInterval(() => {
@@ -30,49 +46,59 @@ const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSecto
     }, 1000); // Actualizar cada segundo
 
     return () => clearInterval(interval);
-  }, [id, sector, sectorPricesQuery, dispatch, counterActivated, remainingTime]);
+  }, [
+    id,
+    sector,
+    sectorPricesQuery,
+    dispatch,
+    counterActivated,
+    remainingTime,
+  ]);
 
   const handleSeatClick = (seat) => {
     if (!seat.status) {
       // El asiento está ocupado, no se puede seleccionar
       return;
     }
-  
+
     setSelectedSeatStatus((prevStatus) => ({
       ...prevStatus,
       [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
     }));
-  
-    if (onSeatSelect) {
-      onSeatSelect(seat);
+
+    if (handleSeatSelect) {
+      handleSeatSelect(seat);
     }
     handleSectorInfoUpdate();
   };
-  
-  
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
-  
 
   return (
     <div className={styles.seatMap}>
       <div className={styles.sector}>
         <h3>Sector: {sector}</h3>
         <div className={styles.selectedInfo}>
-        {counterActivated && (
-            <div className={`${styles.Time} ${remainingTime > 0 ? '' : styles.hidden}`}>
+          {counterActivated && (
+            <div
+              className={`${styles.Time} ${
+                remainingTime > 0 ? "" : styles.hidden
+              }`}
+            >
               <p>
                 Reservaremos tus asientos por los próximos:{" "}
-                <span className={styles.TimeText}>{formatTime(remainingTime)}</span> minutos.
+                <span className={styles.TimeText}>
+                  {formatTime(remainingTime)}
+                </span>{" "}
+                minutos.
               </p>
             </div>
           )}
-
-              </div>
+        </div>
         <table className={styles.seatGrid}>
           <tbody>
             {Array.from({ length: rows }, (_, rowIndex) => (
@@ -87,14 +113,20 @@ const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSecto
                           {currentSeat.status ? (
                             <div>
                               <img
-  key={currentSeat.seatID}
-  src={selectedSeatStatus[currentSeat.seatID] ? asiento : asientoFree}
-  alt={`Seat ${currentSeat.seatLocation}`}
-  className={`${styles.seat} ${
-    selectedSeatStatus[currentSeat.seatID] ? styles.selected : ''
-  }`}
-  onClick={() => handleSeatClick(currentSeat)}
-/>
+                                key={currentSeat.seatID}
+                                src={
+                                  selectedSeatStatus[currentSeat.seatID]
+                                    ? asiento
+                                    : asientoFree
+                                }
+                                alt={`Seat ${currentSeat.seatLocation}`}
+                                className={`${styles.seat} ${
+                                  selectedSeatStatus[currentSeat.seatID]
+                                    ? styles.selected
+                                    : ""
+                                }`}
+                                onClick={() => handleSeatClick(currentSeat)}
+                              />
 
                               <p className={styles.seatLocation}>
                                 {currentSeat.seatLocation}
@@ -123,10 +155,44 @@ const BookingSeats = ({ id, sector, onSeatSelect, sectorPricesQuery, handleSecto
           </tbody>
         </table>
       </div>
-      
+      <div className= {styles.seatInfo}>
+        <div className={styles.TituloBlink}>
+          <h3>Selecciona un sector:</h3>
+        </div>
+      <div className={styles.ContainerSelect}>
+        {sectorPrices && sectorPrices.length > 0 ? (
+          sectorPrices.map((sector, index) => (
+            <div
+              key={index}
+              className={
+                sector === sector[1]
+                  ? styles.selectedSector
+                  : styles.sector
+              }
+              onClick={() => handleSectorSelect(sector[1])}
+            >
+              {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
+            </div>
+          ))
+        ) : (
+          <p>Error en la carga de precios.</p>
+        )}
+        </div>
+        <h3>Asientos seleccionados: {selectedSeats.length}</h3>
+        <h3> Total: $ {selectedSeats
+                                    .reduce((acc, curr) => acc + curr.price, 0)
+                                    .toLocaleString()}
+        </h3>
+      </div>
     </div>
   );
+};
 
+BookingSeats.propTypes = {
+  // ... (otras propTypes existentes)
+  sectorPrices: PropTypes.array,
+  sector: PropTypes.string,
+  handleSectorSelect: PropTypes.func,
 };
 
 export default BookingSeats;
