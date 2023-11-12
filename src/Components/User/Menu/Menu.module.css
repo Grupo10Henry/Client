@@ -78,7 +78,7 @@
   background-color: var(--turquesa);
   background-color: var(--active-color);
   transition: width ease 400ms;
-  border-radius: 3px;
+  border-radius: var(--radius);
 }
 
 .links a:hover::before,
@@ -105,7 +105,7 @@
   --size: 30px;
   background-color: var(--white);
   color: var(--negro);
-  border-radius: 3px;
+  border-radius: var(--radius);
   padding: 8px;
   font-size: 20px;
   transition: transform ease 200ms;
