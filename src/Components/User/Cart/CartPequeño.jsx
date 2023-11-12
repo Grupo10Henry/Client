@@ -4,6 +4,12 @@ import logo from "../../../assets/logo_mi_butaca_color.svg";
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "axios";
+
+import { loadMercadoPago} from "@mercadopago/sdk-js";
+
+await loadMercadoPago();
+const mp = new window.MercadoPago("TEST-33719048-077f-4279-95df-172339560298");
 
 const Cart = () => {
   const location = useLocation();
@@ -28,7 +34,7 @@ const Cart = () => {
 
   const handleCheckout = async () => {
     const description = seatsData.seatID;
-    const price = 1000;
+    const price = {total};
     console.log(price);
     const response = await axios.post(
       "http://localhost:3001/mercadoPago/order",
