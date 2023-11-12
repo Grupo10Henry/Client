@@ -28,6 +28,7 @@
 
 body {
   background-color: #efefef;
+  /* background-color: #2e2e2e; */
   color: var(--negro);
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
 }

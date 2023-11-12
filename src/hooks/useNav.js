@@ -31,6 +31,7 @@ const useNav = () => {
 
   const handlerActionConfirmed = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("isAdmin")
     dispatch(userLogout())
     navigate("/")
   }

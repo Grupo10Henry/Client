@@ -4,12 +4,15 @@ import useNav from "../../../hooks/useNav"
 import Logo from "../Logo/Logo"
 import Menu from "../Menu/Menu"
 
+import { isAuthenticated } from "../../../utils/auth"
 import style from "./Navbar.module.css"
 
 const Nav = () => {
   const { isOpen, setIsOpen, handlerOpenContact, handleLogout, links } =
     useNav()
-  const { isAdmin, userInfo, token } = useSelector((s) => s.user)
+  const { isAdmin, userInfo } = useSelector((s) => s.user)
+
+  const isAuth = isAuthenticated()
 
   return (
     <nav className={style.nav}>
@@ -24,7 +27,7 @@ const Nav = () => {
       <Menu
         isAdmin={isAdmin}
         userInfo={userInfo}
-        token={token}
+        token={isAuth}
         isOpen={isOpen}
         links={links}
         handleLogout={handleLogout}
