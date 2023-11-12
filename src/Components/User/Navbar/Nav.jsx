@@ -8,8 +8,7 @@ import { isAuthenticated } from "../../../utils/auth"
 import style from "./Navbar.module.css"
 
 const Nav = () => {
-  const { isOpen, setIsOpen, handlerOpenContact, handleLogout, links } =
-    useNav()
+  const { isOpen, setIsOpen, handlerOpenContact, handleLogout } = useNav()
   const { isAdmin, userInfo } = useSelector((s) => s.user)
 
   const isAuth = isAuthenticated()
@@ -29,7 +28,6 @@ const Nav = () => {
         userInfo={userInfo}
         token={isAuth}
         isOpen={isOpen}
-        links={links}
         handleLogout={handleLogout}
         handlerOpenContact={handlerOpenContact}
       />
