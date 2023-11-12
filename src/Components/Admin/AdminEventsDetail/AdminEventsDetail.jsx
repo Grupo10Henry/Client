@@ -5,6 +5,7 @@ import { instance } from '../../../axios/config';
 import { useEffect, useState } from 'react';
 import { categories } from '../../../utils/categories';
 import axios from 'axios';
+import { BsFillTrashFill } from 'react-icons/bs'
 import styles from './AdminEventsDetail.module.css'
 
 export default function AdminEventsDetail () {
@@ -43,6 +44,13 @@ export default function AdminEventsDetail () {
     });
 
     const [sections, setSections] = useState();
+    const [newSection, setNewSection] = useState({
+        eventID: params.id,
+        rows: "",
+        columns: "",
+        sector: "",
+        price: "",
+    });
 
     const [image, setImage] =useState();
     const [imageURL, setImageURL] =useState();
@@ -198,11 +206,53 @@ export default function AdminEventsDetail () {
 } catch (error) {
     alert(error);
 }
-    
+    };
+
+    const handleDeleteSection = async (section) => {
+        try {
+            await axios.delete(`http://localhost:3001/seat/${params.id}/${section}`) // instance.delete(`/seat/${params.id}/${section}`) || axios.delete(`http://localhost:3001/seat/${params.id}/${section}`)
+            getSections().then((data) => {
+                setSections(data)
+            })
+            alert('Se ha eliminado exitosamente la sección')
+        } catch (error) {
+            alert(error.response.data.error);
+        }
+    };
+
+    function handleChangeNewSection(e){
+        setNewSection({
+            ...newSection,
+            [e.target.name]: e.target.value,
+        })
+    };
+
+    const handlePostSections = async () => {
+        if(newSection.sector === "" || newSection.price === "" || newSection.rows === "" || newSection.columns === "") {
+            alert('Por favor añade todos los campos para crear una nueva sección')
+        } else {
+        try {
+            await instance.post('/seat/', newSection) // instance.post('/seat/', newSection) || axios.post('http://localhost:3001/seat/', newSection)
+            getSections().then((data) => {
+                setSections(data)
+            });
+            setNewSection({
+                eventID: params.id,
+                rows: "",
+                columns: "",
+                sector: "",
+                price: "",
+            });
+            alert('Se ha creado exitosamente la sección')
+        } catch (error) {
+            alert(error.response.data.error)
+        }
     }
+    };
 
     console.log(updatedEvent)
     console.log(image, bannerImage, planImage)
+    console.log(newSection)
 
     return (
         <div className={styles.editEventContainer}>
@@ -377,31 +427,82 @@ export default function AdminEventsDetail () {
                     <button onClick={() => {navigate(`/admin`)}} className={styles.editFaqButtonReturn}>Regresar</button>
                     </div>
                 </div>
-                <h1>Secciones del evento</h1>
-                {sections ? (<table>
-                    <thead>
+                <div className={styles.sectionContainer}>
+                <h1 className={styles.sectionTableTitle}>Secciones del evento</h1>
+                {sections ? (
+                <table className={styles.sectionTable}>
+                    <thead className={styles.sectionTableHead}>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Precio</th>
-                            <th>Filas</th>
-                            <th>Columnas</th>
-                            <th>Eliminar</th>
+                            <th className={styles.sectionTableHeadContent}>Nombre</th>
+                            <th className={styles.sectionTableHeadContent}>Precio</th>
+                            <th className={styles.sectionTableHeadContent}>Filas</th>
+                            <th className={styles.sectionTableHeadContent}>Columnas</th>
+                            <th className={styles.sectionTableHeadContent}>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
                         {sections?.map((section, index) => (
-                        <tr key={index}>
-                            <td>{section.sector}</td>
-                            <td>{section.price}</td>
-                            <td>{section.rows}</td>
-                            <td>{section.columns}</td>
-                            <td><button>Eliminar</button></td>
+                        <tr className={styles.sectionTableRows} key={index}>
+                            <td className={styles.sectionTableRowsContent}>{section.sector}</td>
+                            <td className={styles.sectionTableRowsContent}>{section.price}</td>
+                            <td className={styles.sectionTableRowsContent}>{section.rows}</td>
+                            <td className={styles.sectionTableRowsContent}>{section.columns}</td>
+                            <td className={styles.sectionTableRowsContent}><BsFillTrashFill className={styles.sectionsDeleteButton} onClick={() => {handleDeleteSection(section.sector)}} /></td>
                         </tr>))}
                     </tbody>
                 </table>
                 ) : (
                     <h1>El evento no tiene secciones creadas</h1>
                 )}
+                </div >
+                <div className={styles.newSectionContainer}>
+                    <h1 className={styles.newSectionTitle}>Crea una nueva sección para este evento</h1>
+                    <div className={styles.newSectionFields}>
+                        <div className={styles.newSectionField}>
+                        <label className={styles.newSectionlabel}>Nombre de la sección</label>
+                        <input className={styles.newSectionInput}
+                        type="text"
+                        name="sector"
+                        min="0"
+                        value={newSection.sector}
+                        onChange={handleChangeNewSection}
+                        />
+                        </div>
+                        <div className={styles.newSectionField}>
+                        <label className={styles.newSectionlabel}>Precio</label>
+                        <input className={styles.newSectionInput}
+                        type="number"
+                        name="price"
+                        min="0"
+                        value={newSection.price}
+                        onChange={handleChangeNewSection}
+                        />
+                        </div>
+                        <div className={styles.newSectionField}>
+                        <label className={styles.newSectionlabel}>Filas</label>
+                        <input className={styles.newSectionInput}
+                        type="number"
+                        name="rows"
+                        min="0"
+                        value={newSection.rows}
+                        onChange={handleChangeNewSection}
+                        />
+                        </div>
+                        <div className={styles.newSectionField}>
+                        <label className={styles.newSectionlabel}>Columnas</label>
+                        <input className={styles.newSectionInput}
+                        type="number"
+                        name="columns"
+                        value={newSection.columns}
+                        onChange={handleChangeNewSection}
+                        />
+                        </div>
+                    </div>
+                    <button
+                    className={styles.newSectionButton}
+                    onClick={handlePostSections}
+                    >Crear sección</button>
+                </div>
         </div>
     )
 
