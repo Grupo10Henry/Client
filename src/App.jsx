@@ -138,7 +138,6 @@ function App() {
       <Contact />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="*" element={<NotFound />} />
         <Route path="/admin" element={<AdminHome />} />
         <Route element={<AuthGuardUser />}>
           <Route path="/micuenta/:id" element={<MyAccount />} />
@@ -156,7 +155,11 @@ function App() {
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
         <Route path="/mercadopagoexitoso" element={<MercadoPagoExitoso />} />
         <Route path="/mercadopagoerror" element={<MercadoPagoError />} />
-        <Route path="/mercadopagopendiente" element={<MercadoPagoPendiente />} />
+        <Route
+          path="/mercadopagopendiente"
+          element={<MercadoPagoPendiente />}
+        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />
 
