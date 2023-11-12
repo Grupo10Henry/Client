@@ -1,7 +1,6 @@
 import React from "react"
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import styles from "./App.module.css"
-import BookingSeats from "./Components/User/Booking/BookingSeats/BookingSeatsDemo"
 import Cart from "./Components/User/Cart/CartPequeño"
 import Contact from "./Components/User/Contact/Contact"
 import Footer from "./Components/User/Footer/Footer"
@@ -152,7 +151,6 @@ function App() {
         <Route path="/evento/:id" element={<AdminEventsDetail />} />
         <Route path="/preguntas/:id" element={<AdminFAQDetail />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
-        <Route path="/reserva/seats" element={<BookingSeats />} />
       </Routes>
       <ScrollToTop />
 
