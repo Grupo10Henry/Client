@@ -4,7 +4,8 @@ import styles from "./Booking.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { instance } from "../../../axios/config";
-import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsNew";
+import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsPeq";
+import BookingSeatsGde from "../../../Components/User/Booking/BookingSeats/BookingSeatsGde";
 import { useSelector } from "react-redux";
 import Loader from "../../../Components/UserAndAdmin/Loader/Loader";
 import {
@@ -32,6 +33,7 @@ const Booking = () => {
     locationName: "",
     adressLocation: "",
     image: "",
+    bannerImage: "",
     capacity: "",
     mapLocation: "",
     planImage: "",
@@ -100,6 +102,7 @@ const Booking = () => {
               locationName,
               adressLocation,
               image,
+              bannerImage,
               capacity,
               mapLocation,
               planImage,
@@ -114,6 +117,7 @@ const Booking = () => {
               locationName,
               adressLocation,
               image,
+              bannerImage,
               capacity,
               mapLocation,
               planImage,
@@ -214,7 +218,23 @@ const Booking = () => {
       <div className={styles.ContainerPlan}>
         <div className={styles.ContainerPlanoAsientos}>
           {eventDetails.type === "Grande" ? (
-            <img src={eventDetails.planImage} />
+             <BookingSeatsGde
+             id={id}
+             userID={userID}
+             userName={userName}
+             isDonation={isDonation}
+             sector={selectedSector}
+             sectorPrices={sectorPrices}
+             handleSectorSelect={handleSectorSelect}
+             handleSeatSelect={handleSeatSelect}
+             sectorPricesQuery={sectorPricesQuery}
+             handleSectorInfoUpdate={handleSectorInfoUpdate}
+             counterActivated={counterActivated}
+             setCounterActivated={setCounterActivated}
+             bannerImage={eventDetails.bannerImage}
+             image={eventDetails.image}
+             eventName={eventDetails.name}
+           />
           ) : (
             <BookingSeats
               id={id}

@@ -1,7 +1,6 @@
 import React from "react"
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import styles from "./App.module.css"
-import BookingSeats from "./Components/User/Booking/BookingSeats/BookingSeatsDemo"
 import Cart from "./Components/User/Cart/CartPequeño"
 import Contact from "./Components/User/Contact/Contact"
 import Footer from "./Components/User/Footer/Footer"
@@ -26,6 +25,10 @@ import NotFound from "./Components/User/NotFound/NotFound"
 import { config } from "./axios/config"
 import AuthGuardUser from "./guards/AuthGuard"
 import { loginSuccess } from "./redux/userSlice"
+
+import MercadoPagoExitoso from "./Components/User/Cart/mercadoPagoExitoso"
+import MercadoPagoError from "./Components/User/Cart/mercadoPagoError"
+import MercadoPagoPendiente from "./Components/User/Cart/mercadoPagoPendiente"
 
 function App() {
   const location = useLocation()
@@ -151,7 +154,9 @@ function App() {
         <Route path="/evento/:id" element={<AdminEventsDetail />} />
         <Route path="/preguntas/:id" element={<AdminFAQDetail />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
-        <Route path="/reserva/seats" element={<BookingSeats />} />
+        <Route path="/mercadopagoexitoso" element={<MercadoPagoExitoso />} />
+        <Route path="/mercadopagoerror" element={<MercadoPagoError />} />
+        <Route path="/mercadopagopendiente" element={<MercadoPagoPendiente />} />
       </Routes>
       <ScrollToTop />
 
