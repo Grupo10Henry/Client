@@ -26,6 +26,10 @@ import AdminFAQDetail from "./Components/Admin/AdminFAQDetail/AdminFAQDetail"
 import AdminEventsDetail from "./Components/Admin/AdminEventsDetail/AdminEventsDetail"
 import AuthGuard from "./guards/AuthGuard"
 
+import MercadoPagoExitoso from "./Components/User/Cart/mercadoPagoExitoso"
+import MercadoPagoError from "./Components/User/Cart/mercadoPagoError"
+import MercadoPagoPendiente from "./Components/User/Cart/mercadoPagoPendiente"
+
 function App() {
   const location = useLocation()
   const navigate = useNavigate()
@@ -151,6 +155,9 @@ function App() {
         <Route path="/evento/:id" element={<AdminEventsDetail />} />
         <Route path="/preguntas/:id" element={<AdminFAQDetail />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
+        <Route path="/mercadopagoexitoso" element={<MercadoPagoExitoso />} />
+        <Route path="/mercadopagoerror" element={<MercadoPagoError />} />
+        <Route path="/mercadopagopendiente" element={<MercadoPagoPendiente />} />
       </Routes>
       <ScrollToTop />
 

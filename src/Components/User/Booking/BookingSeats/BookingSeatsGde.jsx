@@ -26,11 +26,9 @@ const BookingSeatsGde = ({
 }) => {
   const dispatch = useDispatch();
 
-
   const navigate = useNavigate();
 
   const [remainingTime, setRemainingTime] = useState(900);
-
 
   /*useEffect(() => {
     // Cuando el componente se monta, obtén los asientos del servidor
@@ -51,16 +49,12 @@ const BookingSeatsGde = ({
     remainingTime,
   ]);*/
 
-
-
-
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
-  
   /*const handleOnClickcarrito = () => {
     // Verificar si hay asientos seleccionados
     if (selectedSeats.length === 0) {
@@ -107,61 +101,55 @@ const BookingSeatsGde = ({
   return (
     <div className={styles.seatMap}>
       <div className={styles.sector}>
-       
-            <h3>Sector: {sector}</h3>
-            <div className={styles.selectedInfo}>
-              {counterActivated  && (
-                <div
-                  className={`${styles.Time} ${
-                    remainingTime > 0 ? "" : styles.hidden
-                  }`}
-                >
-                  <p>
-                    Reservaremos tus lugares por los próximos:{" "}
-                    <span className={styles.TimeText}>
-                      {formatTime(remainingTime)}
-                    </span>{" "}
-                    minutos.
-                  </p>
-                </div>
-              )}
+        <h3>Sector: {sector}</h3>
+        <div className={styles.selectedInfo}>
+          {counterActivated && (
+            <div
+              className={`${styles.Time} ${
+                remainingTime > 0 ? "" : styles.hidden
+              }`}
+            >
+              <p>
+                Reservaremos tus lugares por los próximos:{" "}
+                <span className={styles.TimeText}>
+                  {formatTime(remainingTime)}
+                </span>{" "}
+                minutos.
+              </p>
             </div>
-            <img src={bannerImage} alt="imagen del sector" className= {styles.bannerImage} />
-          
-        
-      
-      <div className={styles.seatInfo}>
-        <div className={styles.TituloBlink}>
-          <h3>Selecciona un sector:</h3>
-        </div>
-        <div className={styles.ContainerSelect}>
-          {sectorPrices && sectorPrices.length > 0 ? (
-            sectorPrices.map((sector, index) => (
-              <div
-                key={index}
-                className={
-                  sector === sector[1] ? styles.selectedSector : styles.sector
-                }
-                onClick={() => handleSectorSelect(sector[1])}
-              >
-                {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
-              </div>
-            ))
-          ) : (
-            <p>Error en la carga de precios.</p>
           )}
         </div>
-        
-        <h3>
-          {" "}
-          Total: ${" "}
-          
-        </h3>
-        <button className={styles.Carrito} >
-          Agregar al carrito
-        </button>
       </div>
-      </div>
+
+        <div className={styles.seatInfo}>
+          <div className={styles.TituloBlink}>
+            <h3>Selecciona un sector:</h3>
+          </div>
+          <div className={styles.ContainerSelect}>
+            {sectorPrices && sectorPrices.length > 0 ? (
+              sectorPrices.map((sector, index) => (
+                <div
+                  key={index}
+                  className={
+                    sector === sector[1] ? styles.selectedSector : styles.sector
+                  }
+                  onClick={() => handleSectorSelect(sector[1])}
+                >
+                  {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
+                </div>
+              ))
+            ) : (
+              <p>Error en la carga de precios.</p>
+            )}
+          </div>
+          <h3> Total: $ </h3>
+          <button className={styles.Carrito}>Agregar al carrito</button>
+          <img
+            src={bannerImage}
+            alt="imagen del sector"
+            className={styles.bannerImage}
+          />
+        </div>
     </div>
   );
 };

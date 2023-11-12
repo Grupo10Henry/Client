@@ -26,8 +26,16 @@ const Cart = () => {
     setTotalEntradas(seatCount ?? 0);
   }, [seatsData]);
 
-  const handleCheckout = () => {
-    //esperar que la pasarela de pagos este lista
+  const handleCheckout = async () => {
+    const description = seatsData.seatID;
+    const price = 1000;
+    console.log(price);
+    const response = await axios.post(
+      "http://localhost:3001/mercadoPago/order",
+      { eventName, price, description }
+    );
+    console.log(response);
+    console.log(response.data.init_point);
   };
 
   return (
