@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux"
 import { Navigate, Outlet } from "react-router-dom"
+import { isAuthenticated } from "../utils/auth"
 
-const AuthGuard = () => {
-  const user = useSelector((state) => state.user)
+const AuthGuardUser = () => {
+  const isAuth = isAuthenticated()
 
-  return user.token ? <Outlet /> : <Navigate replace to="/" />
+  return isAuth ? <Outlet /> : <Navigate replace to="/" />
 }
-export default AuthGuard
+export default AuthGuardUser

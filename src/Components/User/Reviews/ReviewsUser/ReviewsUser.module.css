@@ -14,6 +14,7 @@
   justify-content: space-around;
   gap: 20px;
   padding: 50px 40px;
+  border-radius: var(--radius);
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;

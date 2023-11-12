@@ -1,6 +1,7 @@
 .card {
   background: var(--negro);
   padding: 20px;
+  border-radius: var(--radius);
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
@@ -9,6 +10,7 @@
 .card h4 {
   font-weight: 800;
   font-size: 20px;
+  margin: 10px 0;
 }
 
 .content {
@@ -24,6 +26,7 @@
   height: 300px;
   border-radius: 4px;
   overflow: hidden;
+  border-radius: 5px;
 }
 
 .img img {
@@ -46,4 +49,9 @@
 .more {
   margin-top: 20px;
   display: block;
+}
+
+.cardPrice,
+.more {
+  color: var(--verde-claro);
 }

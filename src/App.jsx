@@ -18,13 +18,13 @@ import MyAccount from "./Pages/User/MyAccount/MyAccount"
 
 import axios from "axios"
 import { useDispatch } from "react-redux"
+import AdminEventsDetail from "./Components/Admin/AdminEventsDetail/AdminEventsDetail"
+import AdminFAQDetail from "./Components/Admin/AdminFAQDetail/AdminFAQDetail"
+import Ticket from "./Components/User/MyAccount/Ticket/Ticket"
 import NotFound from "./Components/User/NotFound/NotFound"
 import { config } from "./axios/config"
+import AuthGuardUser from "./guards/AuthGuard"
 import { loginSuccess } from "./redux/userSlice"
-import Ticket from "./Components/User/MyAccount/Ticket/Ticket"
-import AdminFAQDetail from "./Components/Admin/AdminFAQDetail/AdminFAQDetail"
-import AdminEventsDetail from "./Components/Admin/AdminEventsDetail/AdminEventsDetail"
-import AuthGuard from "./guards/AuthGuard"
 
 import MercadoPagoExitoso from "./Components/User/Cart/mercadoPagoExitoso"
 import MercadoPagoError from "./Components/User/Cart/mercadoPagoError"
@@ -139,10 +139,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
-        <Route element={<AuthGuard />}>
-          {/* adentro van las rutas que se van a proteger */}
+        <Route path="/admin" element={<AdminHome />} />
+        <Route element={<AuthGuardUser />}>
           <Route path="/micuenta/:id" element={<MyAccount />} />
-          <Route path="/admin" element={<AdminHome />} />
         </Route>
 
         <Route path="/registro" element={<SignUp />} />
