@@ -1,5 +1,7 @@
 .editEventContainer {
     margin-top: 90px;
+    display: flex;
+    flex-direction: column;
 }
 
 .EventsDetailTitle {
@@ -142,6 +144,7 @@
 
 .buttonContainer .editFaqButtonCancel {
     background-color: blueviolet;
+    color: aliceblue;
     border-radius: 5px;
     padding: 3px 10px 3px 10px;
     margin: 0px 10px 0px 10px;
@@ -165,4 +168,113 @@
 
 .editFaqButtonReturn:hover {
     background-color: rgb(97, 97, 97);
+}
+
+.sectionContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sectionTableTitle {
+    font-weight: bold;
+    margin: 10px 0px 20px 0px;
+    font-size: 15px;
+}
+
+.sectionTable {
+    border-collapse: collapse;
+    margin: 0px 0px 25px 0px;
+    font-size: 14px;
+    border-radius: 8px 8px 0px 0px;
+    overflow: hidden;
+}
+
+.sectionTableHead {
+    background-color: rgb(132, 132, 133);
+    color: aliceblue;
+}
+
+.sectionTableHeadContent {
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 5px 5px 5px;
+}
+
+.sectionTableRows {
+    border-bottom: 1px solid rgb(196, 196, 196);
+}
+
+.sectionTableRows:nth-of-type(even) {
+    border-bottom: 1px solid rgb(196, 196, 196);
+    background-color: rgb(228, 228, 228);
+}
+
+.sectionTableRowsContent {
+    margin: 0px 0px 0px 0px;
+    padding: 5px 5px 5px 5px;
+    text-align: left;
+}
+  
+.sectionsDeleteButton {
+    cursor: pointer;
+    color: blueviolet;
+  }
+
+.newSectionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.newSectionTitle {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 15px 0px;
+}
+
+.newSectionFields {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.newSectionField {
+    display: flex;
+    flex-direction: column;
+}
+
+.newSectionlabel {
+    font-size: 13px;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+.newSectionField .newSectionInput {
+    font-size: 13px;
+    border-color: rgb(143, 143, 143);
+    height: 25px;
+    border-radius: 5px;
+    padding: 0px 0px 0px 10px;
+    margin: 0px 0px 0px 0px;
+    width: 200px;
+}
+
+.newSectionButton {
+    background-color: rgb(69, 192, 149);
+    border-radius: 5px;
+    padding: 3px 10px 3px 10px;
+    margin: 15px 10px 15px 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.newSectionButton:hover {
+    background-color: rgb(90, 212, 170);
 }
