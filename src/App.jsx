@@ -120,6 +120,9 @@ function App() {
     "/detalle",
     "/preguntas",
     "/evento",
+    "/mercadopagoexitoso",
+    "/mercadopagoerro",
+    "/mercadopagopendiente"
   ]
   const allowedPathsFooter = ["/faq", "/reserva", "/carrito", "/detalle"]
 
