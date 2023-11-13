@@ -22,11 +22,13 @@
   --h-nav: 90px;
   --max-width: 1400px;
   --filters-bg: #3d3d3d;
+  --radius: 4px;
   --gradient: linear-gradient(to left, #026d77, #a2dcbb);
 }
 
 body {
   background-color: #efefef;
+  /* background-color: #2e2e2e; */
   color: var(--negro);
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
 }

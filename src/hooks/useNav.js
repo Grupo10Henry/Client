@@ -24,13 +24,9 @@ const useNav = () => {
 
   const handlerOpenContact = () => contactTrue()
 
-  let links = [
-    { id: 1, text: "Inicio", to: "/" },
-    { id: 2, text: "Preguntas frecuentes", to: "/faq" },
-  ]
-
   const handlerActionConfirmed = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("isAdmin")
     dispatch(userLogout())
     navigate("/")
   }
@@ -48,7 +44,7 @@ const useNav = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: "Sesión cerrada!",
+          title: "¡Sesión cerrada!",
           confirmButtonColor: "var(--turquesa)",
         }).then((result) => {
           if (result.isConfirmed) {
@@ -64,7 +60,7 @@ const useNav = () => {
     setIsOpen(false)
   }
 
-  return { isOpen, setIsOpen, handlerOpenContact, handleLogout, links }
+  return { isOpen, setIsOpen, handlerOpenContact, handleLogout }
 }
 
 export default useNav

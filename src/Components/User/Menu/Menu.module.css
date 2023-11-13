@@ -43,6 +43,14 @@
   font-size: 14px;
 }
 
+.links a > svg,
+.links button > svg,
+.optionsBtn > svg {
+  margin-inline: auto;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
 .links a.active {
   color: var(--turquesa);
   color: var(--active-color);
@@ -54,47 +62,30 @@
   color: var(--white);
 }
 
-.links .profile {
-  font-size: 25px;
-}
-
 .links a,
-.links button {
+.links button,
+.optionsBtn {
   user-select: none;
   width: max-content;
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
   position: relative;
 }
 
-.links a::before,
-.links button::before {
-  content: "";
-  position: absolute;
-  left: 0px;
-  bottom: -10px;
-  width: 0%;
-  height: 3px;
-  background-color: var(--turquesa);
-  background-color: var(--active-color);
-  transition: width ease 400ms;
-  border-radius: 3px;
+.links a:hover,
+.links button:hover {
+  color: var(--verde-claro);
+  transition: color ease 200ms;
 }
 
-.links a:hover::before,
-.links button:hover::before {
-  width: 100%;
-  transition: width ease 400ms;
-}
-
-.links a.active::before {
-  width: 100%;
-  transition: width ease 400ms;
+.links a.active {
+  color: var(--verde-claro);
+  text-shadow: 0 0 10px var(--verde-claro);
 }
 
 .options {
   display: flex;
-  gap: 20px;
+  gap: 40px;
   align-items: center;
   justify-content: center;
   height: 100%;
@@ -102,12 +93,7 @@
 }
 
 .optionsBtn {
-  --size: 30px;
-  background-color: var(--white);
-  color: var(--negro);
-  border-radius: 3px;
-  padding: 8px;
-  font-size: 20px;
+  color: var(--white);
   transition: transform ease 200ms;
 }
 
@@ -125,6 +111,17 @@
 .optionsBtn:hover {
   transition: transform ease 200ms;
   transform: scale(1.1);
+}
+
+.profile {
+  --size: 25px;
+  width: var(--size);
+  height: var(--size);
+  background-color: var(--white);
+  color: var(--negro);
+  display: grid;
+  place-content: center;
+  border-radius: 100%;
 }
 
 @media (width > 800px) {
@@ -150,7 +147,7 @@
 
   .options {
     width: 100%;
-    gap: 15px;
+    gap: 30px;
     margin-top: 0;
     margin-left: auto;
   }

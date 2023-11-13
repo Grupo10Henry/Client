@@ -1,8 +1,7 @@
 import React from "react"
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import styles from "./App.module.css"
-import BookingSeats from "./Components/User/Booking/BookingSeats/BookingSeatsDemo"
-import Cart from "./Components/User/Cart/Cart"
+import Cart from "./Components/User/Cart/CartPequeño"
 import Contact from "./Components/User/Contact/Contact"
 import Footer from "./Components/User/Footer/Footer"
 import Login from "./Components/User/Login/Login"
@@ -19,12 +18,17 @@ import MyAccount from "./Pages/User/MyAccount/MyAccount"
 
 import axios from "axios"
 import { useDispatch } from "react-redux"
+import AdminEventsDetail from "./Components/Admin/AdminEventsDetail/AdminEventsDetail"
+import AdminFAQDetail from "./Components/Admin/AdminFAQDetail/AdminFAQDetail"
+import Ticket from "./Components/User/MyAccount/Ticket/Ticket"
 import NotFound from "./Components/User/NotFound/NotFound"
 import { config } from "./axios/config"
+import AuthGuardUser from "./guards/AuthGuard"
 import { loginSuccess } from "./redux/userSlice"
-import Ticket from "./Components/User/MyAccount/Ticket/Ticket"
-import AdminFAQDetail from "./Components/Admin/AdminFAQDetail/AdminFAQDetail"
-import AdminEventsDetail from "./Components/Admin/AdminEventsDetail/AdminEventsDetail"
+
+import MercadoPagoExitoso from "./Components/User/Cart/mercadoPagoExitoso"
+import MercadoPagoError from "./Components/User/Cart/mercadoPagoError"
+import MercadoPagoPendiente from "./Components/User/Cart/mercadoPagoPendiente"
 
 function App() {
   const location = useLocation()
@@ -116,6 +120,9 @@ function App() {
     "/detalle",
     "/preguntas",
     "/evento",
+    "/mercadopagoexitoso",
+    "/mercadopagoerro",
+    "/mercadopagopendiente"
   ]
   const allowedPathsFooter = ["/faq", "/reserva", "/carrito", "/detalle"]
 
@@ -134,19 +141,27 @@ function App() {
       <Contact />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/admin" element={<AdminHome />} />
+        <Route element={<AuthGuardUser />}>
+          <Route path="/micuenta/:id" element={<MyAccount />} />
+        </Route>
+
         <Route path="/registro" element={<SignUp />} />
         <Route path="/iniciarsesion" element={<Login login={login} />} />
         <Route path="/detalle/:id" element={<Detail />} />
         <Route path="/reserva/:id" element={<Booking />} />
         <Route path="/carrito" element={<Cart />} />
-        <Route path="/micuenta/:id" element={<MyAccount />} />
         <Route path="/ticket/:id" element={<Ticket />} />
         <Route path="/faq" element={<FAQ />} />
-        <Route path="/admin" element={<AdminHome />} />
         <Route path="/evento/:id" element={<AdminEventsDetail />} />
         <Route path="/preguntas/:id" element={<AdminFAQDetail />} />
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
-        <Route path="/reserva/seats" element={<BookingSeats />} />
+        <Route path="/mercadopagoexitoso" element={<MercadoPagoExitoso />} />
+        <Route path="/mercadopagoerror" element={<MercadoPagoError />} />
+        <Route
+          path="/mercadopagopendiente"
+          element={<MercadoPagoPendiente />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />

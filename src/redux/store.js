@@ -12,6 +12,7 @@ import bookSeatReducer from "./bookSeatsSlice"
 import footerReducer from "./footerSlice"
 import faqReducer from "./faqSlice"
 import eventIDReducer from "./eventIDSlice"
+import carritoReducer from "./carritoSlice"
 
 const persistConfig = {
   key: "root",
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   bookSeat: bookSeatReducer,
   footer: footerReducer,
   faq: faqReducer,
+  carrito: carritoReducer,
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

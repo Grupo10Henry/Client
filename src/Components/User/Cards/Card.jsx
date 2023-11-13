@@ -12,18 +12,33 @@ import style from "./Card.module.css"
 // recibo "name" "date" "time" "image" "locationName" y "id" para el detail
 //Renderiza Imagen, Fecha, Horario, Ubicación (nombre del lugar), Precio, Nombre
 const Card = (props) => {
-
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const { name, image, time, date, locationName, eventID, priceMin } = props
   const formatPrice = priceMin && formatoPesosColombianos.format(priceMin)
 
   const setEventIDInRedux = async () => {
-  // console.log(eventID, "eventID en card")
+    // console.log(eventID, "eventID en card")
 
-    dispatch(setEventID(eventID));
+    dispatch(setEventID(eventID))
     await instance.put(`/event/views/${eventID}`)
-  };
+  }
+
+  const renderPrice = () => {
+    if (priceMin === 0) {
+      return <b className={style.cardPrice}>Gratis</b>
+    } else {
+      return (
+        <>
+          Desde:{" "}
+          <span
+            className={style.cardPrice}
+            dangerouslySetInnerHTML={{ __html: `<b>${formatPrice}</b>` }}
+          />
+        </>
+      )
+    }
+  }
 
   return (
     <div className={style.card}>
@@ -38,20 +53,18 @@ const Card = (props) => {
           <span>{locationName}</span>
         </div>
 
-        <div>
-          Desde: <b>{formatPrice}</b>
-        </div>
+        <div>{renderPrice()}</div>
         <div>
           Fecha: <b>{date?.split("-").reverse().join("-")}</b>
         </div>
         <div>
-          Horario: <b>{time?.split(":").slice(0,2).join(":")}hs</b>
+          Horario: <b>{time?.split(":").slice(0, 2).join(":")}hs</b>
         </div>
       </div>
 
       <Link
         to={`/detalle/${eventID}`}
-        className={`${style.more} gradient-text`}
+        className={style.more}
         onClick={setEventIDInRedux}
       >
         Saber más
