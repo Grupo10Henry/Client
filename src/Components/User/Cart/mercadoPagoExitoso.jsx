@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../../../assets/logo_mi_butaca_color.svg";
 import { useSelector } from "react-redux";
 import {Link} from "react-router-dom";
-import styles from "./mercadopago.module.css";
+import styles from "./mercadoPago.module.css";
 
 const MercadoPagoExitoso = () => {
 
