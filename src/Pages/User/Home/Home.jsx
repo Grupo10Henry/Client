@@ -42,9 +42,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    if (!nextEvents.length) {
-      dispatch(fetchAvailableEvents())
-    }
+    dispatch(fetchAvailableEvents())
   }, [dispatch])
 
   return (
