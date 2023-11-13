@@ -6,17 +6,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-import { loadMercadoPago} from "@mercadopago/sdk-js";
-
-await loadMercadoPago();
-const mp = new window.MercadoPago("TEST-33719048-077f-4279-95df-172339560298");
 
 const Cart = () => {
   const location = useLocation();
   const { state } = location;
   const userName = useSelector((state) => state.user.userInfo.name);
   const { eventName, eventImage, seatsData } = state ?? {};
-
+  //const userID = useSelector((state) => state.user.userInfo.userID);
   const { seatCount, seats } = seatsData ?? {};
   const [total, setTotal] = useState(0);
   const [totalEntradas, setTotalEntradas] = useState(0);
@@ -35,6 +31,7 @@ const Cart = () => {
   const handleCheckout = async () => {
     const description = seatsData.seatID;
     const price = {total};
+    console.log("total:", total  )
     console.log(price);
     const response = await axios.post(
       "http://localhost:3001/mercadoPago/order",
