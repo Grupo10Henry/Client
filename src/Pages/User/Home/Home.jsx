@@ -18,6 +18,7 @@ import convertUniquesDates from "../../../utils/convertUniqueDates"
 
 import style from "./Home.module.css"
 import MostPopular from "../../../Components/User/Events/MostPopular/MostPopular"
+import DocumentTitle from "../../../Components/DocumentTitle/DocumentTitle"
 
 const Home = () => {
   const { pathname } = useLocation()
@@ -46,6 +47,7 @@ const Home = () => {
 
   return (
     <div className={style.home}>
+      <DocumentTitle title="Inicio" />
       <Banner />
       <EventsText />
       <MostPopular />
