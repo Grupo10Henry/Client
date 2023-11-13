@@ -1,15 +1,15 @@
 //Guada
 
 import { IoStar, IoStarHalf } from "react-icons/io5"
+import { Autoplay, Pagination } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 
 import "swiper/css"
+import "swiper/css/navigation"
 import "swiper/css/pagination"
 
 import style from "./ReviewsUser.module.css"
 
-import { Pagination } from "swiper/modules"
-import moment from "moment"
 import convertToRealtiveDate from "../../../../utils/relativeDate"
 
 const ReviewsUser = () => {
@@ -95,11 +95,15 @@ const ReviewsUser = () => {
 
   return (
     <Swiper
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: false,
+      }}
       spaceBetween={20}
       className={style.reviewSwiper}
       slidesPerView={1}
-      pagination={true}
-      modules={[Pagination]}
+      pagination={{ clickable: true }}
+      modules={[Autoplay, Pagination]}
       breakpoints={{
         // Definición de los breakpoints para mostrar distintos números de slides
         768: {
