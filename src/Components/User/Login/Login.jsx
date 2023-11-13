@@ -502,7 +502,7 @@ const Login = () => {
             </div>
           </form>
 
-          {/* si no está registrado, link al componente SignUp ( modal) */}
+          
 
           <p className="mt-1 text-center text-sm md:text-base lg:text-lg xl:text-xl text-gray-800">
             ¿No está registrado?{" "}
@@ -519,13 +519,16 @@ const Login = () => {
               Seguir como visitante
             </p>
           </p>
-          {/* botón para loguearse con Google */}
+          
           <div className="mt-1 flex items-center justify-center ">
             <Link>
-              {/* Botón para iniciar sesión con Google */}
-              <button onClick={googleLogin} className="google-login-button">
-                Login with Google
+              
+              <button onClick={googleLogin} 
+                      className="flex items-center justify-center w-54 px-2 py-1 mt-1 font-medium text-white bg-fuchsia-900 hover:bg-red-600 rounded-md transition duration-300 ease-in-out  shadow-sm">
+                <span className="text-xl pr-2">G</span> 
+                Ingresar con Google
               </button>
+
             </Link>
           </div>
         </div>
