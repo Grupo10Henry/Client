@@ -105,7 +105,7 @@
 
 .ContainerSelect {
   background-color: brown;
-  height: 50px;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,15 +113,24 @@
   margin-bottom: 10px;
   margin-top: 10px;
     box-shadow: 0px 0px 10px black;
-  font-weight: bold;
-  font-size: 20px;
-  color: whitesmoke;
+  
   cursor: pointer;
 }
 
-.ContainerSelect:hover {
-  background-color: rgb(14, 231, 162);
+.SectorContainer {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 20px;
+  color: whitesmoke;
+}
+
+.SectorContainer > .sector:hover {
   color: black;
+}
+
+.selectedSector {
+  color: rgb(227, 210, 25); 
 }
 
 @keyframes blink {
