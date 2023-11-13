@@ -1,0 +1,17 @@
+.notFoundContainer {
+  height: 100vh;
+  background-color: #fff;
+  position: relative;
+}
+
+.notFoundContainer button {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translatex(-50%);
+}
+
+.notFoundContainer img {
+  height: 100%;
+  object-fit: contain;
+}

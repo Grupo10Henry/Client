@@ -1,10 +1,20 @@
+import { useNavigate } from "react-router-dom"
+import notFoundGif from "../../../assets/notfound.gif"
+
 import style from "./NotFound.module.css"
 
 const NotFound = () => {
+  const navigate = useNavigate()
+
   return (
-    <div className={style.notFound}>
-      ¡Error 404! Parece que este es el espacio donde se esconden los
-      unicornios. Lamentablemente, tu página solicitada no está aquí
+    <div className={style.notFoundContainer}>
+      <button onClick={() => navigate("/")}>
+        Volver a la página principal
+        <span role="img" aria-label="emoji">
+          🏠
+        </span>
+      </button>
+      <img src={notFoundGif} alt="" />
     </div>
   )
 }
