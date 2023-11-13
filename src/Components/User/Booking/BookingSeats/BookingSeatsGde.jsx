@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import {
+  selectSeats,
+  selectSelectedSeats,
+  fetchAndSetSeats,
+} from "../../../../redux/seatSlice";
+import { clearSelectedSeats } from "../../../../redux/seatSlice";
 import { agregarAlCarrito } from "../../../../redux/carritoSlice";
-import styles from "./BookingSeatsGde.module.css";
-
+import styles from "./BookingSeats.module.css";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
@@ -25,13 +29,19 @@ const BookingSeatsGde = ({
   eventName,
 }) => {
   const dispatch = useDispatch();
+  const seats = useSelector(selectSeats);
 
   const navigate = useNavigate();
 
-  const [remainingTime, setRemainingTime] = useState(900);
+  //const rows = seats.length > 0 ? seats[0].rows : 0; 
+  //const columns = seats.length > 0 ? seats[0].columns : 0; 
 
-  /*useEffect(() => {
-    // Cuando el componente se monta, obtén los asientos del servidor
+  const [remainingTime, setRemainingTime] = useState(900);
+  const selectedSeats = useSelector(selectSelectedSeats);
+  //const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
+
+  useEffect(() => {
+    
     dispatch(fetchAndSetSeats(id, sector, sectorPricesQuery));
     const interval = setInterval(() => {
       if (counterActivated && remainingTime > 0) {
@@ -47,7 +57,30 @@ const BookingSeatsGde = ({
     dispatch,
     counterActivated,
     remainingTime,
-  ]);*/
+  ]);
+
+  /*const handleSeatClick = (seat) => {
+    if (!seat.status) {
+      // El asiento está ocupado, no se puede seleccionar.
+
+      return;
+    }
+
+    setSelectedSeatStatus((prevStatus) => ({
+      ...prevStatus,
+      [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
+    }));
+    console.log("selectedSeats local state in BookingSeats:", selectedSeats);
+    if (handleSeatSelect) {
+      console.log("Información enviada a handleSeatSelect:", seat);
+      handleSeatSelect({ ...seat, userID: userID });
+    }
+    handleSectorInfoUpdate();
+  };*/
+
+  useEffect(() => {
+    console.log("selectedSeats local state in BookingSeats:", selectedSeats);
+  }, [selectedSeats]);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -55,7 +88,26 @@ const BookingSeatsGde = ({
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
-  /*const handleOnClickcarrito = () => {
+  useEffect(() => {
+    const clearSelectedSeatsTimer = setTimeout(() => {
+      dispatch(clearSelectedSeats());
+    }, 15 * 60 * 1000);
+
+    const handleBeforeUnload = (event) => {
+      dispatch(clearSelectedSeats());
+      event.returnValue =
+        "¿Estás seguro de abandonar la página?";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      clearTimeout(clearSelectedSeatsTimer);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [dispatch, clearSelectedSeats]);
+
+  const handleOnClickcarrito = () => {
     // Verificar si hay asientos seleccionados
     if (selectedSeats.length === 0) {
       alert("No has seleccionado ningún asiento.");
@@ -67,36 +119,35 @@ const BookingSeatsGde = ({
       userID: userID,
       userName: userName,
       eventID: id,
-      eventName: eventName, // Otra propiedad del evento que desees enviar
-      eventImage: image, // Otra propiedad del evento que desees enviar
+      eventName: eventName, 
+      eventImage: image, 
     };
 
     const seatsData = {
-      seatCount: selectedSeats.length, // Agregar la cantidad de asientos seleccionados
+      seatCount: selectedSeats.length, 
       seats: selectedSeats.map((seat) => ({
         seatID: seat.seatID,
         seatLocation: seat.seatLocation,
-        sector: seat.sector, // Puedes ajustar esto según la estructura de tu asiento
-        price: seat.price, // Puedes ajustar esto según la estructura de tu asiento
+        sector: seat.sector, 
+        price: seat.price, 
         quantity: 1, // cada asiento será una entrada
-        totalPrice: seat.price * selectedSeats.length, // Puedes ajustar esto según la estructura de tu asiento
+        totalPrice: seat.price * selectedSeats.length, 
       })),
     };
 
-    // Enviar datos al carrito (puedes ajustar según la estructura de tu carrito)
+    // Enviar datos al carrito
     dispatch(agregarAlCarrito({ eventData, seatsData }));
 
     // Limpiar asientos seleccionados después de agregar al carrito
     dispatch(clearSelectedSeats());
 
-    // Navegar a la página del carrito
     navigate("/carrito", {
       state: {
         ...eventData,
         seatsData,
       },
     });
-  };*/
+  };
 
   return (
     <div className={styles.seatMap}>
@@ -119,6 +170,11 @@ const BookingSeatsGde = ({
             </div>
           )}
         </div>
+            <img
+              src={bannerImage}
+              alt="imagen del sector"
+              className={styles.bannerImage}
+            />
       </div>
 
         <div className={styles.seatInfo}>
@@ -127,7 +183,8 @@ const BookingSeatsGde = ({
           </div>
           <div className={styles.ContainerSelect}>
             {sectorPrices && sectorPrices.length > 0 ? (
-              sectorPrices.map((sector, index) => (
+              <div className={styles.SectorContainer}> 
+              {sectorPrices.map((sector, index) => (
                 <div
                   key={index}
                   className={
@@ -137,18 +194,18 @@ const BookingSeatsGde = ({
                 >
                   {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
                 </div>
-              ))
+              ))}
+              </div>
             ) : (
               <p>Error en la carga de precios.</p>
             )}
           </div>
+          <div className={styles.cantidad}> 
+          Cantidad de entradas:{" "}
+          <input type="number" min="1" max="100" value="1" className={styles.input} id="cantidad" />
+          </div> 
           <h3> Total: $ </h3>
-          <button className={styles.Carrito}>Agregar al carrito</button>
-          <img
-            src={bannerImage}
-            alt="imagen del sector"
-            className={styles.bannerImage}
-          />
+          <button className={styles.Carrito} onClick={handleOnClickcarrito}  >Agregar al carrito</button>
         </div>
     </div>
   );

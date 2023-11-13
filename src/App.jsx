@@ -35,7 +35,7 @@ function App() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const getUserEmailFromGoogle = async (token) => {
+  /*const getUserEmailFromGoogle = async (token) => {
     try {
       const response = await axios.get(
         "https://www.googleapis.com/oauth2/v3/userinfo",
@@ -54,9 +54,9 @@ function App() {
       )
       return null // Manejo de error, puedes ajustar esto según tus necesidades
     }
-  }
+  }*/
 
-  const login = async (userData) => {
+  /*const login = async (userData) => {
     const { email, password, token } = userData
     const URL = config.baseURL + "/login"
 
@@ -109,7 +109,9 @@ function App() {
       console.error(error)
       alert("Error en el inicio de sesión")
     }
-  }
+  }*/
+
+  
 
   const allowedPaths = [
     "/admin",
@@ -147,7 +149,7 @@ function App() {
         </Route>
 
         <Route path="/registro" element={<SignUp />} />
-        <Route path="/iniciarsesion" element={<Login login={login} />} />
+        <Route path="/iniciarsesion" element={<Login />} />
         <Route path="/detalle/:id" element={<Detail />} />
         <Route path="/reserva/:id" element={<Booking />} />
         <Route path="/carrito" element={<Cart />} />
