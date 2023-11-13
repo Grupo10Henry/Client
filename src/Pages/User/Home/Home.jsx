@@ -17,10 +17,11 @@ import Reviews from "../../../Components/User/Reviews/Reviews"
 import convertUniquesDates from "../../../utils/convertUniqueDates"
 
 import style from "./Home.module.css"
+import MostPopular from "../../../Components/User/Events/MostPopular/MostPopular"
 
 const Home = () => {
   const { pathname } = useLocation()
-  const { nextEvents, isFilter } = useSelector((s) => s.events)
+  const { isFilter } = useSelector((s) => s.events)
 
   const dispatch = useDispatch()
 
@@ -28,10 +29,8 @@ const Home = () => {
     dispatch(setDataStart())
     try {
       const { data } = await instance.get("/event/next")
-      if (data) {
-        dispatch(setEventsDate(convertUniquesDates(data)))
-        dispatch(setDataSuccess(data))
-      }
+      dispatch(setEventsDate(convertUniquesDates(data)))
+      dispatch(setDataSuccess(data))
     } catch (error) {
       if (error?.response.data.error) {
         console.error(error?.response.data.error)
@@ -49,6 +48,7 @@ const Home = () => {
     <div className={style.home}>
       <Banner />
       <EventsText />
+      <MostPopular />
       {pathname === "/" && <Filters />}
       {isFilter ? <EventsFiltered /> : <EventsSections />}
       <Reviews />
