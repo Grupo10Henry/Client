@@ -152,6 +152,9 @@ const BookingSeats = ({
     });
   };
 
+  const sortedSeats = seats.slice().sort((a, b) => 
+    a.seatLocation.localeCompare(b.seatLocation));
+
   return (
     <div className={styles.seatMap}>
       <div className={styles.sector}>
@@ -179,7 +182,7 @@ const BookingSeats = ({
                 {Array.from({ length: rows }, (_, rowIndex) => (
                   <tr key={rowIndex}>
                     {Array.from({ length: columns }, (_, colIndex) => {
-                      const currentSeat = seats[rowIndex * columns + colIndex];
+                      const currentSeat = sortedSeats[rowIndex * columns + colIndex];
 
                       return (
                         <td key={colIndex}>
