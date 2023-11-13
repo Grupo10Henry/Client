@@ -1,15 +1,31 @@
 import { PiSignOutBold, PiUserBold } from "react-icons/pi"
-import { BiCart } from "react-icons/bi"
+import { BiHomeAlt2 } from "react-icons/bi"
+import {
+  BiCart,
+  BiMessageAltDetail,
+  BiPhone,
+  BiBarChartSquare,
+} from "react-icons/bi"
 import { NavLink } from "react-router-dom"
 
 import style from "./Menu.module.css"
+
+let links = [
+  { id: 1, text: "Inicio", to: "/", icon: <BiHomeAlt2 /> },
+  {
+    id: 2,
+    text: "Preguntas frecuentes",
+    to: "/faq",
+    icon: <BiMessageAltDetail />,
+  },
+]
 
 const Menu = ({
   isAdmin,
   userInfo,
   token,
   isOpen,
-  links,
+
   handleLogout,
   handlerOpenContact,
 }) => {
@@ -21,38 +37,45 @@ const Menu = ({
       to={link.to}
       className={({ isActive }) => (isActive ? style.active : "")}
     >
-      {link.text}
+      {link.icon}
+      <p>{link.text}</p>
     </NavLink>
   ))
   return (
     <div className={`${style.menu} ${linksClass}`}>
       <div className={style.links}>
         {renderLinks}
-        <button onClick={handlerOpenContact}>Contacto</button>
+        <button onClick={handlerOpenContact}>
+          <BiPhone />
+          <p>Contacto</p>
+        </button>
         {isAdmin && (
           <NavLink
             to="/admin"
             className={({ isActive }) => (isActive ? style.active : "")}
           >
-            Administrador
+            <BiBarChartSquare />
+            <p>Administrador</p>
           </NavLink>
         )}
       </div>
       {token ? (
         <div className={style.options}>
-          {/* <p>{userInfo?.name} </p> */}
           <NavLink
             title="Mi perfil"
             to={`micuenta/${userInfo?.userID}`}
             className={style.optionsBtn}
           >
-            <PiUserBold />
+            <PiUserBold className={style.profile} />
+            <p>{userInfo?.name}</p>
           </NavLink>
           <button onClick={handleLogout} className={style.optionsBtn}>
             <PiSignOutBold />
+            <p>Salir</p>
           </button>
           <NavLink className={style.optionsBtn} to="/carrito">
             <BiCart />
+            <p>Carrito</p>
           </NavLink>
         </div>
       ) : (

@@ -148,7 +148,7 @@ export default function AdminEventsCreate() {
         if(sections.length) {
         try {
             const postSection = sections.map( async (section) => {
-            await axios.post('http://localhost:3001/seat/', section) // axios.post('http://localhost:3001/seat/', seatMatrix)
+            await instance.post('/seat/', section) // instance.post('/seat/', section) || axios.post('http://localhost:3001/seat/', section)
             setSections([]);
         })
             alert('Se han añadido las secciones al evento')

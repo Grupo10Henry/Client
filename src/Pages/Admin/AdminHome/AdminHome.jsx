@@ -8,7 +8,7 @@ import AdminNavbar from "../../../Components/Admin/AdminNavbar/AdminNavbar"
 import AdminReviews from "../../../Components/Admin/AdminReviews/AdminReviews"
 import AdminUsers from "../../../Components/Admin/AdminUsers/AdminUsers"
 import styles from "./AdminHome.module.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import AdminReports from "../../../Components/Admin/AdminReports/AdminReports"
 import { isAuthenticated, isUserAdmin } from "../../../utils/auth"
 
@@ -19,14 +19,13 @@ export default function AdminHome() {
 
   const navigate = useNavigate()
 
-  const isAdmin = isUserAdmin()
-  const isAuth = isAuthenticated()
-
-  if (!isAuth) {
-    navigate("/")
-  } else if (isAuth && !isAdmin) {
-    navigate("/")
-  }
+  useEffect(() => {
+    const isAdmin = isUserAdmin()
+    const isAuth = isAuthenticated()
+    if (!isAuth || (isAuth && !isAdmin)) {
+      navigate("/")
+    }
+  }, [])
 
   return (
     <div className={styles.AdminHomeContainer}>
