@@ -36,7 +36,7 @@ const MostPopular = () => {
   }
 
   return (
-    <div className={style.container} id="mostPopular">
+    <div id="mostPopular">
       <h2 className="subtitle gradient-text">
         <b>Eventos Recomendados</b>
       </h2>{" "}
@@ -62,15 +62,13 @@ const MostPopular = () => {
           depth: 100,
           modifier: 2.5,
         }}
-        pagination={{ el: ".swiper-pagination", clickable: true }}
         navigation={{
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
           clickable: true,
         }}
-        className="swiper_container"
       >
-        <SwiperSlide className={style.slide}>
+        <SwiperSlide>
           <Link
             to={orden[0]?.eventID ? `/detalle/${orden[0].eventID}` : noLink}
           >
@@ -81,7 +79,6 @@ const MostPopular = () => {
             />
           </Link>
         </SwiperSlide>
-        <br />
         <SwiperSlide>
           <Link
             to={orden[1]?.eventID ? `/detalle/${orden[1].eventID}` : noLink}
@@ -93,7 +90,6 @@ const MostPopular = () => {
             />
           </Link>
         </SwiperSlide>
-        <br />
         <SwiperSlide>
           <Link
             to={orden[2]?.eventID ? `/detalle/${orden[2].eventID}` : noLink}
@@ -105,17 +101,8 @@ const MostPopular = () => {
             />
           </Link>
         </SwiperSlide>
-        <br />
-
-        <div className="slider-controler">
-          <div className="swiper-button-prev slider-arrow">
-            <ion-icon name="arrow-back-outline" />
-          </div>
-          <div className="swiper-button-next slider-arrow">
-            <ion-icon name="arrow-forward-outline" />
-          </div>
-          <div className="swiper-pagination" />
-        </div>
+        <div className="swiper-button-prev" />
+        <div className="swiper-button-next" />
       </Swiper>{" "}
       <br />
     </div>
