@@ -28,7 +28,6 @@ const BookingSeats = ({
   sectorPricesQuery,
   handleSectorInfoUpdate,
   counterActivated,
-  setCounterActivated,
   image,
   eventName,
 }) => {
@@ -37,15 +36,15 @@ const BookingSeats = ({
 
   const navigate = useNavigate();
 
-  const rows = seats.length > 0 ? seats[0].rows : 0; // Obtenemos las filas de los asientos
-  const columns = seats.length > 0 ? seats[0].columns : 0; // Obtenemos las columnas de los asientos
+  const rows = seats.length > 0 ? seats[0].rows : 0; 
+  const columns = seats.length > 0 ? seats[0].columns : 0; 
 
   const [remainingTime, setRemainingTime] = useState(900);
   const selectedSeats = useSelector(selectSelectedSeats);
   const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
 
   useEffect(() => {
-    // Cuando el componente se monta, obtén los asientos del servidor
+    
     dispatch(fetchAndSetSeats(id, sector, sectorPricesQuery));
     const interval = setInterval(() => {
       if (counterActivated && remainingTime > 0) {
@@ -65,7 +64,8 @@ const BookingSeats = ({
 
   const handleSeatClick = (seat) => {
     if (!seat.status) {
-      // El asiento está ocupado, no se puede seleccionar
+      // El asiento está ocupado, no se puede seleccionar.
+
       return;
     }
 
@@ -122,29 +122,28 @@ const BookingSeats = ({
       userID: userID,
       userName: userName,
       eventID: id,
-      eventName: eventName, // Otra propiedad del evento que desees enviar
-      eventImage: image, // Otra propiedad del evento que desees enviar
+      eventName: eventName, 
+      eventImage: image, 
     };
 
     const seatsData = {
-      seatCount: selectedSeats.length, // Agregar la cantidad de asientos seleccionados
+      seatCount: selectedSeats.length, 
       seats: selectedSeats.map((seat) => ({
         seatID: seat.seatID,
         seatLocation: seat.seatLocation,
-        sector: seat.sector, // Puedes ajustar esto según la estructura de tu asiento
-        price: seat.price, // Puedes ajustar esto según la estructura de tu asiento
+        sector: seat.sector, 
+        price: seat.price, 
         quantity: 1, // cada asiento será una entrada
-        totalPrice: seat.price * selectedSeats.length, // Puedes ajustar esto según la estructura de tu asiento
+        totalPrice: seat.price * selectedSeats.length, 
       })),
     };
 
-    // Enviar datos al carrito (puedes ajustar según la estructura de tu carrito)
+    // Enviar datos al carrito
     dispatch(agregarAlCarrito({ eventData, seatsData }));
 
     // Limpiar asientos seleccionados después de agregar al carrito
     dispatch(clearSelectedSeats());
 
-    // Navegar a la página del carrito
     navigate("/carrito", {
       state: {
         ...eventData,
@@ -153,16 +152,12 @@ const BookingSeats = ({
     });
   };
 
+  const sortedSeats = seats.slice().sort((a, b) => 
+    a.seatLocation.localeCompare(b.seatLocation));
+
   return (
     <div className={styles.seatMap}>
       <div className={styles.sector}>
-        {eventType === "Grande" ? (
-          <img
-            src={bannerImage}
-            alt="Banner Image"
-            className={styles.BannerImage}
-          />
-        ) : (
           <>
             <h3>Sector: {sector}</h3>
             <div className={styles.selectedInfo}>
@@ -187,7 +182,7 @@ const BookingSeats = ({
                 {Array.from({ length: rows }, (_, rowIndex) => (
                   <tr key={rowIndex}>
                     {Array.from({ length: columns }, (_, colIndex) => {
-                      const currentSeat = seats[rowIndex * columns + colIndex];
+                      const currentSeat = sortedSeats[rowIndex * columns + colIndex];
 
                       return (
                         <td key={colIndex}>
@@ -224,7 +219,7 @@ const BookingSeats = ({
                                     className={styles.seat}
                                   />
                                   <p className={styles.seatLocation}>
-                                    {currentSeat.seatLocation}
+                                    {currentSeat.seatLocation} - No Disp.
                                   </p>
                                 </div>
                               )}
@@ -238,28 +233,32 @@ const BookingSeats = ({
               </tbody>
             </table>
           </>
-        )}
+        
       </div>
       <div className={styles.seatInfo}>
         <div className={styles.TituloBlink}>
           <h3>Selecciona un sector:</h3>
         </div>
         <div className={styles.ContainerSelect}>
-          {sectorPrices && sectorPrices.length > 0 ? (
-            sectorPrices.map((sector, index) => (
-              <div
-                key={index}
-                className={
-                  sector === sector[1] ? styles.selectedSector : styles.sector
-                }
-                onClick={() => handleSectorSelect(sector[1])}
-              >
-                {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
-              </div>
-            ))
-          ) : (
-            <p>Error en la carga de precios.</p>
-          )}
+  {sectorPrices && sectorPrices.length > 0 ? (
+    <div className={styles.SectorContainer}>
+      {sectorPrices.map((sector, index) => (
+        <div
+          key={index}
+          className={
+            sector === sector[1] ? styles.selectedSector : styles.sector
+          }
+          onClick={() => handleSectorSelect(sector[1])}
+        >
+          {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p>Error en la carga de precios.</p>
+  )}
+
+
         </div>
         <h3>Asientos seleccionados: {selectedSeats.length}</h3>
         <h3>
@@ -278,7 +277,6 @@ const BookingSeats = ({
 };
 
 BookingSeats.propTypes = {
-  // ... (otras propTypes existentes)
   sectorPrices: PropTypes.array,
   sector: PropTypes.string,
   handleSectorSelect: PropTypes.func,
