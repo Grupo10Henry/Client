@@ -20,8 +20,8 @@ const NextEvents = () => {
       <h2 className="subtitle gradient-text">
         <b>Próximos Eventos</b>
       </h2>
-      {Events === undefined ? (
-        "No hay proximos eventos :c"
+      {nextEvents.length === 0 ? (
+        "Hubo un error al cargar los eventos :c"
       ) : (
         <Cards data={Events} />
       )}
