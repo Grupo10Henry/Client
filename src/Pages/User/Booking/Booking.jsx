@@ -21,8 +21,8 @@ const Booking = () => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.user.token);
-  const userID = useSelector((state) => state.user.userInfo.userID);
-  const userName = useSelector((state) => state.user.userInfo.name);
+  const userID = useSelector((state) => state.user?.userInfo?.userID);
+  const userName = useSelector((state) => state.user?.userInfo?.name);
 
   const [loading, setLoading] = useState(true);
   // Cambié el nombre de esta variable para mantener la consistencia

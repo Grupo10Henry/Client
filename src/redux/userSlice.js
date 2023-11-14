@@ -14,9 +14,10 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     loginSuccess: (state, action) => {
-      state.token = action.payload.token
-      state.isAdmin = action.payload.isAdmin
-      state.userInfo = action.payload.userInfo
+      const { token, isAdmin, userInfo } = action.payload
+      state.token = token;
+      state.isAdmin = isAdmin;
+      state.userInfo = userInfo
     },
 
     userLogout: (state, action) => {

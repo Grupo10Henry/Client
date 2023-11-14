@@ -90,65 +90,8 @@ const BookingSeats = ({ id, sector, selectedSeats, onSeatSelect, sectorPricesQue
 
   return (
     <div className={styles.seatMap}>
-      <div className={styles.sector}>
-        <h3>Sector {sector}</h3>
-        <table className={styles.seatGrid}>
-          <tbody>
-          {Array.from({ length: rows }, (_, rowIndex) => (
-  <tr key={rowIndex}>
-    {Array.from({ length: columns }, (_, colIndex) => {
-      const currentSeat = seats[colIndex]; // Usar colIndex para acceder a los objetos
-      
-      return (
-        <td key={colIndex}>
-          {currentSeat && (
-            <div>
-              {currentSeat.status ? (
-                <div>
-                  <img
-                    key={currentSeat.seatID}
-                    src={asientoFree}
-                    alt={`Seat ${currentSeat.seatLocation}`}
-                    className={`${styles.seat} ${
-                      selectedSeats.includes(currentSeat)
-                        ? styles.selected
-                        : ''
-                    }`}
-                    onClick={() => handleSeatClick(currentSeat)}
-                  />
-                  <p className={styles.seatLocation}>
-                    {currentSeat.seatLocation}
-                  </p>
-                </div>
-              ) : (
-                <div>
-                  <img
-                    key={currentSeat.seatID}
-                    src={asiento}
-                    alt={`Seat ${currentSeat.seatLocation}`}
-                    className={styles.seat}
-                  />
-                  <p className={styles.seatLocation}>
-                    {currentSeat.seatLocation}
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
-        </td>
-      );
-    })}
-  </tr>
-))}
-
-          </tbody>
-        </table>
-      </div>
-      <div className={styles.selectedInfo}>
-        <div>Total Seats Selected: {selectedSeats.length}</div>
-        <div>Total Price: {selectedSeats.reduce((total, seat) => total + seat.Price, 0)}</div>
-        <div>Time Left: {formatTime(countdown)}</div>
-      </div>
+      <input type="range" min="5000" max="200000" value="6000" className={styles.slider} id="myRange">
+          </input>
     </div>
   );
 };

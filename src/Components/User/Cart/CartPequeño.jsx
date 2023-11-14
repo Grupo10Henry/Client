@@ -88,7 +88,7 @@ const Cart = () => {
                     }
                   }}
                 >
-                  modificar asiento
+                  modificar
                 </button>
               </div>
             ))}
