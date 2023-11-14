@@ -5,7 +5,6 @@ const DocumentTitle = ({ title }) => {
     <Helmet>
       <meta charSet="utf-8" />
       <title>{title} - Mi Butaca</title>
-      <link rel="canonical" href="http://mysite.com/example" />
     </Helmet>
   )
 }

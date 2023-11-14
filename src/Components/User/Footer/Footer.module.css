@@ -62,18 +62,19 @@
 
 .footerRedes {
   display: flex;
-  gap: 10px;
+  gap: 30px;
 }
 
-.footerRedes p {
+.footerRedes a {
   margin-top: 2rem;
   font-size: 25px;
   color: rgb(49, 133, 141);
   transition: transform 0.2s ease-in-out;
 }
 
-.footerRedes p:hover {
+.footerRedes a:hover {
   transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
 }
 
 .footer2 {
