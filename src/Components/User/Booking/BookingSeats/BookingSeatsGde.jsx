@@ -4,6 +4,7 @@ import {
   selectSeats,
   selectSelectedSeats,
   fetchAndSetSeats,
+  addSelectedSeat,
 } from "../../../../redux/seatSlice";
 import { clearSelectedSeats } from "../../../../redux/seatSlice";
 import { agregarAlCarrito } from "../../../../redux/carritoSlice";
@@ -30,87 +31,57 @@ const BookingSeatsGde = ({
 }) => {
   const dispatch = useDispatch();
   const seats = useSelector(selectSeats);
-
   const navigate = useNavigate();
 
-  //const rows = seats.length > 0 ? seats[0].rows : 0; 
-  //const columns = seats.length > 0 ? seats[0].columns : 0; 
+  console.log("sectorPrices:", sectorPrices)
 
-  const [remainingTime, setRemainingTime] = useState(900);
-  const selectedSeats = useSelector(selectSelectedSeats);
-  //const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
+  /////////// new /////////////
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+  // Obtener la cantidad de asientos disponibles
+  const availableSeats = seats.filter((seat) => seat.status);
+  const availableSeatsCount = availableSeats.length;
+console.log("availableSeatsCount:", availableSeatsCount)
+  // Calcular el total a pagar
+  const selectedSector = sector;
+  const selectedSectorPrice = sectorPrices.find(
+    sector => sector[1] === selectedSector );
+  const totalPrice = selectedSectorPrice ? selectedSectorPrice[0] * selectedQuantity : 0;
+  console.log("selectedSectorPrice:", selectedSectorPrice)
 
-  useEffect(() => {
-    
-    dispatch(fetchAndSetSeats(id, sector, sectorPricesQuery));
-    const interval = setInterval(() => {
-      if (counterActivated && remainingTime > 0) {
-        setRemainingTime(remainingTime - 1);
-      }
-    }, 1000); // Actualizar cada segundo
-
-    return () => clearInterval(interval);
-  }, [
-    id,
-    sector,
-    sectorPricesQuery,
-    dispatch,
-    counterActivated,
-    remainingTime,
-  ]);
-
-  /*const handleSeatClick = (seat) => {
-    if (!seat.status) {
-      // El asiento está ocupado, no se puede seleccionar.
-
+  const handleSeatSelect = () => {
+    const availableSeats = seats.filter(seat => seat.status);
+  
+    if (availableSeats.length < selectedQuantity) {
+      // No hay suficientes asientos disponibles
+      alert('No hay suficientes asientos disponibles. Elige menos cantidad por favor.');
       return;
+      // si la cantidad de asientos disponibles es mayor a la cantidad de asientos seleccionados
+    } else if (availableSeats.length >= selectedQuantity) {
+      // Selecciona un asiento al azar entre los disponibles
+      const randomIndex = Math.floor(Math.random() * availableSeats.length);
+      const selectedSeat = availableSeats[randomIndex];
+  
+      // Despacha la acción para agregar el asiento seleccionado
+      dispatch(addSelectedSeat(selectedSeat.seatID));
+    } else {
+      // No hay asientos disponibles
+      console.error('No hay asientos disponibles para seleccionar.');
     }
-
-    setSelectedSeatStatus((prevStatus) => ({
-      ...prevStatus,
-      [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
-    }));
-    console.log("selectedSeats local state in BookingSeats:", selectedSeats);
-    if (handleSeatSelect) {
-      console.log("Información enviada a handleSeatSelect:", seat);
-      handleSeatSelect({ ...seat, userID: userID });
-    }
-    handleSectorInfoUpdate();
-  };*/
-
-  useEffect(() => {
-    console.log("selectedSeats local state in BookingSeats:", selectedSeats);
-  }, [selectedSeats]);
-
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
+  
 
-  useEffect(() => {
-    const clearSelectedSeatsTimer = setTimeout(() => {
-      dispatch(clearSelectedSeats());
-    }, 15 * 60 * 1000);
-
-    const handleBeforeUnload = (event) => {
-      dispatch(clearSelectedSeats());
-      event.returnValue =
-        "¿Estás seguro de abandonar la página?";
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      clearTimeout(clearSelectedSeatsTimer);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [dispatch, clearSelectedSeats]);
+  
 
   const handleOnClickcarrito = () => {
     // Verificar si hay asientos seleccionados
-    if (selectedSeats.length === 0) {
-      alert("No has seleccionado ningún asiento.");
+    if (selectedQuantity <= 0) {
+      alert("Completa con la cantidad de entradas.");
+      return;
+    }
+
+    const availableSeats = seats.filter((seat) => seat.status);
+    if (availableSeats.length < selectedQuantity) {
+      alert('No hay suficientes asientos disponibles. Elige menos cantidad por favor.');
       return;
     }
 
@@ -124,16 +95,26 @@ const BookingSeatsGde = ({
     };
 
     const seatsData = {
-      seatCount: selectedSeats.length, 
-      seats: selectedSeats.map((seat) => ({
-        seatID: seat.seatID,
-        seatLocation: seat.seatLocation,
-        sector: seat.sector, 
-        price: seat.price, 
-        quantity: 1, // cada asiento será una entrada
-        totalPrice: seat.price * selectedSeats.length, 
-      })),
+      seatCount: selectedQuantity, 
+      seats: [],
+     
     };
+
+    for (let i = 0; i < selectedQuantity; i++) {
+      const randomIndex = Math.floor(Math.random() * availableSeats.length);
+      const selectedSeat = availableSeats[randomIndex];
+
+      dispatch (addSelectedSeat(selectedSeat.seatID));
+
+      seatsData.seats.push({
+        seatID: selectedSeat.seatID,
+        seatLocation: selectedSeat.seatLocation,
+        sector: selectedSeat.sector,
+        price: selectedSeat.price,
+        quantity: 1,
+        totalPrice: selectedSeat.price,
+      });
+    }
 
     // Enviar datos al carrito
     dispatch(agregarAlCarrito({ eventData, seatsData }));
@@ -152,24 +133,7 @@ const BookingSeatsGde = ({
   return (
     <div className={styles.seatMap}>
       <div className={styles.sector}>
-        <h3>Sector: {sector}</h3>
-        <div className={styles.selectedInfo}>
-          {counterActivated && (
-            <div
-              className={`${styles.Time} ${
-                remainingTime > 0 ? "" : styles.hidden
-              }`}
-            >
-              <p>
-                Reservaremos tus lugares por los próximos:{" "}
-                <span className={styles.TimeText}>
-                  {formatTime(remainingTime)}
-                </span>{" "}
-                minutos.
-              </p>
-            </div>
-          )}
-        </div>
+             
             <img
               src={bannerImage}
               alt="imagen del sector"
@@ -200,11 +164,23 @@ const BookingSeatsGde = ({
               <p>Error en la carga de precios.</p>
             )}
           </div>
+          <h3>Sector elegido: {sector}</h3>
           <div className={styles.cantidad}> 
           Cantidad de entradas:{" "}
-          <input type="number" min="1" max="100" value="1" className={styles.input} id="cantidad" />
+          <input 
+          type="number" 
+          min="1" 
+          max={availableSeatsCount} 
+          value={selectedQuantity} 
+          className={styles.input} 
+          id="cantidad" 
+          onChange={(event) => {
+            setSelectedQuantity(parseInt(event.target.value, 10));
+            handleSeatSelect(); // Llama a la función cuando cambie la cantidad
+          }}  
+          />
           </div> 
-          <h3> Total: $ </h3>
+          <h3> Total: ${totalPrice} </h3>
           <button className={styles.Carrito} onClick={handleOnClickcarrito}  >Agregar al carrito</button>
         </div>
     </div>
@@ -212,7 +188,6 @@ const BookingSeatsGde = ({
 };
 
 BookingSeatsGde.propTypes = {
-  // ... (otras propTypes existentes)
   sectorPrices: PropTypes.array,
   sector: PropTypes.string,
   handleSectorSelect: PropTypes.func,
