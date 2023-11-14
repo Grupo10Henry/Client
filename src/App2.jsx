@@ -36,82 +36,6 @@ function App() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const getUserEmailFromGoogle = async (token) => {
-    try {
-      const response = await axios.get(
-        "https://www.googleapis.com/oauth2/v3/userinfo",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      return response.data.email
-    } catch (error) {
-      console.error(
-        "Error al obtener el correo electrónico del usuario de Google",
-        error
-      )
-      return null // Manejo de error, puedes ajustar esto según tus necesidades
-    }
-  }
-
-  const login = async (userData) => {
-    const { email, password, token } = userData
-    const URL = config.baseURL + "/login"
-
-    try {
-      // Comprobar si se proporciona un token en la URL
-      const urlSearchParams = new URLSearchParams(window.location.search)
-      const tokenFromURL = urlSearchParams.get("token")
-
-      let userEmail = email
-
-      if (tokenFromURL) {
-        // Si hay un token en la URL, obtén el correo electrónico del usuario desde Google
-        userEmail = await getUserEmailFromGoogle(tokenFromURL)
-        if (!userEmail) {
-          // Manejo de error, puedes mostrar un mensaje o redirigir al usuario
-          alert("Error al obtener el correo electrónico del usuario.")
-          return
-        }
-      }
-
-      // Incluir el token en el cuerpo de la solicitud si se encuentra en la URL
-      const requestBody = tokenFromURL
-        ? { email, password, token: tokenFromURL }
-        : { email, password }
-
-      console.log("Datos de la solicitud POST:", requestBody)
-
-      const response = await axios.post(URL, requestBody)
-      const responseData = response.data
-
-      if (responseData.token) {
-        dispatch(loginSuccess(responseData.token))
-        localStorage.setItem("token", responseData.token.token)
-
-        // Aquí verifica la propiedad isAdmin
-        const isAdmin = responseData.token.isAdmin
-        localStorage.setItem("isAdmin", isAdmin)
-
-        console.log("isAdmin:", isAdmin)
-
-        if (isAdmin) {
-          navigate("/admin")
-        } else {
-          navigate("/")
-        }
-      } else {
-        alert("Usuario o contraseña incorrectos")
-      }
-    } catch (error) {
-      console.error(error)
-      alert("Error en el inicio de sesión")
-    }
-  }
-
   const allowedPaths = [
     "/admin",
     "/faq",
@@ -150,7 +74,7 @@ function App() {
         </Route>
 
         <Route path="/registro" element={<SignUp />} />
-        <Route path="/iniciarsesion" element={<Login login={login} />} />
+        <Route path="/iniciarsesion" element={<Login />} />
         <Route path="/detalle/:id" element={<Detail />} />
         <Route path="/reserva/:id" element={<Booking />} />
         <Route path="/carrito" element={<Cart />} />
