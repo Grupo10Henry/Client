@@ -6,39 +6,46 @@ import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
 
-import style from "./ReviewsUser.module.css"
-
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { instance } from "../../../../axios/config"
+import {
+  failedReviews,
+  startReviews,
+  successReviews,
+} from "../../../../redux/reviewsSlice"
 import convertToRealtiveDate from "../../../../utils/relativeDate"
-import { useEffect, useState } from "react"
+
+import style from "./ReviewsUser.module.css"
 import axios from "axios"
-import Loader from "../../Loader/Loader"
 
 const ReviewsUser = () => {
-  const [reviews, setReviews] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const { reviews, isLoading, isError } = useSelector((s) => s.reviews)
+  const dispatch = useDispatch()
+
+  const fetchReviews = async () => {
+    dispatch(startReviews())
+    try {
+      // const { data } = await instance.get("/review")
+      const { data } = await axios.get("http://localhost:3001/review")
+      dispatch(successReviews(data))
+    } catch (err) {
+      console.log(err)
+      dispatch(successReviews([]))
+      dispatch(failedReviews("Error al traer las reviews"))
+    }
+  }
 
   useEffect(() => {
-    setIsLoading(true)
-    axios
-      .get("http://localhost:3001/review")
-      .then((res) => {
-        setReviews(res?.data)
-      })
-      .catch((error) => {
-        setIsLoading(false)
-        setError(true)
-        console.log(error)
-      })
-      .finally(() => setIsLoading(false))
+    fetchReviews()
   }, [])
 
   if (isLoading) {
-    return <Loader size={3} height={250} />
-  } else if (error) {
+    return <div className={style.loader}></div>
+  } else if (isError) {
     return (
-      <div>
-        <p>Error al traer las reviews</p>
+      <div className={style.error}>
+        <p>{isError}</p>
       </div>
     )
   }
