@@ -2,8 +2,13 @@
 import { useState } from 'react';
 import styles from './SetReview.module.css';
 import {AiOutlineStar, AiFillStar} from 'react-icons/ai';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-export default function SetReview () {
+export default function SetReview (props) {
+
+    const {eventID} = props;
+    const params = useParams();
 
     const goodReviews = [
         'Muy buena oferta de eventos',
@@ -23,42 +28,40 @@ export default function SetReview () {
 
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState();
-    console.log(rating);
-    console.log(review);
-
-    const handleClick1 = () => {
-        setRating(1)
-    };
-
-    const handleClick2 = () => {
-        setRating(2)
-    };
-
-    const handleClick3 = () => {
-        setRating(3)
-    };
-
-    const handleClick4 = () => {
-        setRating(4)
-    };
-
-    const handleClick5 = () => {
-        setRating(5)
-    };
+    
+    // console.log(rating);
+    // console.log(review);
 
     const handleChange = (e) => {
         setReview(e.target.value)
+    };
+
+    const handleSubmitReview = async () => {
+    
+    const newReview = {
+        userID: params.id,
+        eventID: eventID,
+        review: review,
+        rating: rating,
+    }
+
+    try {
+        await axios.post(`http://localhost:3001/review`, newReview)
+        alert('¡Gracias por calificarnos!')
+    } catch (error) {
+        alert(error.response.data.error)
+    }
     };
 
     return (
         <div className={styles.setReviewContainer}>
         <h1 className={styles.reviewTitle}>Califica tu experiencia</h1>
         <div className={styles.ratingContainer}>
-        {rating > 0 ? <button onClick={handleClick1}><AiFillStar className={styles.onStar} /></button> : <button onClick={handleClick1}><AiOutlineStar className={styles.offStar} /></button> }
-        {rating > 1 ? <button onClick={handleClick2}><AiFillStar className={styles.onStar} /></button> : <button onClick={handleClick2}><AiOutlineStar className={styles.offStar} /></button> }
-        {rating > 2 ? <button onClick={handleClick3}><AiFillStar className={styles.onStar} /></button> : <button onClick={handleClick3}><AiOutlineStar className={styles.offStar} /></button> }
-        {rating > 3 ? <button onClick={handleClick4}><AiFillStar className={styles.onStar} /></button> : <button onClick={handleClick4}><AiOutlineStar className={styles.offStar} /></button> }
-        {rating > 4 ? <button onClick={handleClick5}><AiFillStar className={styles.onStar} /></button> : <button onClick={handleClick5}><AiOutlineStar className={styles.offStar} /></button> }
+        {rating > 0 ? <button onClick={() => {setRating(1)}}><AiFillStar className={styles.onStar} /></button> : <button onClick={() => {setRating(1)}}><AiOutlineStar className={styles.offStar} /></button> }
+        {rating > 1 ? <button onClick={() => {setRating(2)}}><AiFillStar className={styles.onStar} /></button> : <button onClick={() => {setRating(2)}}><AiOutlineStar className={styles.offStar} /></button> }
+        {rating > 2 ? <button onClick={() => {setRating(3)}}><AiFillStar className={styles.onStar} /></button> : <button onClick={() => {setRating(3)}}><AiOutlineStar className={styles.offStar} /></button> }
+        {rating > 3 ? <button onClick={() => {setRating(4)}}><AiFillStar className={styles.onStar} /></button> : <button onClick={() => {setRating(4)}}><AiOutlineStar className={styles.offStar} /></button> }
+        {rating > 4 ? <button onClick={() => {setRating(5)}}><AiFillStar className={styles.onStar} /></button> : <button onClick={() => {setRating(5)}}><AiOutlineStar className={styles.offStar} /></button> }
         </div>
         <div className={styles.reviewContainer}>
             <select className={styles.reviewOption} onChange={handleChange}>
@@ -70,7 +73,7 @@ export default function SetReview () {
             ))}
             </select>
         </div>
-        {rating && review ? <button className={styles.setReviewButton}>Enviar calificación</button>: null}
+        {rating && review ? <button onClick={handleSubmitReview} className={styles.setReviewButton}>Enviar calificación</button>: null}
         </div>
     )
 }

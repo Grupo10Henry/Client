@@ -1,3 +1,7 @@
+.myAccountContainer {
+    margin-top: 90px;
+}
+
 .AccountSections {
     display: flex;
     flex-direction: row;
@@ -10,4 +14,44 @@
 .AccountSectionsText {
     font-size: 15px;
     font-weight: bold;
+}
+
+.myTicketsContainer {
+    background-color: rgb(66, 66, 66);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 0px 5px 0px;
+}
+
+.myTicketsTitle {
+    color: aliceblue;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 0px 5px 0px;
+}
+
+.myTicketsSubtitle {
+    color: aliceblue;
+    font-size: 15px;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 0px 5px 0px;
+}
+
+.myTicketsSubtitleLink {
+    color: rgb(57, 145, 223);
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.noTicketsContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 156px;
 }

@@ -29,6 +29,7 @@ import { loginSuccess } from "./redux/userSlice"
 import MercadoPagoExitoso from "./Components/User/Cart/mercadoPagoExitoso"
 import MercadoPagoError from "./Components/User/Cart/mercadoPagoError"
 import MercadoPagoPendiente from "./Components/User/Cart/mercadoPagoPendiente"
+import AuthGuardAdmin from "./guards/AuthGuardAdmin"
 
 function App() {
   const location = useLocation()
@@ -124,7 +125,7 @@ function App() {
     "/evento",
     "/mercadopagoexitoso",
     "/mercadopagoerro",
-    "/mercadopagopendiente"
+    "/mercadopagopendiente",
   ]
   const allowedPathsFooter = ["/faq", "/reserva", "/carrito", "/detalle"]
 
@@ -143,9 +144,11 @@ function App() {
       <Contact />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<AdminHome />} />
         <Route element={<AuthGuardUser />}>
           <Route path="/micuenta/:id" element={<MyAccount />} />
+          <Route element={<AuthGuardAdmin />}>
+            <Route path="/admin" element={<AdminHome />} />
+          </Route>
         </Route>
 
         <Route path="/registro" element={<SignUp />} />

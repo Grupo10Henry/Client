@@ -5,6 +5,8 @@ import {
   BiMessageAltDetail,
   BiPhone,
   BiBarChartSquare,
+  BiArrowFromLeft,
+  BiUserPlus,
 } from "react-icons/bi"
 import { NavLink } from "react-router-dom"
 
@@ -80,17 +82,13 @@ const Menu = ({
         </div>
       ) : (
         <div className={style.options}>
-          <NavLink
-            to="iniciarsesion"
-            className={`${style.optionsBtn} ${style.optionsBtnSession}`}
-          >
-            Iniciar Sesión
+          <NavLink to="iniciarsesion" className={style.optionsBtn}>
+            <BiArrowFromLeft />
+            <p>Iniciar Sesión</p>
           </NavLink>
-          <NavLink
-            to="registro"
-            className={`${style.optionsBtn} ${style.optionsBtnSession}`}
-          >
-            Registrarse
+          <NavLink to="registro" className={style.optionsBtn}>
+            <BiUserPlus />
+            <p>Registrarse</p>
           </NavLink>
         </div>
       )}

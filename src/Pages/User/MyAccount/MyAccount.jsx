@@ -1,20 +1,61 @@
 // Luissssss
+import { useDispatch, useSelector } from 'react-redux';
 import MyAccountInfo from '../../../Components/User/MyAccount/MyAccountInfo/MyAccountInfo';
 import MyTicketsActive from '../../../Components/User/MyAccount/MyTicketsActive/MyTicketsActive';
 import MyTicketsPast from '../../../Components/User/MyAccount/MyTicketsPast/MyTicketsPast';
-
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './MyAccount.module.css';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { getPaystubById } from '../../../redux/paystubslice';
 
 export default function MyAccount() {
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const params = useParams();
+    const {paystubs} = useSelector((s) => s.paystub);
+
+    const getPaystub = async () => {
+        try {
+            const {data} = await axios.get(`http://localhost:3001/paystub/${params.id}`)
+            // console.log(data)
+            return data
+        } catch (error) {
+            console.log(error)            
+        }
+    };
+
+    useEffect(() => {
+        getPaystub().then((data) => {
+            dispatch(getPaystubById(data))
+        })
+    }, []
+    );
+
+    console.log(paystubs)
+
+
     return (
-        <div>
-            <div className={styles.AccountSections}>
-            <button className={styles.AccountSectionsText}>Entradas activas</button>
-            <button className={styles.AccountSectionsText}>Entradas anteriores</button>
-            <button className={styles.AccountSectionsText}>Datos personales</button>
+        <div className={styles.myAccountContainer}>
+            <div className={styles.myTicketsContainer}>
+            <h1 className={styles.myTicketsTitle}>Entradas compradas</h1>
+            {paystubs?.length ? paystubs.map((paystub) => (
+                <MyTicketsActive
+                key={paystub.paystubID}
+                eventID={paystub.eventID}
+                issueDate={paystub.issueDate}
+                paymentNum={paystub.paymentNum}
+                paystubID={paystub.paystubID}
+                tickets={paystub.tickets}
+                />
+            )
+            ) : (
+            <div className={styles.noTicketsContainer}>
+            <h1 className={styles.myTicketsSubtitle}>Actualmente no tienes entradas activas. Busca eventos y compra tus entradas <button className={styles.myTicketsSubtitleLink} onClick={()=>{navigate('/')}}>aquí</button></h1>
             </div>
-            <MyTicketsActive />
-            <MyTicketsPast />
+            )}
+            </div>
             <MyAccountInfo />
         </div>
     )
