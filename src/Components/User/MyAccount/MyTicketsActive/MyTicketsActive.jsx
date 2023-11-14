@@ -1,9 +1,50 @@
 // Luissssss
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import SetReview from '../SetReview/SetReview';
 import styles from './MyTicketsActive.module.css';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 export default function MyTicketsActive() {
+
+    const params = useParams();
+
+    const [paystub, setPaystub] = useState();
+    const [seat, setSeat] = useState();
+
+    const getPaystub = async () => {
+    try {
+        const {data} = await axios.get(`http://localhost:3001/paystub/${params.id}`)
+        // console.log(data)
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+    };
+
+    const getSeat = async () => {
+        try {
+            const {data} = await axios.get(`http://localhost:3001/seat/user/${params.id}`)
+            // console.log(data)
+            return data
+        } catch (error) {
+            console.log(error)
+        }
+        };
+
+    useEffect(() => {
+        getPaystub().then((data) => {
+            setPaystub(data)
+        })
+        getSeat().then((data) => {
+            setSeat(data)
+        })
+    }, []
+    );
+
+    // console.log(paystub)
+    // console.log(seat)
+
     return (
         <div className={styles.aTicketContainer}>
             <h1 className={styles.activeTicketsTitle}>Entradas activas</h1>
@@ -26,6 +67,7 @@ export default function MyTicketsActive() {
             </div>
             <div>
                 <SetReview />
+                {/* Poner este componente como condicional, si el paystub no tiene review. De lo contrario, poner "¡Gracias por calificar tu experiencia!" */}
             </div>
         </div>
             </div>
