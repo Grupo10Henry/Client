@@ -1,5 +1,5 @@
 // Luiiisssss
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './SetReview.module.css';
 import {AiOutlineStar, AiFillStar} from 'react-icons/ai';
 import { useParams } from 'react-router-dom';
@@ -26,9 +26,27 @@ export default function SetReview (props) {
         'El evento se desarrolló de forma impuntual'
     ];
 
+    const [currentRating, setCurrentRating] = useState();
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState();
+
+    const validateReview = async () => {
+    try {
+        const {data} = await axios.get(`http://localhost:3001/review/${params.id}/${eventID}`)
+        console.log(data)
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+    };
     
+    useEffect(() => {
+        validateReview().then((data) => {
+        setCurrentRating(data)
+        })
+    }, []
+    );
+
     // console.log(rating);
     // console.log(review);
 
@@ -53,8 +71,16 @@ export default function SetReview (props) {
     }
     };
 
+    console.log(currentRating)
+
     return (
-        <div className={styles.setReviewContainer}>
+        <>
+        {currentRating?.length ? (
+            <div className={styles.setReviewContainer}>
+            <h1 className={styles.reviewTitleDone}>Calificación enviada</h1>
+            </div>
+        ) : (
+            <div className={styles.setReviewContainer}>
         <h1 className={styles.reviewTitle}>Califica tu experiencia</h1>
         <div className={styles.ratingContainer}>
         {rating > 0 ? <button onClick={() => {setRating(1)}}><AiFillStar className={styles.onStar} /></button> : <button onClick={() => {setRating(1)}}><AiOutlineStar className={styles.offStar} /></button> }
@@ -68,12 +94,14 @@ export default function SetReview (props) {
                 <option value="">-- Selecciona una opción --</option>
             {rating > 3 ? goodReviews.map((rev, index) => (
                 <option key={`goodReview-${index}`}>{rev}</option>
-            )) : badReviews.map((rev, index) => (
-                <option key={`badReview-${index}`}>{rev}</option>
-            ))}
+                )) : badReviews.map((rev, index) => (
+                    <option key={`badReview-${index}`}>{rev}</option>
+                    ))}
             </select>
         </div>
         {rating && review ? <button onClick={handleSubmitReview} className={styles.setReviewButton}>Enviar calificación</button>: null}
         </div>
+        )}
+        </>
     )
 }
