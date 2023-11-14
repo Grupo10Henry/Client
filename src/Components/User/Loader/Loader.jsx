@@ -2,7 +2,7 @@ import ContentLoader from "react-content-loader"
 
 import style from "./Loader.module.css"
 
-const Loader = ({ size = 4, slide }) => {
+const Loader = ({ size = 4, slide, height = 590 }) => {
   const arr = new Array(size).fill(0)
 
   if (slide) {
@@ -19,7 +19,7 @@ const Loader = ({ size = 4, slide }) => {
         <ContentLoader
           speed={2}
           width={300}
-          height={590}
+          height={height}
           viewBox="0 0 350 590"
           backgroundColor="gray"
           foregroundColor="#ecebeb"

@@ -9,25 +9,39 @@ import "swiper/css/pagination"
 import style from "./ReviewsUser.module.css"
 
 import convertToRealtiveDate from "../../../../utils/relativeDate"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import Loader from "../../Loader/Loader"
 
-const ReviewsUser = ({ reviews }) => {
-  //Calcula y devuelve el promedio de las calificaciones de las revisiones.
-  // const averageRating =
-  //   reviews.reduce((total, review) => total + review.rating, 0) / reviews.length
+const ReviewsUser = () => {
+  const [reviews, setReviews] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  //Muestra las estrellas según la calificación.
-  // const renderStars = (rating) => {
-  //   const fullStars = Math.floor(rating)
-  //   const hasHalfStar = rating % 1 !== 0
-  //   return (
-  //     <>
-  //       {[...Array(fullStars)].map((_, starIndex) => (
-  //         <IoStar key={starIndex} />
-  //       ))}
-  //       {hasHalfStar && <IoStarHalf />}
-  //     </>
-  //   )
-  // }
+  useEffect(() => {
+    setIsLoading(true)
+    axios
+      .get("http://localhost:3001/review")
+      .then((res) => {
+        setReviews(res?.data)
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        setError(true)
+        console.log(error)
+      })
+      .finally(() => setIsLoading(false))
+  }, [])
+
+  if (isLoading) {
+    return <Loader size={3} height={250} />
+  } else if (error) {
+    return (
+      <div>
+        <p>Error al traer las reviews</p>
+      </div>
+    )
+  }
 
   return (
     <Swiper
@@ -48,7 +62,7 @@ const ReviewsUser = ({ reviews }) => {
         // Agrega más breakpoints si deseas cambiar la cantidad de slides en otras resoluciones
       }}
     >
-      {reviews.map((review, index) => (
+      {reviews?.slice(0, 20).map((review, index) => (
         <SwiperSlide key={index} className={style.reviewSwiperSlide}>
           {/* Estrellas usuario */}
           <div className={style.reviewStars}>

@@ -69,6 +69,7 @@ const ReviewsEvent = () => {
     try {
       setLoading(true)
       const data = await getPrevEvents()
+
       setPrevEvents(data)
     } catch (error) {
       console.error("Error al traer los eventos previos:", error)
@@ -80,9 +81,7 @@ const ReviewsEvent = () => {
   }
 
   useEffect(() => {
-    if (prevEvents.length === 0) {
-      fetchData()
-    }
+    fetchData()
   }, [])
 
   if (loading) {
@@ -92,8 +91,11 @@ const ReviewsEvent = () => {
   const eventosOrdenados = prevEvents?.sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   )
-
   const eventosMostrados = eventosOrdenados.slice(0, 8)
+
+  //Calcula y devuelve el promedio de las calificaciones de las revisiones.
+  // const averageRating =
+  //   reviews.reduce((total, review) => total + review.rating, 0) / reviews.length
 
   return (
     <div className={style.reviewsEvent}>
