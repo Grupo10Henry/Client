@@ -21,6 +21,13 @@ const Ticket = () => {
         time:"22:00 pm"
     };
 
+    // Traer info user
+    // tarer info paystub
+    // traer info seat
+    // traer info event
+
+    // Javascript para descargar e imprimir
+
     return (
         <div className={styles.ticket}>
             <div className={styles.ticketContainer}>
