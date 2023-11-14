@@ -2,8 +2,13 @@
 import { useState } from 'react';
 import styles from './SetReview.module.css';
 import {AiOutlineStar, AiFillStar} from 'react-icons/ai';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-export default function SetReview () {
+export default function SetReview (props) {
+
+    const {eventID} = props;
+    const params = useParams();
 
     const goodReviews = [
         'Muy buena oferta de eventos',
@@ -31,6 +36,23 @@ export default function SetReview () {
         setReview(e.target.value)
     };
 
+    const handleSubmitReview = async () => {
+    
+    const newReview = {
+        userID: params.id,
+        eventID: eventID,
+        review: review,
+        rating: rating,
+    }
+
+    try {
+        await axios.post(`http://localhost:3001/review`, newReview)
+        alert('¡Gracias por calificarnos!')
+    } catch (error) {
+        alert(error.response.data.error)
+    }
+    };
+
     return (
         <div className={styles.setReviewContainer}>
         <h1 className={styles.reviewTitle}>Califica tu experiencia</h1>
@@ -51,7 +73,7 @@ export default function SetReview () {
             ))}
             </select>
         </div>
-        {rating && review ? <button className={styles.setReviewButton}>Enviar calificación</button>: null}
+        {rating && review ? <button onClick={handleSubmitReview} className={styles.setReviewButton}>Enviar calificación</button>: null}
         </div>
     )
 }

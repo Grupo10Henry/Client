@@ -40,10 +40,14 @@ export default function MyAccount() {
         <div className={styles.myAccountContainer}>
             <div className={styles.myTicketsContainer}>
             <h1 className={styles.myTicketsTitle}>Entradas compradas</h1>
-            {paystubs.length ? paystubs.map((paystub) => (
+            {paystubs?.length ? paystubs.map((paystub) => (
                 <MyTicketsActive
                 key={paystub.paystubID}
-                paystub={paystub}
+                eventID={paystub.eventID}
+                issueDate={paystub.issueDate}
+                paymentNum={paystub.paymentNum}
+                paystubID={paystub.paystubID}
+                tickets={paystub.tickets}
                 />
             )
             ) : (
