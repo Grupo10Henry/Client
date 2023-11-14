@@ -3,10 +3,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
 .reviewTitle {
-    background-color: blueviolet;
+    background-color: rgb(148, 58, 231);
+    margin: 0px 0px 0px 0px;
+    padding: 2px 0px 2px 0px;
+    font-size: 15px;
+    width: 360px;
+    text-align: center;
+}
+
+.reviewTitleDone {
+    background-color: rgb(36, 165, 126);
     margin: 0px 0px 0px 0px;
     padding: 2px 0px 2px 0px;
     font-size: 15px;
