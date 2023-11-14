@@ -18,6 +18,7 @@ import convertToRealtiveDate from "../../../../utils/relativeDate"
 
 import style from "./ReviewsUser.module.css"
 import axios from "axios"
+import StarRating from "../../StarRating/StarRating"
 
 const ReviewsUser = () => {
   const { reviews, isLoading, isError } = useSelector((s) => s.reviews)
@@ -73,12 +74,8 @@ const ReviewsUser = () => {
         <SwiperSlide key={index} className={style.reviewSwiperSlide}>
           {/* Estrellas usuario */}
           <div className={style.reviewStars}>
-            {[...Array(review.rating)].map((_, starIndex) => (
-              <IoStar key={starIndex} />
-            ))}
-            {[...Array(5 - review.rating)].map((_, starIndex) => (
-              <IoStar key={starIndex} className={style.starGray} />
-            ))}
+            <StarRating rating={review.rating} />
+
             <p>{convertToRealtiveDate(review.reviewDate)}</p>
           </div>
           <h3 className={style.reviewTitle}>

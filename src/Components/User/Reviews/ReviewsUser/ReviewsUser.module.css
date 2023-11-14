@@ -54,10 +54,6 @@
   color: gray;
 }
 
-.starGray {
-  color: gray;
-}
-
 .error {
   color: var(--danger);
   font-size: 20px;
