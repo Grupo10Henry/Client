@@ -13,6 +13,7 @@ import footerReducer from "./footerSlice"
 import faqReducer from "./faqSlice"
 import eventIDReducer from "./eventIDSlice"
 import carritoReducer from "./carritoSlice"
+import paystubReducer from "./paystubslice"
 
 const persistConfig = {
   key: "root",
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   footer: footerReducer,
   faq: faqReducer,
   carrito: carritoReducer,
+  paystub: paystubReducer,
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
