@@ -511,12 +511,12 @@ const handleLoginResponse = (data) => {
           </form>
 
           <p className="mt-1 text-center text-sm md:text-base lg:text-lg xl:text-xl text-gray-800">
-            ¿No está registrado?{" "}
+            ¿No estás registrado?{" "}
             <p
               onClick={handlerNavigateSignUp}
               className="cursor-pointer font-semibold leading-6 text-teal-700 hover:text-fuchsia-500"
             >
-              Regístrese aquí
+              Regístrate aquí
             </p>
             <p
               onClick={handlerNavigateHome}
