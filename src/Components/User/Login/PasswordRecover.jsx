@@ -25,7 +25,7 @@ const PasswordRecover = () => {
                 <h1 className="text-center text-2xl font-bold text-fuchsia-900 mb-10">
                     Recuperar Password
                     </h1>
-            <p className='text-sm'>Ingrese su email para recuperar su contraseña</p>
+            <p className='text-sm'>Ingresa tu email para recuperar tu contraseña</p>
             <form>
             <input 
                             type="email" 

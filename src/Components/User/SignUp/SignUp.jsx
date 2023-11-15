@@ -112,7 +112,7 @@ const SignUp = () => {
           {/*<div className="col-12 col-md-6 offset-md-3">*/}
           <img className="mx-auto h-8 w-auto mb-2" src={logo} alt="Mi Butaca" />
           <h1 className="text-center text-2xl font-bold text-fuchsia-900 mb-10">
-            Registrarse
+            Registrarme
           </h1>
         </div>
         <div className="mt-3 mx-auto w-full max-w-xl text-sm md:text-base lg:text-lg xl:text-xl">
@@ -141,7 +141,7 @@ const SignUp = () => {
                       required
                       pattern="^[A-Za-zÁáÉéÍíÓóÚúÜüÇçÑñ\s]{1,15}"
                       title="Solo letras y espacios, máximo 15 caracteres"
-                      placeholder="Su nombre aquí."
+                      placeholder="Tu nombre aquí."
                       className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       style={{ paddingTop: "-0.5rem" }}
                     />
@@ -164,7 +164,7 @@ const SignUp = () => {
                       required
                       pattern="^[A-Za-zÁáÉéÍíÓóÚúÜüÇçÑñ\s]{1,15}"
                       title="Solo letras y espacios, máximo 15 caracteres"
-                      placeholder="Sus apellidos aquí."
+                      placeholder="Tus apellidos aquí."
                     />
                   </div>
                 </div>
@@ -187,7 +187,7 @@ const SignUp = () => {
                   onChange={handleChange}
                   value={user.email}
                   required
-                  placeholder="email@su-email.com"
+                  placeholder="email@tu-email.com"
                 />
               </div>
             </div>
@@ -325,12 +325,12 @@ const SignUp = () => {
                 type="submit"
                 className="flex w-full mt-1 justify-center rounded-md bg-teal-600 px-2 py-1.5 text-sm md:text-base lg:text-lg xl:text-xl font-semibold leading-6 text-white shadow-sm hover:bg-fuchsia-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Registrarse
+                Registrarme
               </button>
             </div>
           </form>
           <p className="mt-1 text-center text-sm md:text-base lg:text-lg xl:text-xl text-gray-800">
-            ¿Ya está registrado?{" "}
+            ¿Ya estás registrado?{" "}
             <p
               onClick={handlerNavigateLogin}
               className="cursor-pointer font-semibold leading-6 text-teal-700 hover:text-fuchsia-500"
