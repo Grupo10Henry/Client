@@ -23,7 +23,7 @@ export default function MyTicketsActive(props) {
         try {
             // const {data} = await axios.get(`http://localhost:3001/seat/user/${params.id}`)
             const {data} = await axios.get(`http://localhost:3001/seat/seats/${params.id}/${eventID}`)
-            console.log(data)
+            // console.log(data)
             return data
         } catch (error) {
             console.log(error)
@@ -50,8 +50,8 @@ export default function MyTicketsActive(props) {
     }, []
     );
 
-    console.log(seat)
-    console.log(event)
+    // console.log(seat)
+    // console.log(event)
 
     return (
         <div className={event?.date < minDate ? styles.aTicketContainer : styles.pTicketContainer}>
@@ -66,7 +66,7 @@ export default function MyTicketsActive(props) {
                     <p className={styles.aTicketInfo}>ID de compra: {paymentNum}</p>
                     <p className={styles.aTicketInfo}>{event?.name}</p>
                     {seat?.map((s) => (
-                        <p key={s.seatID} className={styles.aTicketInfo}>{s.sector} | {s.price} | {s.seatLocation} {event?.date < minDate ? (<NavLink to={`/ticket/${s.seatID}`}>
+                        <p key={s.seatID} className={styles.aTicketInfo}>{s.sector} | ${s.price} | {s.seatLocation} {event?.date < minDate ? (<NavLink to={`/ticket/${s.seatID}`}>
                         <button className={styles.aTicketButton}>Ver</button>
                         </NavLink>) : null}</p>
                     ))}

@@ -19,6 +19,7 @@
     "axios": "1.4.0",
     "cloudinary": "1.41.0",
     "dotenv": "16.3.1",
+    "html2pdf.js": "^0.10.1",
     "leaflet": "1.9.4",
     "moment": "2.29.4",
     "postcss": "8.4.31",

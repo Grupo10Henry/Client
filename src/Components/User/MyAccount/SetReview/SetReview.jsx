@@ -33,7 +33,7 @@ export default function SetReview (props) {
     const validateReview = async () => {
     try {
         const {data} = await axios.get(`http://localhost:3001/review/${params.id}/${eventID}`)
-        console.log(data)
+        // console.log(data)
         return data
     } catch (error) {
         console.log(error)
@@ -65,13 +65,16 @@ export default function SetReview (props) {
 
     try {
         await axios.post(`http://localhost:3001/review`, newReview)
+        validateReview().then((data) => {
+            setCurrentRating(data)
+            })
         alert('¡Gracias por calificarnos!')
     } catch (error) {
         alert(error.response.data.error)
     }
     };
 
-    console.log(currentRating)
+    // console.log(currentRating);
 
     return (
         <>
