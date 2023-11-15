@@ -36,17 +36,16 @@ const BookingSeats = ({
 
   const navigate = useNavigate();
 
-  const rows = seats.length > 0 ? seats[0].rows : 0; 
-  const columns = seats.length > 0 ? seats[0].columns : 0; 
+  const rows = seats.length > 0 ? seats[0].rows : 0;
+  const columns = seats.length > 0 ? seats[0].columns : 0;
 
   const [remainingTime, setRemainingTime] = useState(900);
   const selectedSeats = useSelector(selectSelectedSeats);
   const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
 
-  console.log("eventID en BookingSeats", id)
+  console.log("eventID en BookingSeats", id);
 
   useEffect(() => {
-    
     dispatch(fetchAndSetSeats(id, sector, sectorPricesQuery));
     const interval = setInterval(() => {
       if (counterActivated && remainingTime > 0) {
@@ -75,17 +74,14 @@ const BookingSeats = ({
       ...prevStatus,
       [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
     }));
-    
+
     if (handleSeatSelect) {
-      
       handleSeatSelect({ ...seat, userID: userID });
     }
     handleSectorInfoUpdate();
   };
 
-  useEffect(() => {
-    
-  }, [selectedSeats]);
+  useEffect(() => {}, [selectedSeats]);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -112,8 +108,6 @@ const BookingSeats = ({
     };
   }, [dispatch, clearSelectedSeats]);
 
-  
-
   const handleOnClickcarrito = () => {
     // Verificar si hay asientos seleccionados
     if (selectedSeats.length === 0) {
@@ -126,23 +120,23 @@ const BookingSeats = ({
       userID: userID,
       userName: userName,
       eventID: id,
-      eventName: eventName, 
-      eventImage: image, 
+      eventName: eventName,
+      eventImage: image,
       isDonation: isDonation,
     };
 
     const seatsData = {
-      seatCount: selectedSeats.length, 
+      seatCount: selectedSeats.length,
       seats: selectedSeats.map((seat) => ({
         seatID: seat.seatID,
         seatLocation: seat.seatLocation,
-        sector: seat.sector, 
-        price: seat.price, 
+        sector: seat.sector,
+        price: seat.price,
         quantity: 1, // cada asiento será una entrada
-        totalPrice: seat.price * selectedSeats.length, 
+        totalPrice: seat.price * selectedSeats.length,
       })),
     };
-    console.log("isDonation para Cart:", isDonation)
+    console.log("isDonation para Cart:", isDonation);
 
     // Enviar datos al carrito
     dispatch(agregarAlCarrito({ eventData, seatsData }));
@@ -158,113 +152,112 @@ const BookingSeats = ({
     });
   };
 
-  const sortedSeats = seats.slice().sort((a, b) => 
-    a.seatLocation.localeCompare(b.seatLocation));
+  const sortedSeats = seats
+    .slice()
+    .sort((a, b) => a.seatLocation.localeCompare(b.seatLocation));
 
   return (
     <div className={styles.seatMap}>
       <div className={styles.sector}>
-          <>
-            <h3>Sector: {sector}</h3>
-            <div className={styles.selectedInfo}>
-              {counterActivated && selectedSeats.length > 0 && (
-                <div
-                  className={`${styles.Time} ${
-                    remainingTime > 0 ? "" : styles.hidden
-                  }`}
-                >
-                  <p>
-                    Reservaremos tus asientos por los próximos:{" "}
-                    <span className={styles.TimeText}>
-                      {formatTime(remainingTime)}
-                    </span>{" "}
-                    minutos.
-                  </p>
-                </div>
-              )}
-            </div>
-            <table className={styles.seatGrid}>
-              <tbody>
-                {Array.from({ length: rows }, (_, rowIndex) => (
-                  <tr key={rowIndex}>
-                    {Array.from({ length: columns }, (_, colIndex) => {
-                      const currentSeat = sortedSeats[rowIndex * columns + colIndex];
+        <>
+          <h3>Sector: {sector}</h3>
+          <div className={styles.selectedInfo}>
+            {counterActivated && selectedSeats.length > 0 && (
+              <div
+                className={`${styles.Time} ${
+                  remainingTime > 0 ? "" : styles.hidden
+                }`}
+              >
+                <p>
+                  Reservaremos tus asientos por los próximos:{" "}
+                  <span className={styles.TimeText}>
+                    {formatTime(remainingTime)}
+                  </span>{" "}
+                  minutos.
+                </p>
+              </div>
+            )}
+          </div>
+          <table className={styles.seatGrid}>
+            <tbody>
+              {Array.from({ length: rows }, (_, rowIndex) => (
+                <tr key={rowIndex}>
+                  {Array.from({ length: columns }, (_, colIndex) => {
+                    const currentSeat =
+                      sortedSeats[rowIndex * columns + colIndex];
 
-                      return (
-                        <td key={colIndex}>
-                          {currentSeat && (
-                            <div>
-                              {currentSeat.status ? (
-                                <div>
-                                  <img
-                                    key={currentSeat.seatID}
-                                    src={
-                                      selectedSeatStatus[currentSeat.seatID]
-                                        ? asiento
-                                        : asientoFree
-                                    }
-                                    alt={`Seat ${currentSeat.seatLocation}`}
-                                    className={`${styles.seat} ${
-                                      selectedSeatStatus[currentSeat.seatID]
-                                        ? styles.selected
-                                        : ""
-                                    }`}
-                                    onClick={() => handleSeatClick(currentSeat)}
-                                  />
+                    return (
+                      <td key={colIndex}>
+                        {currentSeat && (
+                          <div>
+                            {currentSeat.status ? (
+                              <div>
+                                <img
+                                  key={currentSeat.seatID}
+                                  src={
+                                    selectedSeatStatus[currentSeat.seatID]
+                                      ? asiento
+                                      : asientoFree
+                                  }
+                                  alt={`Seat ${currentSeat.seatLocation}`}
+                                  className={`${styles.seat} ${
+                                    selectedSeatStatus[currentSeat.seatID]
+                                      ? styles.selected
+                                      : ""
+                                  }`}
+                                  onClick={() => handleSeatClick(currentSeat)}
+                                />
 
-                                  <p className={styles.seatLocation}>
-                                    {currentSeat.seatLocation}
-                                  </p>
-                                </div>
-                              ) : (
-                                <div>
-                                  <img
-                                    key={currentSeat.seatID}
-                                    src={asientoSelected}
-                                    alt={`Seat ${currentSeat.seatLocation}`}
-                                    className={styles.seat}
-                                  />
-                                  <p className={styles.seatLocation}>
-                                    {currentSeat.seatLocation} - No Disp.
-                                  </p>
-                                </div>
-                              )}
-                            </div>
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        
+                                <p className={styles.seatLocation}>
+                                  {currentSeat.seatLocation}
+                                </p>
+                              </div>
+                            ) : (
+                              <div>
+                                <img
+                                  key={currentSeat.seatID}
+                                  src={asientoSelected}
+                                  alt={`Seat ${currentSeat.seatLocation}`}
+                                  className={styles.seat}
+                                />
+                                <p className={styles.seatLocation}>
+                                  {currentSeat.seatLocation} - No Disp.
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
       </div>
       <div className={styles.seatInfo}>
         <div className={styles.TituloBlink}>
           <h3>Selecciona un sector:</h3>
         </div>
         <div className={styles.ContainerSelect}>
-  {sectorPrices && sectorPrices.length > 0 ? (
-    <div className={styles.SectorContainer}>
-      {sectorPrices.map((sector, index) => (
-        <div
-          key={index}
-          className={
-            sector === sector[1] ? styles.selectedSector : styles.sector
-          }
-          onClick={() => handleSectorSelect(sector[1])}
-        >
-          {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
-        </div>
-      ))}
-    </div>
-  ) : (
-    <p>Error en la carga de precios.</p>
-  )}
-
-
+          {sectorPrices && sectorPrices.length > 0 ? (
+            <div className={styles.SectorContainer}>
+              {sectorPrices.map((sector, index) => (
+                <div
+                  key={index}
+                  className={
+                    sector === sector[1] ? styles.selectedSector : styles.sector
+                  }
+                  onClick={() => handleSectorSelect(sector[1])}
+                >
+                  {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>Error en la carga de precios.</p>
+          )}
         </div>
         <h3>Asientos seleccionados: {selectedSeats.length}</h3>
         <h3>
