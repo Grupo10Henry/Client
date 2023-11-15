@@ -69,29 +69,30 @@ const ReviewsUser = () => {
         // Agrega más breakpoints si deseas cambiar la cantidad de slides en otras resoluciones
       }}
     >
-      {reviews?.slice(0, 20).map((review, index) => (
-        <SwiperSlide key={index} className={style.reviewSwiperSlide}>
-          {/* Estrellas usuario */}
-          <div className={style.reviewStars}>
-            <StarRating rating={review.rating} />
+      {reviews.length > 0 &&
+        reviews.slice(0, 20).map((review, index) => (
+          <SwiperSlide key={index} className={style.reviewSwiperSlide}>
+            {/* Estrellas usuario */}
+            <div className={style.reviewStars}>
+              <StarRating rating={review?.rating} />
 
-            <p>{convertToRealtiveDate(review.reviewDate)}</p>
-          </div>
-          <h3 className={style.reviewTitle}>
-            <p>{review.eventName}</p>
-          </h3>
-
-          {/* Evento - comentario */}
-          <div className={style.reviewEvent}>
-            <div className={style.reviewName}>
-              <p>
-                {review.userName} {review.userLastName}
-              </p>
+              <p>{convertToRealtiveDate(review?.reviewDate)}</p>
             </div>
-            <p className={style.review}>{review.review}</p>
-          </div>
-        </SwiperSlide>
-      ))}
+            <h3 className={style.reviewTitle}>
+              <p>{review?.eventName}</p>
+            </h3>
+
+            {/* Evento - comentario */}
+            <div className={style.reviewEvent}>
+              <div className={style.reviewName}>
+                <p>
+                  {review?.userName} {review?.userLastName}
+                </p>
+              </div>
+              <p className={style.review}>{review?.review}</p>
+            </div>
+          </SwiperSlide>
+        ))}
     </Swiper>
   )
 }
