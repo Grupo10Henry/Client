@@ -3,19 +3,32 @@
 import logo from "../../../assets/logo_mi_butaca_color.svg";
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import axios from "axios";
-
+import { useSelector, useDispatch } from "react-redux";
+import { setEventID } from "../../../redux/eventIDSlice";
+import { v4 as uuidv4 } from "uuid";
+import { setOrderData } from "../../../redux/carritoSlice";
+import {instance} from "../../../server";
 
 const Cart = () => {
   const location = useLocation();
   const { state } = location;
   const userName = useSelector((state) => state.user.userInfo.name);
-  const { eventName, eventImage, seatsData } = state ?? {};
-  //const userID = useSelector((state) => state.user.userInfo.userID);
+  const isDonation = useSelector((state) => state.event.isDonation);
+  const { eventID, eventName, eventImage, seatsData } = state ?? {};
+  const userID = useSelector((state) => state.user.userInfo.userID);
+
   const { seatCount, seats } = seatsData ?? {};
   const [total, setTotal] = useState(0);
   const [totalEntradas, setTotalEntradas] = useState(0);
+
+  
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setEventID(eventID));
+  }, [dispatch, eventID]);
+  
 
   const navigate = useNavigate();
 
@@ -28,15 +41,49 @@ const Cart = () => {
     setTotalEntradas(seatCount ?? 0);
   }, [seatsData]);
 
+  // número de compra //
+  const unique_id = uuidv4();
+
+  const orderID = unique_id.slice(0, 8);
+
+
+  ///////////////////////////
+
   const handleCheckout = async () => {
-    const description = seatsData.seatID;
-    const price = {total};
-    console.log("total:", total  )
-    console.log(price);
-    const response = await axios.post(
-      "http://localhost:3001/mercadoPago/order",
-      { eventName, price, description }
+    const descriptionValues = seatsData.seats.map(
+      ({ sector, seatLocation }) => `${sector} | ${seatLocation}`
     );
+    const seatID = seatsData.seats.map(({ seatID }) => seatID);
+    
+
+    const description = descriptionValues.join(", ");
+    
+
+    const price = { total };
+   
+
+    const orderData = { 
+      userID, 
+      eventID, 
+      eventName, 
+      price: total, 
+      seatID, 
+      description,
+     };
+     dispatch(setOrderData(orderData));
+    
+
+    
+    
+    const response = await instance.post(
+      "/mercadoPago/order",
+      { userID, 
+        eventID, 
+        eventName, 
+        total, 
+        description,}
+    );
+    window.location.href = response.data.init_point;
     console.log(response);
     console.log(response.data.init_point);
   };
@@ -54,7 +101,7 @@ const Cart = () => {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm p-6 space-y-0 bg-white rounded-lg shadow-lg">
           <img className="mx-auto h-8 w-auto" src={logo} alt="Mi Butaca" />
           <h1 className="text-2xl text-teal-600 text-center">
-            Finaliza tu compra {userName}{" "}
+            {userName}, Finaliza tu compra nro.{orderID}{" "}
           </h1>
           <div className="flex flex-col">
             {/* Mostrar datos del evento una sola vez */}

@@ -1,5 +1,3 @@
-//Guada
-
 import ReviewsEvent from "./ReviewsEvent/ReviewsEvent"
 import ReviewsUser from "./ReviewsUser/ReviewsUser"
 

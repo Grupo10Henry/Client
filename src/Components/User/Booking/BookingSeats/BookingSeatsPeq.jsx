@@ -20,7 +20,6 @@ const BookingSeats = ({
   eventType,
   bannerImage,
   id,
-  isDonation,
   sector,
   sectorPrices,
   handleSectorSelect,
@@ -33,6 +32,7 @@ const BookingSeats = ({
 }) => {
   const dispatch = useDispatch();
   const seats = useSelector(selectSeats);
+  const isDonation = useSelector((state) => state.event.isDonation);
 
   const navigate = useNavigate();
 
@@ -42,6 +42,8 @@ const BookingSeats = ({
   const [remainingTime, setRemainingTime] = useState(900);
   const selectedSeats = useSelector(selectSelectedSeats);
   const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
+
+  console.log("eventID en BookingSeats", id)
 
   useEffect(() => {
     
@@ -73,16 +75,16 @@ const BookingSeats = ({
       ...prevStatus,
       [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
     }));
-    console.log("selectedSeats local state in BookingSeats:", selectedSeats);
+    
     if (handleSeatSelect) {
-      console.log("Información enviada a handleSeatSelect:", seat);
+      
       handleSeatSelect({ ...seat, userID: userID });
     }
     handleSectorInfoUpdate();
   };
 
   useEffect(() => {
-    console.log("selectedSeats local state in BookingSeats:", selectedSeats);
+    
   }, [selectedSeats]);
 
   const formatTime = (time) => {
@@ -110,6 +112,8 @@ const BookingSeats = ({
     };
   }, [dispatch, clearSelectedSeats]);
 
+  
+
   const handleOnClickcarrito = () => {
     // Verificar si hay asientos seleccionados
     if (selectedSeats.length === 0) {
@@ -124,6 +128,7 @@ const BookingSeats = ({
       eventID: id,
       eventName: eventName, 
       eventImage: image, 
+      isDonation: isDonation,
     };
 
     const seatsData = {
@@ -137,6 +142,7 @@ const BookingSeats = ({
         totalPrice: seat.price * selectedSeats.length, 
       })),
     };
+    console.log("isDonation para Cart:", isDonation)
 
     // Enviar datos al carrito
     dispatch(agregarAlCarrito({ eventData, seatsData }));

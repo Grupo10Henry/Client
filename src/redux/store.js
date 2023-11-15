@@ -19,7 +19,7 @@ import reviewsReducer from "./reviewsSlice"
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["user"], // aca se agregan las keys que se van a persistir (se deben llamar igual el key del reducer de abajo)
+  whitelist: ["user", "eventID", "carrito"], // aca se agregan las keys que se van a persistir (se deben llamar igual el key del reducer de abajo)
 }
 
 const rootReducer = combineReducers({

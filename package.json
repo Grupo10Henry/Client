@@ -16,6 +16,8 @@
     "@reduxjs/toolkit": "1.9.7",
     "@seatsio/seatsio-react": "14.3.0",
     "@tailwindcss/forms": "0.5.6",
+    "@tremor/react": "^3.11.1",
+    "apexcharts": "^3.44.0",
     "axios": "1.4.0",
     "cloudinary": "1.41.0",
     "dotenv": "16.3.1",
@@ -24,6 +26,7 @@
     "moment": "2.29.4",
     "postcss": "8.4.31",
     "react": "18.2.0",
+    "react-apexcharts": "^1.4.1",
     "react-content-loader": "6.2.1",
     "react-dom": "18.2.0",
     "react-helmet": "^6.1.0",
@@ -38,7 +41,8 @@
     "redux-persist": "6.0.0",
     "redux-thunk": "^2.4.2",
     "sweetalert2": "11.9.0",
-    "swiper": "11.0.3"
+    "swiper": "11.0.3",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@types/react": "18.2.15",

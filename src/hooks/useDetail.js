@@ -3,9 +3,11 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { instance } from "../axios/config"
 import { setEventID } from "../redux/eventIDSlice"
+import { updateIsDonation } from "../redux/detailSlice"
 import axios from "axios"
 
 const initialEventsDetail = {
+  eventID: "",
   name: "",
   description: "",
   date: "",
@@ -29,7 +31,7 @@ const useDetail = (id) => {
   const navigate = useNavigate()
 
   const handleClick = () => {
-    console.log("Sector Prices:", sectorPrices)
+    
     navigate(`/reserva/${id}?isDonation=${isDonation}`, {
       state: { sectorPrices },
     })
@@ -50,10 +52,11 @@ const useDetail = (id) => {
 
   const fetchEventDetails = async () => {
     try {
-      // const response = await axios.get(`http://localhost:3001/event/${id}`)
+       const response = await axios.get(`http://localhost:3001/event/${id}`)
 
-      const response = await instance.get(`/event/${id}`)
+      //const response = await instance.get(`/event/${id}`)
       const {
+        eventID,
         name,
         description,
         date,
@@ -65,9 +68,11 @@ const useDetail = (id) => {
         capacity,
         planImage,
         views,
+        isDonation,
       } = response.data
 
       setEventDetails({
+        eventID,
         name,
         description,
         date,
@@ -79,9 +84,13 @@ const useDetail = (id) => {
         capacity,
         planImage,
         views,
+        isDonation,
       })
-
-      setIsDonation(response?.data?.isDonation)
+      console.log("EventID en useDetail:", eventID);
+      setIsDonation(isDonation);
+      dispatch(updateIsDonation(isDonation));
+     
+      console.log("Valor de isDonation después de dispatch:", isDonation);
     } catch (error) {
       throw Error(`Error al obtener los detalles del evento:, ${error}`)
     }

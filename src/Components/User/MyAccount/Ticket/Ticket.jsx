@@ -70,6 +70,10 @@ const Ticket = () => {
 
     return (
         <>
+        <div className={styles.btnTicket}>
+            <button onClick={handleSaveAsPDF} >Descargar</button>
+            <button onClick={handlePrint}>Imprimir</button>
+        </div>
         <div id="Ticket" className={styles.ticket}>
             <div className={styles.ticketContainer}>
                 <div className={styles.mainInfo}>
@@ -81,7 +85,7 @@ const Ticket = () => {
                     </div>
                         
                         <h3>{info?.event.locationName}</h3>
-
+                        <h4>{info?.event.adressLocation}</h4>
 
                     <div className={styles.subtitles}>
                         <h4>Fecha</h4>
@@ -104,7 +108,7 @@ const Ticket = () => {
                     <p>Nombre: {info?.user.name} {info?.user.lastName}</p>
                     <p>Teléfono: {info?.user.phone}</p>
                     <p>Email: {info?.user.email}</p>
-                    <p>Dirección: {info?.event.adressLocation}</p>
+                    
                 </div>
 
                 <div className={styles.lastInfo}>
@@ -114,7 +118,7 @@ const Ticket = () => {
                         </div>
                         <div className={styles.idPrice}>
                         <p>{info?.paystub.paymentNum}</p>
-                        <p>${info?.seat.price}</p>
+                        <p>${info?.seat.price.toLocaleString()}</p>
                         </div>
 
                 </div>
@@ -124,10 +128,6 @@ const Ticket = () => {
                     </div>
                 </div>
             </div>
-        </div>
-        <div>
-            <button onClick={handleSaveAsPDF}>Descargar</button>
-            <button onClick={handlePrint}>Imprimir</button>
         </div>
         </>
     );
