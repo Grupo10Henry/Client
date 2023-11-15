@@ -30,6 +30,7 @@ import MercadoPagoExitoso from "./Components/User/Cart/mercadoPagoExitoso"
 import MercadoPagoError from "./Components/User/Cart/mercadoPagoError"
 import MercadoPagoPendiente from "./Components/User/Cart/mercadoPagoPendiente"
 import AuthGuardAdmin from "./guards/AuthGuardAdmin"
+import DetailPrevEvent from "./Pages/User/DetailPrevEvent/DetailPrevEvent"
 
 function App() {
   const location = useLocation()
@@ -165,6 +166,7 @@ function App() {
           path="/mercadopagopendiente"
           element={<MercadoPagoPendiente />}
         />
+        <Route path="/evento-anterior/:id" element={<DetailPrevEvent />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />

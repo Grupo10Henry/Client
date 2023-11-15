@@ -70,7 +70,7 @@ export default function AdminEventsDetail () {
     const getEvent = async () => {
         try {
             const {data} = await instance.get(`event/${params.id}`)
-            console.log(data)
+            // console.log(data)
             return data
         } catch (error) {
             console.log(error)
@@ -80,7 +80,7 @@ export default function AdminEventsDetail () {
     const getSections = async () => {
         try {
             const {data} = await axios.get(`http://localhost:3001/seat/admin/${params.id}`) // axios.get(`http://localhost:3001/seat/admin/${params.id}`) || instance.get(`/seat/admin/${params.id}`)
-            console.log(data)
+            // console.log(data)
             return data
         } catch (error) {
             console.log(error)
@@ -251,8 +251,8 @@ export default function AdminEventsDetail () {
     };
 
     console.log(updatedEvent)
-    console.log(image, bannerImage, planImage)
-    console.log(newSection)
+    // console.log(image, bannerImage, planImage)
+    // console.log(newSection)
 
     return (
         <div className={styles.editEventContainer}>
@@ -428,7 +428,7 @@ export default function AdminEventsDetail () {
                     </div>
                 </div>
                 <div className={styles.sectionContainer}>
-                <h1 className={styles.sectionTableTitle}>Secciones del evento</h1>
+                <h1 className={styles.sectionTableTitle}>Secciones del evento {'('}Solo para eventos pagos{')'}</h1>
                 {sections ? (
                 <table className={styles.sectionTable}>
                     <thead className={styles.sectionTableHead}>
@@ -455,6 +455,8 @@ export default function AdminEventsDetail () {
                     <h1>El evento no tiene secciones creadas</h1>
                 )}
                 </div >
+                <>
+                {updatedEvent.isDonation === true || updatedEvent.isDonation === "true" ? null : (
                 <div className={styles.newSectionContainer}>
                     <h1 className={styles.newSectionTitle}>Crea una nueva sección para este evento</h1>
                     <div className={styles.newSectionFields}>
@@ -503,6 +505,8 @@ export default function AdminEventsDetail () {
                     onClick={handlePostSections}
                     >Crear sección</button>
                 </div>
+                )}
+                </>
         </div>
     )
 

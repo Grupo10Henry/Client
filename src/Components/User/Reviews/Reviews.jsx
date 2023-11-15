@@ -1,7 +1,7 @@
 //Guada
 
-import ReviewsUser from "./ReviewsUser/ReviewsUser"
 import ReviewsEvent from "./ReviewsEvent/ReviewsEvent"
+import ReviewsUser from "./ReviewsUser/ReviewsUser"
 
 import style from "./Reviews.module.css"
 
