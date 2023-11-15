@@ -81,7 +81,7 @@ const Ticket = () => {
                     </div>
                         
                         <h3>{info?.event.locationName}</h3>
-
+                        <h4>{info?.event.adressLocation}</h4>
 
                     <div className={styles.subtitles}>
                         <h4>Fecha</h4>
@@ -104,7 +104,7 @@ const Ticket = () => {
                     <p>Nombre: {info?.user.name} {info?.user.lastName}</p>
                     <p>Teléfono: {info?.user.phone}</p>
                     <p>Email: {info?.user.email}</p>
-                    <p>Dirección: {info?.event.adressLocation}</p>
+                    
                 </div>
 
                 <div className={styles.lastInfo}>
@@ -125,8 +125,8 @@ const Ticket = () => {
                 </div>
             </div>
         </div>
-        <div>
-            <button onClick={handleSaveAsPDF}>Descargar</button>
+        <div className={styles.btnTicket}>
+            <button onClick={handleSaveAsPDF} >Descargar</button>
             <button onClick={handlePrint}>Imprimir</button>
         </div>
         </>

@@ -58,9 +58,14 @@
     color:#067290;
     font-size: 16px;
     margin: 0;
+}
+.mainInfo h4 {
+    font-weight: bold;
+    color:#067290;
+    font-size: 14px;
+    margin: 0;
     padding-bottom: 10px;
 }
-
 .ticket .time {
     display: flex;
     justify-content: space-between;
@@ -141,4 +146,27 @@
 .ticket .mainInfo .titles .logo img {
     width: 120px;
     margin-left: 10px;
+}
+/* Añade estas reglas al final de tu archivo Ticket.module.css */
+
+.btnTicket {
+    display: flex;
+    justify-content: flex-start; /* Alinea los botones a la derecha */
+    margin-top: 10px; /* Espacio entre el div ticket y los botones */
+    margin-left: 10px;
+}
+
+.btnTicket button {
+    background-color: #4c8797; /* Color de fondo del botón */
+    color: #ffffff; /* Color del texto del botón */
+    border: none; /* Elimina el borde del botón */
+    padding: 8px 10px; /* Espaciado interno del botón */
+    margin-left: 10px; /* Espacio entre los botones */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    border-radius: 5px; /* Borde redondeado */
+    font-size: 14px; /* Tamaño del texto del botón */
+}
+
+.btnTicket button:hover {
+    background-color: #355f6b; /* Cambia el color de fondo al pasar sobre el botón */
 }
