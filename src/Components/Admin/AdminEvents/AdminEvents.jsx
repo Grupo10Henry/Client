@@ -29,7 +29,7 @@ export default function AdminEvents() {
       }, []
   );
 
-  console.log(allEvents)
+  // console.log(allEvents)
 
   const handleDeleteEvent = async (eventID) => {
     try {

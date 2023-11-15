@@ -62,3 +62,50 @@
     color: #484848;
 }
 
+.reviewsTableContainer {
+    width: 87.8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviewsTableTitle {
+    font-weight: bold;
+    margin: 20px 0px 20px 0px;
+    font-size: 15px;
+}
+
+.reviewsTable {
+    border-collapse: collapse;
+    margin: 0px 0px 30px 0px;
+    font-size: 14px;
+    border-radius: 8px 8px 0px 0px;
+    overflow: hidden;
+}
+
+.reviewsTableHead {
+    background-color: rgb(132, 132, 133);
+    color: aliceblue;
+}
+
+.reviewsTableHeadContent {
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 5px 5px 5px;
+}
+
+.reviewsTableRows {
+    border-bottom: 1px solid rgb(196, 196, 196);
+}
+
+.reviewsTableRows:nth-of-type(even) {
+    border-bottom: 1px solid rgb(196, 196, 196);
+    background-color: rgb(228, 228, 228);
+}
+
+.reviewsTableRowsContent {
+    margin: 0px 0px 0px 0px;
+    padding: 5px 5px 5px 5px;
+    text-align: left;
+}
