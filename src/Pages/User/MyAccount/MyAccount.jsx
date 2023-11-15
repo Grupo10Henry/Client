@@ -33,8 +33,7 @@ export default function MyAccount() {
     }, []
     );
 
-    console.log(paystubs)
-
+    // console.log(paystubs)
 
     return (
         <div className={styles.myAccountContainer}>

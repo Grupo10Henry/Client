@@ -1,9 +1,52 @@
-import React from 'react';
-import styles from './Ticket.module.css';
+import React, { useEffect, useState } from 'react';
 import QRImage from "../../../../assets/qrRandom.jpg";
 import logo from "../../../../assets/logo_mi_butaca_color.svg"
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import html2pdf from 'html2pdf.js';
+import styles from './Ticket.module.css';
 
 const Ticket = () => {
+
+    const params = useParams()
+    const [info, setInfo] = useState();
+
+    const getSeatById = async () => {
+    try {
+        const {data} = await axios.get(`http://localhost:3001/seat/details/${params.id}`)
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+    };
+
+    useEffect(() => {
+        getSeatById().then((data) => {
+            setInfo(data)
+        })
+    }, []
+    );
+
+    console.log(info)
+
+
+    const handleSaveAsPDF = () => {
+        const element = document.getElementById('Ticket');
+        const opt = {
+            margin: 0,
+            filename: `${info?.paystub.paymentNum}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'px', format: 'a4', orientation: 'portrait' },
+          };
+      
+          html2pdf().from(element).set(opt).save();
+    };
+      
+    const handlePrint = () => {
+          window.print();
+    };
+
     const infoTicket = {
         name: "Milagros",
         lastName: "Martinez",
@@ -21,25 +64,23 @@ const Ticket = () => {
         time:"22:00 pm"
     };
 
-    // Traer info user
-    // tarer info paystub
-    // traer info seat
-    // traer info event
+
 
     // Javascript para descargar e imprimir
 
     return (
-        <div className={styles.ticket}>
+        <>
+        <div id="Ticket" className={styles.ticket}>
             <div className={styles.ticketContainer}>
                 <div className={styles.mainInfo}>
                     <div className={styles.titles}>
-                    <h2>{infoTicket.eventName}</h2>
+                    <h2>{info?.event.name}</h2>
                     <div className={styles.logo}>
                         <img src={logo} alt="Logo Mi Butaca" />
                     </div>
                     </div>
                         
-                        <h3>{infoTicket.locationName}</h3>
+                        <h3>{info?.event.locationName}</h3>
 
 
                     <div className={styles.subtitles}>
@@ -47,23 +88,23 @@ const Ticket = () => {
                         <h4>Horario</h4>
                     </div>
                     <div className={styles.time}>
-                        <p>{infoTicket.issueDate}</p>
-                        <p>{infoTicket.time}</p>
+                        <p>{info?.event.date}</p>
+                        <p>{info?.event.time}</p>
                     </div>
                     <div className={styles.subtitles}>
                         <h4>Sector</h4>
                         <h4>Asiento</h4>
                     </div>
                     <div className={styles.location}>
-                        <p>{infoTicket.sector}</p>
-                        <p>{infoTicket.seatLocation}</p> 
+                        <p>{info?.seat.sector}</p>
+                        <p>{info?.seat.seatLocation}</p> 
                     </div>
                 </div>
                 <div className={styles.info}>
-                    <p>Nombre: {infoTicket.name} {infoTicket.lastName}</p>
-                    <p>Teléfono: {infoTicket.phone}</p>
-                    <p>Email: {infoTicket.email}</p>
-                    <p>Dirección: {infoTicket.adressLocation}</p>
+                    <p>Nombre: {info?.user.name} {info?.user.lastName}</p>
+                    <p>Teléfono: {info?.user.phone}</p>
+                    <p>Email: {info?.user.email}</p>
+                    <p>Dirección: {info?.event.adressLocation}</p>
                 </div>
 
                 <div className={styles.lastInfo}>
@@ -72,8 +113,8 @@ const Ticket = () => {
                             <h4>Precio</h4>
                         </div>
                         <div className={styles.idPrice}>
-                        <p>{infoTicket.paymentNum}</p>
-                        <p>${infoTicket.price}</p>
+                        <p>{info?.paystub.paymentNum}</p>
+                        <p>${info?.seat.price}</p>
                         </div>
 
                 </div>
@@ -84,7 +125,11 @@ const Ticket = () => {
                 </div>
             </div>
         </div>
-
+        <div>
+            <button onClick={handleSaveAsPDF}>Descargar</button>
+            <button onClick={handlePrint}>Imprimir</button>
+        </div>
+        </>
     );
 }
 
