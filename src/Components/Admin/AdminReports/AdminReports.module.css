@@ -1,3 +1,14 @@
+.reportsContainer {
+    width: 87.8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .reportTitle {
-    background-color: gray;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 0px 0px 0px 0px;
+    margin: 15px 0px 15px 0px;
 }
