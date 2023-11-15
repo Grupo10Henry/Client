@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setEventID } from "../../../redux/eventIDSlice";
 import { v4 as uuidv4 } from "uuid";
 import { setOrderData } from "../../../redux/carritoSlice";
-import {instance} from "../../../server";
+import {instance} from "../../../axios/config";
 
 const Cart = () => {
   const location = useLocation();
