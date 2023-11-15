@@ -40,7 +40,7 @@ const useReviewsEvent = () => {
   //Calcula y devuelve el promedio de las calificaciones de las revisiones.
   const calculateAverageRating = (reviews, id) => {
     //filtered reviews by event
-    const reviewsFiltered = reviews.filter((review) => review.eventID === id)
+    const reviewsFiltered = reviews?.filter((review) => review?.eventID === id)
 
     const totalRating = reviewsFiltered.reduce(
       (acc, review) => acc + review.rating,
