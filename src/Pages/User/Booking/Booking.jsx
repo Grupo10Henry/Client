@@ -16,7 +16,6 @@ import {
 } from "../../../redux/seatSlice";
 
 const Booking = () => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -35,7 +34,7 @@ const Booking = () => {
   const location = useLocation();
   const sectorPrices = location.state && location.state.sectorPrices;
   const [sectorPricesQuery, setSectorPricesQuery] = useState("");
-  
+
   const [eventDetails, setEventDetails] = useState({
     name: "",
     date: "",
@@ -50,7 +49,6 @@ const Booking = () => {
     views: "",
     type: "",
   });
-
 
   const [sectorInfo, setSectorInfo] = useState({
     selectedSeats: [],
@@ -77,9 +75,7 @@ const Booking = () => {
           if (selectedSector) {
             dispatch(fetchAndSetSeats(id, selectedSector));
           }
-          const responseEvent = await instance.get(
-            `/event/${id}`
-          );
+          const responseEvent = await instance.get(`/event/${id}`);
 
           if (responseEvent.data) {
             const {
@@ -124,14 +120,6 @@ const Booking = () => {
     }
   }, [token, navigate, id, selectedSector]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      checkPaystubID();
-    }, 15 * 60 * 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  
   if (loading) {
     //return <Loader />
     return null;
@@ -153,8 +141,6 @@ const Booking = () => {
     setCounterActivated(true);
   };
 
-
-
   const originalDate = eventDetails.date;
   const parts = originalDate.split("-");
 
@@ -167,11 +153,14 @@ const Booking = () => {
   }
 
   const handleSeatSelect = async (seat) => {
-  
-  if (seat.status === true) {
-    if (selectedSeats.some(selectedSeat => selectedSeat.seatID === seat.seatID)) {
+    if (seat.status === true) {
+      if (
+        selectedSeats.some(
+          (selectedSeat) => selectedSeat.seatID === seat.seatID
+        )
+      ) {
         dispatch(removeSelectedSeat(seat));
-    } else {
+      } else {
         dispatch(addSelectedSeat(seat));
         try {
           // realizar la solicitud put para cambiar el estado del asiento a ocupado y enviar el userID
@@ -179,34 +168,38 @@ const Booking = () => {
         } catch (error) {
           console.error("Error al actualizar el estado del asiento:", error);
         }
-    };
-  }
-};
+      }
+    }
+  };
 
-    const updateSeatStatus = async (seatID, newStatus) => {
-        await instance.put(`/seat/${seatID}`, { 
-          status: newStatus,
-          userID: userID,
-         });
-};
+  const updateSeatStatus = async (seatID, newStatus) => {
+    await instance.put(`/seat/${seatID}`, {
+      status: newStatus,
+      userID: userID,
+    });
+  };
 
-
-
-const checkPaystubID = async () => {
-  try {
-    // hacer la solciitud get para saber si el campo paystubID de la tabla seat está vacío. Si lo está, cambiar el estado del asiento a disponible y borrar el userID
-    const responseSeat = await instance.get(`/seat/${seatID}`);
-    console.log(responseSeat);
-    if (responseSeat.data.paystubID === null) {
-      //cambiar el estado (status) del asiento a disponible (true) y borrar el userID
-    await updateSeatStatus(seatID, true); 
-    }   
-
-  }catch(error) {
-    console.error("Error al obtener el paystubID:", error);
-  }
-};
-
+  const checkPaystubID = async (seatID) => {
+    try {
+      // hacer la solciitud get para saber si el campo paystubID de la tabla seat está vacío. Si lo está, cambiar el estado del asiento a disponible y borrar el userID
+      const responseSeat = await instance.get(`/seat/${seatID}`);
+      console.log(responseSeat);
+      if (responseSeat.data.paystubID === null) {
+        //cambiar el estado (status) del asiento a disponible (true) y borrar el userID
+        await updateSeatStatus(seatID, true);
+      }
+    } catch (error) {
+      console.error("Error al obtener el paystubID:", error);
+    }
+  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      selectedSeats.forEach((seat) => {
+        checkPaystubID(seat.seatID);
+      });
+    }, 15 * 60 * 1000);
+    return () => clearTimeout(timer);
+  }, [selectedSeats]);
 
   const handleSectorSelect = (sectorName) => {
     setSelectedSector(sectorName);
@@ -260,23 +253,23 @@ const checkPaystubID = async () => {
       <div className={styles.ContainerPlan}>
         <div className={styles.ContainerPlanoAsientos}>
           {eventDetails.type === "Grande" ? (
-             <BookingSeatsGde
-             id={id}
-             userID={userID}
-             userName={userName}
-             isDonation={isDonation}
-             sector={selectedSector}
-             sectorPrices={sectorPrices}
-             handleSectorSelect={handleSectorSelect}
-             handleSeatSelect={handleSeatSelect}
-             sectorPricesQuery={sectorPricesQuery}
-             handleSectorInfoUpdate={handleSectorInfoUpdate}
-             counterActivated={counterActivated}
-             setCounterActivated={setCounterActivated}
-             bannerImage={eventDetails.bannerImage}
-             image={eventDetails.image}
-             eventName={eventDetails.name}
-           />
+            <BookingSeatsGde
+              id={id}
+              userID={userID}
+              userName={userName}
+              isDonation={isDonation}
+              sector={selectedSector}
+              sectorPrices={sectorPrices}
+              handleSectorSelect={handleSectorSelect}
+              handleSeatSelect={handleSeatSelect}
+              sectorPricesQuery={sectorPricesQuery}
+              handleSectorInfoUpdate={handleSectorInfoUpdate}
+              counterActivated={counterActivated}
+              setCounterActivated={setCounterActivated}
+              bannerImage={eventDetails.bannerImage}
+              image={eventDetails.image}
+              eventName={eventDetails.name}
+            />
           ) : (
             <BookingSeats
               id={id}

@@ -57,7 +57,7 @@ const SignUp = () => {
     }
   };
 
-  const darkModeClass = modoOscuro ? "dark-mode" : "";
+  /*const darkModeClass = modoOscuro ? "dark-mode" : "";
 
   // Estilos para el modo claro
   const lightModeStyles = {
@@ -70,9 +70,9 @@ const SignUp = () => {
       color: "#fff",
     },
   };
-
+*/
   // Estilos para el modo oscuro
-  const darkModeStyles = {
+  /*const darkModeStyles = {
     container: {
       backgroundColor: "#333",
       color: "#fff",
@@ -81,9 +81,9 @@ const SignUp = () => {
       backgroundColor: "#f1c40f",
       color: "#333",
     },
-  };
+  };*/
 
-  const currentStyles = modoOscuro ? darkModeStyles : lightModeStyles;
+  //const currentStyles = modoOscuro ? darkModeStyles : lightModeStyles;
 
   return (
     <>
@@ -340,13 +340,7 @@ const SignUp = () => {
             </p>
           </p>
           {/* botón para loguearse con Google */}
-          <div className="mt-1 flex items-center justify-center ">
-            <Link to="http://localhost:3001/auth/google/callback">
-              <button className="flex items-center justify-center w-54 px-2 py-0 font-medium text-white bg-fuchsia-900 hover:bg-red-600 rounded-md transition duration-300 ease-in-out  shadow-sm">
-                <span className="text-xl pr-2">G</span> Registrarse con Google
-              </button>
-            </Link>
-          </div>
+          
         </div>
       </div>
       {/*</div>*/}
