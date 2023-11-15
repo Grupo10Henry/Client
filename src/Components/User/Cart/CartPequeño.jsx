@@ -5,9 +5,9 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setEventID } from "../../../redux/eventIDSlice";
-import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { setOrderData } from "../../../redux/carritoSlice";
+import {instance} from "../../../server";
 
 const Cart = () => {
   const location = useLocation();
@@ -75,8 +75,8 @@ const Cart = () => {
 
     
     
-    const response = await axios.post(
-      "http://localhost:3001/mercadoPago/order",
+    const response = await instance.post(
+      "/mercadoPago/order",
       { userID, 
         eventID, 
         eventName, 
