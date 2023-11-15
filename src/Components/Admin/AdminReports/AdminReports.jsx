@@ -3,6 +3,7 @@ import ReactApexChart from 'react-apexcharts';
 import styles from './AdminReports.module.css'
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { instance } from '../../../axios/config';
 
 export default function AdminReports () {
 
@@ -12,7 +13,7 @@ const [allPaystubs, setAllPaystubs] = useState();
 
 const getPaystubs = async () => {
 try {
-    const {data} = await axios.get(`http://localhost:3001/paystub`)
+    const {data} = await instance.get(`/paystub`) // axios.get(`http://localhost:3001/paystub`) | instance.get(`/paystub`)
     console.log(data)
     return data
 } catch (error) {
@@ -51,8 +52,8 @@ const [chart, setChart] = useState({
         curve: 'straight'
       },
       title: {
-        text: 'Product Trends by Month',
-        align: 'left'
+        text: 'Usuarios registrados por mes',
+        align: 'center'
       },
       grid: {
         row: {
@@ -84,6 +85,10 @@ const [bars, setBars] = useState({
         dataLabels: {
           enabled: false
         },
+        title: {
+        text: 'Entradas vendidas por evento',
+        align: 'center'
+      },
         xaxis: {
           categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
             'United States', 'China', 'Germany'
@@ -114,8 +119,8 @@ const [bars, setBars] = useState({
                 </div>
             </div>
             <div className={styles.reportsCharts}>
-            <ReactApexChart className={styles.reportsUsers} options={chart.options} series={chart.series} type="line" height={350} />
-            <ReactApexChart options={bars.options} series={bars.series} type="bar" height={350} />
+            <ReactApexChart className={styles.reportsUsersChart} options={chart.options} series={chart.series} type="line" height={350} />
+            <ReactApexChart className={styles.reportsEventsChart} options={bars.options} series={bars.series} type="bar" height={350} />
             </div>
         </div>
     )
