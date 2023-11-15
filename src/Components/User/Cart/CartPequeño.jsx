@@ -21,14 +21,14 @@ const Cart = () => {
   const [total, setTotal] = useState(0);
   const [totalEntradas, setTotalEntradas] = useState(0);
 
-  console.log("eventID en Carrito antes del dispatch:", eventID);
+  
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setEventID(eventID));
   }, [dispatch, eventID]);
-  console.log("eventID en Carrito despues del dispatch:", eventID);
+  
 
   const navigate = useNavigate();
 
@@ -54,16 +54,15 @@ const Cart = () => {
       ({ sector, seatLocation }) => `${sector} | ${seatLocation}`
     );
     const seatID = seatsData.seats.map(({ seatID }) => seatID);
-    console.log("seatID en Carrito es", seatID);
+    
 
     const description = descriptionValues.join(", ");
-    console.log("description es", description);
+    
 
     const price = { total };
-    console.log("total es", total);
+   
 
     const orderData = { 
-      orderID, 
       userID, 
       eventID, 
       eventName, 
@@ -74,27 +73,15 @@ const Cart = () => {
      dispatch(setOrderData(orderData));
     
 
-    console.log(
-      "Se envia a MercadoPago: orderNum(orderNum)",
-      orderID,
-      "userID(userID):",
-      userID,
-      "eventID(eventID):",
-      eventID,
-      "title(eventName):",
-      eventName,
-      ", price(total):",
-      total,
-      "seatID: ",
-      seatID,
-      ", description(sector y seatLocation):",
-      description
-    );
-
-
+    
+    
     const response = await axios.post(
       "http://localhost:3001/mercadoPago/order",
-      orderData
+      { userID, 
+        eventID, 
+        eventName, 
+        total, 
+        description,}
     );
     window.location.href = response.data.init_point;
     console.log(response);
