@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getContactData } from "../../../redux/footerSlice"
 import { useEffect, useState } from "react"
 import { instance } from "../../../axios/config"
+import { Link } from "react-router-dom"
 
 const Footer = () => {
   const { contactData } = useSelector((s) => s.footer)
@@ -108,7 +109,9 @@ const Footer = () => {
               Política de Privacidad
             </a>
           </p>
-          <p>Developed By Tres Creativo</p>
+          <Link to="/desarrolladores" className={style.linkDesarrolladores}>
+            Desarrolladores
+          </Link>
         </div>
       </div>
     </div>

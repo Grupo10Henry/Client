@@ -31,6 +31,7 @@ import MercadoPagoError from "./Components/User/Cart/mercadoPagoError"
 import MercadoPagoPendiente from "./Components/User/Cart/mercadoPagoPendiente"
 import AuthGuardAdmin from "./guards/AuthGuardAdmin"
 import DetailPrevEvent from "./Pages/User/DetailPrevEvent/DetailPrevEvent"
+import Developers from "./Pages/User/Developers/Developers"
 
 function App() {
   const location = useLocation()
@@ -125,8 +126,15 @@ function App() {
     "/mercadopagoexitoso",
     "/mercadopagoerro",
     "/mercadopagopendiente",
+    "/desarrolladores",
   ]
-  const allowedPathsFooter = ["/faq", "/reserva", "/carrito", "/detalle"]
+  const allowedPathsFooter = [
+    "/faq",
+    "/reserva",
+    "/carrito",
+    "/detalle",
+    "/desarrolladores",
+  ]
 
   const shouldRenderNavbar = allowedPaths.some(
     (path) => location.pathname === path || location.pathname.includes(path)
@@ -167,6 +175,7 @@ function App() {
           element={<MercadoPagoPendiente />}
         />
         <Route path="/evento-anterior/:id" element={<DetailPrevEvent />} />
+        <Route path="/desarrolladores" element={<Developers />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />

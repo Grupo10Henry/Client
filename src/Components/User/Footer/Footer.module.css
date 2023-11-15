@@ -103,7 +103,14 @@
   width: 60%;
 }
 .footer2Info a {
-  color: var(--amarillo-oscuro);
+  color: var(--amarillo-claro);
+  text-underline-offset: 5px;
+  text-decoration: underline;
+}
+
+.footer2Info .linkDesarrolladores {
+  margin-top: 10px;
+  display: block;
 }
 
 @media (width > 700px) {
