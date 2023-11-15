@@ -13,7 +13,9 @@ const initialState = {
   image: "",
   bannerImage: "",
   planImage: "",
+  isDonation: false,
 }
+console.log("Estado inicial de eventSlice:", initialState);
 
 export const eventSlice = createSlice({
   name: "event",
@@ -31,6 +33,7 @@ export const eventSlice = createSlice({
         image,
         bannerImage,
         planImage,
+        isDonation,
       } = action.payload
       state.name = name
       state.description = description
@@ -42,7 +45,9 @@ export const eventSlice = createSlice({
       state.image = image
       state.bannerImage = bannerImage
       state.planImage = planImage
+      state.isDonation = isDonation
     },
+    
   },
 })
 

@@ -17,6 +17,7 @@ import {
 import axios from "axios";
 
 const Booking = () => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -24,8 +25,18 @@ const Booking = () => {
   const userID = useSelector((state) => state.user?.userInfo?.userID);
   const userName = useSelector((state) => state.user?.userInfo?.name);
 
+  const { id } = useParams();
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const isDonation = urlSearchParams.get("isDonation") === "true";
+
   const [loading, setLoading] = useState(true);
-  // Cambié el nombre de esta variable para mantener la consistencia
+  const [selectedSector, setSelectedSector] = useState(null);
+  const selectedSeats = useSelector(selectSelectedSeats);
+
+  const location = useLocation();
+  const sectorPrices = location.state && location.state.sectorPrices;
+  const [sectorPricesQuery, setSectorPricesQuery] = useState("");
+  
   const [eventDetails, setEventDetails] = useState({
     name: "",
     date: "",
@@ -40,36 +51,13 @@ const Booking = () => {
     views: "",
     type: "",
   });
-  const { id } = useParams();
-  const { isDonation } = new URLSearchParams(window.location.search);
-  const [selectedSector, setSelectedSector] = useState(null);
-  const selectedSeats = useSelector(selectSelectedSeats);
 
-  const location = useLocation();
-  const sectorPrices = location.state && location.state.sectorPrices;
-  const [sectorPricesQuery, setSectorPricesQuery] = useState("");
 
   const [sectorInfo, setSectorInfo] = useState({
     selectedSeats: [],
     totalPrice: 0,
   });
   const [counterActivated, setCounterActivated] = useState(false);
-
-  const handleSectorInfoUpdate = () => {
-    // Calcula el total de asientos seleccionados y el precio total
-    const totalSeatsSelected = selectedSeats.length;
-    const totalPrice = selectedSeats.reduce(
-      (total, seat) => total + seat.price,
-      0
-    );
-
-    // Actualiza el estado sectorInfo
-    setSectorInfo({
-      selectedSeats: totalSeatsSelected,
-      totalPrice,
-    });
-    setCounterActivated(true);
-  };
 
   useEffect(() => {
     if (sectorPrices && sectorPrices.length > 0) {
@@ -137,10 +125,36 @@ const Booking = () => {
     }
   }, [token, navigate, id, selectedSector]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      checkPaystubID();
+    }, 15 * 60 * 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  
   if (loading) {
     //return <Loader />
     return null;
   }
+
+  const handleSectorInfoUpdate = () => {
+    // Calcula el total de asientos seleccionados y el precio total
+    const totalSeatsSelected = selectedSeats.length;
+    const totalPrice = selectedSeats.reduce(
+      (total, seat) => total + seat.price,
+      0
+    );
+
+    // Actualiza el estado sectorInfo
+    setSectorInfo({
+      selectedSeats: totalSeatsSelected,
+      totalPrice,
+    });
+    setCounterActivated(true);
+  };
+
+
 
   const originalDate = eventDetails.date;
   const parts = originalDate.split("-");
@@ -153,16 +167,45 @@ const Booking = () => {
     dateToRender = eventDetails.date; // Corregí esta parte para evitar un error
   }
 
-  const handleSeatSelect = (seat) => {
-  console.log("selectedSeats in Booking antes del dispatch:", selectedSeats);
+  const handleSeatSelect = async (seat) => {
+  
   if (seat.status === true) {
     if (selectedSeats.some(selectedSeat => selectedSeat.seatID === seat.seatID)) {
         dispatch(removeSelectedSeat(seat));
     } else {
         dispatch(addSelectedSeat(seat));
-    }
-}
-  console.log("selectedSeats in Booking despues del dispatch:", selectedSeats);
+        try {
+          // realizar la solicitud put para cambiar el estado del asiento a ocupado y enviar el userID
+          await updateSeatStatus(seat.seatID, false);
+        } catch (error) {
+          console.error("Error al actualizar el estado del asiento:", error);
+        }
+    };
+  }
+};
+
+    const updateSeatStatus = async (seatID, newStatus) => {
+        await axios.put(`http://localhost:3001/seat/${seatID}`, { 
+          status: newStatus,
+          userID: userID,
+         });
+};
+
+
+
+const checkPaystubID = async () => {
+  try {
+    // hacer la solciitud get para saber si el campo paystubID de la tabla seat está vacío. Si lo está, cambiar el estado del asiento a disponible y borrar el userID
+    const responseSeat = await axios.get(`http://localhost:3001/seat/${seatID}`);
+    console.log(responseSeat);
+    if (responseSeat.data.paystubID === null) {
+      //cambiar el estado (status) del asiento a disponible (true) y borrar el userID
+    await updateSeatStatus(seatID, true); 
+    }   
+
+  }catch(error) {
+    console.error("Error al obtener el paystubID:", error);
+  }
 };
 
 

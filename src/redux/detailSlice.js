@@ -3,6 +3,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
+    eventID: '',
     name: '',
     description: '',
     date: '',
@@ -13,6 +14,7 @@ const initialState = {
     image: '',
     bannerImage: '',
     planImage: '',
+    isDonation: false,
 };
 
 export const detailSlice = createSlice({
@@ -20,7 +22,8 @@ export const detailSlice = createSlice({
     initialState,
     reducers: {
         getDetail: (state, action) => {
-            const {name, description, date, time, locationName, adressLocation, mapLocation, image, bannerImage, planImage} = action.payload;
+            const {eventID, name, description, date, time, locationName, adressLocation, mapLocation, image, bannerImage, planImage, isDonation} = action.payload;
+            state.eventID = eventID;
             state.name = name;
             state.description = description;
             state.date = date;
@@ -31,9 +34,17 @@ export const detailSlice = createSlice({
             state.image = image;
             state.bannerImage = bannerImage;
             state.planImage = planImage;
+            state.isDonation = isDonation;
         },
+        updateIsDonation: (state, action) => {
+            console.log("Estado antes de updateIsDonation:", state);
+            
+            state.isDonation = action.payload
+            console.log("Nuevo estado después de updateIsDonation:", state);
+            console.log("Nuevo estado después de updateIsDonation:", state.isDonation);
+          },
     },
 });
 
-export const {getDetail} = detailSlice.actions;
+export const {getDetail, updateIsDonation} = detailSlice.actions;
 export default detailSlice.reducer;
