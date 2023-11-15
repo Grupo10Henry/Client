@@ -15,6 +15,11 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+
+  ///
+  
+  ///
+
   const handleGoogleSuccess = async (tokenResponse) => {
     console.log("Token obtenido de Google:", tokenResponse); // Para depurar
     try {
@@ -70,41 +75,94 @@ const Login = () => {
     }
   };
 
-  // reconoce is admin con email y contraseña, pero no con google
-  const handleLoginResponse = (data) => {
-    console.log("Respuesta del servidor:", data); // Para depurar
-    if (data && data.token) {
-      const token = data.token;
-      const userInfo = data.userInfo;
 
-      const isAdmin = token.isAdmin;
 
-      localStorage.setItem("token", token);
+// con esta ingresa con ambas, con email y contraseña perfecto, conm google tira error y no redirije
+/*const handleLoginResponse = (data) => {
+  console.log("Respuesta del servidor:", data);
 
-      localStorage.setItem("isAdmin", isAdmin.toString());
+  if (data && data.token) {
+    const tokenData = data.token.token ? data.token : data.token;
+    const token = tokenData.token;
+    const isAdmin = tokenData.isAdmin !== undefined ? tokenData.isAdmin : data.isAdmin;
+    const userInfo = tokenData.userInfo || data.userInfo;
 
-      dispatch(loginSuccess({ token, isAdmin, userInfo }));
-
-      if (token) {
-        const isAdminStored = localStorage.getItem("isAdmin");
-        const isAdminBoolean = isAdminStored === "true";
-
-        if (isAdminBoolean) {
-          navigate("/admin");
-        } else {
-          navigate("/");
-        }
-      } else {
-        console.error(
-          "Error: La respuesta del servidor no contiene los datos esperados."
-        );
-        setErrors({
-          ...errors,
-          form: "No se pudo procesar la respuesta del servidor.",
-        });
-      }
+    if (isAdmin === undefined) {
+      console.error("Error: No se pudo determinar si el usuario es administrador.");
+      setErrors({
+        ...errors,
+        form: "No se pudo determinar si el usuario es administrador. Contacta al soporte técnico.",
+      });
+      return;
     }
-  };
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("isAdmin", isAdmin.toString());
+
+    dispatch(loginSuccess({ token, isAdmin, userInfo }));
+
+    if (token) {
+      const isAdminStored = localStorage.getItem("isAdmin");
+      const isAdminBoolean = isAdminStored === "true";
+
+      if (isAdminBoolean) {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+    } else {
+      console.error(
+        "Error: La respuesta del servidor no contiene el token necesario para el inicio de sesión."
+      );
+      setErrors({
+        ...errors,
+        form: "No se pudo procesar la respuesta del servidor. Contacta al soporte técnico.",
+      });
+    }
+  } else {
+    console.error("Error: La respuesta del servidor no contiene los datos esperados.");
+    setErrors({
+      ...errors,
+      form: "No se pudo procesar la respuesta del servidor. Contacta al soporte técnico.",
+    });
+  }
+};*/
+
+/// Pancho
+const handleLoginResponse = (data) => {
+  console.log("Respuesta del servidor:", data);
+
+  let token, isAdmin, userInfo;
+
+  
+  if (data.token && typeof data.token === 'object') {
+   
+    ({ token, isAdmin, userInfo } = data.token);
+  } else {
+   
+    ({ token, isAdmin, userInfo } = data);
+  }
+
+  if (token) {
+    localStorage.setItem("token", token);
+    if (isAdmin !== undefined) {
+      localStorage.setItem("isAdmin", isAdmin.toString());
+    }
+
+    dispatch(loginSuccess({ token, isAdmin, userInfo }));
+
+    const isAdminStored = localStorage.getItem("isAdmin") === "true";
+    navigate(isAdminStored ? "/admin" : "/");
+  } else {
+    console.error("Error: No se encontró el token necesario para el inicio de sesión.");
+    setErrors({ ...errors, form: "No se pudo procesar la respuesta del servidor." });
+  }
+};
+
+
+
+  
+          
   
 
   const validateForm = (formData) => {
@@ -226,6 +284,7 @@ const Login = () => {
               <button
                 className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-fuchsia-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 type="submit"
+                
               >
                 INGRESAR
               </button>
@@ -249,7 +308,7 @@ const Login = () => {
           </p>
 
           <div className="mt-1 flex items-center justify-center ">
-            <Link>
+            
               <button
                 onClick={googleLogin}
                 className="flex items-center justify-center w-54 px-2 py-1 mt-1 font-medium text-white bg-fuchsia-900 hover:bg-red-600 rounded-md transition duration-300 ease-in-out  shadow-sm"
@@ -257,7 +316,7 @@ const Login = () => {
                 <span className="text-xl pr-2">G</span>
                 Ingresar con Google
               </button>
-            </Link>
+            
           </div>
         </div>
       </div>

@@ -1,105 +1,67 @@
-//Guada
-
-import { IoStar, IoStarHalf } from "react-icons/io5"
+import { IoStar } from "react-icons/io5"
+import { Autoplay, Pagination } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 
 import "swiper/css"
+import "swiper/css/navigation"
 import "swiper/css/pagination"
 
-import style from "./ReviewsUser.module.css"
-
-import { Pagination } from "swiper/modules"
-import moment from "moment"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { instance } from "../../../../axios/config"
+import {
+  failedReviews,
+  startReviews,
+  successReviews,
+} from "../../../../redux/reviewsSlice"
 import convertToRealtiveDate from "../../../../utils/relativeDate"
 
+import style from "./ReviewsUser.module.css"
+import axios from "axios"
+import StarRating from "../../StarRating/StarRating"
+
 const ReviewsUser = () => {
-  //Recibe del admin: respuestas sugeridas
-  const comments = [
-    "No recomendaría este evento. Experimenté dificultades significativas.",
-    "No estoy satisfecho, algunos problemas a mejorar.",
-    "La experiencia fue promedio. Ni buena ni mala.",
-    "Fue un gran evento, aunque con pequeños inconvenientes.",
-    "Muy agradable. Disfruté cada parte del evento y lo recomendaría sin dudarlo.",
-  ]
+  const { reviews, isLoading, isError } = useSelector((s) => s.reviews)
+  const dispatch = useDispatch()
 
-  //Recibe del usuario: nombre - apellido - fecha - rating - nombre de evento
-  const reviews = [
-    {
-      name: "Micaela",
-      lastName: "Bellone",
-      date: "2023-11-07",
-      rating: 4,
-      event: "Karol G",
-    },
-    {
-      name: "Belén",
-      lastName: "Gonzales",
-      date: "2023-11-04",
-      rating: 3,
-      event: "Shakira",
-    },
-    {
-      name: "Carlos",
-      lastName: "Marinez",
-      date: "2023-11-08",
-      rating: 5,
-      event: "Maria Becerra",
-    },
-    {
-      name: "Nicolas",
-      lastName: "Perez",
-      date: "2023-11-01",
-      rating: 5,
-      event: "TINI",
-    },
-    {
-      name: "Guillermo",
-      lastName: "Román",
-      date: "2023-11-05",
-      rating: 2,
-      event: "Maluma",
-    },
-    {
-      name: "Juan",
-      lastName: "Gomez",
-      date: "2023-11-08",
-      rating: 4,
-      event: "Luis Fonsi",
-    },
-    {
-      name: "Sofia",
-      lastName: "Aguirre",
-      date: "2023-11-07",
-      rating: 3,
-      event: "Karol G",
-    },
-  ]
+  const fetchReviews = async () => {
+    dispatch(startReviews())
+    try {
+      // const { data } = await instance.get("/review")
+      const { data } = await axios.get("http://localhost:3001/review")
+      dispatch(successReviews(data))
+    } catch (err) {
+      console.log(err)
+      dispatch(successReviews([]))
+      dispatch(failedReviews("Error al traer las reviews"))
+    }
+  }
 
-  //Calcula y devuelve el promedio de las calificaciones de las revisiones.
-  const averageRating =
-    reviews.reduce((total, review) => total + review.rating, 0) / reviews.length
+  useEffect(() => {
+    fetchReviews()
+  }, [])
 
-  //Muestra las estrellas según la calificación.
-  const renderStars = (rating) => {
-    const fullStars = Math.floor(rating)
-    const hasHalfStar = rating % 1 !== 0
+  if (isLoading) {
+    return <div className={style.loader}></div>
+  } else if (isError) {
     return (
-      <>
-        {[...Array(fullStars)].map((_, starIndex) => (
-          <IoStar key={starIndex} />
-        ))}
-        {hasHalfStar && <IoStarHalf />}
-      </>
+      <div className={style.error}>
+        <p>{isError}</p>
+      </div>
     )
   }
 
   return (
     <Swiper
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: false,
+      }}
       spaceBetween={20}
       className={style.reviewSwiper}
       slidesPerView={1}
-      pagination={true}
-      modules={[Pagination]}
+      pagination={{ clickable: true }}
+      modules={[Autoplay, Pagination]}
       breakpoints={{
         // Definición de los breakpoints para mostrar distintos números de slides
         768: {
@@ -108,25 +70,26 @@ const ReviewsUser = () => {
         // Agrega más breakpoints si deseas cambiar la cantidad de slides en otras resoluciones
       }}
     >
-      {reviews.map((review, index) => (
+      {reviews?.slice(0, 20).map((review, index) => (
         <SwiperSlide key={index} className={style.reviewSwiperSlide}>
           {/* Estrellas usuario */}
           <div className={style.reviewStars}>
-            {[...Array(review.rating)].map((_, starIndex) => (
-              <IoStar key={starIndex} />
-            ))}
-            <p>{convertToRealtiveDate(review.date)}</p>
+            <StarRating rating={review.rating} />
+
+            <p>{convertToRealtiveDate(review.reviewDate)}</p>
           </div>
           <h3 className={style.reviewTitle}>
-            <p>{review.event}</p>
+            <p>{review.eventName}</p>
           </h3>
 
           {/* Evento - comentario */}
           <div className={style.reviewEvent}>
-            <p className={style.reviewName}>
-              {review.name} {review.lastName}
-            </p>
-            <p className={style.reviewComment}>{comments[review.rating - 1]}</p>
+            <div className={style.reviewName}>
+              <p>
+                {review.userName} {review.userLastName}
+              </p>
+            </div>
+            <p className={style.review}>{review.review}</p>
           </div>
         </SwiperSlide>
       ))}

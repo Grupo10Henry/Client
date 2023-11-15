@@ -18,7 +18,7 @@ export default function MyAccountInfo() {
     const getUserData = async () => {
         try {
           const { data } = await instance.get(`/user/${params.id}`) // instance.get(`/user/${params.id}`) || axios.get(`http://localhost:3001/user/${params.id}`)
-          console.log(data)
+        //   console.log(data)
           return data
         } catch (error) {
           console.log(error)
@@ -81,8 +81,8 @@ export default function MyAccountInfo() {
         image: "",
     });
 
-    console.log(user);
-    console.log(userCopy);
+    // console.log(user);
+    // console.log(userCopy);
 
     const handleChange = (field, value) => {
         setUser({

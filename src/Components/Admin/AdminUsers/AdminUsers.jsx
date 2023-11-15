@@ -124,6 +124,7 @@ export default function AdminUsers() {
          <table className={styles.usersTable}>
          <thead className={styles.usersTableHead}>
            <tr>
+             <th className={styles.usersTableHeadContent}>ID</th>
              <th className={styles.usersTableHeadContent}>Nombre</th>
              <th className={styles.usersTableHeadContent}>Apellido</th>
              <th className={styles.usersTableHeadContent}>Email</th>
@@ -135,8 +136,9 @@ export default function AdminUsers() {
            </tr>
          </thead>
          <tbody>
-           {allUsers.map((user) => (
+           {allUsers?.map((user) => (
                <tr className={styles.userTableRows} key={user.userID}>
+               <td className={styles.userTableRowsContent}>{user.userID}</td>
                <td className={styles.userTableRowsContent}>{user.name}</td>
                <td className={styles.userTableRowsContent}>{user.lastName}</td>
                <td className={styles.userTableRowsContent}>{user.email}</td>

@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 480px;
+  flex-direction: column;
+  padding: 30px 0;
   background-image: url(../../../assets/fondo-tres-scaled.jpg);
   background-color: rgba(255, 255, 255, 0.7);
   background-blend-mode: lighten;
@@ -13,10 +14,9 @@
 }
 
 .mapaContainer {
-  width: 50%;
-  height: 80%;
+  width: 100%;
   padding: 20px;
-  text-align: left;
+  text-align: center;
 }
 
 .mapaContainer h1 {
@@ -26,20 +26,23 @@
   font-weight: bold;
 }
 
-.mapa {
-  width: 100%;
-  height: 100%;
-}
-
 .infoContainer {
-  width: 50%;
-  height: 65%;
-  color: #ecf0f1;
+  color: var(--white);
   padding: 20px;
-  text-align: left;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+}
+
+.mapa {
+  height: 400px;
+}
+
+.mapa,
+.infoContainer {
+  width: 100%;
 }
 
 .infoContainer h2 {
@@ -49,11 +52,13 @@
 }
 
 .infoContainer p {
-  font-size: 15px;
-  margin: 5px 0;
+  font-size: 14px;
+  margin: 10px 0;
   color: rgb(88, 88, 88);
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .infoContainer p svg {
@@ -62,41 +67,61 @@
 
 .footerRedes {
   display: flex;
-  gap: 10px;
+  gap: 30px;
 }
 
-.footerRedes p {
+.footerRedes a {
   margin-top: 2rem;
   font-size: 25px;
   color: rgb(49, 133, 141);
   transition: transform 0.2s ease-in-out;
 }
 
-.footerRedes p:hover {
+.footerRedes a:hover {
   transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
 }
 
 .footer2 {
-  /* background-color: rgb(7, 96, 105); */
   background-color: var(--negro);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
-  max-height: 350px;
-}
-
-.footer2Logo {
-  max-width: 200px;
   padding: 20px;
 }
 
+.footer2Logo {
+  width: 30%;
+  max-width: 200px;
+}
+
 .footer2Info {
-  color: #fff;
+  color: var(--white);
   font-size: 14px;
   font-weight: bold;
-  padding-right: 20px;
+  text-align: end;
+  width: 60%;
 }
 .footer2Info a {
-  color: rgb(232, 235, 12);
+  color: var(--amarillo-oscuro);
+}
+
+@media (width > 700px) {
+  .footerContainer {
+    flex-direction: row;
+  }
+
+  .footerRedes {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .infoContainer {
+    align-items: start;
+    text-align: start;
+  }
+  .infoContainer p {
+    font-size: 16px;
+    justify-content: flex-start;
+  }
 }
