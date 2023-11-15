@@ -52,11 +52,12 @@
 }
 
 .infoContainer p {
-  font-size: 15px;
-  margin: 5px 0;
+  font-size: 14px;
+  margin: 10px 0;
   color: rgb(88, 88, 88);
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
 }
 
@@ -108,5 +109,19 @@
 @media (width > 700px) {
   .footerContainer {
     flex-direction: row;
+  }
+
+  .footerRedes {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .infoContainer {
+    align-items: start;
+    text-align: start;
+  }
+  .infoContainer p {
+    font-size: 16px;
+    justify-content: flex-start;
   }
 }
