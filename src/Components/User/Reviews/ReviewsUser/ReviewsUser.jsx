@@ -27,8 +27,7 @@ const ReviewsUser = () => {
   const fetchReviews = async () => {
     dispatch(startReviews())
     try {
-      // const { data } = await instance.get("/review")
-      const { data } = await axios.get("http://localhost:3001/review")
+      const { data } = await instance.get("/review")
       dispatch(successReviews(data))
     } catch (err) {
       console.log(err)
