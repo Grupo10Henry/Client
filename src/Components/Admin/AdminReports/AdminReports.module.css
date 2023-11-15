@@ -53,8 +53,16 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    padding: 0px 0px 0px 0px;
+    margin: 40px 0px 0px 0px;
 }
 
-.reportsUsers {
+.reportsUsersChart {
     width: 500px;
+    background-color: aliceblue;
+}
+
+.reportsEventsChart {
+    width: 500px;
+    background-color: aliceblue;
 }
