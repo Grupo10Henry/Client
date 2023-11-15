@@ -6,6 +6,7 @@ const carritoSlice = createSlice({
   name: 'carrito',
   initialState: {
     items: [],
+    orderData: null,
   },
   reducers: {
     agregarAlCarrito: (state, action) => {
@@ -15,8 +16,12 @@ const carritoSlice = createSlice({
     limpiarCarrito: (state) => {
       state.items = [];
     },
+    setOrderData: (state, action) => {
+      state.orderData = action.payload;
+    },
   },
 });
 
-export const { agregarAlCarrito, limpiarCarrito } = carritoSlice.actions;
+export const { agregarAlCarrito, limpiarCarrito, setOrderData } = carritoSlice.actions;
+export const selectOrderData = (state) => state.carrito.orderData;
 export default carritoSlice.reducer;

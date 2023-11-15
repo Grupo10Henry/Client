@@ -18,6 +18,8 @@ const Detail = () => {
     countdown,
   } = useDetail(params?.id)
 
+ 
+
   if (isLoading) {
     return <Loader />
   }

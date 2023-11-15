@@ -6,6 +6,7 @@ import {
   fetchAndSetSeats,
   addSelectedSeat,
 } from "../../../../redux/seatSlice";
+import { getDetail } from "../../../../redux/detailSlice";
 import { clearSelectedSeats } from "../../../../redux/seatSlice";
 import { agregarAlCarrito } from "../../../../redux/carritoSlice";
 import styles from "./BookingSeats.module.css";
@@ -15,38 +16,37 @@ import { useNavigate } from "react-router-dom";
 const BookingSeatsGde = ({
   userID,
   userName,
-  eventType,
-  bannerImage,
-  id,
-  isDonation,
+  bannerImage,  
   sector,
   sectorPrices,
   handleSectorSelect,
-  sectorPricesQuery,
-  handleSectorInfoUpdate,
-  counterActivated,
-  setCounterActivated,
   image,
   eventName,
 }) => {
   const dispatch = useDispatch();
   const seats = useSelector(selectSeats);
   const navigate = useNavigate();
-
-  console.log("sectorPrices:", sectorPrices)
+const eventID = useSelector((state) => state.event.eventID);
+console.log("evenID en BookingSeatsGde", eventID)
+  
+  // traer de redux el valor de isDonation
+  const isDonation = useSelector((state) => state.event.isDonation);
+  console.log("isDonation en BookingSeatsGde", isDonation);
 
   /////////// new /////////////
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   // Obtener la cantidad de asientos disponibles
   const availableSeats = seats.filter((seat) => seat.status);
   const availableSeatsCount = availableSeats.length;
-console.log("availableSeatsCount:", availableSeatsCount)
+  console.log("availableSeatsCount en BookingSeatsGde", availableSeatsCount);
+
+
   // Calcular el total a pagar
   const selectedSector = sector;
   const selectedSectorPrice = sectorPrices.find(
     sector => sector[1] === selectedSector );
   const totalPrice = selectedSectorPrice ? selectedSectorPrice[0] * selectedQuantity : 0;
-  console.log("selectedSectorPrice:", selectedSectorPrice)
+  
 
   const handleSeatSelect = () => {
     const availableSeats = seats.filter(seat => seat.status);
@@ -69,9 +69,7 @@ console.log("availableSeatsCount:", availableSeatsCount)
     }
   };
   
-
   
-
   const handleOnClickcarrito = () => {
     // Verificar si hay asientos seleccionados
     if (selectedQuantity <= 0) {
@@ -89,16 +87,18 @@ console.log("availableSeatsCount:", availableSeatsCount)
     const eventData = {
       userID: userID,
       userName: userName,
-      eventID: id,
+      eventID: eventID,
       eventName: eventName, 
       eventImage: image, 
+      isDonation: isDonation,
     };
-
+    
     const seatsData = {
       seatCount: selectedQuantity, 
       seats: [],
-     
+      
     };
+    
 
     for (let i = 0; i < selectedQuantity; i++) {
       const randomIndex = Math.floor(Math.random() * availableSeats.length);
@@ -106,7 +106,18 @@ console.log("availableSeatsCount:", availableSeatsCount)
 
       dispatch (addSelectedSeat(selectedSeat.seatID));
 
-      seatsData.seats.push({
+      // si isDonation es true seatsData.push de seatId, seatLocation, quiantity: 1, totalPrice = al valor ingresado en el input de Donacion
+      if (isDonation) {
+        const donationAmount = document.getElementById("donation").value;
+
+        seatsData.seats.push({
+          seatID: selectedSeat.seatID,
+          seatLocation: selectedSeat.seatLocation,
+          quantity: 1,
+          totalPrice: donationAmount,
+        });
+      } else {    
+        seatsData.seats.push({
         seatID: selectedSeat.seatID,
         seatLocation: selectedSeat.seatLocation,
         sector: selectedSeat.sector,
@@ -115,7 +126,7 @@ console.log("availableSeatsCount:", availableSeatsCount)
         totalPrice: selectedSeat.price,
       });
     }
-
+    
     // Enviar datos al carrito
     dispatch(agregarAlCarrito({ eventData, seatsData }));
 
@@ -129,11 +140,12 @@ console.log("availableSeatsCount:", availableSeatsCount)
       },
     });
   };
+};
 
   return (
     <div className={styles.seatMap}>
-      <div className={styles.sector}>
              
+      <div className={styles.sector}>
             <img
               src={bannerImage}
               alt="imagen del sector"
@@ -142,7 +154,37 @@ console.log("availableSeatsCount:", availableSeatsCount)
       </div>
 
         <div className={styles.seatInfo}>
-          <div className={styles.TituloBlink}>
+    {isDonation ? (
+      <>
+      <div className={styles.cantidad}> 
+      Cantidad de entradas:{" "}
+      <input 
+      type="number" 
+      min="1" 
+      max={availableSeatsCount} 
+      value={selectedQuantity} 
+      className={styles.input} 
+      id="cantidad" 
+      onChange={(event) => {
+        setSelectedQuantity(parseInt(event.target.value, 10));
+        handleSeatSelect(); // Llama a la función cuando cambie la cantidad
+      }}  
+      />
+      </div> 
+      <input
+          type="range"
+          id="donation"
+          min="1000"
+          max="20000"
+          step="1000"
+          value={totalPrice}
+          />
+      <h3> Total a Donar: ${totalPrice} </h3>
+      <button className={styles.Carrito} onClick={handleOnClickcarrito}>Agregar al carrito</button>
+</>
+    ) : (
+      <>
+      <div className={styles.TituloBlink}>
             <h3>Selecciona un sector:</h3>
           </div>
           <div className={styles.ContainerSelect}>
@@ -162,7 +204,7 @@ console.log("availableSeatsCount:", availableSeatsCount)
               </div>
             ) : (
               <p>Error en la carga de precios.</p>
-            )}
+              )}
           </div>
           <h3>Sector elegido: {sector}</h3>
           <div className={styles.cantidad}> 
@@ -181,10 +223,14 @@ console.log("availableSeatsCount:", availableSeatsCount)
           />
           </div> 
           <h3> Total: ${totalPrice} </h3>
+         
           <button className={styles.Carrito} onClick={handleOnClickcarrito}  >Agregar al carrito</button>
-        </div>
-    </div>
-  );
+          </> 
+          )
+        }
+          </div>
+          </div>
+          );
 };
 
 BookingSeatsGde.propTypes = {
