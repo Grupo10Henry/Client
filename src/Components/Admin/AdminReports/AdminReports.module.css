@@ -12,3 +12,49 @@
     padding: 0px 0px 0px 0px;
     margin: 15px 0px 15px 0px;
 }
+
+.reportsKPIs {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.reportsKPIsBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    height: 80px;
+    width: 200px;
+    background-color: aliceblue;
+    border-bottom-color: black;
+    border-bottom-width: 2px;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    padding: 5px 10px 5px 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+.reportsKPI {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.reportsKPIText {
+    font-size: 15px;
+    color: rgb(87, 87, 87);
+}
+
+.reportsCharts {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.reportsUsers {
+    width: 500px;
+}

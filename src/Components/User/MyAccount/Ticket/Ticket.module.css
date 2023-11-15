@@ -1,5 +1,5 @@
 .ticket {
-    margin: 20px;
+    margin: 10px 20px 20px 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -153,6 +153,7 @@
     display: flex;
     justify-content: flex-start; /* Alinea los botones a la derecha */
     margin-top: 10px; /* Espacio entre el div ticket y los botones */
+    margin-bottom: 0px;
     margin-left: 10px;
 }
 
@@ -160,7 +161,7 @@
     background-color: #4c8797; /* Color de fondo del botón */
     color: #ffffff; /* Color del texto del botón */
     border: none; /* Elimina el borde del botón */
-    padding: 8px 10px; /* Espaciado interno del botón */
+    padding: 5px 10px; /* Espaciado interno del botón */
     margin-left: 10px; /* Espacio entre los botones */
     cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
     border-radius: 5px; /* Borde redondeado */

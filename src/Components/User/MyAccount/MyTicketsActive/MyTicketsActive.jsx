@@ -66,7 +66,7 @@ export default function MyTicketsActive(props) {
                     <p className={styles.aTicketInfo}>ID de compra: {paymentNum}</p>
                     <p className={styles.aTicketInfo}>{event?.name}</p>
                     {seat?.map((s) => (
-                        <p key={s.seatID} className={styles.aTicketInfo}>{s.sector} | ${s.price} | {s.seatLocation} {event?.date < minDate ? (<NavLink to={`/ticket/${s.seatID}`}>
+                        <p key={s.seatID} className={styles.aTicketInfo}>{s.sector} | ${s.price.toLocaleString()} | {s.seatLocation} {event?.date < minDate ? (<NavLink to={`/ticket/${s.seatID}`}>
                         <button className={styles.aTicketButton}>Ver</button>
                         </NavLink>) : null}</p>
                     ))}
