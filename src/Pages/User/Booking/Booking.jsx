@@ -14,7 +14,6 @@ import {
   selectSelectedSeats,
   fetchAndSetSeats,
 } from "../../../redux/seatSlice";
-import axios from "axios";
 
 const Booking = () => {
 
@@ -78,8 +77,8 @@ const Booking = () => {
           if (selectedSector) {
             dispatch(fetchAndSetSeats(id, selectedSector));
           }
-          const responseEvent = await axios.get(
-            `http://localhost:3001/event/${id}`
+          const responseEvent = await instance.get(
+            `/event/${id}`
           );
 
           if (responseEvent.data) {
@@ -185,7 +184,7 @@ const Booking = () => {
 };
 
     const updateSeatStatus = async (seatID, newStatus) => {
-        await axios.put(`http://localhost:3001/seat/${seatID}`, { 
+        await instance.put(`/seat/${seatID}`, { 
           status: newStatus,
           userID: userID,
          });
@@ -196,7 +195,7 @@ const Booking = () => {
 const checkPaystubID = async () => {
   try {
     // hacer la solciitud get para saber si el campo paystubID de la tabla seat está vacío. Si lo está, cambiar el estado del asiento a disponible y borrar el userID
-    const responseSeat = await axios.get(`http://localhost:3001/seat/${seatID}`);
+    const responseSeat = await instance.get(`/seat/${seatID}`);
     console.log(responseSeat);
     if (responseSeat.data.paystubID === null) {
       //cambiar el estado (status) del asiento a disponible (true) y borrar el userID

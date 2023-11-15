@@ -5,7 +5,7 @@ import { setOrderData } from "../../../redux/carritoSlice";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./mercadopago.module.css";
 import { useState } from "react";
-import axios from "axios";
+import {instance} from "../../../axios/config"
 
 const MercadoPagoExitoso = () => {
   const userName = useSelector((state) => state.user.userInfo.name);
@@ -46,8 +46,8 @@ const MercadoPagoExitoso = () => {
 
         try {
 
-          const responsePaystub = await axios.post(
-            "https://grupo10henryserver.onrender.com/paystub",
+          const responsePaystub = await instance.post(
+            "/paystub",
             {
               userID, // está
               eventID, // está
@@ -60,7 +60,7 @@ const MercadoPagoExitoso = () => {
               const paystubID = responsePaystub.data.paystubID;
               const seatsID = storedOrderData.seatID;
               seatsID.map(async (seatID) => {
-                 await axios.put(`https://grupo10henryserver.onrender.com/seat/${seatID}`, {
+                 await instance.put(`/seat/${seatID}`, {
                    paystubID: paystubID,
                   });
                 });

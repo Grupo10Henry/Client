@@ -33,11 +33,6 @@ const SignUp = () => {
     repeatPassword: "",
   });
 
-  /* const handleGoogle = async (e) => {
-    e.preventDefault();
-    const response = await instance.get("/auth/google/callback");
-    console.log(response.data);
-  };*/
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
