@@ -79,17 +79,17 @@ const ReviewsUser = () => {
               <p>{convertToRealtiveDate(review?.reviewDate)}</p>
             </div>
             <h3 className={style.reviewTitle}>
-              <p>{review.eventName}</p>
+              <p>{review?.eventName}</p>
             </h3>
 
             {/* Evento - comentario */}
             <div className={style.reviewEvent}>
               <div className={style.reviewName}>
                 <p>
-                  {review.userName} {review.userLastName}
+                  {review?.userName} {review?.userLastName}
                 </p>
               </div>
-              <p className={style.review}>{review.review}</p>
+              <p className={style.review}>{review?.review}</p>
             </div>
           </SwiperSlide>
         ))}
