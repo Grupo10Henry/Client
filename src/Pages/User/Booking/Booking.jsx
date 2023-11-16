@@ -20,20 +20,30 @@ const Booking = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const isDonation = searchParams.get("isDonation") === "true";
+  console.log("isDonation en Booking", isDonation);
+  
   const token = useSelector((state) => state.user.token);
   const userID = useSelector((state) => state.user?.userInfo?.userID);
   const userName = useSelector((state) => state.user?.userInfo?.name);
 
+  const eventID = useSelector((state) => state.event.id);
+  console.log("evenID en Booking", eventID);
+  
   const { id } = useParams();
-  const urlSearchParams = new URLSearchParams(window.location.search);
-  const isDonation = urlSearchParams.get("isDonation") === "true";
+  
+  
+  console.log("id en Booking", id);
 
   const [loading, setLoading] = useState(true);
   const [selectedSector, setSelectedSector] = useState(null);
   const selectedSeats = useSelector(selectSelectedSeats);
-
-  const location = useLocation();
+  
+  //const [selectedSeatID, setSelectedSeatID] = useState(null);
+  const [seatID, setSelectedSeatID] = useState(null);
+  
   const sectorPrices = location.state && location.state.sectorPrices;
   const [sectorPricesQuery, setSectorPricesQuery] = useState("");
   
@@ -125,18 +135,7 @@ const Booking = () => {
     }
   }, [token, navigate, id, selectedSector]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      checkPaystubID();
-    }, 15 * 60 * 1000);
-    return () => clearTimeout(timer);
-  }, []);
 
-  
-  if (loading) {
-    //return <Loader />
-    return null;
-  }
 
   const handleSectorInfoUpdate = () => {
     // Calcula el total de asientos seleccionados y el precio total
@@ -167,7 +166,12 @@ const Booking = () => {
     dateToRender = eventDetails.date; // Corregí esta parte para evitar un error
   }
 
+  
+
   const handleSeatSelect = async (seat) => {
+    const seatID = seat.seatID;
+    setSelectedSeatID(seatID);
+    console.log("seatID en handleSeatSelect", seatID);
   
   if (seat.status === true) {
     if (selectedSeats.some(selectedSeat => selectedSeat.seatID === seat.seatID)) {
@@ -194,9 +198,11 @@ const Booking = () => {
 
 
 const checkPaystubID = async () => {
+  console.log("ejecutando checkPaystubID");
   try {
+    console.log("seatID en checkPaystubID", seatID);
     // hacer la solciitud get para saber si el campo paystubID de la tabla seat está vacío. Si lo está, cambiar el estado del asiento a disponible y borrar el userID
-    const responseSeat = await instance.get(`/seat/${seatID}`);
+    const responseSeat = await instance.get(`/seat/by-id/${seatID}`);
     console.log(responseSeat);
     if (responseSeat.data.paystubID === null) {
       //cambiar el estado (status) del asiento a disponible (true) y borrar el userID
@@ -207,6 +213,19 @@ const checkPaystubID = async () => {
     console.error("Error al obtener el paystubID:", error);
   }
 };
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    checkPaystubID();
+  }, 5 * 60 * 1000);
+  return () => clearTimeout(timer);
+}, [seatID]);
+
+
+if (loading) {
+  //return <Loader />
+  return null;
+}
 
 
   const handleSectorSelect = (sectorName) => {
@@ -255,48 +274,74 @@ const checkPaystubID = async () => {
         </div>
 
         <div className={styles.ContainerSectores}>
-          <img src={eventDetails.planImage} />
-        </div>
-      </div>
-      <div className={styles.ContainerPlan}>
-        <div className={styles.ContainerPlanoAsientos}>
-          {eventDetails.type === "Grande" ? (
-             <BookingSeatsGde
-             id={id}
-             userID={userID}
-             userName={userName}
-             isDonation={isDonation}
-             sector={selectedSector}
-             sectorPrices={sectorPrices}
-             handleSectorSelect={handleSectorSelect}
-             handleSeatSelect={handleSeatSelect}
-             sectorPricesQuery={sectorPricesQuery}
-             handleSectorInfoUpdate={handleSectorInfoUpdate}
-             counterActivated={counterActivated}
-             setCounterActivated={setCounterActivated}
-             bannerImage={eventDetails.bannerImage}
-             image={eventDetails.image}
-             eventName={eventDetails.name}
-           />
-          ) : (
-            <BookingSeats
-              id={id}
-              userID={userID}
-              userName={userName}
-              isDonation={isDonation}
-              sector={selectedSector}
-              sectorPrices={sectorPrices}
-              handleSectorSelect={handleSectorSelect}
-              handleSeatSelect={handleSeatSelect}
-              sectorPricesQuery={sectorPricesQuery}
-              handleSectorInfoUpdate={handleSectorInfoUpdate}
-              counterActivated={counterActivated}
-              setCounterActivated={setCounterActivated}
-              bannerImage={eventDetails.bannerImage}
-              image={eventDetails.image}
-              eventName={eventDetails.name}
-            />
-          )}
+  {isDonation && eventDetails.type === "Grande" ? (
+    <BookingSeatsGde
+      id={id}
+      userID={userID}
+      userName={userName}
+      isDonation={isDonation}
+      sector={selectedSector}
+      sectorPrices={sectorPrices}
+      handleSectorSelect={handleSectorSelect}
+      handleSeatSelect={handleSeatSelect}
+      sectorPricesQuery={sectorPricesQuery}
+      handleSectorInfoUpdate={handleSectorInfoUpdate}
+      counterActivated={counterActivated}
+      setCounterActivated={setCounterActivated}
+      bannerImage={eventDetails.bannerImage}
+      image={eventDetails.image}
+      eventName={eventDetails.name} 
+    />
+  ) : eventDetails.type === "Grande" && !isDonation ? (
+    <img src={eventDetails.planImage} />
+  ) : (
+    <p></p>
+  )}
+</div>
+<div className={styles.ContainerPlan}>
+  <div className={styles.ContainerPlanoAsientos}>
+    {(!isDonation && eventDetails.type === "Grande") ? (
+      <BookingSeatsGde
+        id={id}
+        userID={userID}
+        userName={userName}
+        isDonation={isDonation}
+        sector={selectedSector}
+        sectorPrices={sectorPrices}
+        handleSectorSelect={handleSectorSelect}
+        handleSeatSelect={handleSeatSelect}
+        sectorPricesQuery={sectorPricesQuery}
+        handleSectorInfoUpdate={handleSectorInfoUpdate}
+        counterActivated={counterActivated}
+        setCounterActivated={setCounterActivated}
+        bannerImage={eventDetails.bannerImage}
+        image={eventDetails.image}
+        eventName={eventDetails.name}
+      />
+    ) : (eventDetails.type === "Pequeño" ? (
+        <BookingSeats
+          id={id}
+          userID={userID}
+          userName={userName}
+          isDonation={isDonation}
+          sector={selectedSector}
+          sectorPrices={sectorPrices}
+          handleSectorSelect={handleSectorSelect}
+          handleSeatSelect={handleSeatSelect}
+          sectorPricesQuery={sectorPricesQuery}
+          handleSectorInfoUpdate={handleSectorInfoUpdate}
+          counterActivated={counterActivated}
+          setCounterActivated={setCounterActivated}
+          bannerImage={eventDetails.bannerImage}
+          image={eventDetails.image}
+          eventName={eventDetails.name}
+        />
+      ) : (
+        <p></p>
+      )
+    )}
+  </div>
+          
         </div>
       </div>
     </div>
