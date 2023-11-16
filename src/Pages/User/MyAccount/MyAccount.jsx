@@ -2,12 +2,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import MyAccountInfo from '../../../Components/User/MyAccount/MyAccountInfo/MyAccountInfo';
 import MyTicketsActive from '../../../Components/User/MyAccount/MyTicketsActive/MyTicketsActive';
-import MyTicketsPast from '../../../Components/User/MyAccount/MyTicketsPast/MyTicketsPast';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './MyAccount.module.css';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { getPaystubById } from '../../../redux/paystubslice';
+import { instance } from '../../../axios/config';
 
 export default function MyAccount() {
 
@@ -18,7 +18,7 @@ export default function MyAccount() {
 
     const getPaystub = async () => {
         try {
-            const {data} = await axios.get(`http://localhost:3001/paystub/${params.id}`)
+            const {data} = await instance.get(`/paystub/${params.id}`) // axios.get(`http://localhost:3001/paystub/${params.id}`) | instance.get(`/paystub/${params.id}`)
             // console.log(data)
             return data
         } catch (error) {

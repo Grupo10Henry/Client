@@ -79,7 +79,7 @@ export default function AdminEventsDetail () {
 
     const getSections = async () => {
         try {
-            const {data} = await axios.get(`http://localhost:3001/seat/admin/${params.id}`) // axios.get(`http://localhost:3001/seat/admin/${params.id}`) || instance.get(`/seat/admin/${params.id}`)
+            const {data} = await instance.get(`/seat/admin/${params.id}`) // axios.get(`http://localhost:3001/seat/admin/${params.id}`) || instance.get(`/seat/admin/${params.id}`)
             // console.log(data)
             return data
         } catch (error) {
@@ -210,7 +210,7 @@ export default function AdminEventsDetail () {
 
     const handleDeleteSection = async (section) => {
         try {
-            await axios.delete(`http://localhost:3001/seat/${params.id}/${section}`) // instance.delete(`/seat/${params.id}/${section}`) || axios.delete(`http://localhost:3001/seat/${params.id}/${section}`)
+            await instance.delete(`/seat/${params.id}/${section}`) // instance.delete(`/seat/${params.id}/${section}`) || axios.delete(`http://localhost:3001/seat/${params.id}/${section}`)
             getSections().then((data) => {
                 setSections(data)
             })

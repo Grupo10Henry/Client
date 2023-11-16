@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import html2pdf from 'html2pdf.js';
 import styles from './Ticket.module.css';
+import { instance } from '../../../../axios/config';
 
 const Ticket = () => {
 
@@ -13,7 +14,7 @@ const Ticket = () => {
 
     const getSeatById = async () => {
     try {
-        const {data} = await axios.get(`http://localhost:3001/seat/details/${params.id}`)
+        const {data} = await instance.get(`/seat/details/${params.id}`) // axios.get(`http://localhost:3001/seat/details/${params.id}`) | instance.get(`/seat/details/${params.id}`)
         return data
     } catch (error) {
         console.log(error)
@@ -64,10 +65,6 @@ const Ticket = () => {
         time:"22:00 pm"
     };
 
-
-
-    // Javascript para descargar e imprimir
-
     return (
         <>
         <div className={styles.btnTicket}>
@@ -84,30 +81,30 @@ const Ticket = () => {
                     </div>
                     </div>
                         
-                        <h3>{info?.event.locationName}</h3>
-                        <h4>{info?.event.adressLocation}</h4>
+                        <h3>{info?.event?.locationName}</h3>
+                        <h4>{info?.event?.adressLocation}</h4>
 
                     <div className={styles.subtitles}>
                         <h4>Fecha</h4>
                         <h4>Horario</h4>
                     </div>
                     <div className={styles.time}>
-                        <p>{info?.event.date}</p>
-                        <p>{info?.event.time}</p>
+                        <p>{info?.event?.date}</p>
+                        <p>{info?.event?.time}</p>
                     </div>
                     <div className={styles.subtitles}>
                         <h4>Sector</h4>
                         <h4>Asiento</h4>
                     </div>
                     <div className={styles.location}>
-                        <p>{info?.seat.sector}</p>
-                        <p>{info?.seat.seatLocation}</p> 
+                        <p>{info?.seat?.sector}</p>
+                        <p>{info?.seat?.seatLocation}</p> 
                     </div>
                 </div>
                 <div className={styles.info}>
-                    <p>Nombre: {info?.user.name} {info?.user.lastName}</p>
-                    <p>Teléfono: {info?.user.phone}</p>
-                    <p>Email: {info?.user.email}</p>
+                    <p>Nombre: {info?.user?.name} {info?.user?.lastName}</p>
+                    <p>Teléfono: {info?.user?.phone}</p>
+                    <p>Email: {info?.user?.email}</p>
                     
                 </div>
 
@@ -117,15 +114,15 @@ const Ticket = () => {
                             <h4>Precio</h4>
                         </div>
                         <div className={styles.idPrice}>
-                        <p>{info?.paystub.paymentNum}</p>
-                        <p>${info?.seat.price.toLocaleString()}</p>
+                        <p>{info?.paystub?.paymentNum}</p>
+                        <p>${info?.seat?.price.toLocaleString()}</p>
                         </div>
 
                 </div>
                 <div className={styles.qrTicket}>
-                    <div className={styles.qrContainer}>
+                    {/* <div className={styles.qrContainer}>
                     <img src={infoTicket.QR} alt="Código QR" />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

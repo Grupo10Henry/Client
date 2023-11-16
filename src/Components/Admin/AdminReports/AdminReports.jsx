@@ -30,7 +30,7 @@ useEffect(() => {
 
 const totalSales = allPaystubs?.reduce((acc, paystub) => acc + paystub.tickets, 0);
 
-const usersMonth = [10, 41, 35, 51, 49, 62, 69, 91, 17]
+const usersMonth = [21, 0, 0, 0, 0, 0, 0, 0, 0]
 
 const [chart, setChart] = useState({
     series: [{
@@ -62,14 +62,14 @@ const [chart, setChart] = useState({
         },
       },
       xaxis: {
-        categories: ['Lucía', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+        categories: ['Nov', 'Dic', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
       }
     },
 });
 
 const [bars, setBars] = useState({
     series: [{
-        data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+        data: [4, 3, 1]
       }],
       options: {
         chart: {
@@ -90,8 +90,7 @@ const [bars, setBars] = useState({
         align: 'center'
       },
         xaxis: {
-          categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
-            'United States', 'China', 'Germany'
+          categories: ['Tini', 'The Weekend', 'The Score'
           ],
         }
       },

@@ -4,6 +4,7 @@ import SetReview from '../SetReview/SetReview';
 import styles from './MyTicketsActive.module.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { instance } from '../../../../axios/config';
 
 export default function MyTicketsActive(props) {
 
@@ -21,8 +22,7 @@ export default function MyTicketsActive(props) {
 
     const getSeat = async () => {
         try {
-            // const {data} = await axios.get(`http://localhost:3001/seat/user/${params.id}`)
-            const {data} = await axios.get(`http://localhost:3001/seat/seats/${params.id}/${eventID}`)
+            const {data} = await instance.get(`/seat/seats/${params.id}/${eventID}`) // axios.get(`http://localhost:3001/seat/seats/${params.id}/${eventID}`) | instance.get(`/seat/seats/${params.id}/${eventID}`)
             // console.log(data)
             return data
         } catch (error) {
@@ -32,7 +32,7 @@ export default function MyTicketsActive(props) {
 
     const getEvent = async () => {
     try {
-        const {data} = await axios.get(`http://localhost:3001/event/${eventID}`)
+        const {data} = await instance.get(`/event/${eventID}`) // axios.get(`http://localhost:3001/event/${eventID}`) | instance.get(`/event/${eventID}`)
         // console.log(data)
         return data
     } catch (error) {
@@ -54,11 +54,11 @@ export default function MyTicketsActive(props) {
     // console.log(event)
 
     return (
-        <div className={event?.date < minDate ? styles.aTicketContainer : styles.pTicketContainer}>
+        <div className={event?.date > minDate ? styles.aTicketContainer : styles.pTicketContainer}>
             <div className={styles.aTicketInfoContainer}>
             <div>
                 <div>
-                    {event?.date < minDate ? (
+                    {event?.date > minDate ? (
                     <p className={styles.aTicketInfo}>Estado: Activa</p>
                     ) : (
                     <p className={styles.aTicketInfo}>Estado: Inactiva</p>
@@ -66,26 +66,18 @@ export default function MyTicketsActive(props) {
                     <p className={styles.aTicketInfo}>ID de compra: {paymentNum}</p>
                     <p className={styles.aTicketInfo}>{event?.name}</p>
                     {seat?.map((s) => (
-                        <p key={s.seatID} className={styles.aTicketInfo}>{s.sector} | ${s.price.toLocaleString()} | {s.seatLocation} {event?.date < minDate ? (<NavLink to={`/ticket/${s.seatID}`}>
+                        <p key={s.seatID} className={styles.aTicketInfo}>{s.sector} | ${s.price.toLocaleString()} | {s.seatLocation} {event?.date > minDate ? (<NavLink to={`/ticket/${s.seatID}`}>
                         <button className={styles.aTicketButton}>Ver</button>
                         </NavLink>) : null}</p>
                     ))}
                     <p className={styles.aTicketInfo}>{event?.date} | {event?.time}</p>
                     <p className={styles.aTicketInfo}>{event?.locationName}</p>
                 </div>
-                {/* <div>
-                    <NavLink to='/ticket/1'>
-                    <button className={styles.aTicketButton}>Ver</button>
-                    </NavLink>
-                    <button className={styles.aTicketButton}>Imprimir</button>
-                    <button className={styles.aTicketButton}>Descargar</button>
-                </div> */}
             </div>
             <div>
                 <SetReview
                 eventID={eventID}
                 />
-                {/* Poner este componente como condicional, si el paystub no tiene review. De lo contrario, poner "¡Gracias por calificar tu experiencia!" */}
             </div>
         </div>
             </div>

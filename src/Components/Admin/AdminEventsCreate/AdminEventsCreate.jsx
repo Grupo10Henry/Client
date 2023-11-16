@@ -84,8 +84,8 @@ export default function AdminEventsCreate() {
 
     const [sections, setSections] =useState([]);
 
-    console.log(input);
-    // console.log(section);
+    // console.log(input);
+    console.log(section);
     // console.log(sections);
     // console.log(image, bannerImage, planImage)
 
@@ -122,15 +122,22 @@ export default function AdminEventsCreate() {
         e.preventDefault();
         const repetido = sections.some((existingSection) => existingSection.sector.toLowerCase() === section.sector.toLowerCase())
         if (repetido) {
-        // alert('Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección')
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección',
-            footer: '<a href="">Why do I have this issue?</a>'
-          })
+        alert('Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección')
+        // Swal.fire({
+        //     icon: 'error',
+        //     title: 'Oops...',
+        //     text: 'Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección',
+        //     footer: '<a href="">Why do I have this issue?</a>'
+        //   })
         } else {
         setSections([...sections, section]);
+        setSection({
+            ...section,
+            rows: "",
+            columns: "",
+            sector: "",
+            price: "",
+        })
         }
     };
 
@@ -229,6 +236,24 @@ export default function AdminEventsCreate() {
                     const post = await instance.post('/event/', newEvent);
                     getEvents().then((data) => (dispatch(getAllEvents(data))));
                     alert("Evento creado exitosamente");
+                    setInput({
+                        name: "",
+                        description: "",
+                        category: "",
+                        capacity: "",
+                        date: "",
+                        time: "",
+                        locationName: "",
+                        adressLocation: "",
+                        mapLocation: "",
+                        priceMin: 0,
+                        priceMax: 0,
+                        isDonation: "",
+                        type: "",
+                    });
+                    setImage("")
+                    setBannerImage("")
+                    setPlanImage("")
                 } catch (error) {
                     alert(error.response.data.error);
                 }                
@@ -498,7 +523,7 @@ export default function AdminEventsCreate() {
                     type="number"
                     min="0"
                     name='columns'
-                    value={section.sectionColumns}
+                    value={section.columns}
                     onChange={handleChangeSection} />
                     {/* } */}
                     </div>
