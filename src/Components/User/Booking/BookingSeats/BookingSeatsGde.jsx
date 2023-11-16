@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 const BookingSeatsGde = ({
+  isDonation,
   userID,
   userName,
   eventType,
@@ -29,7 +30,8 @@ const BookingSeatsGde = ({
 }) => {
   const dispatch = useDispatch();
   const seats = useSelector(selectSeats);
-  const isDonation = useSelector((state) => state.event.isDonation);
+
+  console.log("isDonation en BookingSeatsGde:", isDonation);
 
   const navigate = useNavigate();
 
@@ -39,8 +41,6 @@ const BookingSeatsGde = ({
   const [remainingTime, setRemainingTime] = useState(900);
   const selectedSeats = useSelector(selectSelectedSeats);
   const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
-
- 
 
   useEffect(() => {
     dispatch(fetchAndSetSeats(id, sector, sectorPricesQuery));
@@ -156,101 +156,133 @@ const BookingSeatsGde = ({
 
   return (
     <div className={styles.seatMap}>
-      <div className={styles.sector}>
-        <>
-          <h3>Sector: {sector}</h3>
-          <div className={styles.selectedInfo}>
-            {counterActivated && selectedSeats.length > 0 && (
-              <div
-                className={`${styles.Time} ${
-                  remainingTime > 0 ? "" : styles.hidden
-                }`}
-              >
-                <p>
-                  Reservaremos tus lugares por los próximos:{" "}
-                  <span className={styles.TimeText}>
-                    {formatTime(remainingTime)}
-                  </span>{" "}
-                  minutos.
-                </p>
-              </div>
-            )}
-          </div>
-          <table className={styles.seatGrid}>
-  <tbody>
-    {Array.from({ length: rows }, (_, rowIndex) => (
-      <tr key={rowIndex}>
-        {Array.from({ length: columns }, (_, colIndex) => {
-          const currentSeat =
-            sortedSeats[rowIndex * columns + colIndex];
-
-          return (
-            <td key={colIndex}>
-              {currentSeat && (
-                <div className={styles.seatContainer}>
-                  {currentSeat.status ? (
-                    <label key={currentSeat.seatID} className={styles.checkboxLabel}>
-                      <input
-                        type="checkbox"
-                        checked={selectedSeatStatus[currentSeat.seatID]}
-                        onChange={() => handleSeatClick(currentSeat)}
-                        className={styles.checkbox}
-                      />
-                      <span className={styles.checkmark}></span>
-                    </label>
-                  ) : (
-                    <div className={styles.disabledCheckbox}></div>
-                  )}
-                  
+      {isDonation ? (
+        <p></p>
+      ) : (
+        <div className={styles.sector}>
+          <>
+            <h3>Sector: {sector}</h3>
+            <div className={styles.selectedInfo}>
+              {counterActivated && selectedSeats.length > 0 && (
+                <div
+                  className={`${styles.Time} ${
+                    remainingTime > 0 ? "" : styles.hidden
+                  }`}
+                >
+                  <p>
+                    Reservaremos tus lugares por los próximos:{" "}
+                    <span className={styles.TimeText}>
+                      {formatTime(remainingTime)}
+                    </span>{" "}
+                    minutos.
+                  </p>
                 </div>
               )}
-            </td>
-          );
-        })}
-      </tr>
-    ))}
-  </tbody>
-</table>
-
-
-        </>
-      </div>
-      <div className={styles.seatInfo}>
-        <div className={styles.TituloBlink}>
-          <h3>Selecciona un sector:</h3>
-        </div>
-        <div className={styles.ContainerSelect}>
-          {sectorPrices && sectorPrices.length > 0 ? (
-            <div className={styles.SectorContainer}>
-              {sectorPrices.map((sector, index) => (
-                <div
-                  key={index}
-                  className={
-                    sector === sector[1] ? styles.selectedSector : styles.sector
-                  }
-                  onClick={() => handleSectorSelect(sector[1])}
-                >
-                  {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
-                </div>
-              ))}
             </div>
-          ) : (
-            <p>Error en la carga de precios.</p>
-          )}
-        </div>
-        <h3>Lugares seleccionados: {selectedSeats.length}</h3>
-        <h3>
-          {" "}
-          Total: ${" "}
-          {selectedSeats
-            .reduce((acc, curr) => acc + curr.price, 0)
-            .toLocaleString()}
-        </h3>
-        <button className={styles.Carrito} onClick={handleOnClickcarrito}>
-          Agregar al carrito
-        </button>
-      </div>
-    </div>
+            <table className={styles.seatGrid}>
+              <tbody>
+                {Array.from({ length: rows }, (_, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {Array.from({ length: columns }, (_, colIndex) => {
+                      const currentSeat =
+                        sortedSeats[rowIndex * columns + colIndex];
+
+                      return (
+                        <td key={colIndex}>
+                          {currentSeat && (
+                            <div className={styles.seatContainer}>
+                              {currentSeat.status ? (
+                                <label
+                                  key={currentSeat.seatID}
+                                  className={styles.checkboxLabel}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={
+                                      selectedSeatStatus[currentSeat.seatID]
+                                    }
+                                    onChange={() =>
+                                      handleSeatClick(currentSeat)
+                                    }
+                                    className={styles.checkbox}
+                                  />
+                                  <span className={styles.checkmark}></span>
+                                </label>
+                              ) : (
+                                <div className={styles.disabledCheckbox}></div>
+                              )}
+                            </div>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        </div> // SECTOR ASIENTOS
+      )}
+      <div className={styles.seatInfo}>
+        {isDonation ? (
+          <>
+            <div className={styles.cantidad}>
+              <input
+                type="range"
+                id="donation"
+                min="1000"
+                max="20000"
+                step="1000"
+                value=""
+              />
+              <h3> Total a Donar: $ </h3>
+              <button className={styles.Carrito} onClick={handleOnClickcarrito}>
+                Agregar al carrito
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={styles.TituloBlink}>
+              <h3>Selecciona un sector:</h3>
+            </div>
+            <div className={styles.ContainerSelect}>
+              {sectorPrices && sectorPrices.length > 0 ? (
+                <div className={styles.SectorContainer}>
+                  {sectorPrices.map((sector, index) => (
+                    <div
+                      key={index}
+                      className={
+                        sector === sector[1]
+                          ? styles.selectedSector
+                          : styles.sector
+                      }
+                      onClick={() => handleSectorSelect(sector[1])}
+                    >
+                      {sector[1]} - $
+                      {parseFloat(sector[0]).toLocaleString("es-ES")}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p>Error en la carga de precios.</p>
+              )}
+            </div>
+            <h3>Lugares seleccionados: {selectedSeats.length}</h3>
+            <h3>
+              {" "}
+              Total: ${" "}
+              {selectedSeats
+                .reduce((acc, curr) => acc + curr.price, 0)
+                .toLocaleString()}
+            </h3>
+            <button className={styles.Carrito} onClick={handleOnClickcarrito}>
+              Agregar al carrito
+            </button>
+          </>
+        )}
+      </div> {/*FINAL MENU*/}
+    </div> // FINAL
   );
 };
 

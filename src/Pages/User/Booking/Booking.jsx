@@ -20,27 +20,30 @@ const Booking = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const isDonation = searchParams.get("isDonation") === "true";
+  console.log("isDonation en Booking", isDonation);
+  
   const token = useSelector((state) => state.user.token);
   const userID = useSelector((state) => state.user?.userInfo?.userID);
   const userName = useSelector((state) => state.user?.userInfo?.name);
 
   const eventID = useSelector((state) => state.event.id);
   console.log("evenID en Booking", eventID);
-
+  
   const { id } = useParams();
-  const urlSearchParams = new URLSearchParams(window.location.search);
-  const isDonation = urlSearchParams.get("isDonation") === "true";
+  
+  
   console.log("id en Booking", id);
 
   const [loading, setLoading] = useState(true);
   const [selectedSector, setSelectedSector] = useState(null);
   const selectedSeats = useSelector(selectSelectedSeats);
-
+  
   //const [selectedSeatID, setSelectedSeatID] = useState(null);
   const [seatID, setSelectedSeatID] = useState(null);
-
-  const location = useLocation();
+  
   const sectorPrices = location.state && location.state.sectorPrices;
   const [sectorPricesQuery, setSectorPricesQuery] = useState("");
   
@@ -271,49 +274,74 @@ if (loading) {
         </div>
 
         <div className={styles.ContainerSectores}>
-          <img src={eventDetails.planImage} />
-        </div>
-      </div>
-      <div className={styles.ContainerPlan}>
-        <div className={styles.ContainerPlanoAsientos}>
-          {eventDetails.type === "Grande" ? (
-             <BookingSeatsGde
-             id={id}
-             userID={userID}
-             userName={userName}
-             isDonation={isDonation}
-             sector={selectedSector}
-             sectorPrices={sectorPrices}
-             handleSectorSelect={handleSectorSelect}
-             handleSeatSelect={handleSeatSelect}
-             sectorPricesQuery={sectorPricesQuery}
-             handleSectorInfoUpdate={handleSectorInfoUpdate}
-             counterActivated={counterActivated}
-             setCounterActivated={setCounterActivated}
-             bannerImage={eventDetails.bannerImage}
-             image={eventDetails.image}
-             eventName={eventDetails.name}
-           />
-          ) : (
-            <BookingSeats
-              id={id}
-              userID={userID}
-              userName={userName}
-              isDonation={isDonation}
-              sector={selectedSector}
-              sectorPrices={sectorPrices}
-              handleSectorSelect={handleSectorSelect}
-              handleSeatSelect={handleSeatSelect}
-              
-              sectorPricesQuery={sectorPricesQuery}
-              handleSectorInfoUpdate={handleSectorInfoUpdate}
-              counterActivated={counterActivated}
-              setCounterActivated={setCounterActivated}
-              bannerImage={eventDetails.bannerImage}
-              image={eventDetails.image}
-              eventName={eventDetails.name}
-            />
-          )}
+  {isDonation && eventDetails.type === "Grande" ? (
+    <BookingSeatsGde
+      id={id}
+      userID={userID}
+      userName={userName}
+      isDonation={isDonation}
+      sector={selectedSector}
+      sectorPrices={sectorPrices}
+      handleSectorSelect={handleSectorSelect}
+      handleSeatSelect={handleSeatSelect}
+      sectorPricesQuery={sectorPricesQuery}
+      handleSectorInfoUpdate={handleSectorInfoUpdate}
+      counterActivated={counterActivated}
+      setCounterActivated={setCounterActivated}
+      bannerImage={eventDetails.bannerImage}
+      image={eventDetails.image}
+      eventName={eventDetails.name} 
+    />
+  ) : eventDetails.type === "Grande" && !isDonation ? (
+    <img src={eventDetails.planImage} />
+  ) : (
+    <p></p>
+  )}
+</div>
+<div className={styles.ContainerPlan}>
+  <div className={styles.ContainerPlanoAsientos}>
+    {(!isDonation && eventDetails.type === "Grande") ? (
+      <BookingSeatsGde
+        id={id}
+        userID={userID}
+        userName={userName}
+        isDonation={isDonation}
+        sector={selectedSector}
+        sectorPrices={sectorPrices}
+        handleSectorSelect={handleSectorSelect}
+        handleSeatSelect={handleSeatSelect}
+        sectorPricesQuery={sectorPricesQuery}
+        handleSectorInfoUpdate={handleSectorInfoUpdate}
+        counterActivated={counterActivated}
+        setCounterActivated={setCounterActivated}
+        bannerImage={eventDetails.bannerImage}
+        image={eventDetails.image}
+        eventName={eventDetails.name}
+      />
+    ) : (eventDetails.type === "Pequeño" ? (
+        <BookingSeats
+          id={id}
+          userID={userID}
+          userName={userName}
+          isDonation={isDonation}
+          sector={selectedSector}
+          sectorPrices={sectorPrices}
+          handleSectorSelect={handleSectorSelect}
+          handleSeatSelect={handleSeatSelect}
+          sectorPricesQuery={sectorPricesQuery}
+          handleSectorInfoUpdate={handleSectorInfoUpdate}
+          counterActivated={counterActivated}
+          setCounterActivated={setCounterActivated}
+          bannerImage={eventDetails.bannerImage}
+          image={eventDetails.image}
+          eventName={eventDetails.name}
+        />
+      ) : (
+        <p></p>
+      )
+    )}
+  </div>
+          
         </div>
       </div>
     </div>
