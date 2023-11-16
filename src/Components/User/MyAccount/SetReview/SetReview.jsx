@@ -4,6 +4,7 @@ import styles from './SetReview.module.css';
 import {AiOutlineStar, AiFillStar} from 'react-icons/ai';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { instance } from '../../../../axios/config';
 
 export default function SetReview (props) {
 
@@ -32,7 +33,7 @@ export default function SetReview (props) {
 
     const validateReview = async () => {
     try {
-        const {data} = await axios.get(`http://localhost:3001/review/${params.id}/${eventID}`)
+        const {data} = await instance.get(`/review/${params.id}/${eventID}`) // axios.get(`http://localhost:3001/review/${params.id}/${eventID}`) | instance.get(`/review/${params.id}/${eventID}`)
         // console.log(data)
         return data
     } catch (error) {
@@ -64,7 +65,7 @@ export default function SetReview (props) {
     }
 
     try {
-        await axios.post(`http://localhost:3001/review`, newReview)
+        await instance.post(`/review`, newReview) // axios.post(`http://localhost:3001/review`, newReview) | instance.post(`/review`, newReview)
         validateReview().then((data) => {
             setCurrentRating(data)
             })
