@@ -12,7 +12,7 @@ const SignUp = () => {
 
   const maxDate = today.toISOString().split("T")[0]; // Formatear la fecha como 'YYYY-MM-DD'
 
-  const [modoOscuro, setModoOscuro] = useState(false);
+  //const [modoOscuro, setModoOscuro] = useState(false);
 
   const handlerNavigateHome = () => {
     navigate("/");
