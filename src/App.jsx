@@ -1,5 +1,5 @@
 import React from "react"
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import styles from "./App.module.css"
 import Cart from "./Components/User/Cart/CartPequeño"
 import Contact from "./Components/User/Contact/Contact"
@@ -15,15 +15,11 @@ import Detail from "./Pages/User/Detail/Detail"
 import FAQ from "./Pages/User/FAQ/FAQ"
 import Home from "./Pages/User/Home/Home"
 import MyAccount from "./Pages/User/MyAccount/MyAccount"
-
-import axios from "axios"
-import { useDispatch } from "react-redux"
 import AdminEventsDetail from "./Components/Admin/AdminEventsDetail/AdminEventsDetail"
 import AdminFAQDetail from "./Components/Admin/AdminFAQDetail/AdminFAQDetail"
 import Ticket from "./Components/User/MyAccount/Ticket/Ticket"
 import NotFound from "./Components/User/NotFound/NotFound"
 import AuthGuardUser from "./guards/AuthGuard"
-
 import MercadoPagoExitoso from "./Components/User/Cart/mercadoPagoExitoso"
 import MercadoPagoError from "./Components/User/Cart/mercadoPagoError"
 import MercadoPagoPendiente from "./Components/User/Cart/mercadoPagoPendiente"
@@ -33,9 +29,6 @@ import Developers from "./Pages/User/Developers/Developers"
 
 function App() {
   const location = useLocation()
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
 
   const allowedPaths = [
     "/admin",
@@ -93,10 +86,7 @@ function App() {
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
         <Route path="/mercadopagoexitoso" element={<MercadoPagoExitoso />} />
         <Route path="/mercadopagoerror" element={<MercadoPagoError />} />
-        <Route
-          path="/mercadopagopendiente"
-          element={<MercadoPagoPendiente />}
-        />
+        <Route path="/mercadopagopendiente" element={<MercadoPagoPendiente />}/>
         <Route path="/evento-anterior/:id" element={<DetailPrevEvent />} />
         <Route path="/desarrolladores" element={<Developers />} />
         <Route path="*" element={<NotFound />} />
