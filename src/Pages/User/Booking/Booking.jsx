@@ -33,6 +33,9 @@ const Booking = () => {
   const [selectedSector, setSelectedSector] = useState(null);
   const selectedSeats = useSelector(selectSelectedSeats);
 
+  //const [selectedSeatID, setSelectedSeatID] = useState(null);
+  const [seatID, setSelectedSeatID] = useState(null);
+
   const location = useLocation();
   const sectorPrices = location.state && location.state.sectorPrices;
   const [sectorPricesQuery, setSectorPricesQuery] = useState("");
@@ -125,18 +128,7 @@ const Booking = () => {
     }
   }, [token, navigate, id, selectedSector]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      checkPaystubID();
-    }, 15 * 60 * 1000);
-    return () => clearTimeout(timer);
-  }, []);
 
-  
-  if (loading) {
-    //return <Loader />
-    return null;
-  }
 
   const handleSectorInfoUpdate = () => {
     // Calcula el total de asientos seleccionados y el precio total
@@ -167,7 +159,12 @@ const Booking = () => {
     dateToRender = eventDetails.date; // Corregí esta parte para evitar un error
   }
 
+  
+
   const handleSeatSelect = async (seat) => {
+    const seatID = seat.seatID;
+    setSelectedSeatID(seatID);
+    console.log("seatID en handleSeatSelect", seatID);
   
   if (seat.status === true) {
     if (selectedSeats.some(selectedSeat => selectedSeat.seatID === seat.seatID)) {
@@ -194,9 +191,11 @@ const Booking = () => {
 
 
 const checkPaystubID = async () => {
+  console.log("ejecutando checkPaystubID");
   try {
+    console.log("seatID en checkPaystubID", seatID);
     // hacer la solciitud get para saber si el campo paystubID de la tabla seat está vacío. Si lo está, cambiar el estado del asiento a disponible y borrar el userID
-    const responseSeat = await instance.get(`/seat/${seatID}`);
+    const responseSeat = await instance.get(`/seat/by-id/${seatID}`);
     console.log(responseSeat);
     if (responseSeat.data.paystubID === null) {
       //cambiar el estado (status) del asiento a disponible (true) y borrar el userID
@@ -207,6 +206,19 @@ const checkPaystubID = async () => {
     console.error("Error al obtener el paystubID:", error);
   }
 };
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    checkPaystubID();
+  }, 5 * 60 * 1000);
+  return () => clearTimeout(timer);
+}, [seatID]);
+
+
+if (loading) {
+  //return <Loader />
+  return null;
+}
 
 
   const handleSectorSelect = (sectorName) => {
@@ -288,6 +300,7 @@ const checkPaystubID = async () => {
               sectorPrices={sectorPrices}
               handleSectorSelect={handleSectorSelect}
               handleSeatSelect={handleSeatSelect}
+              
               sectorPricesQuery={sectorPricesQuery}
               handleSectorInfoUpdate={handleSectorInfoUpdate}
               counterActivated={counterActivated}

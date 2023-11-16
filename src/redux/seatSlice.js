@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import {instance} from '../axios/config';
 
 const initialState = {
   seats: {}, // Usa un objeto para almacenar los asientos únicos
@@ -39,7 +40,7 @@ export const seatSlice = createSlice({
 
 export const fetchAndSetSeats = (eventID, sector) => async (dispatch) => {
   try {
-    const response = await axios.post(`http://localhost:3001/seat/${eventID}/${sector}`);
+    const response = await instance.post(`/seat/${eventID}/${sector}`);
     const realSeats = response.data;
     dispatch(setSeats(realSeats)); // Llama a la acción 'setSeats' para almacenar todos los detalles de los asientos
   } catch (error) {

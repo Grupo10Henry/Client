@@ -43,7 +43,7 @@ const BookingSeats = ({
   const selectedSeats = useSelector(selectSelectedSeats);
   const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
 
-  console.log("eventID en BookingSeats", id);
+ 
 
   useEffect(() => {
     dispatch(fetchAndSetSeats(id, sector, sectorPricesQuery));
@@ -78,6 +78,7 @@ const BookingSeats = ({
     if (handleSeatSelect) {
       handleSeatSelect({ ...seat, userID: userID });
     }
+
     handleSectorInfoUpdate();
   };
 
