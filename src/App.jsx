@@ -33,9 +33,6 @@ import Developers from "./Pages/User/Developers/Developers"
 
 function App() {
   const location = useLocation()
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
 
   const allowedPaths = [
     "/admin",
@@ -93,10 +90,7 @@ function App() {
         <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
         <Route path="/mercadopagoexitoso" element={<MercadoPagoExitoso />} />
         <Route path="/mercadopagoerror" element={<MercadoPagoError />} />
-        <Route
-          path="/mercadopagopendiente"
-          element={<MercadoPagoPendiente />}
-        />
+        <Route path="/mercadopagopendiente" element={<MercadoPagoPendiente />}/>
         <Route path="/evento-anterior/:id" element={<DetailPrevEvent />} />
         <Route path="/desarrolladores" element={<Developers />} />
         <Route path="*" element={<NotFound />} />
