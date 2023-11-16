@@ -8,9 +8,6 @@ import {
 import { clearSelectedSeats } from "../../../../redux/seatSlice";
 import { agregarAlCarrito } from "../../../../redux/carritoSlice";
 import styles from "./BookingSeats.module.css";
-import asiento from "../../../../assets/asiento.svg";
-import asientoFree from "../../../../assets/asiento-free.svg";
-import asientoSelected from "../../../../assets/asiento-ocup.svg";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
@@ -98,7 +95,7 @@ const BookingSeatsGde = ({
     const handleBeforeUnload = (event) => {
       dispatch(clearSelectedSeats());
       event.returnValue =
-        "¿Estás seguro de abandonar la página? Se perderán los asientos seleccionados.";
+        "¿Estás seguro de abandonar la página? Se perderán los lugares seleccionados.";
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -112,7 +109,7 @@ const BookingSeatsGde = ({
   const handleOnClickcarrito = () => {
     // Verificar si hay asientos seleccionados
     if (selectedSeats.length === 0) {
-      alert("No has seleccionado ningún asiento.");
+      alert("No has seleccionado ningún lugar.");
       return;
     }
 
@@ -170,7 +167,7 @@ const BookingSeatsGde = ({
                 }`}
               >
                 <p>
-                  Reservaremos tus asientos por los próximos:{" "}
+                  Reservaremos tus lugares por los próximos:{" "}
                   <span className={styles.TimeText}>
                     {formatTime(remainingTime)}
                   </span>{" "}
@@ -241,7 +238,7 @@ const BookingSeatsGde = ({
             <p>Error en la carga de precios.</p>
           )}
         </div>
-        <h3>Asientos seleccionados: {selectedSeats.length}</h3>
+        <h3>Lugares seleccionados: {selectedSeats.length}</h3>
         <h3>
           {" "}
           Total: ${" "}
