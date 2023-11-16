@@ -3,7 +3,8 @@ const developers = [
     id: 1,
     fullName: "Luis Carrillo",
     location: "Bogotá, Colombia",
-    photo: "/public/developers/luis.jpeg",
+    photo:
+      "https://res.cloudinary.com/dgdcfmnnx/image/upload/v1700094616/developers/k3ith9ypfs9sfhx622n1.jpg",
     linkedin: "https://www.linkedin.com/in/luis-carlos-carrillo-73aaa057/",
     github: "https://github.com/lccarrillo247",
   },
@@ -11,7 +12,8 @@ const developers = [
     id: 2,
     fullName: "Evelyn  Pereira",
     location: "Buenos Aires, Argentina",
-    photo: "/public/developers/evelyn.jpg",
+    photo:
+      "https://res.cloudinary.com/dgdcfmnnx/image/upload/v1700094583/developers/imbnrm2pfa2wj45qstcx.jpg",
     linkedin:
       "https://www.linkedin.com/in/evelyn-pereira-aa2843232?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
     github: "https://github.com/EvelynCPereira",
@@ -20,7 +22,8 @@ const developers = [
     id: 3,
     fullName: "Franco Rinque",
     location: "Buenos Aires, Argentina",
-    photo: "/public/developers/franco.jpg",
+    photo:
+      "https://res.cloudinary.com/dgdcfmnnx/image/upload/v1700094615/developers/irzdif39z92jd0sbll3y.jpg",
     linkedin: "https://www.linkedin.com/in/franco-agustin-rinque/",
     github: "https://github.com/francorinque",
   },
@@ -28,15 +31,17 @@ const developers = [
     id: 4,
     fullName: "Julia Funes",
     location: "Córdoba, Argentina",
-    photo: "/public/developers/july.jpeg",
-    linkedin: "https://www.linkedin.com/in/franco-agustin-rinque/",
+    photo:
+      "https://res.cloudinary.com/dgdcfmnnx/image/upload/v1700094615/developers/yofigayzorakat31hwgc.jpg",
+    linkedin: "https://www.linkedin.com/in/je-funes/",
     github: "https://github.com/JE-FUNES",
   },
   {
     id: 5,
     fullName: "Francisco Pertile",
     location: "Córdoba, Argentina",
-    photo: "/public/developers/francisco.jpeg",
+    photo:
+      "https://res.cloudinary.com/dgdcfmnnx/image/upload/v1700094605/developers/f0ilw81kacybc7w9xfh0.jpg",
     linkedin: "https://www.linkedin.com/in/franpertile/",
     github: "https://github.com/FranciscoPer",
   },
@@ -44,7 +49,8 @@ const developers = [
     id: 6,
     fullName: "Lucia Vargas",
     location: "Tucumán, Argentina",
-    photo: "/public/developers/lucia.jpg",
+    photo:
+      "https://res.cloudinary.com/dgdcfmnnx/image/upload/v1700094616/developers/fttycke1msdgpldlo2ey.jpg",
     linkedin: "https://www.linkedin.com/in/analuciavargasl/",
     github: "https://github.com/Luvargaslombardi",
   },
@@ -52,7 +58,8 @@ const developers = [
     id: 7,
     fullName: "Maria Barrionuevo",
     location: "Salta, Argentina",
-    photo: "/public/developers/guada.jpeg",
+    photo:
+      "https://res.cloudinary.com/dgdcfmnnx/image/upload/v1700094616/developers/lwolge64uywoyy0bxyuv.jpg",
     linkedin:
       "https://www.linkedin.com/in/mar%C3%ADa-guadalupe-redondo-barrionuevo-8b6174239/",
     github: "https://github.com/GuadalupeRedondo",
@@ -61,7 +68,8 @@ const developers = [
     id: 8,
     fullName: "Kevin Ortíz",
     location: "Santa Fe, Argentina",
-    photo: "/public/developers/kevin.jpg",
+    photo:
+      "https://res.cloudinary.com/dgdcfmnnx/image/upload/v1700094616/developers/jufuywttrkuldvii60yk.jpg",
     linkedin: "https://www.linkedin.com/in/kevin-ortiz-b29321276/",
     github: "https://github.com/kevinor03",
   },
