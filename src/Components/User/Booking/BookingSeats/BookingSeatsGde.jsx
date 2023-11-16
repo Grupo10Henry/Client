@@ -4,7 +4,7 @@ import {
   selectSeats,
   //selectSelectedSeats,
   //fetchAndSetSeats,
-  addSelectedSeat,
+  addSelectedSeats,
 } from "../../../../redux/seatSlice";
 //import { getDetail } from "../../../../redux/detailSlice";
 import { clearSelectedSeats } from "../../../../redux/seatSlice";
@@ -52,25 +52,33 @@ const BookingSeatsGde = ({
   const handleSeatSelect = () => {
     const availableSeats = seats.filter((seat) => seat.status);
 
-    if (availableSeats.length < selectedQuantity) {
+    if (availableSeats.length === 0) {
       // No hay suficientes asientos disponibles
       alert(
         "No hay suficientes asientos disponibles. Elige menos cantidad por favor."
       );
       return;
-      // si la cantidad de asientos disponibles es mayor a la cantidad de asientos seleccionados
-    } else if (availableSeats.length >= selectedQuantity) {
-      // Selecciona un asiento al azar entre los disponibles
-      const randomIndex = Math.floor(Math.random() * availableSeats.length);
-      const selectedSeat = availableSeats[randomIndex];
-
-      // Despacha la acción para agregar el asiento seleccionado
-      dispatch(addSelectedSeat(selectedSeat.seatID));
-    } else {
-      // No hay asientos disponibles
-      console.error("No hay asientos disponibles para seleccionar.");
     }
-  };
+
+    if (selectedQuantity > availableSeats.length) {
+      alert (
+        "No hay suficientes asientos disponibles. Elige menos cantidad por favor."
+      );
+      return;
+    }
+
+    // selecciona la cantidad de asientos ingresada en el inpt
+    const selectedSeats = [];
+    for (let i = 0; i < selectedQuantity; i++) {
+      const randomIndex = Math.floor(Math.random() * availableSeats.length);
+      selectedSeats.push(availableSeats[randomIndex].seatID);
+    }
+    
+      // Despacha la acción para agregar el asiento seleccionado
+      dispatch(addSelectedSeats(selectedSeats));
+      };
+    
+  
 
   const handleOnClickcarrito = () => {
     // Verificar si hay asientos seleccionados
@@ -106,7 +114,7 @@ const BookingSeatsGde = ({
       const randomIndex = Math.floor(Math.random() * availableSeats.length);
       const selectedSeat = availableSeats[randomIndex];
 
-      dispatch(addSelectedSeat(selectedSeat.seatID));
+      dispatch(addSelectedSeats(selectedSeat.seatID));
 
       // si isDonation es true seatsData.push de seatId, seatLocation, quiantity: 1, totalPrice = al valor ingresado en el input de Donacion
       if (isDonation) {
@@ -165,6 +173,7 @@ const BookingSeatsGde = ({
                 max={availableSeatsCount}
                 value={selectedQuantity}
                 className={styles.input}
+                onWheel={(e) => e.preventDefault()}
                 id="cantidad"
                 onChange={(event) => {
                   setSelectedQuantity(parseInt(event.target.value, 10));
@@ -221,6 +230,7 @@ const BookingSeatsGde = ({
                 max={availableSeatsCount}
                 value={selectedQuantity}
                 className={styles.input}
+                onWheel={(e) => e.preventDefault()}
                 id="cantidad"
                 onChange={(event) => {
                   setSelectedQuantity(parseInt(event.target.value, 10));

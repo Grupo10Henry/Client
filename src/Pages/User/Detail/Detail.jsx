@@ -63,7 +63,7 @@ const Detail = () => {
       </div>
       {hasNaN ? (
         <div className={styles.loaderWrapper}>
-          <span class={styles.loader}></span>
+          <span className={styles.loader}></span>
         </div>
       ) : (
         <div className={styles.ContainerRightColumn}>

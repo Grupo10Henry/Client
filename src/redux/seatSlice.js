@@ -12,6 +12,11 @@ export const seatSlice = createSlice({
   name: 'seat',
   initialState,
   reducers: {
+    addSelectedSeats: (state, action) => {
+      const seatsToAdd = action.payload;
+      state.selectedSeats = [...state.selectedSeats, ...seatsToAdd];
+      state.deselectedSeats = state.deselectedSeats.filter(seat => !seatsToAdd.some(selectedSeat => selectedSeat.seatID === seat.seatID));
+    },
     addSelectedSeat: (state, action) => {
       const seatToAdd = action.payload;
       state.selectedSeats.push(seatToAdd);
@@ -48,7 +53,7 @@ export const fetchAndSetSeats = (eventID, sector) => async (dispatch) => {
   }
 };
 
-export const { addSelectedSeat, removeSelectedSeat, clearSelectedSeats,setSeats } = seatSlice.actions;
+export const { addSelectedSeat, addSelectedSeats, removeSelectedSeat, clearSelectedSeats,setSeats } = seatSlice.actions;
 
 export const selectSelectedSeats = state => state.seat.selectedSeats;
 export const selectSeats = state => Object.values(state.seat.seats);
