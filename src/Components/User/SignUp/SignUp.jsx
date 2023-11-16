@@ -46,7 +46,7 @@ const SignUp = () => {
 
       if (response.status === 200) {
         alert("Usuario creado correctamente");
-        window.location.href = "#/";
+        window.location.href = "#/iniciarSesion";
       }
     } catch (error) {
       if (error.response && error.response.data) {
