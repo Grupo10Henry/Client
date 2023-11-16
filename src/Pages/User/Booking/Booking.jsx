@@ -7,7 +7,7 @@ import { instance } from "../../../axios/config";
 import BookingSeats from "../../../Components/User/Booking/BookingSeats/BookingSeatsPeq";
 import BookingSeatsGde from "../../../Components/User/Booking/BookingSeats/BookingSeatsGde";
 import { useSelector } from "react-redux";
-import Loader from "../../../Components/UserAndAdmin/Loader/Loader";
+//import Loader from "../../../Components/UserAndAdmin/Loader/Loader";
 import {
   addSelectedSeat,
   removeSelectedSeat,

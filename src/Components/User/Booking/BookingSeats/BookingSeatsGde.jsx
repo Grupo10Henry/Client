@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectSeats,
-  selectSelectedSeats,
-  fetchAndSetSeats,
+  //selectSelectedSeats,
+  //fetchAndSetSeats,
   addSelectedSeat,
 } from "../../../../redux/seatSlice";
-import { getDetail } from "../../../../redux/detailSlice";
+//import { getDetail } from "../../../../redux/detailSlice";
 import { clearSelectedSeats } from "../../../../redux/seatSlice";
 import { agregarAlCarrito } from "../../../../redux/carritoSlice";
 import styles from "./BookingSeats.module.css";
