@@ -292,7 +292,7 @@ if (loading) {
       image={eventDetails.image}
       eventName={eventDetails.name} 
     />
-  ) : eventDetails.type === "Grande" && !isDonation ? (
+  ) : !isDonation && eventDetails.type === "Grande" ? (
     <img src={eventDetails.planImage} />
   ) : (
     <p></p>
