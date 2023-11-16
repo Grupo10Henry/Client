@@ -1,5 +1,5 @@
 /* Juli >>>>>>>> */
-import React from "react"
+import React, { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import Loader from "../../../Components/UserAndAdmin/Loader/Loader"
 import useDetail from "../../../hooks/useDetail"
@@ -18,7 +18,11 @@ const Detail = () => {
     countdown,
   } = useDetail(params?.id)
 
+ console.log("id en Detail", params?.id)
+ const eventID = params?.id
+
  
+
 
   if (isLoading) {
     return <Loader />

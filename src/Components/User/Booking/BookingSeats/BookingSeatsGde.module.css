@@ -113,8 +113,35 @@
   align-items: center;
 }
 
-.sector .bannerImage {
+/*.sector .bannerImage {
   max-width: 50%;
   left: 0;
+}*/
+
+/* Agrega estos estilos según sea necesario */
+
+.seatContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.bulletCheck {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #000;
+}
+
+.disabledBulletCheck {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  background-color: #ccc;
+}

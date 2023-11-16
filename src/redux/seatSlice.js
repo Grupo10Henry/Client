@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import {instance} from '../axios/config';
 
 const initialState = {
@@ -50,6 +49,18 @@ export const fetchAndSetSeats = (eventID, sector) => async (dispatch) => {
     dispatch(setSeats(realSeats)); // Llama a la acción 'setSeats' para almacenar todos los detalles de los asientos
   } catch (error) {
     console.error('Error al obtener los asientos:', error);
+  }
+};
+
+export const fetchAndSetSeatsGde = (eventID, sector) => async (dispatch) => {
+  try {
+    const response = await instance.post(`/seat/${eventID}/${sector}`);
+    const realSeats = response.data;
+    dispatch(setSeats(realSeats)); 
+    return realSeats;
+  } catch (error) {
+    console.error('Error al obtener los asientos:', error);
+    throw error;
   }
 };
 

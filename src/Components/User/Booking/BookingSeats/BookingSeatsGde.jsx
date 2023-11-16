@@ -2,96 +2,117 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectSeats,
-  //selectSelectedSeats,
-  //fetchAndSetSeats,
-  addSelectedSeats,
+  selectSelectedSeats,
+  fetchAndSetSeats,
 } from "../../../../redux/seatSlice";
-//import { getDetail } from "../../../../redux/detailSlice";
 import { clearSelectedSeats } from "../../../../redux/seatSlice";
 import { agregarAlCarrito } from "../../../../redux/carritoSlice";
 import styles from "./BookingSeats.module.css";
+import asiento from "../../../../assets/asiento.svg";
+import asientoFree from "../../../../assets/asiento-free.svg";
+import asientoSelected from "../../../../assets/asiento-ocup.svg";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 const BookingSeatsGde = ({
   userID,
   userName,
+  eventType,
   bannerImage,
+  id,
   sector,
   sectorPrices,
   handleSectorSelect,
+  handleSeatSelect,
+  sectorPricesQuery,
+  handleSectorInfoUpdate,
+  counterActivated,
   image,
   eventName,
 }) => {
   const dispatch = useDispatch();
   const seats = useSelector(selectSeats);
-  const navigate = useNavigate();
-  const eventID = useSelector((state) => state.event.eventID);
-  console.log("evenID en BookingSeatsGde", eventID);
-
-  // traer de redux el valor de isDonation
   const isDonation = useSelector((state) => state.event.isDonation);
-  console.log("isDonation en BookingSeatsGde", isDonation);
 
-  /////////// new /////////////
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
-  // Obtener la cantidad de asientos disponibles
-  const availableSeats = seats.filter((seat) => seat.status);
-  const availableSeatsCount = availableSeats.length;
-  console.log("availableSeatsCount en BookingSeatsGde", availableSeatsCount);
+  const navigate = useNavigate();
 
-  // Calcular el total a pagar
-  const selectedSector = sector;
-  const selectedSectorPrice = sectorPrices.find(
-    (sector) => sector[1] === selectedSector
-  );
-  const totalPrice = selectedSectorPrice
-    ? selectedSectorPrice[0] * selectedQuantity
-    : 0;
+  const rows = seats.length > 0 ? seats[0].rows : 0;
+  const columns = seats.length > 0 ? seats[0].columns : 0;
 
-  const handleSeatSelect = () => {
-    const availableSeats = seats.filter((seat) => seat.status);
+  const [remainingTime, setRemainingTime] = useState(900);
+  const selectedSeats = useSelector(selectSelectedSeats);
+  const [selectedSeatStatus, setSelectedSeatStatus] = useState({});
 
-    if (availableSeats.length === 0) {
-      // No hay suficientes asientos disponibles
-      alert(
-        "No hay suficientes asientos disponibles. Elige menos cantidad por favor."
-      );
+ 
+
+  useEffect(() => {
+    dispatch(fetchAndSetSeats(id, sector, sectorPricesQuery));
+    const interval = setInterval(() => {
+      if (counterActivated && remainingTime > 0) {
+        setRemainingTime(remainingTime - 1);
+      }
+    }, 1000); // Actualizar cada segundo
+
+    return () => clearInterval(interval);
+  }, [
+    id,
+    sector,
+    sectorPricesQuery,
+    dispatch,
+    counterActivated,
+    remainingTime,
+  ]);
+
+  const handleSeatClick = (seat) => {
+    if (!seat.status) {
+      // El asiento está ocupado, no se puede seleccionar.
+
       return;
     }
 
-    if (selectedQuantity > availableSeats.length) {
-      alert (
-        "No hay suficientes asientos disponibles. Elige menos cantidad por favor."
-      );
-      return;
+    setSelectedSeatStatus((prevStatus) => ({
+      ...prevStatus,
+      [seat.seatID]: !prevStatus[seat.seatID], // Cambia el estado de selección del asiento
+    }));
+
+    if (handleSeatSelect) {
+      handleSeatSelect({ ...seat, userID: userID });
     }
 
-    // selecciona la cantidad de asientos ingresada en el inpt
-    const selectedSeats = [];
-    for (let i = 0; i < selectedQuantity; i++) {
-      const randomIndex = Math.floor(Math.random() * availableSeats.length);
-      selectedSeats.push(availableSeats[randomIndex].seatID);
-    }
-    
-      // Despacha la acción para agregar el asiento seleccionado
-      dispatch(addSelectedSeats(selectedSeats));
-      };
-    
-  
+    handleSectorInfoUpdate();
+  };
+
+  useEffect(() => {}, [selectedSeats]);
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
+  useEffect(() => {
+    const clearSelectedSeatsTimer = setTimeout(() => {
+      dispatch(clearSelectedSeats());
+    }, 15 * 60 * 1000);
+
+    const handleBeforeUnload = (event) => {
+      dispatch(clearSelectedSeats());
+      event.returnValue =
+        "¿Estás seguro de abandonar la página? Se perderán los asientos seleccionados.";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      clearTimeout(clearSelectedSeatsTimer);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [dispatch, clearSelectedSeats]);
 
   const handleOnClickcarrito = () => {
     // Verificar si hay asientos seleccionados
-    if (selectedQuantity <= 0) {
-      alert("Completa con la cantidad de entradas.");
-      return;
-    }
-
-    const availableSeats = seats.filter((seat) => seat.status);
-    if (availableSeats.length < selectedQuantity) {
-      alert(
-        "No hay suficientes asientos disponibles. Elige menos cantidad por favor."
-      );
+    if (selectedSeats.length === 0) {
+      alert("No has seleccionado ningún asiento.");
       return;
     }
 
@@ -99,152 +120,138 @@ const BookingSeatsGde = ({
     const eventData = {
       userID: userID,
       userName: userName,
-      eventID: eventID,
+      eventID: id,
       eventName: eventName,
       eventImage: image,
       isDonation: isDonation,
     };
 
     const seatsData = {
-      seatCount: selectedQuantity,
-      seats: [],
+      seatCount: selectedSeats.length,
+      seats: selectedSeats.map((seat) => ({
+        seatID: seat.seatID,
+        seatLocation: seat.seatLocation,
+        sector: seat.sector,
+        price: seat.price,
+        quantity: 1, // cada asiento será una entrada
+        totalPrice: seat.price * selectedSeats.length,
+      })),
     };
+    console.log("isDonation para Cart:", isDonation);
 
-    for (let i = 0; i < selectedQuantity; i++) {
-      const randomIndex = Math.floor(Math.random() * availableSeats.length);
-      const selectedSeat = availableSeats[randomIndex];
+    // Enviar datos al carrito
+    dispatch(agregarAlCarrito({ eventData, seatsData }));
 
-      dispatch(addSelectedSeats(selectedSeat.seatID));
+    // Limpiar asientos seleccionados después de agregar al carrito
+    dispatch(clearSelectedSeats());
 
-      // si isDonation es true seatsData.push de seatId, seatLocation, quiantity: 1, totalPrice = al valor ingresado en el input de Donacion
-      if (isDonation) {
-        const donationAmount = document.getElementById("donation").value;
-
-        seatsData.seats.push({
-          seatID: selectedSeat.seatID,
-          seatLocation: selectedSeat.seatLocation,
-          quantity: 1,
-          totalPrice: donationAmount,
-        });
-      } else {
-        seatsData.seats.push({
-          seatID: selectedSeat.seatID,
-          seatLocation: selectedSeat.seatLocation,
-          sector: selectedSeat.sector,
-          price: selectedSeat.price,
-          quantity: 1,
-          totalPrice: selectedSeat.price,
-        });
-      }
-
-      // Enviar datos al carrito
-      dispatch(agregarAlCarrito({ eventData, seatsData }));
-
-      // Limpiar asientos seleccionados después de agregar al carrito
-      dispatch(clearSelectedSeats());
-
-      navigate("/carrito", {
-        state: {
-          ...eventData,
-          seatsData,
-        },
-      });
-    }
+    navigate("/carrito", {
+      state: {
+        ...eventData,
+        seatsData,
+      },
+    });
   };
+
+  const sortedSeats = seats
+    .slice()
+    .sort((a, b) => a.seatLocation.localeCompare(b.seatLocation));
 
   return (
     <div className={styles.seatMap}>
       <div className={styles.sector}>
-        <img
-          src={bannerImage}
-          alt="imagen del sector"
-          className={styles.bannerImage}
-        />
-      </div>
+        <>
+          <h3>Sector: {sector}</h3>
+          <div className={styles.selectedInfo}>
+            {counterActivated && selectedSeats.length > 0 && (
+              <div
+                className={`${styles.Time} ${
+                  remainingTime > 0 ? "" : styles.hidden
+                }`}
+              >
+                <p>
+                  Reservaremos tus asientos por los próximos:{" "}
+                  <span className={styles.TimeText}>
+                    {formatTime(remainingTime)}
+                  </span>{" "}
+                  minutos.
+                </p>
+              </div>
+            )}
+          </div>
+          <table className={styles.seatGrid}>
+  <tbody>
+    {Array.from({ length: rows }, (_, rowIndex) => (
+      <tr key={rowIndex}>
+        {Array.from({ length: columns }, (_, colIndex) => {
+          const currentSeat =
+            sortedSeats[rowIndex * columns + colIndex];
 
-      <div className={styles.seatInfo}>
-        {isDonation ? (
-          <>
-            <div className={styles.cantidad}>
-              Cantidad de entradas:{" "}
-              <input
-                type="number"
-                min="1"
-                max={availableSeatsCount}
-                value={selectedQuantity}
-                className={styles.input}
-                onWheel={(e) => e.preventDefault()}
-                id="cantidad"
-                onChange={(event) => {
-                  setSelectedQuantity(parseInt(event.target.value, 10));
-                  handleSeatSelect(); // Llama a la función cuando cambie la cantidad
-                }}
-              />
-            </div>
-            <input
-              type="range"
-              id="donation"
-              min="1000"
-              max="20000"
-              step="1000"
-              value={totalPrice}
-            />
-            <h3> Total a Donar: ${totalPrice} </h3>
-            <button className={styles.Carrito} onClick={handleOnClickcarrito}>
-              Agregar al carrito
-            </button>
-          </>
-        ) : (
-          <>
-            <div className={styles.TituloBlink}>
-              <h3>Selecciona un sector:</h3>
-            </div>
-            <div className={styles.ContainerSelect}>
-              {sectorPrices && sectorPrices.length > 0 ? (
-                <div className={styles.SectorContainer}>
-                  {sectorPrices.map((sector, index) => (
-                    <div
-                      key={index}
-                      className={
-                        sector === sector[1]
-                          ? styles.selectedSector
-                          : styles.sector
-                      }
-                      onClick={() => handleSectorSelect(sector[1])}
-                    >
-                      {sector[1]} - $
-                      {parseFloat(sector[0]).toLocaleString("es-ES")}
-                    </div>
-                  ))}
+          return (
+            <td key={colIndex}>
+              {currentSeat && (
+                <div className={styles.seatContainer}>
+                  {currentSeat.status ? (
+                    <label key={currentSeat.seatID} className={styles.checkboxLabel}>
+                      <input
+                        type="checkbox"
+                        checked={selectedSeatStatus[currentSeat.seatID]}
+                        onChange={() => handleSeatClick(currentSeat)}
+                        className={styles.checkbox}
+                      />
+                      <span className={styles.checkmark}></span>
+                    </label>
+                  ) : (
+                    <div className={styles.disabledCheckbox}></div>
+                  )}
+                  
                 </div>
-              ) : (
-                <p>Error en la carga de precios.</p>
               )}
-            </div>
-            <h3>Sector elegido: {sector}</h3>
-            <div className={styles.cantidad}>
-              Cantidad de entradas:{" "}
-              <input
-                type="number"
-                min="1"
-                max={availableSeatsCount}
-                value={selectedQuantity}
-                className={styles.input}
-                onWheel={(e) => e.preventDefault()}
-                id="cantidad"
-                onChange={(event) => {
-                  setSelectedQuantity(parseInt(event.target.value, 10));
-                  handleSeatSelect(); // Llama a la función cuando cambie la cantidad
-                }}
-              />
-            </div>
-            <h3> Total: ${totalPrice} </h3>
+            </td>
+          );
+        })}
+      </tr>
+    ))}
+  </tbody>
+</table>
 
-            <button className={styles.Carrito} onClick={handleOnClickcarrito}>
-              Agregar al carrito
-            </button>
-          </>
-        )}
+
+        </>
+      </div>
+      <div className={styles.seatInfo}>
+        <div className={styles.TituloBlink}>
+          <h3>Selecciona un sector:</h3>
+        </div>
+        <div className={styles.ContainerSelect}>
+          {sectorPrices && sectorPrices.length > 0 ? (
+            <div className={styles.SectorContainer}>
+              {sectorPrices.map((sector, index) => (
+                <div
+                  key={index}
+                  className={
+                    sector === sector[1] ? styles.selectedSector : styles.sector
+                  }
+                  onClick={() => handleSectorSelect(sector[1])}
+                >
+                  {sector[1]} - ${parseFloat(sector[0]).toLocaleString("es-ES")}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>Error en la carga de precios.</p>
+          )}
+        </div>
+        <h3>Asientos seleccionados: {selectedSeats.length}</h3>
+        <h3>
+          {" "}
+          Total: ${" "}
+          {selectedSeats
+            .reduce((acc, curr) => acc + curr.price, 0)
+            .toLocaleString()}
+        </h3>
+        <button className={styles.Carrito} onClick={handleOnClickcarrito}>
+          Agregar al carrito
+        </button>
       </div>
     </div>
   );

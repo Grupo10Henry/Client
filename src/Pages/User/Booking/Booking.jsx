@@ -25,9 +25,13 @@ const Booking = () => {
   const userID = useSelector((state) => state.user?.userInfo?.userID);
   const userName = useSelector((state) => state.user?.userInfo?.name);
 
+  const eventID = useSelector((state) => state.event.id);
+  console.log("evenID en Booking", eventID);
+
   const { id } = useParams();
   const urlSearchParams = new URLSearchParams(window.location.search);
   const isDonation = urlSearchParams.get("isDonation") === "true";
+  console.log("id en Booking", id);
 
   const [loading, setLoading] = useState(true);
   const [selectedSector, setSelectedSector] = useState(null);
