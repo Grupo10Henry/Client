@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import {instance} from '../axios/config';
 
 const initialState = {
   seats: {}, // Usa un objeto para almacenar los asientos únicos
@@ -11,6 +11,11 @@ export const seatSlice = createSlice({
   name: 'seat',
   initialState,
   reducers: {
+    addSelectedSeats: (state, action) => {
+      const seatsToAdd = action.payload;
+      state.selectedSeats = [...state.selectedSeats, ...seatsToAdd];
+      state.deselectedSeats = state.deselectedSeats.filter(seat => !seatsToAdd.some(selectedSeat => selectedSeat.seatID === seat.seatID));
+    },
     addSelectedSeat: (state, action) => {
       const seatToAdd = action.payload;
       state.selectedSeats.push(seatToAdd);
@@ -39,7 +44,7 @@ export const seatSlice = createSlice({
 
 export const fetchAndSetSeats = (eventID, sector) => async (dispatch) => {
   try {
-    const response = await axios.post(`http://localhost:3001/seat/${eventID}/${sector}`);
+    const response = await instance.post(`/seat/${eventID}/${sector}`);
     const realSeats = response.data;
     dispatch(setSeats(realSeats)); // Llama a la acción 'setSeats' para almacenar todos los detalles de los asientos
   } catch (error) {
@@ -47,7 +52,19 @@ export const fetchAndSetSeats = (eventID, sector) => async (dispatch) => {
   }
 };
 
-export const { addSelectedSeat, removeSelectedSeat, clearSelectedSeats,setSeats } = seatSlice.actions;
+export const fetchAndSetSeatsGde = (eventID, sector) => async (dispatch) => {
+  try {
+    const response = await instance.post(`/seat/${eventID}/${sector}`);
+    const realSeats = response.data;
+    dispatch(setSeats(realSeats)); 
+    return realSeats;
+  } catch (error) {
+    console.error('Error al obtener los asientos:', error);
+    throw error;
+  }
+};
+
+export const { addSelectedSeat, addSelectedSeats, removeSelectedSeat, clearSelectedSeats,setSeats } = seatSlice.actions;
 
 export const selectSelectedSeats = state => state.seat.selectedSeats;
 export const selectSeats = state => Object.values(state.seat.seats);
