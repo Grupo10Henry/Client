@@ -1,7 +1,7 @@
 .seatMap {
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 
   
   max-height: min-content;
@@ -23,7 +23,9 @@
   margin-left: 10px; /* Añadido un espacio entre sector y seatInfo */
   text-align: center;
 }
-
+.sector table {
+  width: 100%;
+}
 
 
 
@@ -47,6 +49,11 @@
   /* Add any other styles you want to apply */
 }
 
+.row {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
 
 .seatInfo h3 {
   text-align: center;
@@ -81,6 +88,14 @@
   font-size: 20px;
   color: whitesmoke;
   cursor: pointer;
+}
+
+.SectorContainer {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 1em;
+  color: whitesmoke;
 }
 
 .ContainerSelect:hover {
