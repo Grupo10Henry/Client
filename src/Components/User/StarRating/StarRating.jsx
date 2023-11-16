@@ -7,8 +7,10 @@ const styleStarGray = {
 const StarRating = ({ rating }) => {
   const stars = []
 
-  for (let i = 0; i < Math.round(rating); i++) {
-    stars.push(<IoStar key={i} />)
+  if (rating) {
+    for (let i = 0; i < Math.round(rating); i++) {
+      stars.push(<IoStar key={i} />)
+    }
   }
 
   return (

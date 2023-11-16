@@ -7,7 +7,7 @@ const DevelopersAbout = () => {
     <div className={style.wrapper}>
       <div className={style.texts}>
         <h2 className={`gradient-text ${style.title}`}>
-          Conocé a nuestro equipo de desarrolladores
+          Conoce a nuestro equipo de desarrolladores
         </h2>
         <p className={style.paragraph}>
           ¿Quiénes somos? Nosotros, los <b>creadores</b> detrás de esta
