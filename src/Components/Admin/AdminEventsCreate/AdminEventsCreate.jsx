@@ -122,13 +122,13 @@ export default function AdminEventsCreate() {
         e.preventDefault();
         const repetido = sections.some((existingSection) => existingSection.sector.toLowerCase() === section.sector.toLowerCase())
         if (repetido) {
-        // alert('Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección')
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección',
-            footer: '<a href="">Why do I have this issue?</a>'
-          })
+        alert('Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección')
+        // Swal.fire({
+        //     icon: 'error',
+        //     title: 'Oops...',
+        //     text: 'Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección',
+        //     footer: '<a href="">Why do I have this issue?</a>'
+        //   })
         } else {
         setSections([...sections, section]);
         }
