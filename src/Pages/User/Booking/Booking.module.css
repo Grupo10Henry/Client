@@ -155,11 +155,15 @@
 
 
 .ContainerSectores {
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrar verticalmente */
+  align-items: center; /* Centrar horizontalmente */
   flex: 1;
   text-align: center;
   padding: 10px 15px;
 }
+
 
 .ContainerPlanoAsientos {
   display: flex;

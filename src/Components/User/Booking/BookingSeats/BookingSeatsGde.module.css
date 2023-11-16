@@ -145,3 +145,12 @@
   border: 2px solid #ccc;
   background-color: #ccc;
 }
+
+.rangeLabels span {
+  font-size: 10px;
+  margin: 5px;
+}
+
+.cantidad h3{
+  color: brown;
+}

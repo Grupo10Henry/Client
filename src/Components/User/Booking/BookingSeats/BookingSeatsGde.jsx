@@ -7,7 +7,7 @@ import {
 } from "../../../../redux/seatSlice";
 import { clearSelectedSeats } from "../../../../redux/seatSlice";
 import { agregarAlCarrito } from "../../../../redux/carritoSlice";
-import styles from "./BookingSeats.module.css";
+import styles from "./BookingSeatsGde.module.css";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
@@ -154,6 +154,49 @@ const BookingSeatsGde = ({
     .slice()
     .sort((a, b) => a.seatLocation.localeCompare(b.seatLocation));
 
+  const [donationAmount, setDonationAmount] = useState(1000); // Valor inicial
+
+  const handleDonationChange = (event) => {
+    const newValue = parseInt(event.target.value, 10);
+    setDonationAmount(newValue);
+  };
+
+  const handleOnClickcarritoDonation = () => {
+    
+    const eventData = {
+      userID: userID,
+      userName: userName,
+      eventID: id,
+      eventName: eventName,
+      eventImage: image,
+      isDonation: isDonation,
+    };
+
+    const seatsData = {
+      seatCount: 1,
+      seats: [
+        {
+          seatID: 0,
+          seatLocation: "Donación",
+          sector: "Donación",
+          price: donationAmount,
+          quantity: 1, // cada asiento será una entrada
+          totalPrice: donationAmount,
+        },
+      ],
+    };
+
+    // Enviar datos al carrito
+    dispatch(agregarAlCarrito({ eventData, seatsData }));
+
+    navigate("/carrito", {
+      state: {
+        ...eventData,
+        seatsData,
+      },
+    });
+  }
+
   return (
     <div className={styles.seatMap}>
       {isDonation ? (
@@ -233,10 +276,16 @@ const BookingSeatsGde = ({
                 min="1000"
                 max="20000"
                 step="1000"
-                value=""
+                value={donationAmount}
+                onChange={handleDonationChange}
               />
-              <h3> Total a Donar: $ </h3>
-              <button className={styles.Carrito} onClick={handleOnClickcarrito}>
+              <div className={styles.rangeLabels}>
+              <span>Mínimo: $1000</span>
+              <span>Máximo: $20000</span>
+            </div>
+            <h3> Total a Donar: ${donationAmount} </h3>
+              <br />
+              <button className={styles.Carrito} onClick={handleOnClickcarritoDonation}>
                 Agregar al carrito
               </button>
             </div>
