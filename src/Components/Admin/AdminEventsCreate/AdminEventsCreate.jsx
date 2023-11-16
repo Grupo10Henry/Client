@@ -85,7 +85,7 @@ export default function AdminEventsCreate() {
     const [sections, setSections] =useState([]);
 
     // console.log(input);
-    console.log(section);
+    // console.log(section);
     // console.log(sections);
     // console.log(image, bannerImage, planImage)
 
