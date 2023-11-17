@@ -15,7 +15,7 @@ import eventIDReducer from "./eventIDSlice"
 import carritoReducer from "./carritoSlice"
 import paystubReducer from "./paystubslice"
 import reviewsReducer from "./reviewsSlice"
-
+import prevEventsReducer from "./prevEventsSlice"
 const persistConfig = {
   key: "root",
   storage,
@@ -36,6 +36,7 @@ const rootReducer = combineReducers({
   carrito: carritoReducer,
   paystub: paystubReducer,
   reviews: reviewsReducer,
+  prevEvents: prevEventsReducer,
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

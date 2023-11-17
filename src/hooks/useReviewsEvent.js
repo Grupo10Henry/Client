@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { instance } from "../axios/config"
+import {
+  failedPrevEvents,
+  fetchPrevEvents,
+  successPrevEvents,
+} from "../redux/prevEventsSlice"
 
 const useReviewsEvent = () => {
-  const [prevEvents, setPrevEvents] = useState([])
-  const [loading, setLoading] = useState(false)
-
+  const {
+    isLoading,
+    data: prevEventsData,
+    isError,
+  } = useSelector((s) => s.prevEvents)
   const { reviews } = useSelector((s) => s.reviews)
 
+  const dispatch = useDispatch()
   const getPrevEvents = async () => {
     try {
       const response = await instance.get("/event/previus")
@@ -18,21 +26,20 @@ const useReviewsEvent = () => {
   }
 
   const fetchData = async () => {
+    dispatch(fetchPrevEvents())
     try {
-      setLoading(true)
       const data = await getPrevEvents()
 
-      setPrevEvents(data)
+      dispatch(successPrevEvents(data))
     } catch (error) {
+      dispatch(
+        failedPrevEvents("Hubo un error al traer los eventos anteriores")
+      )
       console.error("Error al traer los eventos previos:", error)
-      setLoading(false)
-      // Manejo de errores, como mostrar un mensaje al usuario o realizar otras acciones necesarias
-    } finally {
-      setLoading(false)
     }
   }
 
-  const orderedPrevEvents = prevEvents?.sort(
+  const orderedPrevEvents = [...prevEventsData]?.sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   )
   const shownPrevEvents = orderedPrevEvents.slice(0, 8)
@@ -56,8 +63,8 @@ const useReviewsEvent = () => {
   }, [])
 
   return {
-    prevEvents,
-    loading,
+    isLoading,
+    isError,
     reviews,
     shownPrevEvents,
     calculateAverageRating,
