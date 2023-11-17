@@ -7,6 +7,7 @@ import { instance } from '../../../axios/config';
 import { AiFillEdit } from 'react-icons/ai';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export default function AdminEvents() {
 
@@ -34,7 +35,11 @@ export default function AdminEvents() {
   const handleDeleteEvent = async (eventID) => {
     try {
       await instance.delete(`/event/${eventID}`)
-      alert('Evento eliminado con éxito')
+      // alert('Evento eliminado con éxito')
+      Swal.fire({
+        title: "Evento eliminado con éxito",
+        icon: "success"
+      });
     } catch (error) {
       alert(error.response.data.error)
     }

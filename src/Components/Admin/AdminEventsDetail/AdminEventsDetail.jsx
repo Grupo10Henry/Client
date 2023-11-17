@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { categories } from '../../../utils/categories';
 import axios from 'axios';
 import { BsFillTrashFill } from 'react-icons/bs'
+import Swal from 'sweetalert2';
 import styles from './AdminEventsDetail.module.css'
 
 export default function AdminEventsDetail () {
@@ -139,7 +140,11 @@ export default function AdminEventsDetail () {
     const handleSubmit = async () => {
         if (!updatedEvent.name || !updatedEvent.description || !updatedEvent.category || updatedEvent.isDonation === "" || !updatedEvent.capacity || !updatedEvent.date || !updatedEvent.time || !updatedEvent.locationName ||
             !updatedEvent.adressLocation || !updatedEvent.mapLocation || !updatedEvent.type) {
-                alert('Por favor completa todos los campos para editar el evento');
+                // alert('Por favor completa todos los campos para editar el evento');
+                Swal.fire({
+                    title: 'Por favor completa todos los campos para editar el evento',
+                    icon: "error"
+                  });
                 return;
             }
         try {
@@ -199,7 +204,11 @@ export default function AdminEventsDetail () {
         getEvent().then((data) => {
             setUpdatedEvent(data)
         });
-        alert('Se ha editado el evento exitosamente')
+        // alert('Se ha editado el evento exitosamente')
+        Swal.fire({
+            title: 'Se ha editado el evento exitosamente',
+            icon: "success"
+          });
     } catch (error) {
         alert(error.response.data.error);
     }
@@ -214,7 +223,11 @@ export default function AdminEventsDetail () {
             getSections().then((data) => {
                 setSections(data)
             })
-            alert('Se ha eliminado exitosamente la sección')
+            // alert('Se ha eliminado exitosamente la sección')
+            Swal.fire({
+                title: 'Se ha eliminado exitosamente la sección',
+                icon: "success"
+              });
         } catch (error) {
             alert(error.response.data.error);
         }
@@ -229,7 +242,11 @@ export default function AdminEventsDetail () {
 
     const handlePostSections = async () => {
         if(newSection.sector === "" || newSection.price === "" || newSection.rows === "" || newSection.columns === "") {
-            alert('Por favor añade todos los campos para crear una nueva sección')
+            // alert('Por favor añade todos los campos para crear una nueva sección')
+            Swal.fire({
+                title: 'Por favor añade todos los campos para crear una nueva sección',
+                icon: "error"
+              });
         } else {
         try {
             await instance.post('/seat/', newSection) // instance.post('/seat/', newSection) || axios.post('http://localhost:3001/seat/', newSection)
@@ -243,7 +260,11 @@ export default function AdminEventsDetail () {
                 sector: "",
                 price: "",
             });
-            alert('Se ha creado exitosamente la sección')
+            // alert('Se ha creado exitosamente la sección')
+            Swal.fire({
+                title: 'Se ha creado exitosamente la sección',
+                icon: "success"
+              });
         } catch (error) {
             alert(error.response.data.error)
         }
