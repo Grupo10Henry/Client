@@ -28,7 +28,7 @@ try {
 
 const getPurchasedSeats = async () => {
 try {
-  const {data} = await axios.get(`http://localhost:3001/seat/reportSeats`) // axios.get(`http://localhost:3001/seat/reportSeats`) | instance.get('/seat/reportSeats')
+  const {data} = await instance.get('/seat/reportSeats') // axios.get(`http://localhost:3001/seat/reportSeats`) | instance.get('/seat/reportSeats')
   // console.log(data)
   return data
 } catch (error) {
@@ -38,7 +38,7 @@ try {
 
 const getPurchasedSeatsEvent = async () => {
   try {
-    const {data} = await axios.get(`http://localhost:3001/seat/reportNames`) // axios.get(`http://localhost:3001/seat/reportNames`) | instance.get('/seat/reportNames')
+    const {data} = await instance.get('/seat/reportNames') // axios.get(`http://localhost:3001/seat/reportNames`) | instance.get('/seat/reportNames')
     // console.log(data)
     return data
   } catch (error) {
@@ -80,8 +80,8 @@ if (!allUsers) {
 
 // console.log(allUsers)
 // console.log(monthlyUserCounts)
-console.log(reportSeats)
-console.log(reportNames)
+// console.log(reportSeats)
+// console.log(reportNames)
 
 const [chart, setChart] = useState({
     series: [{
