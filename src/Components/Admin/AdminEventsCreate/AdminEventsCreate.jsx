@@ -1,12 +1,12 @@
 // Luissssss
 import axios from 'axios';
-import styles from './AdminEventsCreate.module.css';
 import { useEffect, useState } from 'react';
 import { instance } from '../../../axios/config';
 import { categories } from '../../../utils/categories';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllEvents } from '../../../redux/eventsSlice';
 import Swal from 'sweetalert2';
+import styles from './AdminEventsCreate.module.css';
 
 export default function AdminEventsCreate() {
 
@@ -122,13 +122,12 @@ export default function AdminEventsCreate() {
         e.preventDefault();
         const repetido = sections.some((existingSection) => existingSection.sector.toLowerCase() === section.sector.toLowerCase())
         if (repetido) {
-        alert('Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección')
-        // Swal.fire({
-        //     icon: 'error',
-        //     title: 'Oops...',
-        //     text: 'Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección',
-        //     footer: '<a href="">Why do I have this issue?</a>'
-        //   })
+        // alert('Ya existe una sección con ese nombre para este evento. Por favor escoge un nombre diferente para crear la sección')
+        Swal.fire({
+            title: "Ya existe una sección con ese nombre para este evento",
+            text: "Por favor escoge un nombre diferente para crear la sección",
+            icon: "error"
+          });
         } else {
         setSections([...sections, section]);
         setSection({
@@ -143,7 +142,11 @@ export default function AdminEventsCreate() {
 
     function deleteLastSection (){
         if(sections.length === 0) {
-            alert('Actualmente no hay secciones creadas')
+            // alert('Actualmente no hay secciones creadas')
+            Swal.fire({
+                title: "Actualmente no hay secciones creadas",
+                icon: "error"
+              });
             return;
         }
 
@@ -158,12 +161,20 @@ export default function AdminEventsCreate() {
             await instance.post('/seat/', section) // instance.post('/seat/', section) || axios.post('http://localhost:3001/seat/', section)
             setSections([]);
         })
-            alert('Se han añadido las secciones al evento')
+            // alert('Se han añadido las secciones al evento')
+            Swal.fire({
+                title: 'Se han añadido las secciones al evento',
+                icon: "success"
+              });
         } catch (error) {
             alert(error.response.data.error)
         }
     } else {
-        alert('Por favor añade secciones antes de crearlas')
+        // alert('Por favor añade secciones antes de crearlas')
+        Swal.fire({
+            title: 'Por favor añade secciones antes de crearlas',
+            icon: "error"
+          });   
     }
     };
     
@@ -188,7 +199,11 @@ export default function AdminEventsCreate() {
         e.preventDefault();
         if (!input.name || !input.description || !input.category || !input.isDonation || !input.capacity || !input.date || !input.time || !input.locationName ||
             !input.adressLocation || !input.mapLocation || !image || !bannerImage || !planImage || !input.type) {
-                alert('Por favor completa todos los campos para crear el evento');
+                // alert('Por favor completa todos los campos para crear el evento');
+                Swal.fire({
+                    title: 'Por favor completa todos los campos para crear el evento',
+                    icon: "error"
+                  });
                 return;
             }
 
@@ -235,7 +250,11 @@ export default function AdminEventsCreate() {
                     // const post = await axios.post('http://localhost:3001/event/', input)
                     const post = await instance.post('/event/', newEvent);
                     getEvents().then((data) => (dispatch(getAllEvents(data))));
-                    alert("Evento creado exitosamente");
+                    // alert("Evento creado exitosamente");
+                    Swal.fire({
+                        title: "Evento creado exitosamente",
+                        icon: "success"
+                      });
                     setInput({
                         name: "",
                         description: "",
