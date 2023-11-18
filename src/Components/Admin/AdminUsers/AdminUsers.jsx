@@ -3,63 +3,21 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { instance } from "../../../axios/config"
 import { getAllUsers } from "../../../redux/userSlice"
-import styles from "./AdminUsers.module.css"
 import BlockBtn from "./BlockBtn"
 import UnblockBtn from "./UnblockBtn"
 import axios from "axios"
+import Swal from "sweetalert2";
+import styles from "./AdminUsers.module.css"
 
 export default function AdminUsers() {
   const dispatch = useDispatch()
   const { allUsers } = useSelector((s) => s.user)
 
-  const Users = [
-    {
-      isAdmin: false,
-      name: "Luis",
-      lastName: "Carrillo",
-      email: "lccarrillo247@gmail.com",
-      phone: "1234567",
-      password: "Luchito123",
-      identityCard: "1234567",
-      dob: "10-12-1989",
-    },
-    {
-      isAdmin: false,
-      name: "Luis",
-      lastName: "Carrillo",
-      email: "lccarrillo247@gmail.com",
-      phone: "1234567",
-      password: "Luchito123",
-      identityCard: "1234567",
-      dob: "10-12-1989",
-    },
-    {
-      isAdmin: false,
-      name: "Luis",
-      lastName: "Carrillo",
-      email: "lccarrillo247@gmail.com",
-      phone: "1234567",
-      password: "Luchito123",
-      identityCard: "1234567",
-      dob: "10-12-1989",
-    },
-    {
-      isAdmin: false,
-      name: "Luis",
-      lastName: "Carrillo",
-      email: "lccarrillo247@gmail.com",
-      phone: "1234567",
-      password: "Luchito123",
-      identityCard: "1234567",
-      dob: "10-12-1989",
-    },
-  ]
-
   const getAllUsersData = async () => {
     try {
       // const { data } = await instance.get(`/user/`)
       // instance.get(`/user/`) || axios.get(`http://localhost:3001/user/`)
-      const { data } = await axios.get(`http://localhost:3001/user/`)
+      const { data } = await instance.get(`/user/`)
       console.log(data)
       return data
     } catch (error) {
@@ -79,7 +37,11 @@ export default function AdminUsers() {
       getAllUsersData().then((data) => {
         dispatch(getAllUsers(data))
       })
-      alert("Se ha asignado correctamente al usuario como administrador")
+      // alert("Se ha asignado correctamente al usuario como administrador")
+      Swal.fire({
+        title: "Se ha asignado correctamente al usuario como administrador",
+        icon: "success"
+      });
     } catch (error) {
       alert(error.response.data.error)
     }
@@ -91,9 +53,13 @@ export default function AdminUsers() {
       getAllUsersData().then((data) => {
         dispatch(getAllUsers(data))
       })
-      alert(
-        "Se ha removido correctamente el acceso de administrador al usuario"
-      )
+      // alert(
+      //   "Se ha removido correctamente el acceso de administrador al usuario"
+      // )
+      Swal.fire({
+        title: "Se ha removido correctamente el acceso de administrador al usuario",
+        icon: "success"
+      });
     } catch (error) {
       alert(error.response.data.error)
     }

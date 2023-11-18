@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getContactData } from "../../../redux/footerSlice";
 import { instance } from "../../../axios/config";
+import Swal from "sweetalert2";
 import style from "./AdminFooter.module.css";
-//POST - EDIT - Envia al back la nueva información
 
 const AdminFooter = () => {
 
@@ -84,7 +84,11 @@ const AdminFooter = () => {
                     dispatch(getContactData(data));
                     setFooterInfo(data);
                   });
-                alert('Se ha actualizado correctamente la información');
+                // alert('Se ha actualizado correctamente la información');
+                Swal.fire({
+                    title: 'Se ha actualizado correctamente la información',
+                    icon: "success"
+                  });
                 setEditMode(false);
             } catch (error) {
                 alert(error.response.data.error)

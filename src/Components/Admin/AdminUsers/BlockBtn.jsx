@@ -14,14 +14,18 @@ const BlockBtn = ({ userID, email, getAllUsersData }) => {
   const handleBlockUser = async (userID, email) => {
     setIsLoading(true)
     try {
-      const response = await axios.post("http://localhost:3001/userBlocked", {
+      const response = await instance.post("/userBlocked", { // axios.post("http://localhost:3001/userBlocked" | instance.post("/userBlocked"
         userID,
         email,
       })
 
       console.log("Block user response:", response.data)
 
-      alert("Se ha bloqueado al usuario correctamente")
+      // alert("Se ha bloqueado al usuario correctamente")
+      Swal.fire({
+        title: "Se ha bloqueado al usuario correctamente",
+        icon: "success"
+      });
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
