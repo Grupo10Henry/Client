@@ -36,7 +36,7 @@ export default function MyAccount() {
     const sortedPaystubs = [...paystubs].sort((a, b) => new Date(b.issueDate) - new Date(a.issueDate))
 
     // console.log(paystubs)
-    console.log(sortedPaystubs)
+    // console.log(sortedPaystubs)
 
     return (
         <div className={styles.myAccountContainer}>

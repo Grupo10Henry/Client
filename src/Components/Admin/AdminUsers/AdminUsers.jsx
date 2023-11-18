@@ -18,7 +18,7 @@ export default function AdminUsers() {
       // const { data } = await instance.get(`/user/`)
       // instance.get(`/user/`) || axios.get(`http://localhost:3001/user/`)
       const { data } = await instance.get(`/user/`)
-      console.log(data)
+      // console.log(data)
       return data
     } catch (error) {
       console.log(error)
