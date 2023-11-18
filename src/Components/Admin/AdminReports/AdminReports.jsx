@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react'
 import ReactApexChart from 'react-apexcharts';
 import styles from './AdminReports.module.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { instance } from '../../../axios/config';
+import { getReportNames, getReportSeats } from '../../../redux/reportSlice';
 
 export default function AdminReports () {
 
+const dispatch = useDispatch();
+const {reportSeats, reportNames} = useSelector((s) => s.report)
 const {allEvents} = useSelector((s) => s.events);
 const {allUsers} = useSelector((s) => s.user); // const allUsers = []
 const [allPaystubs, setAllPaystubs] = useState();
-const [purchasedSeats, setPurchasedSeats] = useState();
-const [purchasedSeatsEvent, setPurchasedSeatsEvent] = useState();
+// const [purchasedSeats, setPurchasedSeats] = useState();
+// const [purchasedSeatsEvent, setPurchasedSeatsEvent] = useState();
 
 const getPaystubs = async () => {
 try {
@@ -33,9 +36,6 @@ try {
 }
 };
 
-const eve = getPurchasedSeats
-console.log(eve)
-
 const getPurchasedSeatsEvent = async () => {
   try {
     const {data} = await axios.get(`http://localhost:3001/seat/reportNames`) // axios.get(`http://localhost:3001/seat/reportNames`) | instance.get('/seat/reportNames')
@@ -47,14 +47,14 @@ const getPurchasedSeatsEvent = async () => {
   };
 
 useEffect(() => {
-  getPurchasedSeats().then((data) => {
-    setPurchasedSeats(data)
+  getPaystubs().then((data) => {
+      setAllPaystubs(data)
   })
-    getPaystubs().then((data) => {
-        setAllPaystubs(data)
-    })
+  getPurchasedSeats().then((data) => {
+    dispatch(getReportSeats(data))
+  })
     getPurchasedSeatsEvent().then((data) => {
-      setPurchasedSeatsEvent(data)
+      dispatch(getReportNames(data))
     })
 }, []
 );
@@ -78,12 +78,10 @@ if (!allUsers) {
   monthlyUserCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 };
 
-const odioReports = purchasedSeats
-const odioMuchoReports = purchasedSeatsEvent
-
 // console.log(allUsers)
 // console.log(monthlyUserCounts)
-
+console.log(reportSeats)
+console.log(reportNames)
 
 const [chart, setChart] = useState({
     series: [{
@@ -120,13 +118,10 @@ const [chart, setChart] = useState({
     },
 });
 
-console.log(purchasedSeats)
-console.log(purchasedSeatsEvent)
-
 const [bars, setBars] = useState(
   {
     series: [{
-        data: purchasedSeats
+        data: reportSeats
       }],
       options: {
         chart: {
@@ -147,7 +142,7 @@ const [bars, setBars] = useState(
         align: 'center'
       },
         xaxis: {
-          categories: odioMuchoReports,
+          categories: reportNames,
         }
       },
 });
