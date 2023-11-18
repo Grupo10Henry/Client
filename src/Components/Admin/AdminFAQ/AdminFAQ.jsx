@@ -39,8 +39,8 @@ const AdminFAQ = () => {
     answer: "",
   });
   
-  console.log(allFaqs);
-  console.log(newFaq);
+  // console.log(allFaqs);
+  // console.log(newFaq);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

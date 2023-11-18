@@ -38,7 +38,7 @@ export default function SetReview (props) {
         // console.log(data)
         return data
     } catch (error) {
-        console.log(error)
+        // console.log(error) //Se comenta pues es un "error esperado"
     }
     };
     
