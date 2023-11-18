@@ -75,3 +75,17 @@ padding: 0px 0px 0px 0px;
 .infoContainer .saveButton:hover {
     background-color: rgb(91, 214, 171);
 }
+
+.infoContainer .saveButtonN {
+    background-color: blueviolet;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+    margin: 15px 30px 25px 30px;
+    font-size: 14px;
+    color: aliceblue;
+    font-weight: bold;
+}
+
+.infoContainer .saveButtonN:hover {
+    background-color: rgb(166, 100, 228);
+}
