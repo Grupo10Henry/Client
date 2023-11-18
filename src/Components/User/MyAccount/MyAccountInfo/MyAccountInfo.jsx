@@ -180,8 +180,8 @@ export default function MyAccountInfo() {
                 </div>
             </div>
             <div>
-            <button className={styles.saveButton} onClick={handleSaveChanges}>Guardar cambios</button>
-            <button className={styles.saveButton} onClick={handleCancelChanges}>Cancelar</button>
+            <button className={styles.saveButtonN} onClick={handleCancelChanges}>Cancelar</button>
+            <button className={styles.saveButton} onClick={handleSaveChanges}>Guardar</button>
             </div>
             </div>
             ) : (
