@@ -13,14 +13,16 @@ const UnblockBtn = ({ userID, getAllUsersData }) => {
   const handleUnblockUser = async (userID) => {
     setIsLoading(true)
     try {
-      const response = await axios.delete(
-        `http://localhost:3001/userBlocked/${userID}`
-      )
+      const response = await instance.delete(`/userBlocked/${userID}`) // axios.delete(`http://localhost:3001/userBlocked/${userID}`) | instance.delete(`/userBlocked/${userID}`)
       console.log(response)
 
       setIsLoading(false)
 
       // alert("Se ha desbloqueado al usuario correctamente")
+      Swal.fire({
+        title: "Se ha desbloqueado al usuario correctamente",
+        icon: "success"
+      });
     } catch (error) {
       setIsLoading(false)
       alert(error)

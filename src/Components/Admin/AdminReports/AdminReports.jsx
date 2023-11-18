@@ -11,6 +11,7 @@ const {allEvents} = useSelector((s) => s.events);
 const {allUsers} = useSelector((s) => s.user); // const allUsers = []
 const [allPaystubs, setAllPaystubs] = useState();
 const [purchasedSeats, setPurchasedSeats] = useState();
+const [purchasedSeatsEvent, setPurchasedSeatsEvent] = useState();
 
 const getPaystubs = async () => {
 try {
@@ -24,7 +25,7 @@ try {
 
 const getPurchasedSeats = async () => {
 try {
-  const {data} = await instance.get('/seat/report') // axios.get(`http://localhost:3001/seat/report`) | instance.get('/seat/report')
+  const {data} = await axios.get(`http://localhost:3001/seat/reportSeats`) // axios.get(`http://localhost:3001/seat/reportSeats`) | instance.get('/seat/reportSeats')
   // console.log(data)
   return data
 } catch (error) {
@@ -32,12 +33,28 @@ try {
 }
 };
 
+const eve = getPurchasedSeats
+console.log(eve)
+
+const getPurchasedSeatsEvent = async () => {
+  try {
+    const {data} = await axios.get(`http://localhost:3001/seat/reportNames`) // axios.get(`http://localhost:3001/seat/reportNames`) | instance.get('/seat/reportNames')
+    // console.log(data)
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+  };
+
 useEffect(() => {
   getPurchasedSeats().then((data) => {
     setPurchasedSeats(data)
   })
     getPaystubs().then((data) => {
         setAllPaystubs(data)
+    })
+    getPurchasedSeatsEvent().then((data) => {
+      setPurchasedSeatsEvent(data)
     })
 }, []
 );
@@ -61,18 +78,12 @@ if (!allUsers) {
   monthlyUserCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 };
 
-let eventos = purchasedSeats?.nombres
-let entradas = purchasedSeats?.entradas
-
-if (!purchasedSeats) {
-  eventos = []
-  entradas = []
-};
-
+const odioReports = purchasedSeats
+const odioMuchoReports = purchasedSeatsEvent
 
 // console.log(allUsers)
 // console.log(monthlyUserCounts)
-console.log(purchasedSeats)
+
 
 const [chart, setChart] = useState({
     series: [{
@@ -109,9 +120,13 @@ const [chart, setChart] = useState({
     },
 });
 
-const [bars, setBars] = useState({
+console.log(purchasedSeats)
+console.log(purchasedSeatsEvent)
+
+const [bars, setBars] = useState(
+  {
     series: [{
-        data: entradas
+        data: purchasedSeats
       }],
       options: {
         chart: {
@@ -132,7 +147,7 @@ const [bars, setBars] = useState({
         align: 'center'
       },
         xaxis: {
-          categories: eventos,
+          categories: odioMuchoReports,
         }
       },
 });
