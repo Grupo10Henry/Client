@@ -48,6 +48,8 @@ const ReviewsUser = () => {
         <p>{isError}</p>
       </div>
     )
+  } else if (reviews.length === 0) {
+    return <div style={{ padding: "70px 0" }}>No hay reviews</div>
   }
 
   return (

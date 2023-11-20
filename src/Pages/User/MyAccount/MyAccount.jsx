@@ -33,13 +33,16 @@ export default function MyAccount() {
     }, []
     );
 
+    const sortedPaystubs = [...paystubs].sort((a, b) => new Date(b.issueDate) - new Date(a.issueDate))
+
     // console.log(paystubs)
+    // console.log(sortedPaystubs)
 
     return (
         <div className={styles.myAccountContainer}>
             <div className={styles.myTicketsContainer}>
             <h1 className={styles.myTicketsTitle}>Entradas compradas</h1>
-            {paystubs?.length ? paystubs.map((paystub) => (
+            {sortedPaystubs?.length ? sortedPaystubs?.map((paystub) => (
                 <MyTicketsActive
                 key={paystub.paystubID}
                 eventID={paystub.eventID}

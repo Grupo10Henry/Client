@@ -7,15 +7,25 @@ import useReviewsEvent from "../../../../hooks/useReviewsEvent"
 import style from "./ReviewsEvent.module.css"
 
 const ReviewsEvent = () => {
-  const { loading, reviews, shownPrevEvents, calculateAverageRating } =
-    useReviewsEvent()
+  const {
+    isLoading,
+    isError,
+    reviews,
+    shownPrevEvents,
+    calculateAverageRating,
+  } = useReviewsEvent()
 
-  if (loading) {
+  if (isLoading) {
     return <Loader />
+  } else if (isError) {
+    return <div>{isError}</div>
+  } else if (shownPrevEvents?.length === 0) {
+    return <div>No hay reviews</div>
   }
 
   return (
     <div className={style.reviewsEvent}>
+      {}
       {shownPrevEvents?.map((review) => (
         <div key={review.eventID} className={style.reviewEvent}>
           <div className={style.imgEventContainer}>

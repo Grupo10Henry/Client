@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getContactData } from "../../../redux/footerSlice";
 import { instance } from "../../../axios/config";
+import Swal from "sweetalert2";
 import style from "./AdminFooter.module.css";
-//POST - EDIT - Envia al back la nueva información
 
 const AdminFooter = () => {
 
@@ -24,7 +24,7 @@ const AdminFooter = () => {
         useEffect(() => {
           getFooterInfo().then((data) => {
             dispatch(getContactData(data));
-            setFooterInfo(data);
+            setFooterInfo(data[0]);
           });
         }, []
     );
@@ -49,20 +49,32 @@ const AdminFooter = () => {
         companyInfoID: "",
     });
 
-    console.log(footerInfo);
-    console.log(footerCopy);
+    const [newFooter, setNewFooter] = useState({
+        email: 'info@trescreativo.com',
+        phone: 'Colombia: (604) 500 5640',
+        adress: 'Calle 44 #90a - 43, La América. Medellín - Colombia',
+        businessHours: 'Lunes a Viernes, de 9:00 am a 06:00 pm',
+        dataPolicy: "Colombia: 302 2360759",
+    });
 
     const editHandler = (event) => {
         setFooterInfo({
             ...footerInfo,
             [event.target.name]: event.target.value,
         });
-    }
+    };
+
+    const editHandlerNewFooter = (event) => {
+        setNewFooter({
+            ...newFooter,
+            [event.target.name]: event.target.value,
+        });
+    };
 
     const HandleEditMode = () => {
         setEditMode(true);
         setFooterCopy(footerInfo);
-    }
+    };
 
     const handleCancelChanges = async () => {
             setEditMode(false);
@@ -79,19 +91,46 @@ const AdminFooter = () => {
 
         const handleSaveChanges = async () => {
             try {
-                await instance.put(`companyInfo/${footerInfo[0].companyInfoID}`, footerInfo); // instance.put(`companyInfo/${footerInfo[0].companyInfoID}`, footerInfo) || axios.put(`http://localhost:3001/`companyInfo/${footerInfo[0].companyInfoID}`, footerInfo)
+                await instance.put(`companyInfo/${contactData[0]?.companyInfoID}`, footerInfo); // instance.put(`companyInfo/${footerInfo[0].companyInfoID}`, footerInfo) || axios.put(`http://localhost:3001/`companyInfo/${footerInfo[0].companyInfoID}`, footerInfo)
                 getFooterInfo().then((data) => {
                     dispatch(getContactData(data));
                     setFooterInfo(data);
                   });
-                alert('Se ha actualizado correctamente la información');
+                // alert('Se ha actualizado correctamente la información');
+                Swal.fire({
+                    title: 'Se ha actualizado correctamente la información',
+                    icon: "success"
+                  });
                 setEditMode(false);
             } catch (error) {
                 alert(error.response.data.error)
             }
         };
+    
+        const handleCreate = async () => {
+        try {
+            await instance.post(`companyInfo/`, newFooter); // instance.put(`companyInfo/${footerInfo[0].companyInfoID}`, footerInfo) || axios.put(`http://localhost:3001/`companyInfo/${footerInfo[0].companyInfoID}`, footerInfo)
+            getFooterInfo().then((data) => {
+                dispatch(getContactData(data));
+                setFooterInfo(data);
+              });
+            // alert('Se ha creado correctamente la información');
+            Swal.fire({
+                title: 'Se ha creado correctamente la información',
+                icon: "success"
+              });
+        } catch (error) {
+            alert(error.response.data.error)
+        }
+        };
+
+    // console.log(footerInfo);
+    // console.log(footerCopy);
+    // console.log(newFooter);
 
     return(
+        <>
+        {contactData.length ? (
         <div className={style.AdminFooterContainer}>
             {editMode ? (
             <div>
@@ -100,50 +139,45 @@ const AdminFooter = () => {
                 <div>
                     <label>Dirección</label>
                     <input
-                    placeholder={contactData?.[0]?.adress}
                     type="text"
                     name="adress"
-                    value={footerInfo.adress}
+                    value={contactData?.[0]?.adress}
                     onChange={editHandler}
                     />
                 </div>
                 <div>
                     <label>Teléfono</label>
                     <input
-                    placeholder={contactData?.[0]?.phone}
                     type="text"
                     name="phone"
-                    value={footerInfo.phone}
+                    value={contactData?.[0]?.phone}
                     onChange={editHandler}
                     />
                 </div>
                 <div>
                     <label>WhatsApp</label>
                     <input
-                    placeholder={contactData?.[0]?.dataPolicy}
                     type="text"
                     name="dataPolicy"
-                    value={footerInfo.dataPolicy}
+                    value={contactData?.[0]?.dataPolicy}
                     onChange={editHandler}
                     />
                 </div>
                 <div>
                     <label>Email</label>
                     <input
-                    placeholder={contactData?.[0]?.email}
                     type="email"
                     name="email"
-                    value={footerInfo.email}
+                    value={contactData?.[0]?.email}
                     onChange={editHandler}
                     />
                 </div>
                 <div>
                     <label>Horario de atención</label>
                     <input
-                    placeholder={contactData?.[0]?.businessHours}
                     type="text"
                     name="businessHours"
-                    value={footerInfo.businessHours}
+                    value={contactData?.[0]?.businessHours}
                     onChange={editHandler}
                     />
                 </div>
@@ -201,6 +235,72 @@ const AdminFooter = () => {
                         </div>
             )}
         </div>
+        ) : (
+            <div className={style.AdminFooterContainer}>
+            <div className={style.InfoContactoAdmin}>
+            <h2>Crear información de contacto</h2>
+            <div>
+                <label>Dirección</label>
+                <input
+                type="text"
+                name="adress"
+                value={newFooter.adress}
+                onChange={editHandlerNewFooter}
+                />
+            </div>
+            <div>
+                <label>Teléfono</label>
+                <input
+                type="text"
+                name="phone"
+                value={newFooter.phone}
+                onChange={editHandlerNewFooter}
+                />
+            </div>
+            <div>
+                <label>WhatsApp</label>
+                <input
+                type="text"
+                name="dataPolicy"
+                value={newFooter.dataPolicy}
+                onChange={editHandlerNewFooter}
+                />
+            </div>
+            <div>
+                <label>Email</label>
+                <input
+                type="email"
+                name="email"
+                value={newFooter.email}
+                onChange={editHandlerNewFooter}
+                />
+            </div>
+            <div>
+                <label>Horario de atención</label>
+                <input
+                type="text"
+                name="businessHours"
+                value={newFooter.businessHours}
+                onChange={editHandlerNewFooter}
+                />
+            </div>
+            </div>
+            {/* <div className={style.infoRedesAdmin}>
+            <h2>Redes sociales</h2>
+            <label>Link instagram</label>
+            <input/>
+            <label>Link facebook</label>
+            <input/>
+            <label>Link Linkedin</label>
+            <input/>
+            <label>Link whatApp</label>
+            <input/>
+            </div> */}
+
+            <button onClick={handleCreate}>Crear</button>
+        </div>
+        )}
+        </>
     )
 }
 

@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './AdminFAQDetail.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { instance } from '../../../axios/config';
 import { useEffect, useState } from 'react';
 import { getFaqById } from '../../../redux/faqSlice';
+import Swal from 'sweetalert2';
+import styles from './AdminFAQDetail.module.css';
 
 export default function AdminFAQDetail () {
 
@@ -62,7 +63,11 @@ export default function AdminFAQDetail () {
                 dispatch(getFaqById(data))
                 setUpdatedFaq(data)
             });
-            alert('Se ha actualizado correctamente la pregunta frecuente')
+            // alert('Se ha actualizado correctamente la pregunta frecuente')
+            Swal.fire({
+                title: 'Se ha actualizado correctamente la pregunta frecuente',
+                icon: "success"
+              });
         } catch (error) {
             alert(error.response.data.error)
         }

@@ -18,11 +18,7 @@ const AllEvents = () => {
       <h2 className="subtitle gradient-text">
         <b>Todos Los Eventos Disponibles</b>
       </h2>
-      {nextEvents.length === 0 ? (
-        "Hubo un error al cargar los eventos :c"
-      ) : (
-        <Cards data={nextEvents} />
-      )}
+      {nextEvents.length === 0 ? "NO HAY EVENTOS" : <Cards data={nextEvents} />}
     </div>
   )
 }
