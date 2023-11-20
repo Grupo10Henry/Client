@@ -1,10 +1,11 @@
 // Luiiisssss
 import { useEffect, useState } from 'react';
-import styles from './SetReview.module.css';
 import {AiOutlineStar, AiFillStar} from 'react-icons/ai';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { instance } from '../../../../axios/config';
+import Swal from 'sweetalert2';
+import styles from './SetReview.module.css';
 
 export default function SetReview (props) {
 
@@ -37,7 +38,7 @@ export default function SetReview (props) {
         // console.log(data)
         return data
     } catch (error) {
-        console.log(error)
+        // console.log(error) //Se comenta pues es un "error esperado"
     }
     };
     
@@ -69,7 +70,11 @@ export default function SetReview (props) {
         validateReview().then((data) => {
             setCurrentRating(data)
             })
-        alert('¡Gracias por calificarnos!')
+        // alert('¡Gracias por calificarnos!')
+        Swal.fire({
+            title: '¡Gracias por calificarnos!',
+            icon: "success"
+          });
     } catch (error) {
         alert(error.response.data.error)
     }

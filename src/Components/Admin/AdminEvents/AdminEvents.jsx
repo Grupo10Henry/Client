@@ -1,18 +1,26 @@
 // Luissssss
-import styles from './AdminEvents.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllEvents } from '../../../redux/eventsSlice';
 import { useEffect } from 'react';
 import { instance } from '../../../axios/config';
-import { AiFillEdit } from 'react-icons/ai';
+import { AiFillEdit, AiOutlineStop } from 'react-icons/ai';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import styles from './AdminEvents.module.css';
 
 export default function AdminEvents() {
 
   const dispatch = useDispatch();
   const {allEvents} = useSelector((s) => s.events)
   const navigate = useNavigate();
+
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const currentDay = String(currentDate.getDate()).padStart(2, '0');
+  const minDate = `${currentYear}-${currentMonth}-${currentDay}`;
 
   const getEvents = async () => {
       try {
@@ -33,16 +41,30 @@ export default function AdminEvents() {
 
   const handleDeleteEvent = async (eventID) => {
     try {
-      await instance.delete(`/event/${eventID}`)
-      alert('Evento eliminado con éxito')
+      await instance.delete(`/event/${eventID}`) // instance.delete(`/event/${eventID}`) | axios.delete(`http://localhost:3001/event/${eventID}`)
+      // alert('Evento eliminado con éxito')
+      getEvents().then((data) => (dispatch(getAllEvents(data))))
+      Swal.fire({
+        title: "Evento eliminado con éxito",
+        icon: "success"
+      });
+
     } catch (error) {
       alert(error.response.data.error)
     }
   };
 
+  const handleCantDeleteEvent = () => {
+          // alert("No es posible eliminar eventos que ya fueron realizados")
+          Swal.fire({
+            title: "No es posible eliminar eventos que ya fueron realizados",
+            icon: "error"
+          });
+  };
+
   const handleEditEvent = (eventID) => {
     navigate(`../evento/${eventID}`)
-  }
+  };
 
     return (
         <div className={styles.eventsTableContainer}>
@@ -80,7 +102,9 @@ export default function AdminEvents() {
                  <AiFillEdit className={styles.adminEventsEditButton} onClick={() => handleEditEvent(event.eventID)} />
                </td>
                <td className={styles.eventTableRowsContent}>
+                 {event.date > minDate ? (
                  <BsFillTrashFill className={styles.adminEventsDeleteButton} onClick={() => handleDeleteEvent(event.eventID)} />
+                 ) : <AiOutlineStop className={styles.adminEventsDeleteButton} onClick={handleCantDeleteEvent}/>}
                </td>
              </tr>
            ))}

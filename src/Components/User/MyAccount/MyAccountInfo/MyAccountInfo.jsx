@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { instance } from '../../../../axios/config';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
-import styles from './MyAccountInfo.module.css';
 import { getUserById } from '../../../../redux/userSlice';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import styles from './MyAccountInfo.module.css';
 
 export default function MyAccountInfo() {
 
@@ -32,25 +33,6 @@ export default function MyAccountInfo() {
           });
         }, []
     );
-
-    // const userData = {
-    //     userID: 3,
-    //     isAdmin: false,
-    //     name: "franco",
-    //     lastName: "rinque",
-    //     email: "Franco2@gmail.com",
-    //     phone: "1122334455",
-    //     password: "$2a$10$j50dnsZi5UBlsDyYGq/JdeyMJWOO9unSZrO7ydZu5EhvjB6op3ogy",
-    //     identityCard: "43336633",
-    //     dob: "2024-04-02",
-    //     createdAt: "2023-10-31T21:03:24.225Z",
-    //     updatedAt: "2023-10-31T21:03:24.225Z",
-    //     deletedAt: null
-    //   }
-
-    // useEffect(() => {
-    //     setUser(userData)
-    // }, []);
 
     const [editMode, setEditMode] = useState(false);
     const [user, setUser] = useState({
@@ -98,7 +80,11 @@ export default function MyAccountInfo() {
                 dispatch(getUserById(data));
                 setUser(data);
               });
-            alert('Se ha actualizado exitosamente la información');
+            // alert('Se ha actualizado exitosamente la información');
+            Swal.fire({
+                title: 'Se ha actualizado exitosamente la información',
+                icon: "success"
+              });
             setEditMode(false);
         } catch (error) {
             alert(error.response.data.error)
@@ -106,15 +92,6 @@ export default function MyAccountInfo() {
     };
 
     const handleCancelChanges = async () => {
-    //   try {
-    //       getUserData().then((data) => {
-    //             dispatch(getUserById(data));
-    //             setUser(data);
-    //       });
-    //         setEditMode(false);
-    //   } catch (error) {
-    //     alert(error.response.data.error)
-    //   }  
         setEditMode(false);
         setUser(userCopy);
         setUserCopy({
@@ -203,8 +180,8 @@ export default function MyAccountInfo() {
                 </div>
             </div>
             <div>
-            <button className={styles.saveButton} onClick={handleSaveChanges}>Guardar cambios</button>
-            <button className={styles.saveButton} onClick={handleCancelChanges}>Cancelar</button>
+            <button className={styles.saveButtonN} onClick={handleCancelChanges}>Cancelar</button>
+            <button className={styles.saveButton} onClick={handleSaveChanges}>Guardar</button>
             </div>
             </div>
             ) : (

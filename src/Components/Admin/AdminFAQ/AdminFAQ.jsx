@@ -5,9 +5,10 @@ import { instance } from "../../../axios/config";
 import { useEffect } from "react";
 import { getAllFaqs } from "../../../redux/faqSlice";
 import { useNavigate } from "react-router-dom";
-import styles from "./AdminFAQ.module.css";
 import { AiFillEdit } from 'react-icons/ai';
 import { BsFillTrashFill } from 'react-icons/bs';
+import Swal from "sweetalert2";
+import styles from "./AdminFAQ.module.css";
 
 const AdminFAQ = () => {
 
@@ -38,8 +39,8 @@ const AdminFAQ = () => {
     answer: "",
   });
   
-  console.log(allFaqs);
-  console.log(newFaq);
+  // console.log(allFaqs);
+  // console.log(newFaq);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,9 +56,13 @@ const AdminFAQ = () => {
         getFaqs().then((data) => {
           dispatch(getAllFaqs(data));
         });
-        alert('Se ha creado la pregunta exitosamente');
+        // alert('Se ha creado la pregunta exitosamente');
+        Swal.fire({
+          title: 'Se ha creado la pregunta exitosamente',
+          icon: "success"
+        });
       } catch (error) {
-        alert(error)
+        alert(error.response.data.error)
       }
   };
 
@@ -67,9 +72,13 @@ const AdminFAQ = () => {
       getFaqs().then((data) => {
         dispatch(getAllFaqs(data));
       });
-      alert('Se ha eliminado la pregunta exitosamente');
+      // alert('Se ha eliminado la pregunta exitosamente');
+      Swal.fire({
+        title: 'Se ha eliminado la pregunta exitosamente',
+        icon: "success"
+      });
     } catch (error) {
-      alert(error)
+      alert(error.response.data.error)
     }
   };
 

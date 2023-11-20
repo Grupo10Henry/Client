@@ -1,41 +1,92 @@
 import { useEffect, useState } from 'react'
 import ReactApexChart from 'react-apexcharts';
 import styles from './AdminReports.module.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { instance } from '../../../axios/config';
+import { getReportNames, getReportSeats } from '../../../redux/reportSlice';
 
 export default function AdminReports () {
 
+const dispatch = useDispatch();
+const {reportSeats, reportNames} = useSelector((s) => s.report)
 const {allEvents} = useSelector((s) => s.events);
-const {allUsers} = useSelector((s) => s.user);
+const {allUsers} = useSelector((s) => s.user); // const allUsers = []
 const [allPaystubs, setAllPaystubs] = useState();
+// const [purchasedSeats, setPurchasedSeats] = useState();
+// const [purchasedSeatsEvent, setPurchasedSeatsEvent] = useState();
 
 const getPaystubs = async () => {
 try {
     const {data} = await instance.get(`/paystub`) // axios.get(`http://localhost:3001/paystub`) | instance.get(`/paystub`)
-    console.log(data)
+    // console.log(data)
     return data
 } catch (error) {
     console.log(error)
 }
 };
 
+const getPurchasedSeats = async () => {
+try {
+  const {data} = await instance.get('/seat/reportSeats') // axios.get(`http://localhost:3001/seat/reportSeats`) | instance.get('/seat/reportSeats')
+  // console.log(data)
+  return data
+} catch (error) {
+  console.log(error)
+}
+};
+
+const getPurchasedSeatsEvent = async () => {
+  try {
+    const {data} = await instance.get('/seat/reportNames') // axios.get(`http://localhost:3001/seat/reportNames`) | instance.get('/seat/reportNames')
+    // console.log(data)
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+  };
+
 useEffect(() => {
-    getPaystubs().then((data) => {
-        setAllPaystubs(data)
+  getPaystubs().then((data) => {
+      setAllPaystubs(data)
+  })
+  getPurchasedSeats().then((data) => {
+    dispatch(getReportSeats(data))
+  })
+    getPurchasedSeatsEvent().then((data) => {
+      dispatch(getReportNames(data))
     })
 }, []
 );
 
 const totalSales = allPaystubs?.reduce((acc, paystub) => acc + paystub.tickets, 0);
 
-const usersMonth = [21, 0, 0, 0, 0, 0, 0, 0, 0]
+// Convertir AllUsers en array de users por mes empezando en noviembre
+const monthlyUserCounts = allUsers?.reduce((counts, user) => {
+  const createdAt = new Date(user.createdAt);
+  let month = createdAt.getMonth() - 10;
+  
+  if (month < 0) {
+    month += 12;
+  }
+  
+  counts[month] = (counts[month] || 0) + 1;
+  return counts;
+}, Array.from({ length: 12 }).fill(0));
+
+if (!allUsers) {
+  monthlyUserCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+};
+
+// console.log(allUsers)
+// console.log(monthlyUserCounts)
+// console.log(reportSeats)
+// console.log(reportNames)
 
 const [chart, setChart] = useState({
     series: [{
         name: "Usuarios",
-        data: usersMonth
+        data: monthlyUserCounts
     }],
     options: {
       chart: {
@@ -62,14 +113,15 @@ const [chart, setChart] = useState({
         },
       },
       xaxis: {
-        categories: ['Nov', 'Dic', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
+        categories: ['Nov', 'Dic', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct'],
       }
     },
 });
 
-const [bars, setBars] = useState({
+const [bars, setBars] = useState(
+  {
     series: [{
-        data: [4, 3, 1]
+        data: reportSeats
       }],
       options: {
         chart: {
@@ -90,8 +142,7 @@ const [bars, setBars] = useState({
         align: 'center'
       },
         xaxis: {
-          categories: ['Tini', 'The Weekend', 'The Score'
-          ],
+          categories: reportNames,
         }
       },
 });
