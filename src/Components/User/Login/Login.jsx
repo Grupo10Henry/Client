@@ -6,8 +6,8 @@ import { loginSuccess } from "../../../redux/userSlice";
 import logo from "../../../assets/logo_mi_butaca_color.svg";
 import { useNavigate, Link } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
-import {instance} from "../../../axios/config"
-
+import { instance } from "../../../axios/config";
+import axios from "axios";
 
 const Login = () => {
   const [errors, setErrors] = useState({ email: "", password: "" });
@@ -16,9 +16,8 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const handleGoogleSuccess = async (tokenResponse) => {
-    console.log("Token obtenido de Google:", tokenResponse); 
+    console.log("Token obtenido de Google:", tokenResponse);
     try {
-      
       const res = await instance.post("/login/google", {
         token: tokenResponse.access_token,
       });
@@ -32,7 +31,7 @@ const Login = () => {
   const googleLogin = useGoogleLogin({
     onSuccess: handleGoogleSuccess,
     scope: "openid profile email",
-    responseType: "token", 
+    responseType: "token",
     onFailure: (errorResponse) => {
       console.error("Google login failed:", errorResponse);
       setErrors({ ...errors, form: "Google login failed. Please try again." });
@@ -53,53 +52,64 @@ const Login = () => {
     if (validationErrors) {
       setErrors(validationErrors);
     } else {
-      try {
-        const res = await instance.post("/login", user);
-        handleLoginResponse(res.data);
-      } catch (error) {
-        console.error("Error durante el proceso de inicio de sesión:", error);
-        if (error.response && error.response.data) {
-          setErrors({ ...errors, form: error.response.data.message });
-        } else {
-          setErrors({
-            ...errors,
-            form: "Hubo un problema de conexión al servidor.",
-          });
+      const userBlocked = await axios.get(
+        `http://localhost:3001/userBlocked/?email=${user.email}`
+      );
+      console.log("userBloqued.data:", userBlocked.data)
+      if (userBlocked.data === false) {
+        try {
+          const res = await instance.post("/login", user);
+          handleLoginResponse(res.data);
+        } catch (error) {
+          console.error("Error durante el proceso de inicio de sesión:", error);
+          if (error.response && error.response.data) {
+            setErrors({ ...errors, form: error.response.data.message });
+          } else {
+            setErrors({
+              ...errors,
+              form: "Hubo un problema de conexión al servidor.",
+            });
+          }
         }
-      }
+      } else {
+        window.alert("Usuario Bloqueado, comuniquese con el administrador del sitio.")
+    } 
     }
   };
 
+  const handleLoginResponse = (data) => {
+    console.log("Respuesta del servidor:", data);
 
-const handleLoginResponse = (data) => {
-  console.log("Respuesta del servidor:", data);
+    let token, isAdmin, userInfo;
 
-  let token, isAdmin, userInfo;
-
- 
-  if (data.token && typeof data.token === 'object') {
-    // Estructura para el inicio de sesión manual
-    ({ token, isAdmin, userInfo } = data.token);
-  } else {
-    // Estructura para el inicio de sesión con Google
-    ({ token, isAdmin, userInfo } = data);
-  }
-
-  if (token) {
-    localStorage.setItem("token", token);
-    if (isAdmin !== undefined) {
-      localStorage.setItem("isAdmin", isAdmin.toString());
+    if (data.token && typeof data.token === "object") {
+      // Estructura para el inicio de sesión manual
+      ({ token, isAdmin, userInfo } = data.token);
+    } else {
+      // Estructura para el inicio de sesión con Google
+      ({ token, isAdmin, userInfo } = data);
     }
 
-    dispatch(loginSuccess({ token, isAdmin, userInfo }));
+    if (token) {
+      localStorage.setItem("token", token);
+      if (isAdmin !== undefined) {
+        localStorage.setItem("isAdmin", isAdmin.toString());
+      }
 
-    const isAdminStored = localStorage.getItem("isAdmin") === "true";
-    navigate(isAdminStored ? "/admin" : "/");
-  } else {
-    console.error("Error: No se encontró el token necesario para el inicio de sesión.");
-    setErrors({ ...errors, form: "No se pudo procesar la respuesta del servidor." });
-  }
-};
+      dispatch(loginSuccess({ token, isAdmin, userInfo }));
+
+      const isAdminStored = localStorage.getItem("isAdmin") === "true";
+      navigate(isAdminStored ? "/admin" : "/");
+    } else {
+      console.error(
+        "Error: No se encontró el token necesario para el inicio de sesión."
+      );
+      setErrors({
+        ...errors,
+        form: "No se pudo procesar la respuesta del servidor.",
+      });
+    }
+  };
 
   const validateForm = (formData) => {
     const errors = {};
@@ -220,7 +230,6 @@ const handleLoginResponse = (data) => {
               <button
                 className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-fuchsia-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 type="submit"
-                
               >
                 INGRESAR
               </button>
@@ -244,15 +253,13 @@ const handleLoginResponse = (data) => {
           </p>
 
           <div className="mt-1 flex items-center justify-center ">
-            
-              <button
-                onClick={googleLogin}
-                className="flex items-center justify-center w-54 px-2 py-1 mt-1 font-medium text-white bg-fuchsia-900 hover:bg-red-600 rounded-md transition duration-300 ease-in-out  shadow-sm"
-              >
-                <span className="text-xl pr-2">G</span>
-                Ingresar con Google
-              </button>
-            
+            <button
+              onClick={googleLogin}
+              className="flex items-center justify-center w-54 px-2 py-1 mt-1 font-medium text-white bg-fuchsia-900 hover:bg-red-600 rounded-md transition duration-300 ease-in-out  shadow-sm"
+            >
+              <span className="text-xl pr-2">G</span>
+              Ingresar con Google
+            </button>
           </div>
         </div>
       </div>
@@ -261,4 +268,3 @@ const handleLoginResponse = (data) => {
 };
 
 export default Login;
-
