@@ -7,7 +7,6 @@ import logo from "../../../assets/logo_mi_butaca_color.svg";
 import { useNavigate, Link } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import { instance } from "../../../axios/config";
-import axios from "axios";
 
 const Login = () => {
   const [errors, setErrors] = useState({ email: "", password: "" });
@@ -52,8 +51,8 @@ const Login = () => {
     if (validationErrors) {
       setErrors(validationErrors);
     } else {
-      const userBlocked = await axios.get(
-        `http://localhost:3001/userBlocked/?email=${user.email}`
+      const userBlocked = await instance.get(
+        `/userBlocked/?email=${user.email}`
       );
       console.log("userBloqued.data:", userBlocked.data)
       if (userBlocked.data === false) {
@@ -195,12 +194,7 @@ const Login = () => {
                   🗝 CONTRASEÑA
                 </label>
                 <div className="text-xs">
-                  <p
-                    onClick={handlePasswordRecuperation}
-                    className="font-semibold text-teal-700 hover:text-fuchsia-600 cursor-pointer"
-                  >
-                    Olvidé mi contraseña
-                  </p>
+                
                 </div>
               </div>
               <div className="mt-2 relative">
