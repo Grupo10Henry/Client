@@ -5,7 +5,6 @@ import Cart from "./Components/User/Cart/CartPequeño"
 import Contact from "./Components/User/Contact/Contact"
 import Footer from "./Components/User/Footer/Footer"
 import Login from "./Components/User/Login/Login"
-import PasswordRecover from "./Components/User/Login/PasswordRecover"
 import Navbar from "./Components/User/Navbar/Navbar"
 import SignUp from "./Components/User/SignUp/SignUp"
 import ScrollToTop from "./Components/UserAndAdmin/ScrollToTop"
@@ -83,7 +82,6 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/evento/:id" element={<AdminEventsDetail />} />
         <Route path="/preguntas/:id" element={<AdminFAQDetail />} />
-        <Route path="/recuperarcontrasena" element={<PasswordRecover />} />
         <Route path="/mercadopagoexitoso" element={<MercadoPagoExitoso />} />
         <Route path="/mercadopagoerror" element={<MercadoPagoError />} />
         <Route path="/mercadopagopendiente" element={<MercadoPagoPendiente />}/>
