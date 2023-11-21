@@ -5,7 +5,7 @@ const developers = [
     location: "Bogotá, Colombia",
     photo:
       "https://res.cloudinary.com/dgdcfmnnx/image/upload/v1700094616/developers/k3ith9ypfs9sfhx622n1.jpg",
-    linkedin: "https://www.linkedin.com/in/luis-carlos-carrillo-73aaa057/",
+    linkedin: "https://www.linkedin.com/in/luis-carlos-carrillo",
     github: "https://github.com/lccarrillo247",
   },
   {
@@ -14,8 +14,7 @@ const developers = [
     location: "Buenos Aires, Argentina",
     photo:
       "https://res.cloudinary.com/dgdcfmnnx/image/upload/v1700094583/developers/imbnrm2pfa2wj45qstcx.jpg",
-    linkedin:
-      "https://www.linkedin.com/in/evelyn-pereira-aa2843232?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    linkedin: "https://www.linkedin.com/in/evelyn-pereira-dev/",
     github: "https://github.com/EvelynCPereira",
   },
   {
@@ -70,7 +69,7 @@ const developers = [
     location: "Santa Fe, Argentina",
     photo:
       "https://res.cloudinary.com/dgdcfmnnx/image/upload/v1700094616/developers/jufuywttrkuldvii60yk.jpg",
-    linkedin: "https://www.linkedin.com/in/kevin-ortiz-b29321276/",
+    linkedin: "https://www.linkedin.com/in/kevin-ortiz-sfe/",
     github: "https://github.com/kevinor03",
   },
 ]
